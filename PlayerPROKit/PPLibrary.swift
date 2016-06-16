@@ -23,8 +23,8 @@ private func toDictionary(infoRec: MADInfoRec) -> NSDictionary {
 		kPPSignature:			OSTypeToString(infoRec.signature, useHexIfInvalid: ()),
 		kPPTotalTracks:			Int(infoRec.totalTracks),
 		kPPTotalInstruments:	Int(infoRec.totalInstruments),
-		kPPInternalFileName:	String(CString: aArray, encoding: NSMacOSRomanStringEncoding) ?? "",
-		kPPFormatDescription:	String(CString: bArray, encoding: NSMacOSRomanStringEncoding) ?? ""]
+		kPPInternalFileName:	String(CString: aArray, encoding: String.Encoding.macOSRoman) ?? "",
+		kPPFormatDescription:	String(CString: bArray, encoding: String.Encoding.macOSRoman) ?? ""]
 }
 
 /// Class that represents the additional tracker types that PlayerPRO can load via plug-ins.
@@ -69,8 +69,8 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			totalTracks = Int(infoRec.totalTracks)
 			totalInstruments = Int(infoRec.totalInstruments)
 			signature = OSTypeToString(infoRec.signature, useHexIfInvalid: ())
-			internalFileName = String(CString: aArray, encoding: NSMacOSRomanStringEncoding) ?? ""
-			formatDescription = String(CString: bArray, encoding: NSMacOSRomanStringEncoding) ?? ""
+			internalFileName = String(CString: aArray, encoding: String.Encoding.macOSRoman) ?? ""
+			formatDescription = String(CString: bArray, encoding: String.Encoding.macOSRoman) ?? ""
 		}
 		
 		private init(infoDict: NSDictionary) {
@@ -204,7 +204,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 		var cType = [Int8](repeating: 0, count: 5)
 		
 		let aRet = MADMusicIdentifyCFURL(theLibrary, &cType, apath)
-		let sRet = String(cString: cType, encoding: NSMacOSRomanStringEncoding)
+		let sRet = String(cString: cType, encoding: String.Encoding.macOSRoman)
 		
 		if aRet == .noErr {
 			return sRet!
@@ -287,7 +287,9 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// - returns: A `MusicFileInfo` struct describing the file pointed to in `URL`.
 	/// - throws: A `MADErr` wrapped in an `NSError`.
 	public func informationFromFile(URL apath: NSURL, type: String) throws -> MusicFileInfo {
-		let cStrType = type.cString(using: NSMacOSRomanStringEncoding)!
+		guard let cStrType = type.cString(using: String.Encoding.macOSRoman) else {
+			throw MADErr.parametersErr
+		}
 		
 		let filInfo = try informationFromFile(URL: apath, cType: cStrType)
 		let anInfo = MusicFileInfo(infoRec: filInfo)
@@ -317,7 +319,9 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 		guard let info = info else {
 			return .parametersErr
 		}
-		let cStrType = type.cString(using: NSMacOSRomanStringEncoding)!
+		guard let cStrType = type.cString(using: String.Encoding.macOSRoman) else {
+			return .parametersErr
+		}
 		
 		do {
 			let aRet = try informationFromFile(URL: path, cType: cStrType)
@@ -352,7 +356,9 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// - parameter type: The type to test for.
 	/// - returns: An error value, or `MADNoErr` if the tracker is of the specified type.
 	@objc(testFileAtURL:stringType:) public func testFile(URL: NSURL, type: String) -> MADErr {
-		var cStrType = type.cString(using: NSMacOSRomanStringEncoding)!
+		guard var cStrType = type.cString(using: String.Encoding.macOSRoman) else {
+			return .parametersErr
+		}
 		
 		return MADMusicTestCFURL(theLibrary, &cStrType, URL)
 	}
@@ -406,7 +412,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	}
 	
 	/// NSFastEnumeration protocol method.
-	public func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject>!, count len: Int) -> Int {
+	public func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
 		return (trackerLibs as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }
@@ -456,7 +462,10 @@ extension PPLibrary {
 		
 		do {
 			let aRet = try identifyFile(URL: apath)
-			strncpy(type, aRet.cString(using: NSMacOSRomanStringEncoding)!, 4)
+			guard let typeStr = aRet.cString(using: String.Encoding.macOSRoman) else {
+				throw MADErr.parametersErr
+			}
+			strncpy(type, typeStr, 4)
 			return .noErr
 		} catch let anErr as NSError {
 			if anErr.domain == PPMADErrorDomain {
@@ -475,7 +484,10 @@ extension PPLibrary {
 		
 		do {
 			let aStr = try identifyFile(path: apath)
-			strncpy(type, aStr.cString(using: NSMacOSRomanStringEncoding)!, 4)
+			guard let typeStr = aStr.cString(using: String.Encoding.macOSRoman) else {
+				throw MADErr.parametersErr
+			}
+			strncpy(type, typeStr, 4)
 			return .noErr
 		} catch let anErr as NSError {
 			if anErr.domain == PPMADErrorDomain {

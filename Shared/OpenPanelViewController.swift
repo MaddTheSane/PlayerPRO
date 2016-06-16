@@ -298,7 +298,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		}
 	}
 	
-	override init?(nibName: String?, bundle: NSBundle?) {
+	override init?(nibName: String?, bundle: Bundle?) {
 		openPanel = NSOpenPanel()
 		allowsMultipleSelectionOfTrackers = false
 		utiObjects = [OpenPanelViewItem]()
@@ -343,7 +343,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			} else {
 				
 				let result = lhs.name.localizedStandardCompare(rhs.name);
-				return result == NSComparisonResult.orderedAscending;
+				return result == ComparisonResult.orderedAscending;
 			}
 			})
 		
@@ -387,9 +387,9 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 				let mi0 = NSMenuItem(title: "All Openable Files", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 				mi0.tag = utiType.allType.rawValue
 				mi0.target = self
-				fileTypeSelectionMenu.add(mi0)
+				fileTypeSelectionMenu.addItem(mi0)
 				
-				fileTypeSelectionMenu.add(NSMenuItem.separator())
+				fileTypeSelectionMenu.addItem(NSMenuItem.separator())
 			}
 			
 			for item in utiObjects {
@@ -397,7 +397,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					let mi0 = NSMenuItem(title: "All Trackers", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.trackerType.rawValue
 					mi0.target = self
-					fileTypeSelectionMenu.add(mi0)
+					fileTypeSelectionMenu.addItem(mi0)
 					
 					break;
 				}
@@ -408,7 +408,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					let mi0 = NSMenuItem(title: "All Playlists", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.playlistType.rawValue
 					mi0.target = self
-					fileTypeSelectionMenu.add(mi0)
+					fileTypeSelectionMenu.addItem(mi0)
 					
 					break;
 				}
@@ -419,7 +419,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					let mi0 = NSMenuItem(title: "All Instruments", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.instrumentType.rawValue
 					mi0.target = self
-					fileTypeSelectionMenu.add(mi0)
+					fileTypeSelectionMenu.addItem(mi0)
 					
 					break;
 				}
@@ -430,26 +430,26 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					let mi0 = NSMenuItem(title: "All Other", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.otherType.rawValue
 					mi0.target = self
-					fileTypeSelectionMenu.add(mi0)
+					fileTypeSelectionMenu.addItem(mi0)
 					
 					break;
 				}
 			}
-			fileTypeSelectionMenu.add(NSMenuItem.separator())
+			fileTypeSelectionMenu.addItem(NSMenuItem.separator())
 			
 			for (i, curItem) in utiObjects.enumerated()  {
 				if (moreThanTwoTypes) {
 					if (i - 1 >= 0) {
 						let prevItem = utiObjects[i - 1];
 						if (curItem.theUtiType != prevItem.theUtiType) {
-							fileTypeSelectionMenu.add(NSMenuItem.separator())
+							fileTypeSelectionMenu.addItem(NSMenuItem.separator())
 						}
 					}
 				}
 				let mi = NSMenuItem(title: curItem.name, action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 				mi.tag = i
 				mi.target = self
-				fileTypeSelectionMenu.add(mi)
+				fileTypeSelectionMenu.addItem(mi)
 			}
 		}
 		popUp?.selectItem(at: 0)
@@ -493,7 +493,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		return false;
 	}
 	
-	func panel(_ sender: AnyObject, shouldEnable url: NSURL) -> Bool {
+	func panel(_ sender: AnyObject, shouldEnable url: URL) -> Bool {
 		// We don't support non-file URLs yet.
 		if !url.isFileURL {
 			return false

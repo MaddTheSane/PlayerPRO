@@ -9,10 +9,10 @@
 import Cocoa
 
 final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
-	let theIndexSet: NSIndexSet
+	let theIndexSet: IndexSet
 	
-	@objc init(indexSet: NSIndexSet) {
-		theIndexSet = NSIndexSet(indexSet: indexSet)
+	@objc init(indexSet: IndexSet) {
+		theIndexSet = indexSet as IndexSet
 		
 		super.init()
 	}
@@ -34,15 +34,15 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	}
 	
 	override init() {
-		theIndexSet = NSIndexSet()
+		theIndexSet = IndexSet()
 		
 		super.init()
 	}
 	
 	@objc convenience required init?(pasteboardPropertyList propertyList: AnyObject, ofType type: String) {
 		if type == PPMLDCUTI {
-			if let plistData = propertyList as? NSData, unArchive = NSKeyedUnarchiver(forReadingWith: plistData).decodeObject(forKey: PPMLDCUTI) as? NSIndexSet {
-				self.init(indexSet: unArchive)
+			if let plistData = propertyList as? Data, unArchive = NSKeyedUnarchiver(forReadingWith: plistData).decodeObject(forKey: PPMLDCUTI) as? NSIndexSet {
+				self.init(indexSet: unArchive as IndexSet)
 			} else {
 				self.init()
 				
@@ -69,13 +69,13 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	}
 	
 	func encode(with aCoder: NSCoder) {
-		aCoder.encode(theIndexSet, forKey: PPMLDCUTI)
+		aCoder.encode(theIndexSet as NSIndexSet, forKey: PPMLDCUTI)
 	}
 	
 	convenience required init?(coder aDecoder: NSCoder) {
 		guard let decoded = aDecoder.decodeObject(forKey: PPMLDCUTI) as? NSIndexSet else {
 			return nil
 		}
-		self.init(indexSet: decoded)
+		self.init(indexSet: decoded as IndexSet)
 	}
 }

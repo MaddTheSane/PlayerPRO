@@ -93,7 +93,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 		for (i, vc) in viewControllers.enumerated() {
 			let mi = NSMenuItem(title: vc.title!, action: #selector(Preferences.changeViewController(_:)), keyEquivalent: "")
 			mi.tag = i
-			menu.add(mi)
+			menu.addItem(mi)
 		}
 		
 		//initially show the first controller
@@ -118,7 +118,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
     }
 	
 	// MARK: NSWindowDelegate
-	func windowWillClose(_ notification: NSNotification) {
+	func windowWillClose(_ notification: Notification) {
 		if let aWin = notification.object as? NSWindow {
 			if aWin === self.window {
 				if NSColorPanel.sharedColorPanelExists() {

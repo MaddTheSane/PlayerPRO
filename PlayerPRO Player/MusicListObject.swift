@@ -20,12 +20,12 @@ private func URLsPointingToTheSameFile(_ urlA: NSURL, _ urlB: NSURL) -> Bool {
 	var bothAreValid = true
 	var theSame = false
 	do {
-		try urlA.getResourceValue(&dat1, forKey: NSURLFileResourceIdentifierKey)
+		try urlA.getResourceValue(&dat1, forKey: URLResourceKey.fileResourceIdentifierKey)
 	} catch _ {
 		bothAreValid = false;
 	}
 	do {
-		try urlB.getResourceValue(&dat2, forKey: NSURLFileResourceIdentifierKey)
+		try urlB.getResourceValue(&dat2, forKey: URLResourceKey.fileResourceIdentifierKey)
 	} catch _ {
 		bothAreValid = false;
 	}
@@ -52,8 +52,8 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 }
 
 @objc(PPMusicListObject) class MusicListObject: NSObject, NSCopying, NSSecureCoding {
-	let musicURL: NSURL
-	let addedDate: NSDate
+	let musicURL: URL
+	let addedDate: Date
 
 	#if os(OSX)
 	@objc private(set) lazy var fileIcon: NSImage = {
@@ -68,8 +68,8 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		var err: NSError? = nil;
 		
 		do {
-			try self.musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey)
-			let retStr = val as! String
+			var values = try self.musicURL.resourceValues(forKeys: [URLResourceKey.localizedNameKey])
+			let retStr = values.localizedName!
 			return retStr
 		} catch {
 			return self.musicURL.lastPathComponent!
@@ -79,14 +79,13 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	@objc private(set) lazy var fileSize: UInt64 = {
 		var val: AnyObject? = nil;
 		do {
-			try self.musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey)
-			let retNum = val as! NSNumber
-			return retNum.uint64Value
+			var values = try self.musicURL.resourceValues(forKeys: [URLResourceKey.totalFileSizeKey])
+			return UInt64(values.totalFileSize!)
 		} catch {
-			let manager = NSFileManager.default();
+			let manager = FileManager.default();
 			do {
 				let theparam = try manager.attributesOfItem(atPath: self.musicURL.path!)
-				if let tmpfilesize: AnyObject = theparam[NSFileSize] {
+				if let tmpfilesize: AnyObject = theparam[FileAttributeKey.size.rawValue] {
 					let aFileSize = tmpfilesize as! NSNumber
 					return aFileSize.uint64Value
 				} else {
@@ -98,30 +97,44 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 		}()
 	
-	init(url URL: NSURL, date: NSDate = NSDate()) {
-		if URL.isFileReferenceURL() {
+	init(url URL: Foundation.URL, date: Date = Date()) {
+		if URL.isFileReferenceURL {
 			musicURL = URL;
 		} else {
-			let tmpURL = URL.fileReferenceURL()
+			let tmpURL = try? URL.fileReferenceURL()
 			musicURL = tmpURL ?? URL
 		}
 		addedDate = date
 		super.init()
 	}
 	
-	convenience init?(bookmarkData: NSData, resolutionOptions: NSURLBookmarkResolutionOptions = [], relativeURL: NSURL? = nil, date: NSDate? = NSDate()) {
+	convenience init?(bookmarkData: Data, resolutionOptions: NSURL.BookmarkResolutionOptions = [], relativeURL: URL? = nil, date: Date? = Date()) {
 		do {
-			let resolvedURL = try NSURL(resolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeTo: relativeURL, bookmarkDataIsStale: nil)
-			self.init(url: resolvedURL, date: date ?? NSDate())
+			var unusedStale = false
+			let resolvedURL = try URL(resolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeTo: relativeURL, bookmarkDataIsStale: &unusedStale)!
+			self.init(url: resolvedURL, date: date ?? Date())
 		} catch _ {
-			self.init(url: NSURL(fileURLWithPath: "/dev/null"))
+			self.init(url: URL(fileURLWithPath: "/dev/null"))
 
 			return nil
 		}
 	}
 	
 	func checkIsReachableAndReturnError(error: NSErrorPointer) -> Bool {
-		return musicURL.checkResourceIsReachableAndReturnError(error)
+		do {
+			return try checkIsReachable()
+		} catch let swiftError as NSError {
+			if let error = error {
+				error.pointee = swiftError
+			}
+			return false
+		} catch {
+			return false
+		}
+	}
+	
+	func checkIsReachable() throws -> Bool {
+		return try musicURL.checkResourceIsReachable()
 	}
 	
 	override var hash: Int {
@@ -129,7 +142,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}
 	
 	override var hashValue: Int {
-		return musicURL.absoluteString.hashValue ^ addedDate.hash
+		return musicURL.absoluteString!.hashValue ^ (addedDate as NSDate).hash
 	}
 
 	override var description: String {
@@ -170,7 +183,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	///
 	///- parameter other: The other `MusicListObject` to compare to.
 	///- returns: How this object compares to the other one.
-	func localizedStandardCompareFileName(other: MusicListObject) -> NSComparisonResult {
+	func localizedStandardCompareFileName(other: MusicListObject) -> ComparisonResult {
 		return fileName.localizedStandardCompare(other.fileName)
 	}
 	
@@ -178,7 +191,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	///
 	///- parameter other: The other `MusicListObject` to compare to.
 	///- returns: How this object compares to the other one.
-	func compareByFileSize(other: MusicListObject) -> NSComparisonResult {
+	func compareByFileSize(other: MusicListObject) -> ComparisonResult {
 		let otherSize = other.fileSize
 		if fileSize > otherSize {
 			return .orderedAscending
@@ -194,7 +207,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	///
 	///- parameter other: The other `MusicListObject` to compare to.
 	///- returns: How this object compares to the other one.
-	func compareByAddedDate(other: MusicListObject) -> NSComparisonResult {
+	func compareByAddedDate(other: MusicListObject) -> ComparisonResult {
 		return addedDate.compare(other.addedDate)
 	}
 	
@@ -219,6 +232,6 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 				return nil
 		}
 		
-		self.init(url: aURL, date: aaddedDate)
+		self.init(url: aURL as URL, date: aaddedDate as Date)
 	}
 }

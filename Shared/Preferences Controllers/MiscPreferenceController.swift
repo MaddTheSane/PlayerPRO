@@ -25,7 +25,7 @@ final class MiscPreferenceController: NSViewController, PPPreferenceObject {
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		let defaults = NSUserDefaults.standard()
+		let defaults = UserDefaults.standard()
 		addExt.state = defaults.bool(forKey: PPMAddExtension) ? NSOnState : NSOffState
 		madCompression.state = defaults.bool(forKey: PPMMadCompression) ? NSOnState : NSOffState
 		noLoadMixerFromFile.state = defaults.bool(forKey: PPMNoLoadMixerFromFiles) ? NSOnState : NSOffState
@@ -33,13 +33,13 @@ final class MiscPreferenceController: NSViewController, PPPreferenceObject {
 	}
 	
 	@IBAction func changePrefs(sender: AnyObject?) {
-		let defaults = NSUserDefaults.standard()
+		let defaults = UserDefaults.standard()
 		
 		defaults[PPMAddExtension] = addExt.state == NSOnState
 		defaults[PPMMadCompression] = madCompression.state == NSOnState
 		defaults[PPMNoLoadMixerFromFiles] = noLoadMixerFromFile.state == NSOnState
 		defaults[PPMOscilloscopeDrawLines] = oscDrawLines.state == NSOnState
 		
-		NSNotificationCenter.default().post(name: PPMiscPreferencesDidChange, object: self)
+		NotificationCenter.default().post(name: .miscPreferencesDidChange, object: self)
 	}
 }

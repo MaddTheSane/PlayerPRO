@@ -9,10 +9,10 @@
 import Foundation
 
 @IBDesignable
-public final class MusicNoteFormatter: NSFormatter {
+public final class MusicNoteFormatter: Formatter {
 	@IBInspectable public var useSingleLetter = true
 	
-	override public func string(for obj: AnyObject) -> String? {
+	override public func string(for obj: AnyObject?) -> String? {
 		if let objInt = obj as? Int {
 			switch objInt {
 			case 0xFF, 0xFE:

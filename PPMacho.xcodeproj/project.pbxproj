@@ -731,6 +731,8 @@
 		55E4D8021A2A3BCA0054675C /* PPAPPLHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */; };
 		55E4D8041A2A40EE0054675C /* ImportWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D8031A2A40EE0054675C /* ImportWindowController.swift */; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
+		55E7CD951D13236F002701A0 /* NotificationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E7CD941D13236F002701A0 /* NotificationAdditions.swift */; };
+		55E7CD961D13236F002701A0 /* NotificationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E7CD941D13236F002701A0 /* NotificationAdditions.swift */; };
 		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55E898B110F17C2B004EB52B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55E8998510F18165004EB52B /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
@@ -2773,6 +2775,7 @@
 		55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPAPPLHelpers.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55E4D8031A2A40EE0054675C /* ImportWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportWindowController.swift; sourceTree = "<group>"; };
 		55E527A8186A2A690020F3D6 /* MIDI.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIDI.pch; sourceTree = "<group>"; };
+		55E7CD941D13236F002701A0 /* NotificationAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationAdditions.swift; sourceTree = "<group>"; };
 		55E898B710F17C2B004EB52B /* QuickTime.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTime.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E8997B10F17CCB004EB52B /* QuickTime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QuickTime-Info.plist"; sourceTree = "<group>"; };
 		55E99F941A5B39560015D878 /* MiscPreferenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscPreferenceController.swift; sourceTree = "<group>"; };
@@ -4895,6 +4898,7 @@
 				552711E4124881F4005120FC /* UserDefaultKeys.m */,
 				557139CD1684EF7500831A5A /* PPHilightableButton.h */,
 				557139CE1684EF7500831A5A /* PPHilightableButton.m */,
+				55E7CD941D13236F002701A0 /* NotificationAdditions.swift */,
 				555F5C601993327D0056AF01 /* OpenPanelViewController.swift */,
 				556AE4BB16E290650074BBF9 /* PPByteswap.h */,
 				55232AF411FDE5970041A4EC /* Preferences Controllers */,
@@ -7431,6 +7435,7 @@
 			files = (
 				5582BDEC1AD748E70087F4D0 /* PlayerAppDelegate.swift in Sources */,
 				5533C8FB19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
+				55E7CD961D13236F002701A0 /* NotificationAdditions.swift in Sources */,
 				555C0F8D19829663003B9347 /* CurrentlyPlayingIndex.swift in Sources */,
 				55F4C3E519763FDD000997BE /* MusicListObject.swift in Sources */,
 				5582BDF21AD749EA0087F4D0 /* PPRunAlert.swift in Sources */,
@@ -7850,6 +7855,7 @@
 				55C52CC81A8ABC5100E448F5 /* PPSamplePlugObject.m in Sources */,
 				5579ADB819A4551500DEC0FF /* DigitalPlugHandler.swift in Sources */,
 				5571120E1C31C9A900637A09 /* FilterPlugHandler.swift in Sources */,
+				55E7CD951D13236F002701A0 /* NotificationAdditions.swift in Sources */,
 				55993EF619A340FF00C2078E /* PPRunAlert.swift in Sources */,
 				557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */,
 				55E99F951A5B39560015D878 /* MiscPreferenceController.swift in Sources */,

@@ -10,7 +10,7 @@ import Foundation
 
 struct CurrentlyPlayingIndex: CustomDebugStringConvertible, CustomStringConvertible {
 	var index = -1
-	var playbackURL: NSURL? = nil
+	var playbackURL: URL? = nil
 	
 	var description: String {
 		return "Index: \(index) URL: \(playbackURL!.relativePath!)"

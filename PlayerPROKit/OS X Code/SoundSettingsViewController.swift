@@ -219,12 +219,12 @@ public class SoundSettingsViewController: NSViewController {
 		}
 	}
 	
-	required override public init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+	required override public init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
 	
 	public class func newSoundSettingWindow() -> Self? {
-		return self.init(nibName: "PPSoundSettingsViewController", bundle: NSBundle(for: SoundSettingsViewController.self))
+		return self.init(nibName: "PPSoundSettingsViewController", bundle: Bundle(for: SoundSettingsViewController.self))
 	}
 
 	public func settingsFromDriverSettings(_ sett: MADDriverSettings) {

@@ -19,7 +19,7 @@ public final class PPLibraryObject: NSObject {
 	public let authorString: String
 	
 	/// The bundle referencing the plug-in.
-	public let bundle: NSBundle
+	public let bundle: Bundle
 	
 	/// A tuple of the plug-in identifier.
 	///
@@ -68,11 +68,11 @@ public final class PPLibraryObject: NSObject {
 	internal init(plugInfo unwrapped: PlugInfo) {
 		menuName = unwrapped.MenuName.takeUnretainedValue() as String
 		authorString = unwrapped.AuthorString.takeUnretainedValue() as String
-		bundle = NSBundle(url: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
+		bundle = Bundle(url: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()) as URL)!
 		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as NSArray as! [String]
 		tupleType = unwrapped.type
 		let tmpArray: [CChar] = try! arrayFromObject(reflecting: tupleType)
-		type = String(cString: tmpArray, encoding: NSMacOSRomanStringEncoding)!
+		type = String(cString: tmpArray, encoding: String.Encoding.macOSRoman)!
 		plugVersion = unwrapped.version
 		switch (unwrapped.mode) {
 		case MADPlugModes.importExport.rawValue:

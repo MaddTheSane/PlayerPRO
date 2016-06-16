@@ -40,16 +40,16 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
         super.windowDidLoad()
     
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-		instrumentView?.selectRowIndexes(NSIndexSet(index:0), byExtendingSelection:false)
+		instrumentView?.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection:false)
     }
 
-	override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>?) {
+	func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>?) {
 		if (keyPath == "music") {
 			instrumentView?.reloadData()
 		}
 	}
 	
-	func outlineViewSelectionDidChange(_ notification: NSNotification) {
+	func outlineViewSelectionDidChange(_ notification: Notification) {
 		var object: AnyObject? = instrumentView!.item(atRow: instrumentView!.selectedRow)
 		
 		if object == nil {
@@ -82,7 +82,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		} else {
 			let sampleObj = object as! PPSampleObject
 			
-			instrumentSize!.integerValue = sampleObj.data.length
+			instrumentSize!.integerValue = sampleObj.data.count
 			instrumentLoopStart!.integerValue = Int(sampleObj.loopBegin)
 			instrumentLoopSize!.integerValue = Int(sampleObj.loopSize)
 			instrumentVolume!.integerValue = Int(sampleObj.volume)
@@ -133,7 +133,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	}
 	
 	deinit {
-		NSNotificationCenter.default().removeObserver(self)
+		NotificationCenter.default().removeObserver(self)
 		(NSApplication.shared().delegate as! PlayerAppDelegate).removeObserver(self, forKeyPath: "music")
 	}
 }

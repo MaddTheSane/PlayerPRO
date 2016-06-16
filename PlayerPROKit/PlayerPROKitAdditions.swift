@@ -153,7 +153,7 @@ extension PPSampleObject {
 	
 	@objc(waveformImageFromSample:usingView:) final public class func waveFormImage(sample theDat: PPSampleObject, view: NSView) -> NSImage? {
 		let imageSize: NSSize = {
-			var aimageSize = view.convertSizeToBacking(view.frame.size)
+			var aimageSize = view.convertToBacking(view.frame.size)
 			aimageSize.height *= 2
 			aimageSize.width *= 2
 			
@@ -179,12 +179,12 @@ extension PPSampleObject {
 		if (theDat.loopSize != 0) {
 			bitmapContext.setStrokeColor(CGColor(red: 0.2, green: 0.1, blue: 0.5, alpha: 0.8))
 			var loopRect = aRect
-			let lineSize = view.convertSizeToBacking(NSSize(width: 2, height: 2)).width * 2
-			let padSize = view.convertSizeToBacking(NSSize(width: 1, height: 1)).width * 2
+			let lineSize = view.convertToBacking(NSSize(width: 2, height: 2)).width * 2
+			let padSize = view.convertToBacking(NSSize(width: 1, height: 1)).width * 2
 			bitmapContext.setLineWidth(lineSize)
-			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.length)
+			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.count)
 			loopRect.origin.y += padSize
-			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.length)
+			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.count)
 			loopRect.size.height -= padSize * 2
 			bitmapContext.stroke(loopRect)
 		}
@@ -279,8 +279,8 @@ extension PPSampleObject {
 		let oneShiftedBy8 = 1 / CGFloat(1 << 8)
 
 		if (curData.amplitude == 16) {
-			let theShortSample = UnsafePointer<UInt16>(curData.data.bytes)
-			let sampleSize = curData.data.length / 2
+			let theShortSample = UnsafePointer<UInt16>((curData.data as NSData).bytes)
+			let sampleSize = curData.data.count / 2
 			start /= 2
 			
 			var BS = start + (tSS * sampleSize) / larg
@@ -331,8 +331,8 @@ extension PPSampleObject {
 				}
 			}
 		} else {
-			let sampleSize = curData.data.length
-			let theSample = UnsafePointer<UInt8>(curData.data.bytes)
+			let sampleSize = curData.data.count
+			let theSample = UnsafePointer<UInt8>((curData.data as NSData).bytes)
 
 			var BS = start + (tSS * sampleSize) / larg;
 			if (isStereo) {
