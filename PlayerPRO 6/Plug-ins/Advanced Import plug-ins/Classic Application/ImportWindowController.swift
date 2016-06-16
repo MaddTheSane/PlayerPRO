@@ -22,7 +22,7 @@ class ImportWindowController: NSWindowController {
 	var resourceDictionary = [String: [FVResource]]()
 	private var modalSession: NSModalSession!
 	
-	@IBAction func importMusicObject(sender: AnyObject?) {
+	@IBAction func importMusicObject(_ sender: AnyObject?) {
 		if let anObject = arrayCont.selectedObjects[0] as? FVResource {
 			var madMusic: UnsafeMutablePointer<MADMusic>
 			var madTest: (UnsafePointer<Void>) -> MADErr
@@ -45,30 +45,30 @@ class ImportWindowController: NSWindowController {
 				madLoad = LoadMADK
 				
 			default:
-				NSApplication.sharedApplication().endModalSession(modalSession)
-				currentBlock(nil, .ParametersErr)
+				NSApplication.shared().endModalSession(modalSession)
+				currentBlock(nil, .parametersErr)
 				
 				return
 			}
 			
 			if let aData = anObject.data {
-				var errVal = madTest(aData.bytes)
+				var errVal = madTest((aData as NSData).bytes)
 				
-				if errVal != .NoErr {
-					NSApplication.sharedApplication().endModalSession(modalSession)
+				if errVal != .noErr {
+					NSApplication.shared().endModalSession(modalSession)
 					currentBlock(nil, errVal)
 					
 					return
 				}
 				
 				var unusedDriverSettings = MADDriverSettings.new()
-				madMusic = UnsafeMutablePointer<MADMusic>.alloc(1)
-				errVal = madLoad(UnsafePointer<Int8>(aData.bytes), aData.length, madMusic, &unusedDriverSettings)
+				madMusic = UnsafeMutablePointer<MADMusic>(allocatingCapacity: 1)
+				errVal = madLoad(UnsafePointer<Int8>((aData as NSData).bytes), aData.count, madMusic, &unusedDriverSettings)
 				
-				if errVal != .NoErr {
+				if errVal != .noErr {
 					// The importers *should* have cleaned up after themselves...
-					madMusic.dealloc(1)
-					NSApplication.sharedApplication().endModalSession(modalSession)
+					madMusic.deallocateCapacity(1)
+					NSApplication.shared().endModalSession(modalSession)
 					currentBlock(nil, errVal)
 					
 					return
@@ -76,51 +76,51 @@ class ImportWindowController: NSWindowController {
 				
 				let ppMusic = PPMusicObject(musicStruct: madMusic, copy: false)
 				
-				NSApplication.sharedApplication().endModalSession(modalSession)
-				currentBlock(ppMusic, .NoErr)
+				NSApplication.shared().endModalSession(modalSession)
+				currentBlock(ppMusic, .noErr)
 			} else {
-				NSApplication.sharedApplication().endModalSession(modalSession)
-				currentBlock(nil, .ReadingErr)
+				NSApplication.shared().endModalSession(modalSession)
+				currentBlock(nil, .readingErr)
 
 				return
 			}
 		} else {
-			NSApplication.sharedApplication().endModalSession(modalSession)
-			currentBlock(nil, .UnknownErr)
+			NSApplication.shared().endModalSession(modalSession)
+			currentBlock(nil, .unknownErr)
 			
 			return
 		}
 	}
 	
-	@IBAction func cancelImport(sender: AnyObject?) {
-		NSApplication.sharedApplication().endModalSession(modalSession)
-		currentBlock(nil, .UserCanceledErr)
+	@IBAction func cancelImport(_ sender: AnyObject?) {
+		NSApplication.shared().endModalSession(modalSession)
+		currentBlock(nil, .userCanceledErr)
 	}
 
-	func addResourceDictionary(theDict: [String: [FVResource]]) {
+	func addResourceDictionary(_ theDict: [String: [FVResource]]) {
 		resourceDictionary = theDict
 	}
 	
 	func beginImportModalSession() {
 		
 		
-		modalSession = NSApplication.sharedApplication().beginModalSessionForWindow(window!)
+		modalSession = NSApplication.shared().beginModalSession(for: window!)
 	}
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
 		// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-		dictionaryCont.bind(NSContentDictionaryBinding, toObject: self, withKeyPath: "resourceDictionary", options: nil)
-		dictionaryCont.addObserver(self, forKeyPath: "selectionIndexes", options: .New, context: nil)
+		dictionaryCont.bind(NSContentDictionaryBinding, to: self, withKeyPath: "resourceDictionary", options: nil)
+		dictionaryCont.addObserver(self, forKeyPath: "selectionIndexes", options: .new, context: nil)
 		
 		dictionaryCont.setSelectionIndex(0)
 		
-		resourceNamesTable?.sortDescriptors = [NSSortDescriptor(key: "key", ascending: true)]
-		resourceIDsTable?.sortDescriptors = [NSSortDescriptor(key: "resourceID", ascending: true)]
+		resourceNamesTable?.sortDescriptors = [SortDescriptor(key: "key", ascending: true)]
+		resourceIDsTable?.sortDescriptors = [SortDescriptor(key: "resourceID", ascending: true)]
 	}
 	
-	override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+	override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
 		if object === dictionaryCont {
 			if dictionaryCont.selectedObjects.count > 0 {
 				let aValue: AnyObject?
@@ -138,10 +138,10 @@ class ImportWindowController: NSWindowController {
 					self.resourceArray = aValue
 				}
 
-				arrayCont.bind(NSContentArrayBinding, toObject: self, withKeyPath: "resourceArray", options: nil)
+				arrayCont.bind(NSContentArrayBinding, to: self, withKeyPath: "resourceArray", options: nil)
 			}
 		} else {
-			super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+			super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
 		}
 	}
 	

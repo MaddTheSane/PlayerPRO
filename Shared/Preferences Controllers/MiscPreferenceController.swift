@@ -32,7 +32,7 @@ final class MiscPreferenceController: NSViewController, PPPreferenceObject {
 		oscDrawLines.state = defaults.bool(forKey: PPMOscilloscopeDrawLines) ? NSOnState : NSOffState
 	}
 	
-	@IBAction func changePrefs(sender: AnyObject?) {
+	@IBAction func changePrefs(_ sender: AnyObject?) {
 		let defaults = UserDefaults.standard()
 		
 		defaults[PPMAddExtension] = addExt.state == NSOnState

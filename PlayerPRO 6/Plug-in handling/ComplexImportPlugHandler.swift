@@ -9,7 +9,7 @@
 import Cocoa
 import PlayerPROKit
 
-final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionType {
+final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, Collection {
 	private(set) var plugIns = [PPComplexImportPlugObject]()
 	
 	@nonobjc var startIndex: Int {
@@ -20,16 +20,20 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionTyp
 		return plugIns.count
 	}
 	
+	@nonobjc func index(after i: ComplexImportPlugHandler.Index) -> ComplexImportPlugHandler.Index {
+		return i + 1
+	}
+	
 	override init() {
 		let defaultPlugLocs = DefaultPlugInLocations() 
-		let defaultManager = NSFileManager.defaultManager()
+		let defaultManager = FileManager.default()
 		
 		for url in defaultPlugLocs {
 			do {
-				let components = try defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: [])
+				let components = try defaultManager.contentsOfDirectory(at: url, includingPropertiesForKeys: [], options: [])
 				let aComp = components.filter({ (aURL) -> Bool in
 					if let ext = aURL.pathExtension {
-						if ext.compare("ppextimp", options: .CaseInsensitiveSearch) == .OrderedSame {
+						if ext.compare("ppextimp", options: .caseInsensitiveSearch) == .orderedSame {
 							return true
 						}
 					}
@@ -38,7 +42,7 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionTyp
 				})
 				
 				for component in aComp {
-					if let theBundle = NSBundle(URL: component), aPlug = PPComplexImportPlugObject(bundle: theBundle) {
+					if let theBundle = Bundle(url: component), aPlug = PPComplexImportPlugObject(bundle: theBundle) {
 						plugIns.append(aPlug)
 					}
 				}
@@ -58,15 +62,15 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionTyp
 		return self.count
 	}
 	
-	func generate() -> IndexingGenerator<[PPComplexImportPlugObject]> {
-		return plugIns.generate()
+	func makeIterator() -> IndexingIterator<[PPComplexImportPlugObject]> {
+		return plugIns.makeIterator()
 	}
 	
 	@objc subscript (index: Int) -> PPComplexImportPlugObject {
 		return plugIns[index]
 	}
 	
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return (plugIns as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len)
+	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
+		return (plugIns as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }

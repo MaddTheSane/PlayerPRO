@@ -12,7 +12,7 @@ import PlayerPROCore
 import PlayerPROKit
 
 private func GlobalDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
-	let manager = NSFileManager.default()
+	let manager = FileManager.default()
 	let fileStr = manager.string(withFileSystemRepresentation: file!, length: Int(strlen(file!)))
 	let textStr = String(validatingUTF8: text!)!
 
@@ -38,7 +38,7 @@ class MADDebugStr_Tests: XCTestCase {
 	}
 	
 	private func classDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
-		let manager = NSFileManager.default()
+		let manager = FileManager.default()
 		let fileStr = manager.string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
 		XCTAssertEqual(fileStr, #file, "files aren't equal...")
 		var textStr = String(validatingUTF8: text!)!
@@ -49,7 +49,7 @@ class MADDebugStr_Tests: XCTestCase {
 	
 	func testInlineDebugBlock() {
 		MADRegisterDebugBlock { (line, file, text) -> Void in
-			let manager = NSFileManager.default()
+			let manager = FileManager.default()
 			let fileStr = manager.string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
 			let textStr = String(validatingUTF8: text!)!
 			

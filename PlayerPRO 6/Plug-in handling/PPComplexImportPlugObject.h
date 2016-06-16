@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PPComplexImportPlugObject : PPPlugInObject
 @property (readonly, copy) NSArray *UTITypes;
 
-- (nullable instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (nonnull instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (nullable instancetype)initWithBundle:(NSBundle*)ourBundle NS_DESIGNATED_INITIALIZER;
 
 - (BOOL)canImportURL:(NSURL*)theURL error:(out NSError*__autoreleasing*)outErr;

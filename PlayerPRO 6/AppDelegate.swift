@@ -11,13 +11,13 @@ import PlayerPROCore
 import PlayerPROKit
 import SwiftAdditions
 
-@inline(__always) private func makeNSRGB(red: UInt16, _ green: UInt16, _ blue:UInt16) -> NSColor {
+@inline(__always) private func makeNSRGB(_ red: UInt16, _ green: UInt16, _ blue:UInt16) -> NSColor {
 	return NSColor(calibratedRed: CGFloat(red) / CGFloat(UInt16.max), green: CGFloat(green) / CGFloat(UInt16.max), blue: CGFloat(blue) / CGFloat(UInt16.max), alpha: 1)
 }
 
-private func CocoaDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
-	let swiftFile = NSFileManager.defaultManager().stringWithFileSystemRepresentation(file, length: Int(strlen(file)))
-	let swiftText = String.fromCString(text)!
+private func CocoaDebugStr(_ line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
+	let swiftFile = FileManager.default().string(withFileSystemRepresentation: file, length: Int(strlen(file)))
+	let swiftText = String(cString: text)
 	print("\(swiftFile):\(line), error text: \(swiftText)")
 	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
 	let mainStr = String(format: NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display"), text)
@@ -100,12 +100,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		return globalMadLib
 	}
 	
-	@IBAction func showPreferences(sender: AnyObject?) {
+	@IBAction func showPreferences(_ sender: AnyObject?) {
 		preferences.window!.center()
 		preferences.showWindow(sender)
 	}
 
-	@IBAction func showPlugInInfo(sender: AnyObject?) {
+	@IBAction func showPlugInInfo(_ sender: AnyObject?) {
 		let tag = (sender as! NSMenuItem).tag
 		if (tag < 0 || tag >= plugInInfos.count) {
 			return;
@@ -167,17 +167,17 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		}
 		
-		plugInInfos.sortInPlace({ (obj1, obj2) -> Bool in
+		plugInInfos.sort(isOrderedBefore: { (obj1, obj2) -> Bool in
 			let menuNam1 = obj1.plugName
 			let menuNam2 = obj2.plugName
 			let res = menuNam1.localizedStandardCompare(menuNam2)
-			return res == NSComparisonResult.OrderedAscending;
+			return res == ComparisonResult.orderedAscending;
 			
 		})
 		
 		aboutPlugInMenu.removeAllItems()
 		
-		for (i, pi) in plugInInfos.enumerate() {
+		for (i, pi) in plugInInfos.enumerated() {
 			let mi = NSMenuItem(title: pi.plugName, action: #selector(AppDelegate.showPlugInInfo(_:)), keyEquivalent: "")
 			mi.tag = i
 			mi.target = self
@@ -339,7 +339,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		tooLargeDict += defaults3
 		tooLargeDict += (colorDefaults as [String: AnyObject])
 		
-		NSUserDefaults.standardUserDefaults().registerDefaults(tooLargeDict)
+		UserDefaults.standard().register(tooLargeDict)
 	}
 	
 	override init() {
@@ -347,16 +347,16 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		registerDefaults()
 	}
 	
-	func handleFile(theURL1: NSURL, ofType theUTI: String) -> Bool {
-		let sharedWorkspace = NSWorkspace.sharedWorkspace()
+	func handleFile(_ theURL1: URL, ofType theUTI: String) -> Bool {
+		let sharedWorkspace = NSWorkspace.shared()
 		var theURL = theURL1
 		if sharedWorkspace.type(theUTI, conformsToType: MADNativeUTI) {
 			// Document controller should automatically handle this.
 			// But just in case...
-			if let _ = documentForURL(theURL1) {
+			if let _ = document(for: theURL1) {
 				return true
 			} else {
-				openDocumentWithContentsOfURL(theURL1, display: true, completionHandler: { (_, alreadyOpen, error) -> Void in
+				openDocument(withContentsOf: theURL1, display: true, completionHandler: { (_, alreadyOpen, error) -> Void in
 					
 					if alreadyOpen {
 						print("\(theURL1) is already open? How did we not catch this?")
@@ -364,7 +364,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					
 					if let aErr = error {
 						let alertErr = NSAlert(error: aErr)
-						dispatch_async(dispatch_get_main_queue()) {
+						DispatchQueue.main.async {
 							alertErr.runModal()
 							
 							return
@@ -389,7 +389,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					let info = try! madLib.informationFromFile(URL: theURL, type: identRet)
 					let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(info.signature.lowercaseString)
 					do {
-						try NSFileManager.defaultManager().moveItemAtURL(theURL, toURL: tmpURL)
+						try FileManager.defaultManager().moveItemAtURL(theURL, toURL: tmpURL)
 						theURL = tmpURL
 						//TODO: regenerate the UTI
 						
@@ -513,22 +513,22 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		return false;
 	}
 	
-	func importSample(URL theURL: NSURL, makeUserSelectSample: Bool = false) throws {
+	func importSample(URL theURL: URL, makeUserSelectSample: Bool = false) throws {
 		throw MADErr.OrderNotImplemented
 		
 	}
 	
-	func importInstrument(URL theURL: NSURL, makeUserSelectInstrument: Bool = false) throws {
+	func importInstrument(URL theURL: URL, makeUserSelectInstrument: Bool = false) throws {
 		throw MADErr.OrderNotImplemented
 		
 	}
 
-	func importPcmdFromURL(url: NSURL) throws {
+	func importPcmdFromURL(_ url: URL) throws {
 		throw MADErr.OrderNotImplemented
 		
 	}
 	
-	func importInstrumentListFromURL(url: NSURL) throws {
+	func importInstrumentListFromURL(_ url: URL) throws {
 		throw MADErr.OrderNotImplemented
 		
 	}
@@ -538,14 +538,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		registerDefaults()
 	}
 	
-	@objc(PPExportAddObject:) func addExportObject(expObj: ExportObject) {
+	@objc(PPExportAddObject:) func addExportObject(_ expObj: ExportObject) {
 		exportObjects.append(expObj);
 		expObj.run()
 	}
 	
-	func applicationDidFinishLaunching(notification: NSNotification) {
+	func applicationDidFinishLaunching(_ notification: Notification) {
 		PPLibrary.registerDebugBlock(CocoaDebugStr)
-		let defaults = NSUserDefaults.standardUserDefaults()
+		let defaults = UserDefaults.standard()
 		
 		for (i, obj) in instrumentPlugHandler.enumerate() {
 			if (obj.mode == MADPlugModes.ImportExport || obj.mode == MADPlugModes.Export) {
@@ -566,21 +566,21 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		
 		for i in 1 ... 96 {
-			let tmpColor = NSColor.PPDecodeColorWithData(defaults.dataForKey("PPColor \(i)"))
+			let tmpColor = NSColor.ppDecode(with: defaults.data(forKey: "PPColor \(i)"))
 			thePPColors.append(tmpColor!)
 		}
 		
 		updatePlugInInfoMenu()
 	}
 	
-	override func makeUntitledDocumentOfType(typeName: String) throws -> NSDocument {
+	override func makeUntitledDocument(ofType typeName: String) throws -> NSDocument {
 		assert(typeName == MADNativeUTI, "Unknown type passed to \(#function): \(typeName)")
 		let theDoc = PPDocument(music: PPMusicObject())
 		
 		return theDoc
 	}
 	
-	@IBAction func openFile(sender: AnyObject?) {
+	@IBAction func openFile(_ sender: AnyObject?) {
 		let panel = NSOpenPanel();
 		let otherDict: [String : [String]]  = ["PCMD": [PPPCMDUTI], "Instrument List": [PPInstrumentListUTI]];
 		var samplesDict = [String: [String]]()
@@ -600,12 +600,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			av.setupDefaults()
 			av.beginWithCompletionHandler { (retval) -> Void in
 				if retval == NSFileHandlingPanelOKButton {
-					let panelURL = panel.URL!
+					let panelURL = panel.url!
 					let filename = panelURL.path!
 					var err: NSError? = nil
 					let utiFile: String?
 					do {
-						utiFile = try NSWorkspace.sharedWorkspace().typeOfFile(filename)
+						utiFile = try NSWorkspace.shared().type(ofFile: filename)
 					} catch let error as NSError {
 						err = error
 						utiFile = nil
@@ -622,22 +622,22 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 	}
 	
-	func application(theApplication: NSApplication, openFile filename: String) -> Bool {
+	func application(_ theApplication: NSApplication, openFile filename: String) -> Bool {
 		let utiFile: String?
 		do {
-			utiFile = try NSWorkspace.sharedWorkspace().typeOfFile(filename)
+			utiFile = try NSWorkspace.shared().type(ofFile: filename)
 		} catch let err as NSError {
 			PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", (filename as NSString).lastPathComponent, err.localizedFailureReason!))
 			return false
 		}
-		return handleFile(NSURL(fileURLWithPath: filename), ofType: utiFile!)
+		return handleFile(URL(fileURLWithPath: filename), ofType: utiFile!)
 	}
 	
-	@objc(PPExportObjectDidFinish:) func exportObjectDidFinish(theObj: ExportObject) {
+	@objc(PPExportObjectDidFinish:) func exportObjectDidFinish(_ theObj: ExportObject) {
 		
 	}
 	
-	@objc(PPExportObjectEncounteredError:errorCode:errorString:) func exportObjectEncounteredError(theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: String?) {
+	@objc(PPExportObjectEncounteredError:errorCode:errorString:) func exportObjectEncounteredError(_ theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: String?) {
 		
 	}
 }

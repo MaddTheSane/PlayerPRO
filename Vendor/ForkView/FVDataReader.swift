@@ -11,42 +11,42 @@ import SwiftAdditions
 import Darwin.POSIX.sys.xattr
 
 final class FVDataReader {
-    private var data = NSData()
+    private var data = Data()
     private(set) var position = 0
     
     var length: Int {
         get {
-            return data.length
+            return data.count
         }
     }
     
-    init(_ data: NSData) {
+    init(_ data: Data) {
         self.data = data
     }
     
-    init?(URL: NSURL, resourceFork: Bool) {
+    init?(URL: Foundation.URL, resourceFork: Bool) {
         // Apple's docs say "The maximum size of the resource fork in a file is 16 megabytes"
         let maxResourceSize = 16777216
         if !resourceFork {
             var fileSize: AnyObject?
             do {
-                try URL.getResourceValue(&fileSize, forKey: NSURLFileSizeKey)
+                try (URL as NSURL).getResourceValue(&fileSize, forKey: URLResourceKey.fileSizeKey)
             } catch _ {
             }
             let fileSizeNum = fileSize as? NSNumber
             if fileSizeNum == nil {
                 return nil
             }
-            if fileSizeNum!.integerValue == 0 || fileSizeNum!.integerValue >= maxResourceSize {
+            if fileSizeNum!.intValue == 0 || fileSizeNum!.intValue >= maxResourceSize {
                 return nil
             }
-            if let data = NSData(contentsOfURL: URL) {
+            if let data = try? Data(contentsOf: URL) {
                 self.data = data
             } else {
                 return nil
             }
         } else {
-            let rsrcSize = getxattr(URL.fileSystemRepresentation, XATTR_RESOURCEFORK_NAME, nil, 0, 0, 0)
+            let rsrcSize = getxattr((URL as NSURL).fileSystemRepresentation, XATTR_RESOURCEFORK_NAME, nil, 0, 0, 0)
             if rsrcSize <= 0 || rsrcSize >= maxResourceSize {
                 return nil
             }
@@ -60,29 +60,29 @@ final class FVDataReader {
         }
     }
     
-    class func dataReader(URL: NSURL, resourceFork: Bool) -> FVDataReader? {
+    class func dataReader(_ URL: Foundation.URL, resourceFork: Bool) -> FVDataReader? {
         return FVDataReader(URL: URL, resourceFork: resourceFork)
     }
     
-    func read(size: Int) -> NSData? {
+    func read(_ size: Int) -> Data? {
         if (position + size > self.length) {
             return nil
         }
-        let subdata = data.subdataWithRange(NSMakeRange(position, size))
+        let subdata = data.subdata(in: Range<Int>(position...size))
         position += size
         return subdata
     }
     
-    func read(size: CUnsignedInt, into buf: UnsafeMutablePointer<Void>) -> Bool {
+    func read(_ size: CUnsignedInt, into buf: UnsafeMutablePointer<Void>) -> Bool {
         let data = self.read(Int(size))
         if data == nil {
             return false
         }
-		data!.getBytes(buf, length: Int(size))
+		(data! as NSData).getBytes(buf, length: Int(size))
         return true
     }
     
-    func seekTo(offset: Int) -> Bool {
+    func seekTo(_ offset: Int) -> Bool {
         if (offset >= self.length) {
             return false
         }
@@ -90,17 +90,17 @@ final class FVDataReader {
         return true
     }
     
-    func readUInt16(endian: ByteOrder, inout _ val: UInt16) -> Bool {
+    func readUInt16(_ endian: ByteOrder, _ val: inout UInt16) -> Bool {
         if let dat = read(sizeof(UInt16)) {
-			dat.getBytes(&val, length: sizeof(UInt16))
+			(dat as NSData).getBytes(&val, length: sizeof(UInt16))
             switch endian {
-            case .Big:
+            case .big:
                 val = val.bigEndian
                 
-            case .Little:
+            case .little:
                 val = val.littleEndian
                 
-            case .Unknown:
+            case .unknown:
                 break;
             }
             return true
@@ -108,17 +108,17 @@ final class FVDataReader {
         return false
     }
 
-    func readInt16(endian: ByteOrder, inout _ val: Int16) -> Bool {
+    func readInt16(_ endian: ByteOrder, _ val: inout Int16) -> Bool {
         if let dat = read(sizeof(Int16)) {
-            dat.getBytes(&val, length: sizeof(Int16))
+            (dat as NSData).getBytes(&val, length: sizeof(Int16))
             switch endian {
-            case .Big:
+            case .big:
                 val = val.bigEndian
                 
-            case .Little:
+            case .little:
                 val = val.littleEndian
                 
-            case .Unknown:
+            case .unknown:
                 break;
             }
             return true
@@ -126,17 +126,17 @@ final class FVDataReader {
         return false
     }
 
-    func readUInt32(endian: ByteOrder, inout _ val: UInt32) -> Bool {
+    func readUInt32(_ endian: ByteOrder, _ val: inout UInt32) -> Bool {
         if let dat = read(sizeof(UInt32)) {
-            dat.getBytes(&val, length: sizeof(UInt32))
+            (dat as NSData).getBytes(&val, length: sizeof(UInt32))
             switch endian {
-            case .Big:
+            case .big:
                 val = val.bigEndian
                 
-            case .Little:
+            case .little:
                 val = val.littleEndian
                 
-            case .Unknown:
+            case .unknown:
                 break;
             }
             return true
@@ -144,17 +144,17 @@ final class FVDataReader {
         return false
     }
     
-    func readInt32(endian: ByteOrder, inout _ val: Int32) -> Bool {
+    func readInt32(_ endian: ByteOrder, _ val: inout Int32) -> Bool {
         if let dat = read(sizeof(Int32)) {
-            dat.getBytes(&val, length: sizeof(Int32))
+            (dat as NSData).getBytes(&val, length: sizeof(Int32))
             switch endian {
-            case .Big:
+            case .big:
                 val = val.bigEndian
                 
-            case .Little:
+            case .little:
                 val = val.littleEndian
                 
-            case .Unknown:
+            case .unknown:
                 break;
             }
             return true
@@ -162,17 +162,17 @@ final class FVDataReader {
         return false
     }
     
-    func readUInt8(inout val: UInt8) -> Bool {
+    func readUInt8(_ val: inout UInt8) -> Bool {
         if let dat = read(sizeof(UInt8)) {
-            dat.getBytes(&val, length: sizeof(UInt8))
+            (dat as NSData).getBytes(&val, length: sizeof(UInt8))
             return true
         }
         return false
     }
 
-    func readInt8(inout val: Int8) -> Bool {
+    func readInt8(_ val: inout Int8) -> Bool {
         if let dat = read(sizeof(Int8)) {
-            dat.getBytes(&val, length: sizeof(Int8))
+            (dat as NSData).getBytes(&val, length: sizeof(Int8))
             return true
         }
         return false

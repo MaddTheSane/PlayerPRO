@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL canImport;
 @property (readonly) BOOL canExport;
 
-- (nullable instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (nonnull instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (nullable instancetype)initWithBundle:(NSBundle *)theBund;
 
 - (BOOL)canImportFileAtURL:(NSURL *)fileURL;

@@ -27,7 +27,7 @@ func ==(lhs: DigitalPlugInObject, rhs: DigitalPlugInObject) -> Bool {
 final class DigitalPlugInObject : PPPlugInObject {
 	private let hasUI: Bool
 	private var plugCode: PPDigitalPlugin!
-	override init?(bundle toInit: NSBundle) {
+	override init?(bundle toInit: Bundle) {
 		guard let archs = toInit.executableArchitectures else {
 			hasUI = false
 			super.init(bundle: toInit)
@@ -70,7 +70,7 @@ final class DigitalPlugInObject : PPPlugInObject {
 		return self.hashValue
 	}
 
-	override func isEqual(object: AnyObject?) -> Bool {
+	override func isEqual(_ object: AnyObject?) -> Bool {
 		if let other = object as? DigitalPlugInObject {
 			return self == other
 		}
@@ -78,7 +78,7 @@ final class DigitalPlugInObject : PPPlugInObject {
 		return false
 	}
 	
-	func beginCallWithPcmd(myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentDocument theDoc: PPDocument, handler: PPPlugErrorBlock) {
+	func beginCallWithPcmd(_ myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentDocument theDoc: PPDocument, handler: PPPlugErrorBlock) {
 		let outError = plugCode.runWithPcmd(myPcmd, driver: driver)
 		if outError == .OrderNotImplemented {
 			guard let UIFunc = plugCode.beginRunWithPcmd else {

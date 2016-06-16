@@ -48,33 +48,33 @@ import AudioToolbox
 
 	private func resetPlayerPRODriver() {
 		var theSett = MADDriverSettings.new()
-		let defaults = NSUserDefaults.standardUserDefaults()
+		let defaults = UserDefaults.standard()
 		
 		//TODO: Sanity Checking
-		theSett.surround = defaults.boolForKey(PPSurroundToggle)
-		theSett.outPutRate = UInt32(defaults.integerForKey(PPSoundOutRate))
-		theSett.outPutBits = Int16(defaults.integerForKey(PPSoundOutBits))
-		if (defaults.boolForKey(PPOversamplingToggle)) {
-			theSett.oversampling = Int32(defaults.integerForKey(PPOversamplingAmount))
+		theSett.surround = defaults.bool(forKey: PPSurroundToggle)
+		theSett.outPutRate = UInt32(defaults.integer(forKey: PPSoundOutRate))
+		theSett.outPutBits = Int16(defaults.integer(forKey: PPSoundOutBits))
+		if (defaults.bool(forKey: PPOversamplingToggle)) {
+			theSett.oversampling = Int32(defaults.integer(forKey: PPOversamplingAmount))
 		} else {
 			theSett.oversampling = 1;
 		}
-		theSett.Reverb = defaults.boolForKey(PPReverbToggle)
-		theSett.ReverbSize = Int32(defaults.integerForKey(PPReverbAmount))
-		theSett.ReverbStrength = Int32(defaults.integerForKey(PPReverbStrength))
-		if (defaults.boolForKey(PPStereoDelayToggle)) {
-			theSett.MicroDelaySize = Int32(defaults.integerForKey(PPStereoDelayAmount))
+		theSett.Reverb = defaults.bool(forKey: PPReverbToggle)
+		theSett.ReverbSize = Int32(defaults.integer(forKey: PPReverbAmount))
+		theSett.ReverbStrength = Int32(defaults.integer(forKey: PPReverbStrength))
+		if (defaults.bool(forKey: PPStereoDelayToggle)) {
+			theSett.MicroDelaySize = Int32(defaults.integer(forKey: PPStereoDelayAmount))
 		} else {
 			theSett.MicroDelaySize = 0;
 		}
 		
-		theSett.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver))) ?? .CoreAudioDriver
+		theSett.driverMode = MADSoundOutput(rawValue: Int16(defaults.integer(forKey: PPSoundDriver))) ?? .CoreAudioDriver
 		theSett.repeatMusic = false;
 		
 		do {
-			try theDriver.changeDriverSettingsToSettings(&theSett)
+			try theDriver.changeSettings(to: &theSett)
 		} catch let error as NSError {
-			print("Unable to change driver for \(self), error \(error)")
+			Swift.print("Unable to change driver for \(self), error \(error)")
 			//NSAlert(error: createErrorFromMADErrorType(returnerr)).beginSheetModalForWindow(self.windowForSheet, completionHandler: { (returnCode) -> Void in
 			//currently, do nothing
 			//})
@@ -82,7 +82,7 @@ import AudioToolbox
 		}
 	}
 	
-	@objc private func soundPreferencesDidChange(notification: NSNotification) {
+	@objc private func soundPreferencesDidChange(_ notification: Notification) {
 		resetPlayerPRODriver()
 	}
 	
@@ -93,47 +93,47 @@ import AudioToolbox
 	
 	override init() {
 		var drivSettings = MADDriverSettings.new()
-		let defaults = NSUserDefaults.standardUserDefaults()
+		let defaults = UserDefaults.standard()
 		
 		//TODO: Sanity Checking
-		drivSettings.surround = defaults.boolForKey(PPSurroundToggle)
-		drivSettings.outPutRate = UInt32(defaults.integerForKey(PPSoundOutRate))
-		drivSettings.outPutBits = Int16(defaults.integerForKey(PPSoundOutBits))
-		if defaults.boolForKey(PPOversamplingToggle) {
-			drivSettings.oversampling = Int32(defaults.integerForKey(PPOversamplingAmount))
+		drivSettings.surround = defaults.bool(forKey: PPSurroundToggle)
+		drivSettings.outPutRate = UInt32(defaults.integer(forKey: PPSoundOutRate))
+		drivSettings.outPutBits = Int16(defaults.integer(forKey: PPSoundOutBits))
+		if defaults.bool(forKey: PPOversamplingToggle) {
+			drivSettings.oversampling = Int32(defaults.integer(forKey: PPOversamplingAmount))
 		} else {
 			drivSettings.oversampling = 1
 		}
-		drivSettings.Reverb = defaults.boolForKey(PPReverbToggle)
-		drivSettings.ReverbSize = Int32(defaults.integerForKey(PPReverbAmount))
-		drivSettings.ReverbStrength = Int32(defaults.integerForKey(PPReverbStrength))
-		if (defaults.boolForKey(PPStereoDelayToggle)) {
-			drivSettings.MicroDelaySize = Int32(defaults.integerForKey(PPStereoDelayAmount))
+		drivSettings.Reverb = defaults.bool(forKey: PPReverbToggle)
+		drivSettings.ReverbSize = Int32(defaults.integer(forKey: PPReverbAmount))
+		drivSettings.ReverbStrength = Int32(defaults.integer(forKey: PPReverbStrength))
+		if (defaults.bool(forKey: PPStereoDelayToggle)) {
+			drivSettings.MicroDelaySize = Int32(defaults.integer(forKey: PPStereoDelayAmount))
 		} else {
 			drivSettings.MicroDelaySize = 0;
 		}
 		
-		drivSettings.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver))) ?? .CoreAudioDriver
+		drivSettings.driverMode = MADSoundOutput(rawValue: Int16(defaults.integer(forKey: PPSoundDriver))) ?? .CoreAudioDriver
 		drivSettings.repeatMusic = false;
 		
 		theDriver = try! PPDriver(library: globalMadLib, settings: &drivSettings)
 		super.init()
 		
-		let defaultCenter = NSNotificationCenter.defaultCenter()
+		let defaultCenter = NotificationCenter.default()
 		defaultCenter.addObserver(self, selector: #selector(PPDocument.soundPreferencesDidChange(_:)), name: PPSoundPreferencesDidChange, object: nil)
 	}
 	
-    override func windowControllerDidLoadNib(aController: NSWindowController) {
+    override func windowControllerDidLoadNib(_ aController: NSWindowController) {
         super.windowControllerDidLoadNib(aController)
         // Add any code here that needs to be executed once the windowController has loaded the document's window.
     }
 
-	override func writeToURL(url: NSURL, ofType typeName: String) throws {
+	override func write(to url: URL, ofType typeName: String) throws {
 		if typeName != MADNativeUTI {
 			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
 		} else {
 			do {
-				try theMusic.saveMusicToURL(url, compress: NSUserDefaults.standardUserDefaults().boolForKey(PPMMadCompression))
+				try theMusic.saveMusic(to: url, compress: UserDefaults.standard().bool(forKey: PPMMadCompression))
 			} catch {
 				if let error = error as? MADErr {
 					throw error.convertToCocoaType()
@@ -147,25 +147,25 @@ import AudioToolbox
 		}
 	}
 	
-	override func readFromURL(url: NSURL, ofType typeName: String) throws {
+	override func read(from url: URL, ofType typeName: String) throws {
 		if typeName != MADNativeUTI {
 			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
 		}
 		
-		theMusic = try PPMusicObject(URL: url, driver: theDriver)
+		theMusic = try PPMusicObject(url: url, driver: theDriver)
 	}
 	
     override class func autosavesInPlace() -> Bool {
         return true
     }
 
-	func importMusicObject(theObj: PPMusicObject) {
+	func importMusicObject(_ theObj: PPMusicObject) {
 		if (theMusic == nil) {
 			theMusic = theObj
 		}
 	}
 		
 	deinit {
-		NSNotificationCenter.defaultCenter().removeObserver(self)
+		NotificationCenter.default().removeObserver(self)
 	}
 }

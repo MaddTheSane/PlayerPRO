@@ -753,7 +753,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		if let av = OpenPanelViewController(openPanel: panel, trackerDictionary: trackerDict, playlistDictionary: playlistDict) {
 			av.setupDefaults()
 			av.allowsMultipleSelectionOfTrackers = true;
-			av.beginOpenPanel(parentWindow: window, completionHandler: { (result) -> Void in
+			av.beginOpenPanel(window, completionHandler: { (result) -> Void in
 				if result != NSFileHandlingPanelOKButton {
 					return
 				}
@@ -1476,7 +1476,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		if let av = OpenPanelViewController(openPanel: panel, trackerDictionary: trackerDict) {
 			av.setupDefaults()
 			av.allowsMultipleSelectionOfTrackers = true
-			av.beginOpenPanel(parentWindow: self.window, completionHandler: { (result) -> Void in
+			av.beginOpenPanel(self.window, completionHandler: { (result) -> Void in
 				if (result == NSFileHandlingPanelOKButton) {
 					self.addMusics(toMusicList: panel.urls )
 				}

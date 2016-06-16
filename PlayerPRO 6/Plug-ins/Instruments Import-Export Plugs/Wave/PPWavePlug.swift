@@ -27,27 +27,30 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		super.init()
 	}
 	
-	public func canImportSampleAtURL(sampleURL: NSURL) -> Bool {
-		var myErr = MADErr.NoErr
-		var audioFile: AudioFileID = nil
+	public func canImportSample(at sampleURL: URL) -> Bool {
+		var myErr = MADErr.noErr
+		var audioFile: AudioFileID? = nil
 		var res: OSStatus = noErr
 		
-		res = AudioFileOpen(URL: sampleURL, permissions: .ReadPermission, fileTypeHint: .WAVE, audioFile: &audioFile);
+		res = AudioFileOpen(URL: sampleURL, permissions: .readPermission, fileTypeHint: .WAVE, audioFile: &audioFile);
 		if (res != noErr) {
-			myErr = .FileNotSupportedByThisPlug;
+			myErr = .fileNotSupportedByThisPlug;
 		} else {
-			AudioFileClose(audioFile);
+			AudioFileClose(audioFile!);
 		}
 		
-		return myErr == .NoErr
+		return myErr == .noErr
 	}
 	
-	public func importSampleAtURL(url: NSURL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
+	public func importSample(at url: URL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject>?, driver: PPDriver) -> MADErr {
 		let newSample = PPSampleObject()
-		var fileRef: ExtAudioFileRef = nil
-		var iErr = ExtAudioFileOpenURL(url, &fileRef)
+		var fileRef1: ExtAudioFileRef? = nil
+		var iErr = ExtAudioFileOpenURL(url, &fileRef1)
 		if iErr != noErr {
-			return .ReadingErr
+			return .readingErr
+		}
+		guard let fileRef = fileRef1 else {
+			return .readingErr
 		}
 		defer {
 			ExtAudioFileDispose(fileRef)
@@ -57,14 +60,14 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			var realFormat = AudioStreamBasicDescription()
 			
 			var asbdSize = UInt32(sizeof(AudioStreamBasicDescription))
-			iErr = ExtAudioFileGetProperty(fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
+			iErr = ExtAudioFileGetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
 			if iErr != noErr {
-				return .UnknownErr
+				return .unknownErr
 			}
 			
 			//Constrain the audio conversion to values supported by PlayerPRO
 			realFormat.mSampleRate = ceil(realFormat.mSampleRate)
-			realFormat.mSampleRate = clamp(realFormat.mSampleRate, minimum: 5000, maximum: 44100)
+			realFormat.mSampleRate = clamp(value: realFormat.mSampleRate, minimum: 5000, maximum: 44100)
 			realFormat.formatFlags = [.NativeEndian, .Packed, .SignedInteger]
 			switch realFormat.mBitsPerChannel {
 			case 8, 16:
@@ -85,9 +88,9 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 				realFormat.mChannelsPerFrame = 2
 			}
 			
-			iErr = ExtAudioFileSetProperty(fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: sizeof(AudioStreamBasicDescription), data: &realFormat)
+			iErr = ExtAudioFileSetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: sizeof(AudioStreamBasicDescription), data: &realFormat)
 			if iErr != noErr {
-				return .UnknownErr
+				return .unknownErr
 			}
 
 			while true {
@@ -109,7 +112,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 					
 					err = ExtAudioFileRead(fileRef, &numFrames, fillBufList.unsafeMutablePointer);
 					if err != noErr {
-						return .UnknownErr
+						return .unknownErr
 					}
 					if numFrames == 0 {
 						// this is our termination condition
@@ -117,47 +120,44 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 					}
 					
 					tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
-					mutableData.appendData(tmpMutDat)
+					mutableData.append(tmpMutDat as Data)
 				} else {
-					ExtAudioFileDispose(fileRef)
-					return .NeedMemory
+					return .needMemory
 				}
 			}
 			
 			newSample.volume = 64
 			newSample.c2spd = UInt16(realFormat.mSampleRate)
-			newSample.loopType = .Classic
+			newSample.loopType = .classic
 			newSample.relativeNote = 0
 			newSample.amplitude = MADByte(realFormat.mBitsPerChannel)
-			newSample.stereo = realFormat.mChannelsPerFrame == 2
-			newSample.data = mutableData
+			newSample.isStereo = realFormat.mChannelsPerFrame == 2
+			newSample.data = mutableData as Data
 			
-			ExtAudioFileDispose(fileRef)
-
-			asample.memory = newSample
+			asample?.pointee = newSample
 			
-			return .NoErr
+			return .noErr
 		} else {
-			return .NeedMemory
+			return .needMemory
 		}
 	}
 	
-	public func exportSample(sample: PPSampleObject, toURL sampleURL: NSURL, driver: PPDriver) -> MADErr {
-		var myErr = MADErr.NoErr
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .LinearPCM, formatFlags: [.SignedInteger, .Packed], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.stereo ? 2 : 1)
+	public func exportSample(_ sample: PPSampleObject, to sampleURL: URL, driver: PPDriver) -> MADErr {
+		var myErr = MADErr.noErr
+		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .LinearPCM, formatFlags: [.SignedInteger, .Packed], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.isStereo ? 2 : 1)
 		
-		var audioFile: AudioFileID = nil
+		var audioFile: AudioFileID? = nil
 		var res: OSStatus = 0
-		let data: NSData
+		let data: Data
 		if isBigEndian {
 			if (sample.amplitude == 16) {
 				let mutData = NSMutableData(data: sample.data)
 				let mutShortBytes = UnsafeMutablePointer<UInt16>(mutData.mutableBytes)
-				dispatch_apply(sample.data.length / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
+				DispatchQueue.concurrentPerform(iterations: sample.data.count / 2, execute: { (i) -> Void in
 					mutShortBytes[i] = mutShortBytes[i].littleEndian
 				})
 				
-				data = mutData
+				data = mutData as Data
 			} else {
 				data = sample.data
 			}
@@ -165,15 +165,15 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			data = sample.data
 		}
 		
-		res = AudioFileCreate(URL: sampleURL, fileType: .WAVE, format: &asbd, flags: .EraseFile, audioFile: &audioFile)
+		res = AudioFileCreate(URL: sampleURL, fileType: .WAVE, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
 		if (res != noErr) {
-			myErr = .WritingErr;
+			myErr = .writingErr;
 		} else {
-			var numBytes = UInt32(data.length);
+			var numBytes = UInt32(data.count);
 			
-			res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, data.bytes);
+			res = AudioFileWriteBytes(audioFile!, false, 0, &numBytes, (data as NSData).bytes);
 			if (res != noErr) {
-				myErr = .WritingErr;
+				myErr = .writingErr;
 			} else {
 				if sample.loop != .notFound {
 					
@@ -186,9 +186,9 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 				AudioFileOptimize(audioFile);
 				*/
 				
-				res = AudioFileClose(audioFile);
+				res = AudioFileClose(audioFile!);
 				if (res != noErr) {
-					myErr = .WritingErr;
+					myErr = .writingErr;
 				}
 			}
 		}

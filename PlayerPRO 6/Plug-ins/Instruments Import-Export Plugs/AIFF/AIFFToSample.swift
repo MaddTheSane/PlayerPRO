@@ -16,11 +16,14 @@ import SwiftAudioAdditions
 private let kSrcBufSize: UInt32 = 32768;
 
 
-internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
-	var fileRef: ExtAudioFileRef = nil
-	var iErr = ExtAudioFileOpenURL(url, &fileRef)
+internal func AIFFAtURL(_ url: NSURL, toSample sample: PPSampleObject) -> MADErr {
+	var fileRef1: ExtAudioFileRef? = nil
+	var iErr = ExtAudioFileOpenURL(url, &fileRef1)
 	if iErr != noErr {
-		return .ReadingErr
+		return .readingErr
+	}
+	guard let fileRef = fileRef1 else {
+		return .readingErr
 	}
 	defer {
 		ExtAudioFileDispose(fileRef)
@@ -29,14 +32,14 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 		var realFormat = AudioStreamBasicDescription()
 		
 		var asbdSize = UInt32(sizeof(AudioStreamBasicDescription))
-		iErr = ExtAudioFileGetProperty(fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
+		iErr = ExtAudioFileGetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
 		if iErr != noErr {
-			return .UnknownErr
+			return .unknownErr
 		}
 		
 		//Constrain the audio conversion to values supported by PlayerPRO
 		realFormat.mSampleRate = ceil(realFormat.mSampleRate)
-		realFormat.mSampleRate = clamp(realFormat.mSampleRate, minimum: 5000, maximum: 44100)
+		realFormat.mSampleRate = clamp(value: realFormat.mSampleRate, minimum: 5000, maximum: 44100)
 		realFormat.formatFlags = [.NativeEndian, .Packed, .SignedInteger]
 		switch realFormat.mBitsPerChannel {
 		case 8, 16:
@@ -57,9 +60,9 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 			realFormat.mChannelsPerFrame = 2
 		}
 		
-		iErr = ExtAudioFileSetProperty(fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: sizeof(AudioStreamBasicDescription), data: &realFormat)
+		iErr = ExtAudioFileSetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: sizeof(AudioStreamBasicDescription), data: &realFormat)
 		if iErr != noErr {
-			return .UnknownErr
+			return .unknownErr
 		}
 		
 		while true {
@@ -81,7 +84,7 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 				
 				err = ExtAudioFileRead(fileRef, &numFrames, fillBufList.unsafeMutablePointer);
 				if err != noErr {
-					return .UnknownErr
+					return .unknownErr
 				}
 				//XThrowIfError (err, "ExtAudioFileRead");
 				if numFrames == 0 {
@@ -90,22 +93,22 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 				}
 				
 				tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
-				mutableData.appendData(tmpMutDat)
+				mutableData.append(tmpMutDat as Data)
 			} else {
-				return .NeedMemory
+				return .needMemory
 			}
 		}
 		
 		sample.volume = 64
 		sample.c2spd = UInt16(realFormat.mSampleRate)
-		sample.loopType = .Classic
+		sample.loopType = .classic
 		sample.relativeNote = 0
 		sample.amplitude = MADByte(realFormat.mBitsPerChannel)
-		sample.stereo = realFormat.mChannelsPerFrame == 2
-		sample.data = mutableData
+		sample.isStereo = realFormat.mChannelsPerFrame == 2
+		sample.data = mutableData as Data
 		
-		return .NoErr
+		return .noErr
 	} else {
-		return .NeedMemory
+		return .needMemory
 	}
 }

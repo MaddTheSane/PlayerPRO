@@ -367,7 +367,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		})
 	}
 
-	@objc func beginOpenPanel(parentWindow: NSWindow, completionHandler resultHandle: (result: Int) -> Void) {
+	@objc func beginOpenPanel(_ parentWindow: NSWindow, completionHandler resultHandle: (result: Int) -> Void) {
 		OpenPanelsInUse.append(self)
 		openPanel.beginSheetModal(for: parentWindow, completionHandler: { (result) -> Void in
 			if let anInt = OpenPanelsInUse.index(of: self) {

@@ -237,9 +237,9 @@ extension PPSampleObject {
 			let lineSize = 2 * scale
 			let padSize = 1 * scale
 			bitmapContext.setLineWidth(lineSize)
-			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.length)
+			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.count)
 			loopRect.origin.y += padSize
-			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.length)
+			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.count)
 			loopRect.size.height -= padSize * 2
 			bitmapContext.stroke(loopRect)
 		}

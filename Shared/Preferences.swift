@@ -101,7 +101,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 		popUp.selectItem(at: 0)
     }
     
-    @objc(displayViewControllerWithName:) func displayViewController(name: String) {
+    @objc(displayViewControllerWithName:) func displayViewController(_ name: String) {
 		let ourController = viewControllers.filter { (aVal) -> Bool in
 			if let ourVal = aVal as? /*NSViewController where NSViewController:*/ PPPreferenceObject {
 				return ourVal.preferenceIdentifier == name

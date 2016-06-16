@@ -10,7 +10,7 @@ import Cocoa
 import PlayerPROKit
 import SwiftAdditions
 
-private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
+private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 	var PATHeader: UnsafePointer<PatchHeader>
 	var PATIns: UnsafePointer<PatInsHeader>
 	var PATSamp: UnsafePointer<PatSampHeader>
@@ -27,7 +27,7 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 		2093007, 2217464, 2349321, 2489019, 2637024, 2793830, 2959960, 3135968, 3322443, 3520006, 3729316, 3951073,
 		4186073, 4434930, 4698645, 4978041, 5274051, 5587663, 5919922, 6271939, 6644889, 7040015, 7458636, 7902150]
 		
-		let toRemain = [UInt32](count: 200 - toRet.count, repeatedValue: toRet.last!)
+		let toRemain = [UInt32](repeating: toRet.last!, count: 200 - toRet.count)
 		toRet += toRemain
 		
 		return toRet
@@ -39,11 +39,11 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 	
 	insHeader.resetInstrument()
 	
-	if (PATHeader.memory.InsNo != 1) {
-		return .FileNotSupportedByThisPlug;
+	if (PATHeader.pointee.InsNo != 1) {
+		return .fileNotSupportedByThisPlug;
 	}
 	
-	let sampleCount = (Int(PATHeader.memory.LoSamp) << 8) + Int(PATHeader.memory.HiSamp)
+	let sampleCount = (Int(PATHeader.pointee.LoSamp) << 8) + Int(PATHeader.pointee.HiSamp)
 	
 	// INS HEADER -- Read only the first instrument
 	PATIns = UnsafePointer<PatInsHeader>(PATData)
@@ -52,15 +52,15 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 	PATData += 63;
 	
 	insHeader.name = {
-		let insNameBytes: [Int8] = getArrayFromMirror(Mirror(reflecting: PATIns.memory.name), appendLastObject: 0)
+		let insNameBytes: [Int8] = try! arrayFromObject(reflecting: PATIns.pointee.name, appendLastObject: 0)
 		let allowable = insNameBytes.map { (i) -> UInt8 in
 			return UInt8(i)
 		}
-		return String(bytes: allowable, encoding: NSMacOSRomanStringEncoding) ?? ""
+		return String(bytes: allowable, encoding: String.Encoding.macOSRoman) ?? ""
 		}()
 	
 	// LAYERS
-	for _ in 0..<PATIns.memory.layer {
+	for _ in 0..<PATIns.pointee.layer {
 		PATData += 47;
 	}
 	
@@ -73,18 +73,18 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 		//curData = sample[x] = inMADCreateSample();
 		
 		curData.name = {
-			let insNameBytes: [Int8] = getArrayFromMirror(Mirror(reflecting: PATSamp.memory.name), appendLastObject: 0)
+			let insNameBytes: [Int8] = try! arrayFromObject(reflecting: PATSamp.pointee.name, appendLastObject: 0)
 			let allowable = insNameBytes.map { (i) -> UInt8 in
 				return UInt8(i)
 			}
-			return String(bytes: allowable, encoding: NSMacOSRomanStringEncoding) ?? ""
+			return String(bytes: allowable, encoding: String.Encoding.macOSRoman) ?? ""
 			}()
 		
 		//int sampSize, sampStartLoop, sampEndLoop;
-		let sampRate = PATSamp.memory.rate.littleEndian
-		let sampSize = PATSamp.memory.size.littleEndian
-		let sampStartLoop = PATSamp.memory.startLoop.littleEndian
-		let sampEndLoop = PATSamp.memory.endLoop.littleEndian
+		let sampRate = PATSamp.pointee.rate.littleEndian
+		let sampSize = PATSamp.pointee.size.littleEndian
+		let sampStartLoop = PATSamp.pointee.startLoop.littleEndian
+		let sampEndLoop = PATSamp.pointee.endLoop.littleEndian
 		
 		//curData->size = PATSamp->size;
 		curData.loopBegin = sampStartLoop;
@@ -92,61 +92,61 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 		curData.c2spd = sampRate;
 		
 		curData.volume = 64;
-		curData.loopType = MADLoopType.Classic
+		curData.loopType = MADLoopType.classic
 		
-		if (PATSamp.memory.Flag & 0x01) != 0 {
+		if (PATSamp.pointee.Flag & 0x01) != 0 {
 			curData.amplitude = 16;
 		} else {
 			curData.amplitude = 8;
 		}
 		
-		if (PATSamp.memory.Flag & 0x02) != 0 {
+		if (PATSamp.pointee.Flag & 0x02) != 0 {
 			signedData = true;
 		} else {
 			signedData = false;
 		}
 		
-		if (PATSamp.memory.Flag & 0x04) == 0 {
+		if (PATSamp.pointee.Flag & 0x04) == 0 {
 			curData.loopBegin = 0;
 			curData.loopSize = 0;
 		}
 		
-		if (PATSamp.memory.Flag & 0x08) != 0 {
-			curData.loopType = .PingPong;
+		if (PATSamp.pointee.Flag & 0x08) != 0 {
+			curData.loopType = .pingPong;
 		} else {
-			curData.loopType = .Classic;
+			curData.loopType = .classic;
 		}
 		
 		///////////////
-		var tmpHeader = PATSamp.memory
+		var tmpHeader = PATSamp.pointee
 		tmpHeader.minFreq = tmpHeader.minFreq.littleEndian
 		tmpHeader.maxFreq = tmpHeader.maxFreq.littleEndian
 		tmpHeader.originRate = tmpHeader.originRate.littleEndian
 		
 		for i in 0..<107 {
-			if scale_table[i] >= UInt32(PATSamp.memory.originRate) {
+			if scale_table[i] >= UInt32(PATSamp.pointee.originRate) {
 				tmpHeader.originRate = Int32(i);
 				break
 			}
 		}
 		
-		curData.relativeNote = Int8(60 - (12 + PATSamp.memory.originRate))
+		curData.relativeNote = Int8(60 - (12 + PATSamp.pointee.originRate))
 		
 		for i in 0..<107 {
-			if scale_table[i] >= UInt32(PATSamp.memory.minFreq) {
+			if scale_table[i] >= UInt32(PATSamp.pointee.minFreq) {
 				tmpHeader.minFreq = Int32(i)
 				break
 			}
 		}
 		
 		for i in 0..<107{
-			if scale_table[i] >= UInt32(PATSamp.memory.maxFreq) {
+			if scale_table[i] >= UInt32(PATSamp.pointee.maxFreq) {
 				tmpHeader.maxFreq = Int32(i)
 				break
 			}
 		}
 		
-		for i in PATSamp.memory.minFreq ..< PATSamp.memory.maxFreq {
+		for i in PATSamp.pointee.minFreq ..< PATSamp.pointee.maxFreq {
 			if (i < 96 && i >= 0) {
 				insHeader.what[Int(i)] = UInt8(x)
 			}
@@ -158,12 +158,12 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 		let aDataObj = NSMutableData(bytes: UnsafePointer<Void>(PATData), length: Int(sampSize))
 		let aData = UnsafeMutablePointer<UInt8>(aDataObj.mutableBytes)
 		
-		if aData != nil {
+		//if aData != nil {
 			
 			if (curData.amplitude == 16) {
 				let tt = UnsafeMutablePointer<UInt16>(aData)
 				
-				dispatch_apply(Int(sampSize / 2), dispatch_get_global_queue(0, 0), { (tL) -> Void in
+				DispatchQueue.concurrentPerform(iterations: Int(sampSize / 2), execute: { (tL) -> Void in
 					tt[tL] = tt[tL].littleEndian
 					
 					if signedData {
@@ -172,34 +172,34 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 				})
 			} else {
 				if signedData {
-					dispatch_apply(Int(sampSize), dispatch_get_global_queue(0, 0), { (ixi) -> Void in
+					DispatchQueue.concurrentPerform(iterations: Int(sampSize), execute: { (ixi) -> Void in
 						aData[ixi] = aData[ixi] &+ 0x80
 					})
 				}
 			}
-			curData.data = aDataObj;
-		}
+			curData.data = aDataObj as Data
+		//}
 		
-		PATData += Int(PATSamp.memory.size)
+		PATData += Int(PATSamp.pointee.size)
 		
-		insHeader.addSampleObject(curData)
+		insHeader.add(curData)
 	}
 	
-	return .NoErr
+	return .noErr
 }
 
 
 public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 	public let hasUIForImport = false
 	//const char headerStr[20] = "GF1PATCH110\0\0";
-	private let headerData: NSData = {
+	private let headerData: Data = {
 		var headerChar: [ASCIICharacter] = [.LetterUppercaseG, .LetterUppercaseF, .NumberOne, .LetterUppercaseP, .LetterUppercaseA,
 		.LetterUppercaseT, .LetterUppercaseC, .LetterUppercaseH, .NumberOne, .NumberOne, .NumberZero, .NullCharacter]
 		var headerStr = headerChar.map({ (aChar) -> UInt8 in
 			return UInt8(aChar.rawValue)
 		})
 		
-		return NSData(byteArray: headerStr)
+		return Data(bytes: headerStr)
 	}()
 
 	override public init() {
@@ -210,32 +210,32 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 		self.init()
 	}
 	
-	public func canImportInstrumentAtURL(url: NSURL) -> Bool {
+	public func canImportInstrument(at url: URL) -> Bool {
 		do {
-			let aHandle = try NSFileHandle(forReadingFromURL:url)
-			let fileData = aHandle.readDataOfLength(headerData.length)
+			let aHandle = try FileHandle(forReadingFrom:url)
+			let fileData = aHandle.readData(ofLength: headerData.count)
 			
-			return fileData.isEqualToData(headerData)
+			return (fileData == headerData)
 		} catch _ {
 			return false
 		}
 	}
 	
-	public func importInstrumentAtURL(sampleURL: NSURL, instrument InsHeader: AutoreleasingUnsafeMutablePointer<PPInstrumentObject?>, driver: PPDriver) -> MADErr {
-		if let inData = NSData(contentsOfURL: sampleURL) {
+	public func importInstrument(at sampleURL: URL, instrument InsHeader: AutoreleasingUnsafeMutablePointer<PPInstrumentObject>?, driver: PPDriver) -> MADErr {
+		if let inData = try? Data(contentsOf: sampleURL) {
 			if let ourIns = PPInstrumentObject() {
 				ourIns.resetInstrument()
 				
 				let iErr = importPAT(ourIns, data: inData)
-				if iErr == .NoErr {
-					InsHeader.memory = ourIns
+				if iErr == .noErr {
+					InsHeader?.pointee = ourIns
 				}
 				return iErr
 			} else {
-				return .NeedMemory
+				return .needMemory
 			}
 		} else {
-			return .ReadingErr
+			return .readingErr
 		}
 	}
 }

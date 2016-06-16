@@ -11,7 +11,7 @@ import AudioToolbox
 import SwiftAudioAdditions
 import PlayerPROCore.Defines
 
-private func fixedToFloat(a: UInt32) -> Double {
+private func fixedToFloat(_ a: UInt32) -> Double {
 	let fixed1 = Double(0x00010000)
 	
 	return Double(a) / fixed1
@@ -68,7 +68,7 @@ private struct SoundHeader {
 	var baseFrequency: UInt8 = 0
 }
 
-internal func canOpenData(data: NSData) -> Bool {
+internal func canOpenData(_ data: Data) -> Bool {
 	#if false
 	var soundPtr = UnsafePointer<Int16>(data.bytes)
 	let oldSound = soundPtr.memory.bigEndian
@@ -82,15 +82,15 @@ internal func canOpenData(data: NSData) -> Bool {
 		
 		// Read the SndListResource or Snd2ListResource
 		var format: Int16 = 0
-		if !reader.readInt16(.Big, &format) {
+		if !reader.readInt16(.big, &format) {
 			return false
 		}
 		if format == firstSoundFormat {
 			var numModifiers: Int16 = 0
 			var modifierPart = ModRef()
-			if !reader.readInt16(.Big, &numModifiers) ||
-				!reader.readUInt16(.Big, &modifierPart.modNumber) ||
-				!reader.readInt32(.Big, &modifierPart.modInit) {
+			if !reader.readInt16(.big, &numModifiers) ||
+				!reader.readUInt16(.big, &modifierPart.modNumber) ||
+				!reader.readInt32(.big, &modifierPart.modInit) {
 					return false
 			}
 			if numModifiers != 1 {
@@ -107,7 +107,7 @@ internal func canOpenData(data: NSData) -> Bool {
 			}
 		} else if format == secondSoundFormat {
 			var refCount = Int16()
-			if !reader.readInt16(.Big, &refCount) {
+			if !reader.readInt16(.big, &refCount) {
 				return false
 			}
 		} else {
@@ -117,8 +117,8 @@ internal func canOpenData(data: NSData) -> Bool {
 	#endif
 }
 
-internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
-	func errmsg(@autoclosure(escaping) message: () -> String) {
+internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
+	func errmsg(@autoclosure(escaping) _ message: () -> String) {
 		print("Sys7 import: \(message())")
 	}
 	
@@ -126,50 +126,50 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	
 	// Read the SndListResource or Snd2ListResource
 	var format = Int16()
-	if !reader.readInt16(.Big, &format) {
-		error = .FileNotSupportedByThisPlug
+	if !reader.readInt16(.big, &format) {
+		error = .fileNotSupportedByThisPlug
 		errmsg("Missing header")
 		return nil
 	}
 	if format == firstSoundFormat {
 		var numModifiers = Int16()
 		var modifierPart = ModRef()
-		if !reader.readInt16(.Big, &numModifiers) ||
-			!reader.readUInt16(.Big, &modifierPart.modNumber) ||
-			!reader.readInt32(.Big, &modifierPart.modInit) {
-				error = .FileNotSupportedByThisPlug
+		if !reader.readInt16(.big, &numModifiers) ||
+			!reader.readUInt16(.big, &modifierPart.modNumber) ||
+			!reader.readInt32(.big, &modifierPart.modInit) {
+				error = .fileNotSupportedByThisPlug
 				errmsg("Missing header")
 				return nil
 		}
 		if numModifiers != 1 {
-			error = .FileNotSupportedByThisPlug
+			error = .fileNotSupportedByThisPlug
 			errmsg("Bad header")
 			return nil
 		}
 		if modifierPart.modNumber != 5  {
-			error = .FileNotSupportedByThisPlug
+			error = .fileNotSupportedByThisPlug
 			errmsg("Unknown modNumber value \(modifierPart.modNumber)")
 			return nil
 		}
 		if modifierPart.modInit & initStereo == 1 {
-			error = .FileNotSupportedByThisPlug
+			error = .fileNotSupportedByThisPlug
 			errmsg("Only mono channel supported")
 			return nil
 		}
 		if (modifierPart.modInit & initMACE3) == initMACE3 || (modifierPart.modInit & initMACE6) == initMACE6 {
-			error = .FileNotSupportedByThisPlug
+			error = .fileNotSupportedByThisPlug
 			errmsg("Compression not supported")
 			return nil
 		}
 	} else if format == secondSoundFormat {
 		var refCount = Int16()
-		if !reader.readInt16(.Big, &refCount) {
-			error = .FileNotSupportedByThisPlug
+		if !reader.readInt16(.big, &refCount) {
+			error = .fileNotSupportedByThisPlug
 			errmsg("Missing header")
 			return nil
 		}
 	} else {
-		error = .FileNotSupportedByThisPlug
+		error = .fileNotSupportedByThisPlug
 		errmsg("Unknown format \(format)")
 		return nil
 	}
@@ -178,21 +178,21 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	var header_offset = Int()
 	var numCommands = Int16()
 	var commandPart = SndCommand()
-	if !reader.readInt16(.Big, &numCommands) {
-		error = .FileNotSupportedByThisPlug
+	if !reader.readInt16(.big, &numCommands) {
+		error = .fileNotSupportedByThisPlug
 		errmsg("Missing header")
 		return nil
 	}
 	if numCommands == 0 {
-		error = .FileNotSupportedByThisPlug
+		error = .fileNotSupportedByThisPlug
 		errmsg("Bad header")
 		return nil
 	}
 	for _ in Int16(0) ..< numCommands {
-		if !reader.readUInt16(.Big, &commandPart.cmd) ||
-			!reader.readInt16(.Big, &commandPart.param1) ||
-			!reader.readInt32(.Big, &commandPart.param2) {
-				error = .FileNotSupportedByThisPlug
+		if !reader.readUInt16(.big, &commandPart.cmd) ||
+			!reader.readInt16(.big, &commandPart.param1) ||
+			!reader.readInt32(.big, &commandPart.param2) {
+				error = .fileNotSupportedByThisPlug
 				errmsg("Missing command")
 				return nil
 		}
@@ -202,7 +202,7 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 		switch commandPart.cmd {
 		case soundCmd, bufferCmd:
 			if header_offset != 0 {
-				error = .FileNotSupportedByThisPlug
+				error = .fileNotSupportedByThisPlug
 				errmsg("Duplicate commands")
 				return nil
 			}
@@ -210,7 +210,7 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 		case nullCmd:
 			break
 		default:
-			error = .FileNotSupportedByThisPlug
+			error = .fileNotSupportedByThisPlug
 			errmsg("Unknown command \(commandPart.cmd)")
 			return nil
 		}
@@ -218,32 +218,32 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	
 	// Read SoundHeader
 	var header = SoundHeader()
-	if !reader.readUInt32(.Big, &header.samplePtr) ||
-		!reader.readUInt32(.Big, &header.length) ||
-		!reader.readUInt32(.Big, &header.sampleRate) ||
-		!reader.readUInt32(.Big, &header.loopStart) ||
-		!reader.readUInt32(.Big, &header.loopEnd) ||
+	if !reader.readUInt32(.big, &header.samplePtr) ||
+		!reader.readUInt32(.big, &header.length) ||
+		!reader.readUInt32(.big, &header.sampleRate) ||
+		!reader.readUInt32(.big, &header.loopStart) ||
+		!reader.readUInt32(.big, &header.loopEnd) ||
 		!reader.readUInt8(&header.encode) ||
 		!reader.readUInt8(&header.baseFrequency) {
-			error = .FileNotSupportedByThisPlug
+			error = .fileNotSupportedByThisPlug
 			errmsg("Missing header data")
 			return nil
 	}
 	let sampleData = reader.read(Int(header.length))
 	if sampleData == nil {
-		error = .FileNotSupportedByThisPlug
+		error = .fileNotSupportedByThisPlug
 		errmsg("Missing samples")
 		return nil
 	}
 	if header.encode != stdSH {
 		if header.encode == extSH {
-			error = .FileNotSupportedByThisPlug
+			error = .fileNotSupportedByThisPlug
 			errmsg("Extended encoding not supported")
 		} else if header.encode == cmpSH {
-			error = .FileNotSupportedByThisPlug
+			error = .fileNotSupportedByThisPlug
 			errmsg("Compression not supported")
 		} else {
-			error = .FileNotSupportedByThisPlug
+			error = .fileNotSupportedByThisPlug
 			errmsg(String(format: "Unknown encoding 0x%02X", header.encode))
 		}
 		return nil
@@ -253,39 +253,39 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	var stream = AudioStreamBasicDescription(sampleRate: fixedToFloat(header.sampleRate), formatFlags: .SignedInteger, bitsPerChannel: 8, channelsPerFrame: 1)
 	
 	// Create a temporary file for storage
-	let url = NSURL(fileURLWithPath: (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("\(arc4random())-\(NSDate.timeIntervalSinceReferenceDate()).aif"))
-		var audioFile: ExtAudioFileRef = nil
-		let createStatus = ExtAudioFileCreate(URL: url, fileType: .AIFF, streamDescription: &stream, flags: .EraseFile, audioFile: &audioFile)
+	let url = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent("\(arc4random())-\(Date.timeIntervalSinceReferenceDate).aif"))
+		var audioFile: ExtAudioFileRef? = nil
+		let createStatus = ExtAudioFileCreate(URL: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
 		if createStatus != noErr {
-			error = .WritingErr
+			error = .writingErr
 			errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")
 			return nil
 		}
 		
 		// Configure the AudioBufferList
-		let srcData = UnsafePointer<UInt8>(sampleData!.bytes)
+		let srcData = UnsafePointer<UInt8>((sampleData! as NSData).bytes)
 		var audioBuffer = AudioBuffer()
 		audioBuffer.mNumberChannels = 1
 		audioBuffer.mDataByteSize = header.length
 		audioBuffer.mData = UnsafeMutablePointer(srcData)
 		let audioBufferData = UnsafeMutablePointer<UInt8>(audioBuffer.mData)
 		for i in 0 ..< Int(header.length) {
-			audioBufferData[i] ^= 0x80
+			audioBufferData?[i] ^= 0x80
 		}
 		var bufferList = AudioBufferList(mNumberBuffers: 1, mBuffers: audioBuffer)
 		
 		// Write the data to the file
-		let writeStatus = ExtAudioFileWrite(audioFile, header.length, &bufferList)
+		let writeStatus = ExtAudioFileWrite(audioFile!, header.length, &bufferList)
 		if writeStatus != noErr {
-			error = .WritingErr
+			error = .writingErr
 			errmsg("ExtAudioFileWrite failed with status \(writeStatus)")
 			return nil
 		}
 		
 		// Finish up
-		let disposeStatus = ExtAudioFileDispose(audioFile)
+		let disposeStatus = ExtAudioFileDispose(audioFile!)
 		if disposeStatus != noErr {
-			error = .WritingErr
+			error = .writingErr
 			errmsg("ExtAudioFileDispose failed with status \(disposeStatus)")
 			return nil
 		}

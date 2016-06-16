@@ -9,7 +9,7 @@
 import Foundation
 
 extension NSError {
-    private class func errorWithDescription(description: String) -> NSError {
+    private class func errorWithDescription(_ description: String) -> NSError {
         return NSError(domain: "FVResourceErrorDomain", code: -1, userInfo: [NSLocalizedFailureReasonErrorKey: description])
     }
 }
@@ -51,7 +51,7 @@ final class FVResourceFile: NSObject {
         var namesOffset: UInt16 = 0
     }
 
-    private func readHeader(inout aHeader: ResourceHeader) -> Bool {
+    private func readHeader(_ aHeader: inout ResourceHeader) -> Bool {
         // read the header values
 
         if (!dataReader.read(CUnsignedInt(sizeofValue(aHeader.dataOffset)), into: &aHeader.dataOffset) ||
@@ -76,7 +76,7 @@ final class FVResourceFile: NSObject {
     }
 
     //- (instancetype)initWithContentsOfURL:(NSURL *)fileURL error:(NSError **)error resourceFork:(BOOL)resourceFork
-    private init(contentsOfURL fileURL: NSURL, resourceFork: Bool) throws {
+    private init(contentsOfURL fileURL: URL, resourceFork: Bool) throws {
         if let dataReader = FVDataReader(URL: fileURL, resourceFork: resourceFork) {
             self.dataReader = dataReader
             super.init()
@@ -120,7 +120,7 @@ final class FVResourceFile: NSObject {
             return false;
         }
 
-        let zeros = [Int8](count: 16, repeatedValue: 0)
+        let zeros = [Int8](repeating: 0, count: 16)
         if (map.headerCopy != header) && (memcmp(&map.headerCopy, zeros, zeros.count) != 0) {
             print("Bad match!")
         }
@@ -209,7 +209,7 @@ final class FVResourceFile: NSObject {
                     return toRet
                 }()
                 
-                var name = Array<Int8>(count: 256, repeatedValue: 0)
+                var name = Array<Int8>(repeating: 0, count: 256)
                 var nameLength: UInt8 = 0
                 
                 if (nameOffset != -1) && (dataReader.seekTo(Int(header.mapOffset) + Int(map.namesOffset) + Int(nameOffset))) {
@@ -230,28 +230,28 @@ final class FVResourceFile: NSObject {
                 resource.dataSize = dataLength
                 resource.dataOffset = dataOffset + UInt32(sizeofValue(dataOffset))
                 if strlen(name) != 0 {
-                    resource.name = String(CString: name, encoding: NSMacOSRomanStringEncoding)!
+                    resource.name = String(cString: name, encoding: String.Encoding.macOSRoman)!
                 }
                 resource.file = self
                 resource.type = obj
                 tmpResources.append(resource)
             }
-            tmpResources.sortInPlace({ (lhs, rhs) -> Bool in
+            tmpResources.sort(isOrderedBefore: { (lhs, rhs) -> Bool in
                 return lhs.ident > rhs.ident
             })
             obj.resources = tmpResources
         }
         
-        typesTemp.sortInPlace { (lhs, rhs) -> Bool in
+        typesTemp.sort { (lhs, rhs) -> Bool in
             let compVal = lhs.typeString.caseInsensitiveCompare(rhs.typeString)
-            return compVal == .OrderedAscending
+            return compVal == .orderedAscending
         }
         
         types = typesTemp
         return true
     }
 
-    internal func dataForResource(resource: FVResource) -> NSData? {
+    internal func dataForResource(_ resource: FVResource) -> Data? {
         if !dataReader.seekTo(Int(header.dataOffset + resource.dataOffset)) {
             return nil;
         }
@@ -259,12 +259,12 @@ final class FVResourceFile: NSObject {
             if !dataReader.read(resource.dataSize, into: data.mutableBytes) {
                 return nil;
             }
-            return data
+            return data as Data
         }
         return nil
     }
     
-    class func resourceFileWithContentsOfURL(fileURL: NSURL) throws -> FVResourceFile {
+    class func resourceFileWithContentsOfURL(_ fileURL: URL) throws -> FVResourceFile {
         var tmpError: NSError?
         
         do {

@@ -17,7 +17,7 @@ import CoreAudio
 #endif
 
 class PlayerPROKit_Tests: XCTestCase {
-	var ourBundle: NSBundle? = nil
+	var ourBundle: Bundle? = nil
 	var ourLib: PPLibrary? = nil
 	
 	override func setUp() {
@@ -26,8 +26,8 @@ class PlayerPROKit_Tests: XCTestCase {
 		currentTestClass = self
 		MADRegisterDebugFunc(cXTCFail)
 		
-		ourBundle = NSBundle(for: PlayerPROKit_Tests.self)
-			if let ourPlugPath = ourBundle?.builtInPlugInsURL where ourPlugPath.checkResourceIsReachableAndReturnError(nil) {
+		ourBundle = Bundle(for: PlayerPROKit_Tests.self)
+			if let ourPlugPath = ourBundle?.builtInPlugInsURL where ((try? ourPlugPath.checkResourceIsReachable()) ?? false) {
 				ourLib = PPLibrary(plugInURL: ourPlugPath)
 			} else {
 				ourLib = PPLibrary()

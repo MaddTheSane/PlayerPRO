@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension NSNotification.Name {
+extension Notification.Name {
 	static let soundPreferencesDidChange = NSNotification.Name(rawValue: PPSoundPreferencesDidChange)
 	static let driverDidChange = NSNotification.Name(rawValue: PPDriverDidChange)
 	static let musicDidChange = NSNotification.Name(rawValue: PPMusicDidChange)

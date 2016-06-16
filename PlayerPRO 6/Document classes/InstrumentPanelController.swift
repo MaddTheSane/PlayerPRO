@@ -27,11 +27,11 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	weak var filterHandler: FilterPlugHandler!
 	weak var theDriver: PPDriver!
 	
-	func colorsDidChange(aNot: NSNotification) {
+	func colorsDidChange(_ aNot: Notification) {
 		
 	}
 	
-	@IBAction func playSample(sender: AnyObject!) {
+	@IBAction func playSample(_ sender: AnyObject!) {
 		let tag = (sender as! NSButtonCell).tag
 		let sampNum = tag % Int(MAXSAMPLE)
 		let instrNum = tag / Int(MAXSAMPLE)
@@ -41,12 +41,12 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	private func loadInstrumentsFromMusic() {
 		if (instrumentOutline != nil) {
 			instrumentOutline.reloadData()
-			instrumentOutline.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
+			instrumentOutline.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
 			instrumentOutline.scrollToBeginningOfDocument(nil)
 		}
 	}
 	
-	func importSampleFromURL(sampURL: NSURL, makeUserSelectInstrument selIns: Bool = false) throws {
+	func importSampleFromURL(_ sampURL: URL, makeUserSelectInstrument selIns: Bool = false) throws {
 		var theErr: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
 		//TODO: handle selIns
 		var plugType: MADFourChar = 0;
@@ -81,15 +81,15 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	}
 	
 	
-	func exportInstrumentListToURL(outURL: NSURL) -> MADErr {
+	func exportInstrumentListToURL(_ outURL: NSURL) -> MADErr {
 		return currentDocument.theMusic.exportInstrumentListToURL(outURL)
 	}
 	
-	func importInstrumentListFromURL(insURL: NSURL) throws {
+	func importInstrumentListFromURL(_ insURL: URL) throws {
 		try currentDocument.theMusic.importInstrumentListFromURL(insURL)
 	}
 	
-	@IBAction func importInstrument(sender: AnyObject!) {
+	@IBAction func importInstrument(_ sender: AnyObject!) {
 		var fileDict = [String: [String]]()
 		for obj in importer {
 			fileDict[obj.menuName] = obj.UTITypes
@@ -100,9 +100,9 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 			vc.beginOpenPanel(parentWindow: currentDocument.windowForSheet!, completionHandler: { (panelHandle: Int) -> Void in
 					if panelHandle == NSFileHandlingPanelOKButton {
 						do {
-							try self.importSampleFromURL(openPanel.URL!)
+							try self.importSampleFromURL(openPanel.url!)
 						} catch let err as NSError {
-							NSAlert(error: err).beginSheetModalForWindow(self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
+							NSAlert(error: err).beginSheetModal(self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
 								//do nothing
 								return
 							})
@@ -112,7 +112,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		}
 	}
 	
-	func playSample(instrument instrument: Int16, sample sampleNumber: Int16, volume: UInt8 = 0xFF, note: UInt8 = 0xFF) {
+	func playSample(instrument: Int16, sample sampleNumber: Int16, volume: UInt8 = 0xFF, note: UInt8 = 0xFF) {
 		
 	}
 	
@@ -124,34 +124,34 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	}
 	
 	
-	@IBAction func exportInstrument(sender: AnyObject!) {
+	@IBAction func exportInstrument(_ sender: AnyObject!) {
 		
 	}
 	
-	@IBAction func deleteInstrument(sender: AnyObject!) {
+	@IBAction func deleteInstrument(_ sender: AnyObject!) {
 		
 	}
 	
-	@IBAction func playInstrument(sender: AnyObject!) {
+	@IBAction func playInstrument(_ sender: AnyObject!) {
 		
 	}
 	
-	@IBAction func showInstrumentInfo(sender: AnyObject!) {
+	@IBAction func showInstrumentInfo(_ sender: AnyObject!) {
 		
 	}
 	
-	@IBAction func toggleInfo(sender: AnyObject!) {
+	@IBAction func toggleInfo(_ sender: AnyObject!) {
 		
 	}
 	
-	@IBAction func deleteSample(sender: AnyObject!) {
+	@IBAction func deleteSample(_ sender: AnyObject!) {
 		
 	}
 	
-	@objc func outlineViewSelectionDidChange(notification: NSNotification) {
-		var object: AnyObject! = instrumentOutline.itemAtRow(instrumentOutline.selectedRow)
+	@objc func outlineViewSelectionDidChange(_ notification: Notification) {
+		var object: AnyObject! = instrumentOutline.item(atRow: instrumentOutline.selectedRow)
 		
-		func updateOutlineView(obj: PPSampleObject?) {
+		func updateOutlineView(_ obj: PPSampleObject?) {
 			if obj == nil {
 				self.instrumentSize.stringValue = PPDoubleDash
 				self.instrumentLoopStart.stringValue = ""
@@ -197,7 +197,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		}
 	}
 	
-	func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
+	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
 		if item == nil {
 			return currentDocument.theMusic.instruments.count
 		}
@@ -208,7 +208,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return 0
 	}
 	
-	func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
+	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
 		if item == nil {
 			return currentDocument.theMusic.instruments[index]
 		}
@@ -218,14 +218,14 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return NSNull()
 	}
 	
-	func outlineView(outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
+	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
 		if let obj = item as? PPInstrumentObject {
 			return obj.countOfSamples != 0
 		}
 		return false
 	}
 	
-	func outlineView(outlineView: NSOutlineView, viewForTableColumn tableColumn: NSTableColumn?, item: AnyObject) -> NSView? {
+	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: AnyObject) -> NSView? {
 		if tableColumn == nil {
 			return nil
 		}
@@ -250,7 +250,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return theView
 	}
 	
-	func replaceObjectInInstrumentsAtIndex(index: Int, withObject object: PPInstrumentObject!) {
+	func replaceObjectInInstrumentsAtIndex(_ index: Int, withObject object: PPInstrumentObject!) {
 		currentDocument.theMusic.replaceObjectInInstrumentsAtIndex(index, withObject: object)
 	}
 	

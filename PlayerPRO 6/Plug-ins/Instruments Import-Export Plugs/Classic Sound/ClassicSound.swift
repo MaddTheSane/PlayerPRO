@@ -24,10 +24,10 @@ public final class ClassicSound: NSObject, PPSampleImportPlugin {
 		self.init()
 	}
 	
-	public func canImportSampleAtURL(AlienFileURL: NSURL) -> Bool {
+	public func canImportSample(at AlienFileURL: URL) -> Bool {
 		do {
-			let fileRef = try NSFileHandle(forUpdatingURL: AlienFileURL)
-			let data = fileRef.readDataOfLength(128)
+			let fileRef = try FileHandle(forUpdating: AlienFileURL)
+			let data = fileRef.readData(ofLength: 128)
 			return canOpenData(data)
 		} catch _ {
 		}
@@ -35,15 +35,15 @@ public final class ClassicSound: NSObject, PPSampleImportPlugin {
 		return false
 	}
 	
-	public func importSampleAtURL(sampleURL: NSURL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
+	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject>?, driver: PPDriver) -> MADErr {
 		let aSamp = PPSampleObject()
-		var iErr = MADErr.NoErr
-		if let data = NSData(contentsOfURL: sampleURL), tmpURL = assetForSND(data, error: &iErr) where iErr == .NoErr {
+		var iErr = MADErr.noErr
+		if let data = try? Data(contentsOf: sampleURL), tmpURL = assetForSND(data, error: &iErr) where iErr == .noErr {
 			iErr = AIFFAtURL(tmpURL, toSample: aSamp)
-			if iErr == .NoErr {
-				sample.memory = aSamp
+			if iErr == .noErr {
+				sample?.pointee = aSamp
 				do {
-				try NSFileManager.defaultManager().removeItemAtURL(tmpURL)
+				try FileManager.default().removeItem(at: tmpURL)
 				} catch {
 					
 				}

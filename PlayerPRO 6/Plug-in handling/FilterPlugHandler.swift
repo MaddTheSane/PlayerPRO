@@ -9,18 +9,18 @@
 import Foundation
 import PlayerPROCore
 
-class FilterPlugHandler: NSObject, NSFastEnumeration, CollectionType, SequenceType {
+class FilterPlugHandler: NSObject, NSFastEnumeration, Collection, Sequence {
 	private(set) var plugInArray = [PPFilterPlugObject]()
 	
 	override init() {
 		let defaultPlugLocs = DefaultPlugInLocations()
-		let defaultManager = NSFileManager.defaultManager()
+		let defaultManager = FileManager.default()
 		for aPlugLoc in defaultPlugLocs {
 			do {
-				let components = try defaultManager.contentsOfDirectoryAtURL(aPlugLoc, includingPropertiesForKeys: [], options: [])
+				let components = try defaultManager.contentsOfDirectory(at: aPlugLoc, includingPropertiesForKeys: [], options: [])
 				let aComp = components.filter({ (aURL) -> Bool in
 					if let ext = aURL.pathExtension {
-						if ext.compare("plugin", options: .CaseInsensitiveSearch) == .OrderedSame {
+						if ext.compare("plugin", options: .caseInsensitiveSearch) == .orderedSame {
 							return true
 						}
 					}
@@ -30,7 +30,7 @@ class FilterPlugHandler: NSObject, NSFastEnumeration, CollectionType, SequenceTy
 				
 				
 				for component in aComp {
-					if let theBundle = NSBundle(URL: component), tempObj = PPFilterPlugObject(bundle: theBundle) {
+					if let theBundle = Bundle(url: component), tempObj = PPFilterPlugObject(bundle: theBundle) {
 						plugInArray.append(tempObj)
 					}
 				}
@@ -47,8 +47,8 @@ class FilterPlugHandler: NSObject, NSFastEnumeration, CollectionType, SequenceTy
 		return plugInArray[index]
 	}
 	
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return (plugInArray as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len)
+	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
+		return (plugInArray as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 	
 	var count: Int {
@@ -63,32 +63,36 @@ class FilterPlugHandler: NSObject, NSFastEnumeration, CollectionType, SequenceTy
 		return plugInArray.count
 	}
 	
+	@nonobjc func index(after i: FilterPlugHandler.Index) -> FilterPlugHandler.Index {
+		return i + 1
+	}
+	
 	var plugInCount: Int {
 		return count
 	}
 	
-	func generate() -> IndexingGenerator<[PPFilterPlugObject]> {
-		return plugInArray.generate();
+	func makeIterator() -> IndexingIterator<[PPFilterPlugObject]> {
+		return plugInArray.makeIterator();
 	}
 
-	func beginWithPlugAtIndex(idx: Int, data theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver, parentDocument document: NSDocument, handler: PPPlugErrorBlock) {
+	func beginWithPlugAtIndex(_ idx: Int, data theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver, parentDocument document: NSDocument, handler: PPPlugErrorBlock) {
 		let aPlug = plugInArray[idx]
-		aPlug.beginRunWithData(theData, selectionRange: selRange, onlyCurrentChannel: StereoMode, driver: driver, parentDocument: document, handler: handler)
+		aPlug.beginRun(withData: theData, selectionRange: selRange, onlyCurrentChannel: StereoMode, driver: driver, parentDocument: document, handler: handler)
 	}
 	
 	@objc(addPlugInFromPath:) func addPlugIn(path thePath: String) {
-		if let bund = NSBundle(path: thePath) {
+		if let bund = Bundle(path: thePath) {
 			addPlugIn(bundle: bund)
 		}
 	}
 	
-	@objc(addPlugInFromURL:) func addPlugIn(URL urlpath: NSURL) {
-		if let bund = NSBundle(URL: urlpath) {
+	@objc(addPlugInFromURL:) func addPlugIn(URL urlpath: URL) {
+		if let bund = Bundle(url: urlpath) {
 			addPlugIn(bundle: bund)
 		}
 	}
 	
-	@objc(addPlugInFromBundle:) func addPlugIn(bundle theBund: NSBundle) {
+	@objc(addPlugInFromBundle:) func addPlugIn(bundle theBund: Bundle) {
 		if let newPlug = PPFilterPlugObject(bundle: theBund) {
 			plugInArray.append(newPlug)
 		}

@@ -16,7 +16,7 @@ final class FVResource: NSObject {
     weak var type: FVResourceType? = nil
     var file: FVResourceFile? = nil
     
-    var data: NSData? {
+    var data: Data? {
         return file?.dataForResource(self)
     }
 }

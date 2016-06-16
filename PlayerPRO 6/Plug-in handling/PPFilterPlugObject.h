@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PPFilterPlugObject : PPPlugInObject
-- (nullable instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (nonnull instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (nullable instancetype)initWithBundle:(NSBundle *)aBund NS_DESIGNATED_INITIALIZER;
 
 - (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handler;

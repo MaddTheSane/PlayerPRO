@@ -9,12 +9,12 @@
 import Cocoa
 import PlayerPROKit
 
-final class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
+final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
 	private(set) var digitalPlugs = [DigitalPlugInObject]()
 	
 	override init() {
 		let defaultPlugLocs = DefaultPlugInLocations()
-		let defaultManager = NSFileManager.defaultManager()
+		let defaultManager = FileManager.default()
 		for aPlugLoc in defaultPlugLocs {
 			do {
 				let components = try defaultManager.contentsOfDirectoryAtURL(aPlugLoc, includingPropertiesForKeys: [], options: [])
@@ -39,25 +39,25 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
 		super.init()
 	}
 	
-	func beginCallDigitalPlugIn(plugNum: Int, pcmd myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentDocument doc: PPDocument, handler: PPPlugErrorBlock) {
+	func beginCallDigitalPlugIn(_ plugNum: Int, pcmd myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentDocument doc: PPDocument, handler: PPPlugErrorBlock) {
 		let tmp = digitalPlugs[plugNum];
 		tmp.beginCallWithPcmd(myPcmd, driver: driver, parentDocument: doc, handler: handler)
 	}
 	
-	func addPlugInFromBundle(theBund: NSBundle) {
+	func addPlugInFromBundle(_ theBund: Bundle) {
 		if let obj = DigitalPlugInObject(bundle: theBund) {
 			digitalPlugs.append(obj)
 		}
 	}
 	
-	func addPlugInFromURL(urlpath: NSURL) {
-		if let theBund = NSBundle(URL: urlpath) {
+	func addPlugInFromURL(_ urlpath: URL) {
+		if let theBund = Bundle(url: urlpath) {
 			addPlugInFromBundle(theBund)
 		}
 	}
 	
-	func addPlugInFromPath(thePath: String) {
-		if let theBund = NSBundle(path: thePath) {
+	func addPlugInFromPath(_ thePath: String) {
+		if let theBund = Bundle(path: thePath) {
 			addPlugInFromBundle(theBund)
 		}
 	}
@@ -66,8 +66,8 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
 		return self.count
 	}
 	
-	func generate() -> IndexingGenerator<[DigitalPlugInObject]> {
-		return digitalPlugs.generate()
+	func makeIterator() -> IndexingIterator<[DigitalPlugInObject]> {
+		return digitalPlugs.makeIterator()
 	}
 	
 	@nonobjc var startIndex: Int {
@@ -86,7 +86,7 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
 		return digitalPlugs[index]
 	}
 	
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return (digitalPlugs as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len)
+	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AutoreleasingUnsafeMutablePointer<AnyObject?>>, count len: Int) -> Int {
+		return (digitalPlugs as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }

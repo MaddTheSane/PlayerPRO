@@ -18,8 +18,8 @@ extension PPPlugInObject {
 	}
 }
 
-extension PPInstrumentPlugHandler: SequenceType {
-	public func generate() -> IndexingGenerator<[PPInstrumentImporterObject]> {
-		return (plugInArray).generate();
+extension PPInstrumentPlugHandler: Sequence {
+	public func makeIterator() -> IndexingIterator<[PPInstrumentImporterObject]> {
+		return (plugInArray).makeIterator();
 	}
 }

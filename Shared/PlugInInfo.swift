@@ -29,7 +29,7 @@ final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 	let authorName: String
 	let plugType: String
 	let plugCopyright: String
-	let plugURL: NSURL
+	let plugURL: URL
 	
 	init(plugName pn: String, author aut: String? = nil, plugType pt: String = "unknown", plugURL pu: URL = Bundle.main().bundleURL) {
 		plugName = pn
@@ -59,7 +59,7 @@ final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 		return "\(plugName): \(plugType)"
 	}
 	
-	func isEqual(object: AnyObject?) -> Bool {
+	func isEqual(_ object: AnyObject?) -> Bool {
 		if (object == nil) {
 			return false
 		}

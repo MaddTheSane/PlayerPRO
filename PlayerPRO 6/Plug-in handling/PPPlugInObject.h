@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) OSType type;
 @property (readonly) UInt32 version;
 
-- (nullable instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (nonnull instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (nullable instancetype)initWithBundle:(NSBundle *)aBund NS_DESIGNATED_INITIALIZER;
 @end
 

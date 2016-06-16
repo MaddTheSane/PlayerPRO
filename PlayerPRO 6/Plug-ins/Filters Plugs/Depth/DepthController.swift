@@ -24,7 +24,7 @@ class DepthController: NSWindowController {
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
 
-	@IBAction func okay(sender: AnyObject!) {
+	@IBAction func okay(_ sender: AnyObject!) {
 		let ourData = NSMutableData(data: theData.data)
 		//let rawData = ourData.mutableBytes
 		var Sample8Ptr = UnsafeMutablePointer<Int8>(ourData.mutableBytes)
@@ -36,10 +36,10 @@ class DepthController: NSWindowController {
 		
 		switch theData.amplitude {
 		case 8:
-			Sample8Ptr = Sample8Ptr.advancedBy(selectionRange.location)
+			Sample8Ptr = Sample8Ptr.advanced(by: selectionRange.location)
 			var i = 0
 			while i < selectionRange.length {
-				var temp = Int32(Sample8Ptr.memory)
+				var temp = Int32(Sample8Ptr.pointee)
 				
 				temp *= Inc;
 				temp /= Int32(UInt8.max)
@@ -47,7 +47,7 @@ class DepthController: NSWindowController {
 				temp *= Int32(UInt8.max)
 				temp /= Inc;
 				
-				Sample8Ptr.memory = Int8(temp)
+				Sample8Ptr.pointee = Int8(temp)
 				
 				if stereoMode {
 					Sample8Ptr = Sample8Ptr.successor()
@@ -58,10 +58,10 @@ class DepthController: NSWindowController {
 				i += 1
 			}
 		case 16:
-			Sample16Ptr = Sample16Ptr.advancedBy(selectionRange.location)
+			Sample16Ptr = Sample16Ptr.advanced(by: selectionRange.location)
 			var i = 0
 			while i < selectionRange.length / 2 {	// Div 2, because it's in bytes !!!
-				var temp = Int32(Sample16Ptr.memory)
+				var temp = Int32(Sample16Ptr.pointee)
 				
 				temp *= Inc;
 				temp /= Int32(UInt16.max)
@@ -69,7 +69,7 @@ class DepthController: NSWindowController {
 				temp *= Int32(UInt16.max)
 				temp /= Inc
 				
-				Sample16Ptr.memory = Int16(temp)
+				Sample16Ptr.pointee = Int16(temp)
 				
 				if stereoMode {
 					Sample16Ptr = Sample16Ptr.successor()
@@ -83,19 +83,19 @@ class DepthController: NSWindowController {
 		default:
 			NSBeep()
 			parentWindow.endSheet(window!)
-			currentBlock(.ParametersErr)
+			currentBlock(.parametersErr)
 			return
 			
 		}
 
-		theData.data = ourData
+		theData.data = ourData as Data
 		parentWindow.endSheet(window!)
-		currentBlock(.NoErr);
+		currentBlock(.noErr);
 	}
 	
-	@IBAction func cancel(sender: AnyObject!) {
+	@IBAction func cancel(_ sender: AnyObject!) {
 		parentWindow.endSheet(window!)
-		currentBlock(.UserCanceledErr);
+		currentBlock(.userCanceledErr);
 	}
 
 }

@@ -26,9 +26,9 @@ class LengthWindowController: NSWindowController {
 	var theData: PPSampleObject!
 
 	enum LengthCompensation: Int {
-	case MoveLeft
-		case MoveRight
-		case Stretch
+	case moveLeft
+		case moveRight
+		case stretch
 	}
 	
 	override func windowDidLoad() {
@@ -40,11 +40,11 @@ class LengthWindowController: NSWindowController {
 		currentSize.isNewSize = false
 		newSize.isNewSize = true
 		
-		var temp = theData.data.length
+		var temp = theData.data.count
 		currentSize.dataSize = temp
 		newSize.dataSize = temp
 		
-		if (theData.stereo) {
+		if (theData.isStereo) {
 			temp /= 2;
 		}
 		if (theData.amplitude == 16) {
@@ -54,9 +54,9 @@ class LengthWindowController: NSWindowController {
 		newSize.samplesNumCount = temp
 	}
 	
-	@IBAction func okay(sender: AnyObject?) {
+	@IBAction func okay(_ sender: AnyObject?) {
 		var newSize: Int32 = 0
-		if theData.stereo {
+		if theData.isStereo {
 			newSize *= 2;
 		}
 		if theData.amplitude == 16 {
@@ -79,118 +79,118 @@ class LengthWindowController: NSWindowController {
 		}
 
 		parentWindow?.endSheet(self.window!)
-		currentBlock(.NoErr)
+		currentBlock(.noErr)
 	}
 	
-	@IBAction func cancel(sender: AnyObject?) {
+	@IBAction func cancel(_ sender: AnyObject?) {
 		parentWindow?.endSheet(self.window!)
-		currentBlock(.UserCanceledErr)
+		currentBlock(.userCanceledErr)
 	}
 	
 	private func convertSample(size destinationSize: Int) -> NSMutableData? {
 		let LRVAL = 3
-		var srcSize = theData.data.length
+		var srcSize = theData.data.count
 		var dstSize = destinationSize
-		let src16 = UnsafePointer<Int16>(theData.data.bytes)
-		let src8 = UnsafePointer<Int8>(src16)
-		let realsrcSize = srcSize
-		
-		if let dst = NSMutableData(length: destinationSize) {
-			var tempL = 0
-			var tempR = 0
-			let dst16 = UnsafeMutablePointer<Int16>(dst.mutableBytes)
-			let dst8 = UnsafeMutablePointer<Int8>(dst16)
-			
-			srcSize /= 100
-			dstSize /= 100
-			
-			switch (theData.amplitude) {
-			case 8:
-				var x = 0
-				while x < destinationSize {
-					var pos		= (x * srcSize << LRVAL) / dstSize
-					let right	= pos & ((1 << LRVAL) - 1)
-					let left	= (1 << LRVAL) - right
-					
-					if (theData.stereo) {
-						pos >>= LRVAL
-						pos /= 2
-						pos *= 2
+		return theData.data.withUnsafeBytes { (src8: UnsafePointer<Int8>) -> NSMutableData? in
+			let src16 = UnsafePointer<Int16>(src8)
+			let realsrcSize = srcSize
+
+			if let dst = NSMutableData(length: destinationSize) {
+				var tempL = 0
+				var tempR = 0
+				let dst16 = UnsafeMutablePointer<Int16>(dst.mutableBytes)
+				let dst8 = UnsafeMutablePointer<Int8>(dst16)
+				
+				srcSize /= 100
+				dstSize /= 100
+				
+				switch (theData.amplitude) {
+				case 8:
+					var x = 0
+					while x < destinationSize {
+						var pos		= (x * srcSize << LRVAL) / dstSize
+						let right	= pos & ((1 << LRVAL) - 1)
+						let left	= (1 << LRVAL) - right
 						
-						if (2 + pos >= realsrcSize) {
+						if (theData.isStereo) {
+							pos >>= LRVAL
+							pos /= 2
+							pos *= 2
+							
+							if (2 + pos >= realsrcSize) {
+							} else {
+								tempL = (left * Int(src8[pos]) + right * Int(src8[2 + pos])) >> LRVAL
+							}
+							
+							dst8[x] = Int8(tempL)
+							
+							x += 1
+							
+							if (3 + pos >= realsrcSize) {
+							} else {
+								tempR = (left * Int(src8[1 + pos]) + right * Int(src8[3 + pos])) >> LRVAL
+							}
+							
+							dst8[x] = Int8(tempR)
 						} else {
-							tempL = (left * Int(src8[pos]) + right * Int(src8[2 + pos])) >> LRVAL
+							pos >>= LRVAL
+							
+							if (1 + pos >= realsrcSize)	{
+							} else {
+								tempL = (left * Int(src8[pos]) + right * Int(src8[1 + pos])) >> LRVAL
+							}
+							
+							dst8[x] = Int8(tempL)
 						}
-						
-						dst8[x] = Int8(tempL)
-						
 						x += 1
-						
-						if (3 + pos >= realsrcSize) {
-						} else {
-							tempR = (left * Int(src8[1 + pos]) + right * Int(src8[3 + pos])) >> LRVAL
-						}
-						
-						dst8[x] = Int8(tempR)
-					} else {
-						pos >>= LRVAL
-						
-						if (1 + pos >= realsrcSize)	{
-						} else {
-							tempL = (left * Int(src8[pos]) + right * Int(src8[1 + pos])) >> LRVAL
-						}
-						
-						dst8[x] = Int8(tempL)
 					}
-					x += 1
-				}
-				
-			case 16:
-				var x = 0
-				while x < destinationSize / 2 {
-					var pos		= (x * srcSize << LRVAL) / dstSize
-					let right	= pos & ((1 << LRVAL) - 1)
-					let left	= (1 << LRVAL) - right
 					
-					if (theData.stereo) {
-						pos >>= LRVAL
-						pos /= 2
-						pos *= 2
+				case 16:
+					var x = 0
+					while x < destinationSize / 2 {
+						var pos		= (x * srcSize << LRVAL) / dstSize
+						let right	= pos & ((1 << LRVAL) - 1)
+						let left	= (1 << LRVAL) - right
 						
-						if (2 + pos >= realsrcSize / 2) {
+						if (theData.isStereo) {
+							pos >>= LRVAL
+							pos /= 2
+							pos *= 2
+							
+							if (2 + pos >= realsrcSize / 2) {
+							} else {
+								tempL = (left * Int(src16[pos]) + right * Int(src16[2 + pos])) >> LRVAL
+							}
+							
+							dst16[x] = Int16(tempL)
+							
+							x += 1;
+							
+							if (3 + pos >= realsrcSize / 2) {
+							} else {
+								tempR = (left * Int(src16[1 + pos]) + right * Int(src16[3 + pos])) >> LRVAL
+							}
+							
+							dst16[x] = Int16(tempR)
 						} else {
-							tempL = (left * Int(src16[pos]) + right * Int(src16[2 + pos])) >> LRVAL
+							pos >>= LRVAL;
+							
+							if (1 + pos >= realsrcSize / 2) {
+							} else {
+								tempL = (left * Int(src16[pos]) + right * Int(src16[1 + pos])) >> LRVAL
+							}
+							
+							dst16[x] = Int16(tempR)
 						}
-						
-						dst16[x] = Int16(tempL)
-						
-						x += 1;
-						
-						if (3 + pos >= realsrcSize / 2) {
-						} else {
-							tempR = (left * Int(src16[1 + pos]) + right * Int(src16[3 + pos])) >> LRVAL
-						}
-						
-						dst16[x] = Int16(tempR)
-					} else {
-						pos >>= LRVAL;
-						
-						if (1 + pos >= realsrcSize / 2) {
-						} else {
-							tempL = (left * Int(src16[pos]) + right * Int(src16[1 + pos])) >> LRVAL
-						}
-						
-						dst16[x] = Int16(tempR)
+						x += 1
 					}
-					x += 1
+					
+				default:
+					return nil
 				}
 				
-			default:
-				return nil
+				return dst
 			}
-			
-			return dst
-		} else {
 			return nil
 		}
 	}

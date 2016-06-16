@@ -134,7 +134,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 		return trackerLibs[index]
 	}
 	
-	public func index(after: Int) -> Int {
+	@nonobjc public func index(after: Int) -> Int {
 		return after + 1
 	}
 	

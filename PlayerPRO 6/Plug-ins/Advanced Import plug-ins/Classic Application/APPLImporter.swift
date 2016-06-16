@@ -20,7 +20,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 		self.init()
 	}
 	
-	public func beginImportOfURL(theURL: NSURL, withHandler handler: PPComplexImportHandler) {
+	public func beginImport(of theURL: URL, withHandler handler: PPComplexImportHandler) {
 		do {
 			let resFile = try FVResourceFile.resourceFileWithContentsOfURL(theURL)
 			var aRet = [String: [FVResource]]()
@@ -40,11 +40,11 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			controller.addResourceDictionary(aRet)
 			controller.beginImportModalSession()
 		} catch _ {
-			handler(nil, .ReadingErr)
+			handler(nil, .readingErr)
 		}
 	}
 	
-	public func canImportURL(theURL: NSURL) throws {
+	public func canImport(_ theURL: URL) throws {
 		var outErr: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
 		do {
 			let resFile = try FVResourceFile.resourceFileWithContentsOfURL(theURL)
@@ -59,7 +59,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 				}
 			}
 			
-			throw MADErr.FileNotSupportedByThisPlug
+			throw MADErr.fileNotSupportedByThisPlug
 		} catch let error as NSError {
 			outErr = error
 		}

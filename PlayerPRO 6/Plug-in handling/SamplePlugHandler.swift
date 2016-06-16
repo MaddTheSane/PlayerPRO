@@ -9,19 +9,19 @@
 import Cocoa
 import PlayerPROKit
 
-final class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
+final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 	private(set) var plugIns = [PPSamplePlugObject]()
 	
 	override init() {
 		let defaultPlugLocs = DefaultPlugInLocations()
-		let defaultManager = NSFileManager.defaultManager()
+		let defaultManager = FileManager.default()
 		
 		for url in defaultPlugLocs {
 			do {
-				let components = try defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: [])
+				let components = try defaultManager.contentsOfDirectory(at:url, includingPropertiesForKeys: [], options: [])
 				let aComp = components.filter({ (aURL) -> Bool in
 					if let ext = aURL.pathExtension {
-						if ext.compare("plugin", options: .CaseInsensitiveSearch) == .OrderedSame {
+						if ext.compare("plugin", options: .caseInsensitiveSearch) == .orderedSame {
 							return true
 						}
 					}
@@ -29,7 +29,7 @@ final class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 					return false
 				})
 				for component in aComp {
-					if let theBundle = NSBundle(URL: component), aPlug = PPSamplePlugObject(bundle: theBundle) {
+					if let theBundle = Bundle(url: component), aPlug = PPSamplePlugObject(bundle: theBundle) {
 						plugIns.append(aPlug)
 					}
 				}
@@ -57,15 +57,19 @@ final class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 		return plugIns.count
 	}
 	
-	func generate() -> IndexingGenerator<[PPSamplePlugObject]> {
-		return plugIns.generate()
+	@nonobjc func index(after i: SamplePlugHandler.Index) -> SamplePlugHandler.Index {
+		return i + 1
+	}
+	
+	func makeIterator() -> IndexingIterator<[PPSamplePlugObject]> {
+		return plugIns.makeIterator()
 	}
 	
 	@objc subscript (index: Int) -> PPSamplePlugObject {
 		return plugIns[index]
 	}
 	
-	func beginExportingSample(sample: PPSampleObject, type: OSType, URL url: NSURL, driver: PPDriver, parentDocument document: PPDocument, handler: PPPlugErrorBlock) {
+	func beginExportingSample(_ sample: PPSampleObject, type: OSType, URL url: URL, driver: PPDriver, parentDocument document: PPDocument, handler: PPPlugErrorBlock) {
 		var aPlug: PPSamplePlugObject? = nil
 		
 		for plug in plugIns {
@@ -76,13 +80,13 @@ final class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 		}
 		
 		if let plug = aPlug {
-			plug.beginExportSample(sample, toURL: url, driver: driver, parentDocument: document, handler: handler)
+			plug.beginExportSample(sample, to: url, driver: driver, parentDocument: document, handler: handler)
 		} else {
-			handler(.CannotFindPlug)
+			handler(.cannotFindPlug)
 		}
 	}
 	
-	func beginImportingSample(type type: OSType, URL url: NSURL, driver: PPDriver, parentDocument document: PPDocument, handler: (errorCode: MADErr, createdIns: PPSampleObject?) -> Void) {
+	func beginImportingSample(type: OSType, URL url: URL, driver: PPDriver, parentDocument document: PPDocument, handler: (errorCode: MADErr, createdIns: PPSampleObject?) -> Void) {
 		var aPlug: PPSamplePlugObject? = nil
 		
 		for plug in plugIns {
@@ -93,23 +97,23 @@ final class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 		}
 		
 		if let plug = aPlug {
-			plug.beginImportSampleAtURL(url, driver: driver, parentDocument: document, handler: handler)
+			plug.beginImportSample(at: url, driver: driver, parentDocument: document, handler: handler)
 		} else {
-			handler(errorCode: .CannotFindPlug, createdIns: nil)
+			handler(errorCode: .cannotFindPlug, createdIns: nil)
 		}
 	}
 	
-	func testSampleFile(toTest: NSURL, type theType: OSType) -> MADErr {
+	func testSampleFile(_ toTest: URL, type theType: OSType) -> MADErr {
 		for plug in plugIns {
 			if plug.type == theType {
-				return plug.canImportFileAtURL(toTest) ? .NoErr : .FileNotSupportedByThisPlug
+				return plug.canImportFile(at: toTest) ? .noErr : .fileNotSupportedByThisPlug
 			}
 		}
 
-		return .CannotFindPlug
+		return .cannotFindPlug
 	}
 	
-	func isPlugAvailable(kind: OSType) -> Bool {
+	func isPlugAvailable(_ kind: OSType) -> Bool {
 		for plug in plugIns {
 			if plug.type == kind {
 				return true
@@ -118,17 +122,17 @@ final class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 		return false
 	}
 	
-	func identifySampleFile(ref: NSURL) -> (error: MADErr, type: OSType) {
+	func identifySampleFile(_ ref: URL) -> (error: MADErr, type: OSType) {
 		for plug in plugIns {
-			if plug.canImportFileAtURL(ref) {
-				return (.NoErr, plug.type)
+			if plug.canImportFile(at: ref) {
+				return (.noErr, plug.type)
 			}
 		}
 		
-		return (.CannotFindPlug, "!!!!")
+		return (.cannotFindPlug, "!!!!")
 	}
 	
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return (plugIns as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len)
+	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
+		return (plugIns as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }
