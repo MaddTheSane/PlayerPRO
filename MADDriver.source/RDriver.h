@@ -325,11 +325,13 @@ typedef MADENUM(short, MADOutputChannel) {
 	/// Use this one only!
 	DeluxeStereoOutPut,
 	/// Do <b>not</b> use this! Standard hardware doesn't support it!
-	PolyPhonic
+	PolyPhonic,
+	
+	/// <b>Not supported</b> anymore
+	oldMonoOutPut = MonoOutPut,
+	/// <b>Not supported</b> anymore
+	oldStereoOutPut = StereoOutPut
 };
-
-#define oldMonoOutPut MonoOutPut
-#define oldStereoOutPut StereoOutPut
 
 #pragma pack(push, 8)
 /*!
