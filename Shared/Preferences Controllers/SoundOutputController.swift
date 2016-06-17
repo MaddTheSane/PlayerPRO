@@ -10,7 +10,7 @@ import Cocoa
 import PlayerPROCore
 import PlayerPROKit
 
-final class SoundOutputController: SoundSettingsViewController, SoundSettingsViewControllerDelegate, PPPreferenceObject {
+final class SoundOutputController: SoundSettingsViewController, SoundSettingsViewWithDriverControllerDelegate, PPPreferenceObject {
 	let preferenceIdentifier = PPSoundSettPrefID
 	
 	class func newPreferenceView() -> Self? {
@@ -35,67 +35,67 @@ final class SoundOutputController: SoundSettingsViewController, SoundSettingsVie
 		return ourself
 	}
 	
-	func soundOutDriverDidChange(_ driv: MADSoundOutput) {
+	func sound(view: SoundSettingsViewController, driverDidChange driv: MADSoundOutput) {
 		UserDefaults.standard().set(Int(driv.rawValue), forKey:PPSoundDriver);
 		
 		NotificationCenter.default().post(name: NSNotification.Name.soundPreferencesDidChange, object: self)
 	}
 	
-	func soundOutBitsDidChange(_ bits: Int16) {
+	func sound(view: SoundSettingsViewController, bitsDidChange bits: Int16) {
 		UserDefaults.standard().set(Int(bits), forKey:PPSoundOutBits);
 		
 		NotificationCenter.default().post(name: NSNotification.Name.soundPreferencesDidChange, object: self)
 	}
 	
-	func soundOutRateDidChange(_ rat: UInt32) {
+	func sound(view: SoundSettingsViewController, rateDidChange rat: UInt32) {
 		UserDefaults.standard().set(Int(rat), forKey: PPSoundOutRate);
 		
 		NotificationCenter.default().post(name: NSNotification.Name.soundPreferencesDidChange, object: self)
 	}
 	
-	func soundOutReverbDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, reverbDidChangeActive isAct: Bool) {
 		UserDefaults.standard().set(isAct, forKey:PPReverbToggle);
 		
 		NotificationCenter.default().post(name: NSNotification.Name.soundPreferencesDidChange, object: self)
 	}
 	
-	func soundOutOversamplingDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, oversamplingDidChangeActive isAct: Bool) {
 		UserDefaults.standard().set(isAct, forKey:PPOversamplingToggle);
 		
 		NotificationCenter.default().post(name: NSNotification.Name.soundPreferencesDidChange, object: self)
 	}
 	
-	func soundOutStereoDelayDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, stereoDelayDidChangeActive isAct: Bool) {
 		UserDefaults.standard().set(isAct, forKey:PPStereoDelayToggle);
 		
 		NotificationCenter.default().post(name: NSNotification.Name.soundPreferencesDidChange, object: self)
 	}
 	
-	func soundOutSurroundDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, surroundDidChangeActive isAct: Bool) {
 		UserDefaults.standard().set(isAct, forKey:PPSurroundToggle);
 		
 		NotificationCenter.default().post(name: NSNotification.Name.soundPreferencesDidChange, object: self)
 	}
 	
-	func soundOutReverbStrengthDidChange(_ rev: Int32) {
+	func sound(view: SoundSettingsViewController, reverbStrengthDidChange rev: Int32) {
 		UserDefaults.standard().set(Int(rev), forKey:PPReverbStrength);
 		
 		NotificationCenter.default().post(name: NSNotification.Name.soundPreferencesDidChange, object: self)
 	}
 	
-	func soundOutReverbSizeDidChange(_ rev: Int32) {
+	func sound(view: SoundSettingsViewController, reverbSizeDidChange rev: Int32) {
 		UserDefaults.standard().set(Int(rev), forKey:PPReverbAmount);
 		
 		NotificationCenter.default().post(name: NSNotification.Name.soundPreferencesDidChange, object: self)
 	}
 	
-	func soundOutOversamplingAmountDidChange(_ ovs: Int32) {
+	func sound(view: SoundSettingsViewController, oversamplingAmountDidChange ovs: Int32) {
 		UserDefaults.standard().set(Int(ovs), forKey:PPOversamplingAmount);
 		
 		NotificationCenter.default().post(name: NSNotification.Name.soundPreferencesDidChange, object: self)
 	}
 	
-	func soundOutStereoDelayAmountDidChange(_ std: Int32) {
+	func sound(view: SoundSettingsViewController, stereoDelayAmountDidChange std: Int32) {
 		UserDefaults.standard().set(Int(std), forKey:PPStereoDelayAmount);
 		
 		NotificationCenter.default().post(name: NSNotification.Name.soundPreferencesDidChange, object: self)

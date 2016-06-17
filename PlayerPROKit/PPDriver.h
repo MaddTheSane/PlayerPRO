@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (getter = isExporting) BOOL exporting;
 @property (readonly) NSTimeInterval totalMusicPlaybackTime;
 
-- (nullable instancetype)init UNAVAILABLE_REASON("PPDriver cannot be inited without a library");
+- (nonnull instancetype)init UNAVAILABLE_REASON("PPDriver cannot be inited without a library");
 - (nullable instancetype)initWithLibrary:(PPLibrary *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)theErr;
 - (nullable instancetype)initWithLibrary:(PPLibrary *)theLib settings:(inout nullable MADDriverSettings *)theSettings error:(out NSError* __nullable __autoreleasing* __nullable)theErr NS_DESIGNATED_INITIALIZER;
 

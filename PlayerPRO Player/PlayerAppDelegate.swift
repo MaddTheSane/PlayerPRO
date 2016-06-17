@@ -44,7 +44,7 @@ private func cocoaDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: Unsafe
 }
 
 @NSApplicationMain
-class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource {
+class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource {
 	@IBOutlet var window: NSWindow! = nil
 	@IBOutlet var loopButton: NSButton!
 	@IBOutlet var playButton: NSButton!
@@ -184,12 +184,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 	}
 	
-	@IBAction func showMusicList(sender: AnyObject?) {
+	@IBAction func showMusicList(_ sender: AnyObject?) {
 		window.makeKeyAndOrderFront(sender)
 	}
 	
 	
-	@IBAction func showPreferences(sender: AnyObject!) {
+	@IBAction func showPreferences(_ sender: AnyObject!) {
 		preferences.window!.center()
 		preferences.showWindow(sender)
 	}
@@ -623,7 +623,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		tableView.scrollRowToVisible(anIdx)
 	}
 	
-	@IBAction func clearMusicList(sender: AnyObject?) {
+	@IBAction func clearMusicList(_ sender: AnyObject?) {
 		if musicList.countOfMusicList != 0 {
 			let clearMusicListStr = String(format: NSLocalizedString("The music list contains %ld items. Do you really want to remove them?", comment: "Clear Music List?"), musicList.countOfMusicList)
 			
@@ -642,7 +642,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 	}
 	
-	@IBAction func saveMusicList(sender: AnyObject!) {
+	@IBAction func saveMusicList(_ sender: AnyObject!) {
 		let savePanel = NSSavePanel()
 		savePanel.allowedFileTypes = [PPMusicListUTI]
 		savePanel.canCreateDirectories = true
@@ -654,7 +654,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		})
 	}
 	
-	@IBAction func showInstrumentsList(sender: AnyObject?) {
+	@IBAction func showInstrumentsList(_ sender: AnyObject?) {
 		instrumentController!.showWindow(sender)
 	}
 	
@@ -745,7 +745,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		return false;
 	}
 	
-	@IBAction func openFile(sender: AnyObject?) {
+	@IBAction func openFile(_ sender: AnyObject?) {
 		let panel = NSOpenPanel()
 		let playlistDict = ["PlayerPRO Music List" : [PPMusicListUTI],
 			"PlayerPRO Old Music List" : [PPOldMusicListUTI]];
@@ -957,15 +957,15 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	
 	// MARK: - Tools functions
 	
-	@IBAction func fastForwardButtonPressed(sender: AnyObject!) {
+	@IBAction func fastForwardButtonPressed(_ sender: AnyObject!) {
 		
 	}
 	
-	@IBAction func loopButtonPressed(sender: AnyObject!) {
+	@IBAction func loopButtonPressed(_ sender: AnyObject!) {
 		
 	}
 	
-	@IBAction func nextButtonPressed(sender: AnyObject!) {
+	@IBAction func nextButtonPressed(_ sender: AnyObject!) {
 		if (self.currentlyPlayingIndex.index + 1 < musicList.countOfMusicList) {
 			currentlyPlayingIndex.index += 1;
 			selectCurrentlyPlayingMusic()
@@ -987,14 +987,14 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 	}
 	
-	@IBAction func playButtonPressed(sender: AnyObject!) {
+	@IBAction func playButtonPressed(_ sender: AnyObject!) {
 		if (self.music != nil) {
 			madDriver.play()
 			paused = false;
 		}
 	}
 	
-	@IBAction func stopButtonPressed(sender: AnyObject!) {
+	@IBAction func stopButtonPressed(_ sender: AnyObject!) {
 		if (self.music != nil) {
 			madDriver.stop()
 			madDriver.cleanDriver()
@@ -1003,7 +1003,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 	}
 	
-	@IBAction func pauseButtonPressed(sender: AnyObject!) {
+	@IBAction func pauseButtonPressed(_ sender: AnyObject!) {
 		if (self.music != nil) {
 			if (self.paused) {
 				madDriver.play()
@@ -1014,7 +1014,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 	}
 	
-	@IBAction func prevButtonPressed(sender: AnyObject!) {
+	@IBAction func prevButtonPressed(_ sender: AnyObject!) {
 		if (currentlyPlayingIndex.index > 0) {
 			currentlyPlayingIndex.index -= 1;
 			selectCurrentlyPlayingMusic()
@@ -1028,28 +1028,28 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 	}
 	
-	@IBAction func rewindButtonPressed(sender: AnyObject!) {
+	@IBAction func rewindButtonPressed(_ sender: AnyObject!) {
 		
 	}
 	
-	@IBAction func sliderChanged(sender: AnyObject!) {
+	@IBAction func sliderChanged(_ sender: AnyObject!) {
 		if (self.music != nil) {
 			madDriver.setMusicStatusWithCurrentTime(Int(songPos.doubleValue), maximumTime: Int(songPos.maxValue), minimumTime: 0)
 		}
 	}
 	
-	@IBAction func showTools(sender: AnyObject?) {
+	@IBAction func showTools(_ sender: AnyObject?) {
 		toolsPanel.makeKeyAndOrderFront(sender)
 	}
 	
 	// MARK: - Exporting functions
 	
-	@IBAction func okayExportSettings(sender: AnyObject!) {
+	@IBAction func okayExportSettings(_ sender: AnyObject!) {
 		window.endSheet(exportWindow, returnCode: NSAlertDefaultReturn)
 		exportWindow.close()
 	}
 	
-	@IBAction func cancelExportSettings(sender: AnyObject!) {
+	@IBAction func cancelExportSettings(_ sender: AnyObject!) {
 		window.endSheet(exportWindow, returnCode: NSAlertAlternateReturn)
 		exportWindow.close()
 	}
@@ -1314,7 +1314,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 						session.exportAsynchronously(completionHandler: { () -> Void in
 							_ = sessionWaitSemaphore.signal()
 						})
-						sessionWaitSemaphore.wait(timeout: DispatchTime.distantFuture)
+						_=sessionWaitSemaphore.wait(timeout: DispatchTime.distantFuture)
 						
 						let didFinish = session.status == .completed
 						self.madDriver.endExport()
@@ -1442,18 +1442,18 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		case FileInfo
 	}
 	
-	@IBAction func toggleInfo(sender: AnyObject?) {
+	@IBAction func toggleInfo(_ sender: AnyObject?) {
 		infoDrawer.toggle(sender)
 	}
 	
-	@IBAction func sortMusicList(sender: AnyObject?) {
+	@IBAction func sortMusicList(_ sender: AnyObject?) {
 		willChangeValue(forKey: kMusicListKVO)
 		musicList.sortMusicListByName()
 		didChangeValue(forKey: kMusicListKVO)
 		musicListContentsDidMove()
 	}
 	
-	@IBAction func playSelectedMusic(sender: AnyObject?) {
+	@IBAction func playSelectedMusic(_ sender: AnyObject?) {
 		self.currentlyPlayingIndex.index = tableView.selectedRow;
 		do {
 			try loadMusicFromCurrentlyPlayingIndex()
@@ -1462,7 +1462,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 	}
 	
-	@IBAction func removeSelectedMusic(sender: AnyObject?) {
+	@IBAction func removeSelectedMusic(_ sender: AnyObject?) {
 		let selMusic = tableView.selectedRowIndexes
 		willChangeValue(forKey: kMusicListKVO)
 		musicList.remove(at: selMusic)
@@ -1470,7 +1470,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		musicListContentsDidMove()
 	}
 	
-	@IBAction func addMusic(sender: AnyObject?) {
+	@IBAction func addMusic(_ sender: AnyObject?) {
 		let panel = NSOpenPanel()
 		
 		if let av = OpenPanelViewController(openPanel: panel, trackerDictionary: trackerDict) {
@@ -1678,49 +1678,52 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		atableView.reloadData()
 		musicListContentsDidMove()
 	}
-	
-	//MARK: - PPSoundSettingsViewController delegate methods
-	func soundOutBitsDidChange(_ bits: Int16) {
+}
+
+//MARK: - PPSoundSettingsViewController delegate methods
+extension PlayerAppDelegate: SoundSettingsViewControllerDelegate {
+	func sound(view: SoundSettingsViewController, bitsDidChange bits: Int16) {
 		exportSettings.outPutBits = bits;
 	}
 	
-	func soundOutRateDidChange(_ rat: UInt32) {
+	func sound(view: SoundSettingsViewController, rateDidChange rat: UInt32) {
 		exportSettings.outPutRate = rat;
 	}
 	
-	func soundOutReverbDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, reverbDidChangeActive isAct: Bool) {
 		exportSettings.Reverb = isAct;
 	}
 	
-	func soundOutOversamplingDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, oversamplingDidChangeActive isAct: Bool) {
 		if (!isAct) {
 			exportSettings.oversampling = 1;
 		}
 	}
 	
-	func soundOutStereoDelayDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, stereoDelayDidChangeActive isAct: Bool) {
 		if (!isAct) {
 			exportSettings.MicroDelaySize = 0;
 		}
 	}
 	
-	func soundOutSurroundDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, surroundDidChangeActive isAct: Bool) {
 		exportSettings.surround = isAct;
 	}
 	
-	func soundOutReverbStrengthDidChange(_ rev: Int32) {
+	func sound(view: SoundSettingsViewController, reverbStrengthDidChange rev: Int32) {
 		exportSettings.ReverbStrength = rev;
 	}
 	
-	func soundOutReverbSizeDidChange(_ rev: Int32) {
+	func sound(view: SoundSettingsViewController, reverbSizeDidChange rev: Int32) {
 		exportSettings.ReverbSize = rev;
 	}
 	
-	func soundOutOversamplingAmountDidChange(_ ovs: Int32) {
+	func sound(view: SoundSettingsViewController, oversamplingAmountDidChange ovs: Int32) {
 		exportSettings.oversampling = ovs;
 	}
 	
-	func soundOutStereoDelayAmountDidChange(_ std: Int32) {
+	func sound(view: SoundSettingsViewController, stereoDelayAmountDidChange std: Int32) {
 		exportSettings.MicroDelaySize = std;
 	}
+
 }

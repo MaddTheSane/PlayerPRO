@@ -80,18 +80,20 @@ private let OversamplingCoupling = [TagCoupling(1, 1), TagCoupling(2, 2), TagCou
 	TagCoupling(6, 5), TagCoupling(8, 6), TagCoupling(10, 7), TagCoupling(16, 8), TagCoupling(20, 9), TagCoupling(25, 10), TagCoupling(30, 11)];
 
 @objc public protocol SoundSettingsViewControllerDelegate : NSObjectProtocol {
-	func soundOutBitsDidChange(_ bits: Int16)
-	func soundOutRateDidChange(_ rat: UInt32)
-	func soundOutReverbDidChangeActive(_ isAct: Bool)
-	func soundOutOversamplingDidChangeActive(_ isAct: Bool)
-	func soundOutStereoDelayDidChangeActive(_ isAct: Bool)
-	func soundOutSurroundDidChangeActive(_ isAct: Bool)
-	func soundOutReverbStrengthDidChange(_ rev: Int32)
-	func soundOutReverbSizeDidChange(_ rev: Int32)
-	func soundOutOversamplingAmountDidChange(_ ovs: Int32)
-	func soundOutStereoDelayAmountDidChange(_ std: Int32)
-	
-	@objc optional func soundOutDriverDidChange(_ driv: MADSoundOutput)
+	func sound(view: SoundSettingsViewController, bitsDidChange bits: Int16)
+	func sound(view: SoundSettingsViewController, rateDidChange rat: UInt32)
+	func sound(view: SoundSettingsViewController, reverbDidChangeActive isAct: Bool)
+	func sound(view: SoundSettingsViewController, oversamplingDidChangeActive isAct: Bool)
+	func sound(view: SoundSettingsViewController, stereoDelayDidChangeActive isAct: Bool)
+	func sound(view: SoundSettingsViewController, surroundDidChangeActive isAct: Bool)
+	func sound(view: SoundSettingsViewController, reverbStrengthDidChange rev: Int32)
+	func sound(view: SoundSettingsViewController, reverbSizeDidChange rev: Int32)
+	func sound(view: SoundSettingsViewController, oversamplingAmountDidChange ovs: Int32)
+	func sound(view: SoundSettingsViewController, stereoDelayAmountDidChange std: Int32)
+}
+
+@objc public protocol SoundSettingsViewWithDriverControllerDelegate : SoundSettingsViewControllerDelegate {
+	func sound(view: SoundSettingsViewController, driverDidChange driv: MADSoundOutput)
 }
 
 public class SoundSettingsViewController: NSViewController {
@@ -348,7 +350,7 @@ public class SoundSettingsViewController: NSViewController {
 			}
 			oversamplingNum.selectItem(at: toSet! - 1)
 			
-			if (delegate?.soundOutDriverDidChange == nil) {
+			if delegate is SoundSettingsViewWithDriverControllerDelegate {
 				soundDriver.isEnabled = false;
 			}
 		}
@@ -359,7 +361,9 @@ public class SoundSettingsViewController: NSViewController {
 	
 	@IBAction public func changeDriver(sender: AnyObject!) {
 		let driver = currentSoundDriver()
-		delegate?.soundOutDriverDidChange?(driver)
+		if let delegate1 = delegate as? SoundSettingsViewWithDriverControllerDelegate {
+			delegate1.sound(view: self, driverDidChange: driver)
+		}
 	}
 	
 	@IBAction public func changeBits(sender: AnyObject!) {
@@ -382,7 +386,7 @@ public class SoundSettingsViewController: NSViewController {
 			returnBits = 16;
 			break;
 		}
-		delegate?.soundOutBitsDidChange(returnBits)
+		delegate?.sound(view: self, bitsDidChange: returnBits)
 	}
 	
 	@IBAction public func changeRate(sender: AnyObject!) {
@@ -405,7 +409,7 @@ public class SoundSettingsViewController: NSViewController {
 			returnRate = 44100;
 			break;
 		}
-		delegate?.soundOutRateDidChange(returnRate)
+		delegate?.sound(view: self, rateDidChange: returnRate)
 	}
 	
 	@IBAction public func changeChecked(sender: AnyObject!) {
@@ -420,22 +424,22 @@ public class SoundSettingsViewController: NSViewController {
 		stereoDelayNum.isEnabled = stereoDelayState
 		
 			if (reverbState != reverbActive) {
-				delegate?.soundOutReverbDidChangeActive(reverbState)
+				delegate?.sound(view: self, reverbDidChangeActive: reverbState)
 			}
 			if (stereoDelayState != stereoDelayActive) {
-				delegate?.soundOutStereoDelayDidChangeActive(stereoDelayState)
+				delegate?.sound(view: self, stereoDelayDidChangeActive: stereoDelayState)
 				if stereoDelayState {
-					delegate?.soundOutStereoDelayAmountDidChange(stereoDelayFromTag(stereoDelayNum.selectedItem!.tag))
+					delegate?.sound(view: self, stereoDelayAmountDidChange: stereoDelayFromTag(stereoDelayNum.selectedItem!.tag))
 				}
 			}
 			if (oversamplingState != oversamplingActive) {
-				delegate?.soundOutOversamplingDidChangeActive(oversamplingState)
+				delegate?.sound(view: self, oversamplingDidChangeActive: oversamplingState)
 				if (oversamplingState) {
-					delegate?.soundOutOversamplingAmountDidChange(oversamplingFromTag(oversamplingNum.selectedItem!.tag))
+					delegate?.sound(view: self, oversamplingAmountDidChange: oversamplingFromTag(oversamplingNum.selectedItem!.tag))
 				}
 			}
 			if (surroundState != surroundActive) {
-				delegate?.soundOutSurroundDidChangeActive(surroundState)
+				delegate?.sound(view: self, surroundDidChangeActive: surroundState)
 			}
 		self.reverbActive = reverbState;
 		self.stereoDelayActive = stereoDelayState;
@@ -445,7 +449,7 @@ public class SoundSettingsViewController: NSViewController {
 	
 	@IBAction func changeOversampling(sender: AnyObject!) {
 		let toSet = oversamplingFromTag((sender as! NSMenuItem).tag)
-		delegate?.soundOutOversamplingAmountDidChange(toSet)
+		delegate?.sound(view: self, oversamplingAmountDidChange: toSet)
 	}
 	
 	@IBAction public func changeReverbAmount(sender: AnyObject!) {
@@ -463,7 +467,7 @@ public class SoundSettingsViewController: NSViewController {
 			toSet = 25;
 		}
 		
-		delegate?.soundOutReverbSizeDidChange(toSet)
+		delegate?.sound(view: self, reverbSizeDidChange: toSet)
 	}
 	
 	@IBAction public func changeReverbPercent(sender: AnyObject!) {
@@ -480,11 +484,11 @@ public class SoundSettingsViewController: NSViewController {
 		if (toSet == 0) {
 			toSet = 30;
 		}
-		delegate?.soundOutReverbStrengthDidChange(toSet)
+		delegate?.sound(view: self, reverbStrengthDidChange: toSet)
 	}
 	
 	@IBAction public func changeStereoDelay(sender: AnyObject!) {
 		let toSet = stereoDelayFromTag((sender as! NSMenuItem).tag)
-		delegate?.soundOutStereoDelayAmountDidChange(toSet)
+		delegate?.sound(view: self, stereoDelayAmountDidChange: toSet)
 	}
 }

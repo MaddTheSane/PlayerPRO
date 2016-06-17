@@ -24,7 +24,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	@IBOutlet weak var waveFormImage:		NSImageView!
 	@IBOutlet weak var instrumentView:		NSOutlineView!
 	
-	@IBAction func toggleInfo(sender: AnyObject?) {
+	@IBAction func toggleInfo(_ sender: AnyObject?) {
 		infoDrawer?.toggle(sender)
 	}
 	
