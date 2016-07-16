@@ -508,16 +508,16 @@ void RegisterCFDefaults()
 #pragma mark Windows, initial settings
 	{
 		NSAutoreleasePool *windowPool = [NSAutoreleasePool new];
-	NSMutableArray *winPosArr = [NSMutableArray arrayWithCapacity:MAXWINDOWS]; 
+		NSMutableArray *winPosArr = [NSMutableArray arrayWithCapacity:MAXWINDOWS]; 
 		NSMutableArray *winIDArr = [NSMutableArray arrayWithCapacity:MAXWINDOWS];
-	
+		
 		NSString *zeroStringPoint = NSStringFromPoint(NSZeroPoint);
 		NSNumber *neg1WinID = [NSNumber numberWithLong:-1];
-	for (int i = 0; i < MAXWINDOWS; i++) {
-		[winPosArr addObject:zeroStringPoint];
-		[winIDArr addObject:neg1WinID];
-	}
-	[winPosArr replaceObjectAtIndex:1 withObject:NSStringFromPoint(NSMakePoint(59, 222))];
+		for (int i = 0; i < MAXWINDOWS; i++) {
+			[winPosArr addObject:zeroStringPoint];
+			[winIDArr addObject:neg1WinID];
+		}
+		[winPosArr replaceObjectAtIndex:1 withObject:NSStringFromPoint(NSMakePoint(59, 222))];
 		[winPosArr replaceObjectAtIndex:2 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
 		[winPosArr replaceObjectAtIndex:5 withObject:NSStringFromPoint(NSMakePoint(58, 429))];
 		[winPosArr replaceObjectAtIndex:6 withObject:NSStringFromPoint(NSMakePoint(60, 357))];
@@ -533,7 +533,7 @@ void RegisterCFDefaults()
 		[winPosArr replaceObjectAtIndex:25 withObject:NSStringFromPoint(NSMakePoint(20, 0))];
 		[winPosArr replaceObjectAtIndex:26 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
 		[winPosArr replaceObjectAtIndex:27 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
-
+		
 		[winIDArr replaceObjectAtIndex:0 withObject:[NSNumber numberWithLong:8]];
 		[winIDArr replaceObjectAtIndex:1 withObject:[NSNumber numberWithLong:7]];
 		[winIDArr replaceObjectAtIndex:2 withObject:[NSNumber numberWithLong:25]];
@@ -541,14 +541,14 @@ void RegisterCFDefaults()
 		[winIDArr replaceObjectAtIndex:4 withObject:[NSNumber numberWithLong:6]];
 		[winIDArr replaceObjectAtIndex:5 withObject:[NSNumber numberWithLong:10]];
 		[winIDArr replaceObjectAtIndex:6 withObject:[NSNumber numberWithLong:1]];
-
-	// Register Window defaults
-	[[NSUserDefaults standardUserDefaults]
-	 registerDefaults:
-	 [NSDictionary dictionaryWithObjectsAndKeys:
-	  winPosArr, PPWindowPositions,
-	  winIDArr, PPWindowIdentifiers,
-	  nil]];
+		
+		// Register Window defaults
+		[[NSUserDefaults standardUserDefaults]
+		 registerDefaults:
+		 [NSDictionary dictionaryWithObjectsAndKeys:
+		  winPosArr, PPWindowPositions,
+		  winIDArr, PPWindowIdentifiers,
+		  nil]];
 		
 		[windowPool drain];
 	}
