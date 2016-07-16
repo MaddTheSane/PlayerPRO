@@ -737,7 +737,15 @@ void WriteCFPreferences()
 	[defaults setBool:thePrefs.clickSound forKey:PPClickSound];
 	
 #pragma mark Windows, set settings
+	tmpMutable = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+	for (int i = 0; i < MAXWINDOWS; i++) {
+		[tmpMutable addObject:NSStringFromPoint(NSMakePoint(thePrefs.WinPos[i].v, thePrefs.WinPos[i].h))];
+	}
+	[defaults setObject:tmpMutable forKey:PPWindowPositions];
 
+	[tmpMutable release]; tmpMutable = nil;
+
+	
 #pragma mark -
 	
 	[defaults synchronize];
