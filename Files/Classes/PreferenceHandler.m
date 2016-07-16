@@ -493,13 +493,54 @@ void RegisterCFDefaults()
 	  
 	  [NSNumber numberWithBool:NO], PPMIDISendClock,
 	  
+	  [NSNumber numberWithBool:NO], PPGEEditorSoundDrag,
+
+	  
 	  [NSNumber numberWithBool:NO], PPUseEQ,
 	  [NSNumber numberWithBool:NO], PPMNoLoadMixerFromFiles,
 	  filters, PPFilterArray,
 	  [NSNumber numberWithBool:NO], PPAutomaticOpen,
 	  [NSNumber numberWithInt:1], PPRecordAllTrack,
 	  [NSNumber numberWithShort:64], PPSoftVolume,
+	  [NSNumber numberWithBool:NO], PPClickSound,
 	  nil]];
+	
+#pragma mark Windows, initial settings
+	{
+	NSMutableArray *winPosArr = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS]; 
+	
+	for (int i = 0; i < MAXWINDOWS; i++) {
+		[winPosArr addObject:NSStringFromPoint(NSZeroPoint)];
+	}
+	[winPosArr replaceObjectAtIndex:1 withObject:NSStringFromPoint(NSMakePoint(59, 222))];
+		[winPosArr replaceObjectAtIndex:2 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+		[winPosArr replaceObjectAtIndex:5 withObject:NSStringFromPoint(NSMakePoint(58, 429))];
+		[winPosArr replaceObjectAtIndex:6 withObject:NSStringFromPoint(NSMakePoint(60, 357))];
+		[winPosArr replaceObjectAtIndex:7 withObject:NSStringFromPoint(NSMakePoint(57, 8))];
+		[winPosArr replaceObjectAtIndex:8 withObject:NSStringFromPoint(NSMakePoint(356, 0))];
+		[winPosArr replaceObjectAtIndex:10 withObject:NSStringFromPoint(NSMakePoint(432, 4))];
+		[winPosArr replaceObjectAtIndex:12 withObject:NSStringFromPoint(NSMakePoint(193, 156))];
+		[winPosArr replaceObjectAtIndex:13 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+		[winPosArr replaceObjectAtIndex:14 withObject:NSStringFromPoint(NSMakePoint(93, 34))];
+		[winPosArr replaceObjectAtIndex:19 withObject:NSStringFromPoint(NSMakePoint(74, 150))];
+		[winPosArr replaceObjectAtIndex:20 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+		[winPosArr replaceObjectAtIndex:21 withObject:NSStringFromPoint(NSMakePoint(58, 94))];
+		[winPosArr replaceObjectAtIndex:25 withObject:NSStringFromPoint(NSMakePoint(20, 0))];
+		[winPosArr replaceObjectAtIndex:26 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+		[winPosArr replaceObjectAtIndex:27 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+
+
+	// Register Window defaults
+	[[NSUserDefaults standardUserDefaults]
+	 registerDefaults:
+	 [NSDictionary dictionaryWithObjectsAndKeys:
+	  winPosArr, PPWindowPositions,
+	  nil]];
+		
+		[winPosArr release];
+	}
+#pragma mark -
+	
 	
 	[pianoArray release];
 	[pool drain];
@@ -599,6 +640,19 @@ void ReadCFPreferences()
 		NSNumber * obj = [filterArray objectAtIndex:i];
 		thePrefs.Filter[i] = obj.doubleValue;
 	}
+	thePrefs.clickSound = [defaults boolForKey:PPClickSound];
+	thePrefs.editorSoundDrag = [defaults boolForKey:PPGEEditorSoundDrag];
+	
+#pragma mark Windows, get settings
+
+	NSArray *winArray = [defaults objectForKey:PPWindowPositions];
+	for (int i = 0; i < MAXWINDOWS; i++) {
+		NSPoint ourPoint = NSPointFromString([winArray objectAtIndex:i]);
+		thePrefs.WinPos[i].v = ourPoint.x;
+		thePrefs.WinPos[i].h = ourPoint.y;
+	}
+	
+#pragma mark -
 	[pool drain];
 }
 
@@ -677,6 +731,14 @@ void WriteCFPreferences()
 	[defaults setBool:thePrefs.AutomaticOpen forKey:PPAutomaticOpen];
 	[defaults setInteger:thePrefs.RecordAllTrack forKey:PPRecordAllTrack];
 	[defaults setInteger:thePrefs.softVolumeLevel forKey:PPSoftVolume];
+	
+	[defaults setBool:thePrefs.editorSoundDrag forKey:PPGEEditorSoundDrag];
+	
+	[defaults setBool:thePrefs.clickSound forKey:PPClickSound];
+	
+#pragma mark Windows, set settings
+
+#pragma mark -
 	
 	[defaults synchronize];
 	

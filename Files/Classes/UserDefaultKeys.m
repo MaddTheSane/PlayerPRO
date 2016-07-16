@@ -82,6 +82,8 @@
 #define PPCETempoUnit @"Classical Editor Tempo Unit"
 #define PPCETrackHeight @"Classical Editor Track Height"
 
+#define PPGEEditorSoundDrag @"General Editor Sound Drag"
+
 #define PPWindowName1 @"PPWindowName1"
 #define PPWindowName2 @"PPWindowName2"
 #define PPWindowName3 @"PPWindowName3"
@@ -96,3 +98,7 @@
 #define PPMIDIKeyboard @"Use MIDI keyboard?"
 #define PPMIDIVelocity @"MIDI velocity"
 #define PPMIDIChanInsTrack @"MIDIChanInsTrack"
+
+#define PPClickSound @"Click Sound"
+
+#define PPWindowPositions @"WinPos"
