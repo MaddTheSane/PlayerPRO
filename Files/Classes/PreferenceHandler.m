@@ -507,10 +507,15 @@ void RegisterCFDefaults()
 	
 #pragma mark Windows, initial settings
 	{
-	NSMutableArray *winPosArr = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS]; 
+		NSAutoreleasePool *windowPool = [NSAutoreleasePool new];
+	NSMutableArray *winPosArr = [NSMutableArray arrayWithCapacity:MAXWINDOWS]; 
+		NSMutableArray *winIDArr = [NSMutableArray arrayWithCapacity:MAXWINDOWS];
 	
+		NSString *zeroStringPoint = NSStringFromPoint(NSZeroPoint);
+		NSNumber *neg1WinID = [NSNumber numberWithLong:-1];
 	for (int i = 0; i < MAXWINDOWS; i++) {
-		[winPosArr addObject:NSStringFromPoint(NSZeroPoint)];
+		[winPosArr addObject:zeroStringPoint];
+		[winIDArr addObject:neg1WinID];
 	}
 	[winPosArr replaceObjectAtIndex:1 withObject:NSStringFromPoint(NSMakePoint(59, 222))];
 		[winPosArr replaceObjectAtIndex:2 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
@@ -529,15 +534,23 @@ void RegisterCFDefaults()
 		[winPosArr replaceObjectAtIndex:26 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
 		[winPosArr replaceObjectAtIndex:27 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
 
+		[winIDArr replaceObjectAtIndex:0 withObject:[NSNumber numberWithLong:8]];
+		[winIDArr replaceObjectAtIndex:1 withObject:[NSNumber numberWithLong:7]];
+		[winIDArr replaceObjectAtIndex:2 withObject:[NSNumber numberWithLong:25]];
+		[winIDArr replaceObjectAtIndex:3 withObject:[NSNumber numberWithLong:12]];
+		[winIDArr replaceObjectAtIndex:4 withObject:[NSNumber numberWithLong:6]];
+		[winIDArr replaceObjectAtIndex:5 withObject:[NSNumber numberWithLong:10]];
+		[winIDArr replaceObjectAtIndex:6 withObject:[NSNumber numberWithLong:1]];
 
 	// Register Window defaults
 	[[NSUserDefaults standardUserDefaults]
 	 registerDefaults:
 	 [NSDictionary dictionaryWithObjectsAndKeys:
 	  winPosArr, PPWindowPositions,
+	  winIDArr, PPWindowIdentifiers,
 	  nil]];
 		
-		[winPosArr release];
+		[windowPool drain];
 	}
 #pragma mark -
 	
@@ -646,10 +659,12 @@ void ReadCFPreferences()
 #pragma mark Windows, get settings
 
 	NSArray *winArray = [defaults objectForKey:PPWindowPositions];
+	NSArray *winIDArray = [defaults objectForKey:PPWindowIdentifiers];
 	for (int i = 0; i < MAXWINDOWS; i++) {
 		NSPoint ourPoint = NSPointFromString([winArray objectAtIndex:i]);
 		thePrefs.WinPos[i].v = ourPoint.x;
 		thePrefs.WinPos[i].h = ourPoint.y;
+		thePrefs.WinID[i] = [[winIDArray objectAtIndex:i] longValue];
 	}
 	
 #pragma mark -
@@ -745,6 +760,13 @@ void WriteCFPreferences()
 
 	[tmpMutable release]; tmpMutable = nil;
 
+	tmpMutable = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+	for (int i = 0; i < MAXWINDOWS; i++) {
+		[tmpMutable addObject:[NSNumber numberWithLong:thePrefs.WinID[i]]];
+	}
+	[defaults setObject:tmpMutable forKey:PPWindowIdentifiers];
+	
+	[tmpMutable release]; tmpMutable = nil;
 	
 #pragma mark -
 	

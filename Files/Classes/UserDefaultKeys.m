@@ -102,3 +102,4 @@
 #define PPClickSound @"Click Sound"
 
 #define PPWindowPositions @"WinPos"
+#define PPWindowIdentifiers @"WinID"
