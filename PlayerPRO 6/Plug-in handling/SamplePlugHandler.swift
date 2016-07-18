@@ -14,14 +14,14 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 	
 	override init() {
 		let defaultPlugLocs = DefaultPlugInLocations()
-		let defaultManager = FileManager.default()
+		let defaultManager = FileManager.default
 		
 		for url in defaultPlugLocs {
 			do {
 				let components = try defaultManager.contentsOfDirectory(at:url, includingPropertiesForKeys: [], options: [])
 				let aComp = components.filter({ (aURL) -> Bool in
 					if let ext = aURL.pathExtension {
-						if ext.compare("plugin", options: .caseInsensitiveSearch) == .orderedSame {
+						if ext.compare("plugin", options: .caseInsensitive) == .orderedSame {
 							return true
 						}
 					}

@@ -23,7 +23,7 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 	/// if the Pcmd structure isn't valid.
 	public var structSize: Int32? {
 		if self.valid {
-			return Int32(sizeof(Pcmd.Type) + myCmd.count * sizeof(Cmd.Type))
+			return Int32(sizeof(Pcmd.self) + myCmd.count * sizeof(Cmd.self))
 		} else {
 			return nil
 		}

@@ -133,7 +133,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	}
 	
 	deinit {
-		NotificationCenter.default().removeObserver(self)
+		NotificationCenter.default.removeObserver(self)
 		(NSApplication.shared().delegate as! PlayerAppDelegate).removeObserver(self, forKeyPath: "music")
 	}
 }

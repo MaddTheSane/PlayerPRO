@@ -35,7 +35,7 @@ final class MusicListPreferenceController: NSViewController, PPPreferenceObject 
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		let defaults = UserDefaults.standard()
+		let defaults = UserDefaults.standard
 		
 		rememberMusicList.state = defaults.bool(forKey: PPRememberMusicList) ? NSOnState : NSOffState
 		loadFirstMusic.state = defaults.bool(forKey: PPLoadMusicAtListLoad) ? NSOnState : NSOffState
@@ -47,15 +47,15 @@ final class MusicListPreferenceController: NSViewController, PPPreferenceObject 
 	}
 	
 	@IBAction func changePlayedMusic(_ sender: AnyObject?) {
-		let defaults = UserDefaults.standard()
+		let defaults = UserDefaults.standard
 		
 		defaults.set(playedMusic.rawValue, forKey: PPAfterPlayingMusic)
 		
-		NotificationCenter.default().post(name: .listPreferencesDidChange, object: self)
+		NotificationCenter.default.post(name: .listPreferencesDidChange, object: self)
 	}
 	
 	@IBAction func toggleButton(_ sender: AnyObject?) {
-		let defaults = UserDefaults.standard()
+		let defaults = UserDefaults.standard
 		
 		defaults.set(rememberMusicList.state == NSOnState, forKey: PPRememberMusicList)
 		defaults.set(loadFirstMusic.state == NSOnState, forKey: PPLoadMusicAtListLoad)
@@ -64,7 +64,7 @@ final class MusicListPreferenceController: NSViewController, PPPreferenceObject 
 		defaults.set(loopMusic.state == NSOnState, forKey: PPLoopMusicWhenDone)
 		defaults.set(goToStartupPos.state == NSOnState, forKey: PPGotoStartupAfterPlaying)
 		
-		NotificationCenter.default().post(name: .listPreferencesDidChange, object: self)
+		NotificationCenter.default.post(name: .listPreferencesDidChange, object: self)
 	}
 	
 	var playedMusic: PlaylistMode {

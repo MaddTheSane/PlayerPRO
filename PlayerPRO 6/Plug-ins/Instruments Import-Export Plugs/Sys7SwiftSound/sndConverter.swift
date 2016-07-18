@@ -82,15 +82,15 @@ internal func canOpenData(_ data: Data) -> Bool {
 		
 		// Read the SndListResource or Snd2ListResource
 		var format: Int16 = 0
-		if !reader.readInt16(.big, &format) {
+		if !reader.readInt16(endian: .big, &format) {
 			return false
 		}
 		if format == firstSoundFormat {
 			var numModifiers: Int16 = 0
 			var modifierPart = ModRef()
-			if !reader.readInt16(.big, &numModifiers) ||
-				!reader.readUInt16(.big, &modifierPart.modNumber) ||
-				!reader.readInt32(.big, &modifierPart.modInit) {
+			if !reader.readInt16(endian: .big, &numModifiers) ||
+				!reader.readUInt16(endian: .big, &modifierPart.modNumber) ||
+				!reader.readInt32(endian: .big, &modifierPart.modInit) {
 					return false
 			}
 			if numModifiers != 1 {
@@ -107,7 +107,7 @@ internal func canOpenData(_ data: Data) -> Bool {
 			}
 		} else if format == secondSoundFormat {
 			var refCount = Int16()
-			if !reader.readInt16(.big, &refCount) {
+			if !reader.readInt16(endian: .big, &refCount) {
 				return false
 			}
 		} else {
@@ -118,7 +118,7 @@ internal func canOpenData(_ data: Data) -> Bool {
 }
 
 internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
-	func errmsg(@autoclosure(escaping) _ message: () -> String) {
+	func errmsg( _ message: @autoclosure(escaping) () -> String) {
 		print("Sys7 import: \(message())")
 	}
 	
@@ -126,7 +126,7 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	
 	// Read the SndListResource or Snd2ListResource
 	var format = Int16()
-	if !reader.readInt16(.big, &format) {
+	if !reader.readInt16(endian: .big, &format) {
 		error = .fileNotSupportedByThisPlug
 		errmsg("Missing header")
 		return nil
@@ -134,9 +134,9 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	if format == firstSoundFormat {
 		var numModifiers = Int16()
 		var modifierPart = ModRef()
-		if !reader.readInt16(.big, &numModifiers) ||
-			!reader.readUInt16(.big, &modifierPart.modNumber) ||
-			!reader.readInt32(.big, &modifierPart.modInit) {
+		if !reader.readInt16(endian: .big, &numModifiers) ||
+			!reader.readUInt16(endian: .big, &modifierPart.modNumber) ||
+			!reader.readInt32(endian: .big, &modifierPart.modInit) {
 				error = .fileNotSupportedByThisPlug
 				errmsg("Missing header")
 				return nil
@@ -163,7 +163,7 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 		}
 	} else if format == secondSoundFormat {
 		var refCount = Int16()
-		if !reader.readInt16(.big, &refCount) {
+		if !reader.readInt16(endian: .big, &refCount) {
 			error = .fileNotSupportedByThisPlug
 			errmsg("Missing header")
 			return nil
@@ -178,7 +178,7 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	var header_offset = Int()
 	var numCommands = Int16()
 	var commandPart = SndCommand()
-	if !reader.readInt16(.big, &numCommands) {
+	if !reader.readInt16(endian: .big, &numCommands) {
 		error = .fileNotSupportedByThisPlug
 		errmsg("Missing header")
 		return nil
@@ -189,9 +189,9 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 		return nil
 	}
 	for _ in Int16(0) ..< numCommands {
-		if !reader.readUInt16(.big, &commandPart.cmd) ||
-			!reader.readInt16(.big, &commandPart.param1) ||
-			!reader.readInt32(.big, &commandPart.param2) {
+		if !reader.readUInt16(endian: .big, &commandPart.cmd) ||
+			!reader.readInt16(endian: .big, &commandPart.param1) ||
+			!reader.readInt32(endian: .big, &commandPart.param2) {
 				error = .fileNotSupportedByThisPlug
 				errmsg("Missing command")
 				return nil
@@ -218,11 +218,11 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	
 	// Read SoundHeader
 	var header = SoundHeader()
-	if !reader.readUInt32(.big, &header.samplePtr) ||
-		!reader.readUInt32(.big, &header.length) ||
-		!reader.readUInt32(.big, &header.sampleRate) ||
-		!reader.readUInt32(.big, &header.loopStart) ||
-		!reader.readUInt32(.big, &header.loopEnd) ||
+	if !reader.readUInt32(endian: .big, &header.samplePtr) ||
+		!reader.readUInt32(endian: .big, &header.length) ||
+		!reader.readUInt32(endian: .big, &header.sampleRate) ||
+		!reader.readUInt32(endian: .big, &header.loopStart) ||
+		!reader.readUInt32(endian: .big, &header.loopEnd) ||
 		!reader.readUInt8(&header.encode) ||
 		!reader.readUInt8(&header.baseFrequency) {
 			error = .fileNotSupportedByThisPlug

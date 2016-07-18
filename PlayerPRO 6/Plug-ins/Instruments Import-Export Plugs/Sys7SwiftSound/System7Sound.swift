@@ -56,7 +56,7 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 								sample?.pointee = asample
 							}
 							do {
-								try FileManager.default().removeItem(at: asset)
+								try FileManager.default.removeItem(at: asset)
 							} catch {
 								
 							}

@@ -48,7 +48,7 @@ import AudioToolbox
 
 	private func resetPlayerPRODriver() {
 		var theSett = MADDriverSettings.new()
-		let defaults = UserDefaults.standard()
+		let defaults = UserDefaults.standard
 		
 		//TODO: Sanity Checking
 		theSett.surround = defaults.bool(forKey: PPSurroundToggle)
@@ -93,7 +93,7 @@ import AudioToolbox
 	
 	override init() {
 		var drivSettings = MADDriverSettings.new()
-		let defaults = UserDefaults.standard()
+		let defaults = UserDefaults.standard
 		
 		//TODO: Sanity Checking
 		drivSettings.surround = defaults.bool(forKey: PPSurroundToggle)
@@ -119,8 +119,8 @@ import AudioToolbox
 		theDriver = try! PPDriver(library: globalMadLib, settings: &drivSettings)
 		super.init()
 		
-		let defaultCenter = NotificationCenter.default()
-		defaultCenter.addObserver(self, selector: #selector(PPDocument.soundPreferencesDidChange(_:)), name: PPSoundPreferencesDidChange, object: nil)
+		let defaultCenter = NotificationCenter.default
+		defaultCenter.addObserver(self, selector: #selector(PPDocument.soundPreferencesDidChange(_:)), name: NSNotification.Name(rawValue: PPSoundPreferencesDidChange), object: nil)
 	}
 	
     override func windowControllerDidLoadNib(_ aController: NSWindowController) {
@@ -133,7 +133,7 @@ import AudioToolbox
 			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
 		} else {
 			do {
-				try theMusic.saveMusic(to: url, compress: UserDefaults.standard().bool(forKey: PPMMadCompression))
+				try theMusic.saveMusic(to: url, compress: UserDefaults.standard.bool(forKey: PPMMadCompression))
 			} catch {
 				if let error = error as? MADErr {
 					throw error.convertToCocoaType()
@@ -166,6 +166,6 @@ import AudioToolbox
 	}
 		
 	deinit {
-		NotificationCenter.default().removeObserver(self)
+		NotificationCenter.default.removeObserver(self)
 	}
 }

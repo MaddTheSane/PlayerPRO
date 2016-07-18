@@ -1,3 +1,6 @@
 [submodule "MaddsSwifts"]
 	path = Vendor/SwiftAdditions
 	url = https://github.com/MaddTheSane/SwiftMacTypes.git
+[submodule "Vendor/ForkView"]
+	path = Vendor/ForkView
+	url = https://github.com/MaddTheSane/ForkView.git

@@ -64,9 +64,7 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	}
 
 	// MARK: Secure Coding protocol
-	class func supportsSecureCoding() -> Bool {
-		return true
-	}
+	static let supportsSecureCoding: Bool = true
 	
 	func encode(with aCoder: NSCoder) {
 		aCoder.encode(theIndexSet as NSIndexSet, forKey: PPMLDCUTI)

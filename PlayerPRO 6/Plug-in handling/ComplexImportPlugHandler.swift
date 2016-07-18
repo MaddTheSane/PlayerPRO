@@ -26,14 +26,14 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, Collection {
 	
 	override init() {
 		let defaultPlugLocs = DefaultPlugInLocations() 
-		let defaultManager = FileManager.default()
+		let defaultManager = FileManager.default
 		
 		for url in defaultPlugLocs {
 			do {
 				let components = try defaultManager.contentsOfDirectory(at: url, includingPropertiesForKeys: [], options: [])
 				let aComp = components.filter({ (aURL) -> Bool in
 					if let ext = aURL.pathExtension {
-						if ext.compare("ppextimp", options: .caseInsensitiveSearch) == .orderedSame {
+						if ext.compare("ppextimp", options: .caseInsensitive) == .orderedSame {
 							return true
 						}
 					}

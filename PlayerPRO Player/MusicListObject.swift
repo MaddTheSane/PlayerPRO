@@ -82,10 +82,10 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 			var values = try self.musicURL.resourceValues(forKeys: [URLResourceKey.totalFileSizeKey])
 			return UInt64(values.totalFileSize!)
 		} catch {
-			let manager = FileManager.default();
+			let manager = FileManager.default;
 			do {
 				let theparam = try manager.attributesOfItem(atPath: self.musicURL.path!)
-				if let tmpfilesize: AnyObject = theparam[FileAttributeKey.size.rawValue] {
+				if let tmpfilesize: AnyObject = theparam[FileAttributeKey.size] {
 					let aFileSize = tmpfilesize as! NSNumber
 					return aFileSize.uint64Value
 				} else {
@@ -217,9 +217,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}
 
 	// MARK: NSSecureCoding protocol
-	class func supportsSecureCoding() -> Bool {
-		return true;
-	}
+	static let supportsSecureCoding = true
 	
 	func encode(with aCoder: NSCoder) {
 		aCoder.encode(musicURL, forKey: kMusicListURLKey)

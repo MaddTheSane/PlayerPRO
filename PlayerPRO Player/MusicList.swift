@@ -25,7 +25,7 @@ private let kPlayerList = "Player List"
 #if os(OSX)
 	private let PPPPath: URL = {
 		do {
-			var retURL = try FileManager.default().urlForDirectory(.applicationSupportDirectory, in:.userDomainMask, appropriateFor:nil, create:true)
+			var retURL = try FileManager.default.urlForDirectory(.applicationSupportDirectory, in:.userDomainMask, appropriateFor:nil, create:true)
 			try retURL.appendPathComponent("PlayerPRO")
 			try retURL.appendPathComponent("Player", isDirectory: true)
 			return retURL
@@ -314,9 +314,7 @@ private let kPlayerList = "Player List"
 		#endif
 	}
 	
-	class func supportsSecureCoding() -> Bool {
-		return true
-	}
+	static let supportsSecureCoding = true
 	
 	//MARK: -
 	func URLAtIndex(_ index: Int) -> URL {
@@ -354,10 +352,10 @@ private let kPlayerList = "Player List"
 	}
 	
 	func loadApplicationMusicList() -> Bool {
-		let manager = FileManager.default()
+		let manager = FileManager.default
 		#if os(OSX)
 			let musListDefName = "PlayerPRO Music List"
-			let defaults = UserDefaults.standard()
+			let defaults = UserDefaults.standard
 			if let listData = defaults.data(forKey: musListDefName) {
 				if loadMusicList(from: listData) {
 					defaults.removeObject(forKey: musListDefName) //Otherwise the preference file is abnormally large.
@@ -391,7 +389,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	func saveApplicationMusicList() -> Bool {
-		let manager = FileManager.default()
+		let manager = FileManager.default
 		
 		if !((try? PPPPath.checkResourceIsReachable()) ?? false) {
 			do {
@@ -485,7 +483,7 @@ private let kPlayerList = "Player List"
 		conn.resume()
 		
 		conn.remoteObjectProxy.loadStcf(at: toOpen, withReply: {(bookmarkData:[String : AnyObject]?, error: NSError?) -> Void in
-			OperationQueue.main().addOperation({
+			OperationQueue.main.addOperation({
 				defer {
 					conn.invalidate()
 				}

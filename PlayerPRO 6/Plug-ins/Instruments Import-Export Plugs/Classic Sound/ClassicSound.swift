@@ -43,7 +43,7 @@ public final class ClassicSound: NSObject, PPSampleImportPlugin {
 			if iErr == .noErr {
 				sample?.pointee = aSamp
 				do {
-				try FileManager.default().removeItem(at: tmpURL)
+				try FileManager.default.removeItem(at: tmpURL)
 				} catch {
 					
 				}

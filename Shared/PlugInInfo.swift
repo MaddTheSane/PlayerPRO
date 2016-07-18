@@ -31,7 +31,7 @@ final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 	let plugCopyright: String
 	let plugURL: URL
 	
-	init(plugName pn: String, author aut: String? = nil, plugType pt: String = "unknown", plugURL pu: URL = Bundle.main().bundleURL) {
+	init(plugName pn: String, author aut: String? = nil, plugType pt: String = "unknown", plugURL pu: URL = Bundle.main.bundleURL) {
 		plugName = pn
 		authorName = aut ?? "Unknown Author"
 		plugType = pt

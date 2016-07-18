@@ -29,7 +29,7 @@ extension MADErr: ErrorProtocol {
 	}
 	
 	/// Converts to an error to one in the built-in Cocoa error domains, if possible.
-	@warn_unused_result public func convertToCocoaType() -> NSError {
+	public func convertToCocoaType() -> NSError {
 		guard let anErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(self, true) else {
 			return NSError(domain: PPMADErrorDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Throwing MADNoErr! This shouldn't happen!"])
 		}
@@ -41,7 +41,7 @@ extension MADErr: ErrorProtocol {
 	/// - parameter customUserDictionary: A dictionary with additional information. May be `nil`, default is `nil`.
 	/// - parameter convertToCocoa: Converts `self` into a comparable error in Cocoa's error types. Default is `true`.
 	/// - returns: An `NSError` value, or `nil` if `self` is `.NoErr`
-	@warn_unused_result public func toNSError(customUserDictionary cud: [String: NSObject]? = nil, convertToCocoa: Bool = true) -> NSError? {
+	public func toNSError(customUserDictionary cud: [String: NSObject]? = nil, convertToCocoa: Bool = true) -> NSError? {
 		if self == .noErr {
 			return nil
 		}
