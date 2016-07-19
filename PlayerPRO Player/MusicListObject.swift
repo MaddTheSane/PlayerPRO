@@ -226,10 +226,10 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	
 	convenience required init?(coder aDecoder: NSCoder) {
 		guard let aURL = aDecoder.decodeObject(forKey: kMusicListURLKey) as? NSURL,
-			aaddedDate = aDecoder.decodeObject(forKey: kMusicListDateAddedKey) as? NSDate else {
+			let aaddedDate = aDecoder.decodeObject(forKey: kMusicListDateAddedKey) as? Date else {
 				return nil
 		}
 		
-		self.init(url: aURL as URL, date: aaddedDate as Date)
+		self.init(url: aURL as URL, date: aaddedDate)
 	}
 }

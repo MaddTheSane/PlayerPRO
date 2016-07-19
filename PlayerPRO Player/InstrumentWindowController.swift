@@ -43,8 +43,8 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		instrumentView?.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection:false)
     }
 
-	func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>?) {
-		if (keyPath == "music") {
+	override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
+		if keyPath == "music" {
 			instrumentView?.reloadData()
 		}
 	}
@@ -97,7 +97,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
 		if (item == nil) {
-			return (NSApplication.shared().delegate as! PlayerAppDelegate).music.instruments.count
+			return (NSApplication.shared().delegate as! PlayerAppDelegate).music!.instruments.count
 		}
 		if let item = item as? PPInstrumentObject {
 			return item.countOfSamples
@@ -107,7 +107,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
 		if (item == nil) {
-			return (NSApplication.shared().delegate as! PlayerAppDelegate).music.instruments[index];
+			return (NSApplication.shared().delegate as! PlayerAppDelegate).music!.instruments[index];
 		}
 		if let item = item as? PPInstrumentObject {
 			return (item).samplesObject(at: index)

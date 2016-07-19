@@ -359,14 +359,14 @@ public class SoundSettingsViewController: NSViewController {
 		super.init(coder: coder)
 	}
 	
-	@IBAction public func changeDriver(sender: AnyObject!) {
+	@IBAction public func changeDriver(_ sender: AnyObject!) {
 		let driver = currentSoundDriver()
 		if let delegate1 = delegate as? SoundSettingsViewWithDriverControllerDelegate {
 			delegate1.sound(view: self, driverDidChange: driver)
 		}
 	}
 	
-	@IBAction public func changeBits(sender: AnyObject!) {
+	@IBAction public func changeBits(_ sender: AnyObject!) {
 		let theBits = currentBits();
 		var returnBits: Int16 = 0
 		switch (theBits) {
@@ -389,7 +389,7 @@ public class SoundSettingsViewController: NSViewController {
 		delegate?.sound(view: self, bitsDidChange: returnBits)
 	}
 	
-	@IBAction public func changeRate(sender: AnyObject!) {
+	@IBAction public func changeRate(_ sender: AnyObject!) {
 		let rate1 = currentRate()
 		var returnRate: UInt32 = 0
 		switch (rate1) {
@@ -412,7 +412,7 @@ public class SoundSettingsViewController: NSViewController {
 		delegate?.sound(view: self, rateDidChange: returnRate)
 	}
 	
-	@IBAction public func changeChecked(sender: AnyObject!) {
+	@IBAction public func changeChecked(_ sender: AnyObject!) {
 		let reverbState = reverb.state == 0 ? false : true;
 		let stereoDelayState = stereoDelay.state == 0 ? false : true
 		let oversamplingState = oversampling.state == 0 ? false : true
@@ -447,12 +447,12 @@ public class SoundSettingsViewController: NSViewController {
 		self.surroundActive = surroundState;
 	}
 	
-	@IBAction func changeOversampling(sender: AnyObject!) {
+	@IBAction func changeOversampling(_ sender: AnyObject!) {
 		let toSet = oversamplingFromTag((sender as! NSMenuItem).tag)
 		delegate?.sound(view: self, oversamplingAmountDidChange: toSet)
 	}
 	
-	@IBAction public func changeReverbAmount(sender: AnyObject!) {
+	@IBAction public func changeReverbAmount(_ sender: AnyObject!) {
 		var toSet: Int32 = 0;
 		let tag = (sender as! NSMenuItem).tag
 
@@ -470,7 +470,7 @@ public class SoundSettingsViewController: NSViewController {
 		delegate?.sound(view: self, reverbSizeDidChange: toSet)
 	}
 	
-	@IBAction public func changeReverbPercent(sender: AnyObject!) {
+	@IBAction public func changeReverbPercent(_ sender: AnyObject!) {
 		var toSet: Int32 = 0
 		let tag = (sender as! NSMenuItem).tag
 		
@@ -487,7 +487,7 @@ public class SoundSettingsViewController: NSViewController {
 		delegate?.sound(view: self, reverbStrengthDidChange: toSet)
 	}
 	
-	@IBAction public func changeStereoDelay(sender: AnyObject!) {
+	@IBAction public func changeStereoDelay(_ sender: AnyObject!) {
 		let toSet = stereoDelayFromTag((sender as! NSMenuItem).tag)
 		delegate?.sound(view: self, stereoDelayAmountDidChange: toSet)
 	}

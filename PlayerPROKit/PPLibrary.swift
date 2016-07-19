@@ -69,8 +69,8 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			totalTracks = Int(infoRec.totalTracks)
 			totalInstruments = Int(infoRec.totalInstruments)
 			signature = OSTypeToString(infoRec.signature, useHexIfInvalid: ())
-			internalFileName = String(CString: aArray, encoding: String.Encoding.macOSRoman) ?? ""
-			formatDescription = String(CString: bArray, encoding: String.Encoding.macOSRoman) ?? ""
+			internalFileName = String(cString: aArray, encoding: String.Encoding.macOSRoman) ?? ""
+			formatDescription = String(cString: bArray, encoding: String.Encoding.macOSRoman) ?? ""
 		}
 		
 		private init(infoDict: NSDictionary) {

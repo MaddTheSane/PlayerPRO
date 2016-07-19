@@ -193,7 +193,7 @@ private let kPlayerList = "Player List"
 			let dirConts = try fm.contentsOfDirectoryAtURL(playlistDir, includingPropertiesForKeys: nil, options: [])
 			var toRetUUIDs = [NSUUID]()
 			for url in dirConts {
-				if let fileUUIDStr = (url.lastPathComponent as NSString?)?.stringByDeletingPathExtension, fileUUID = NSUUID(UUIDString: fileUUIDStr) {
+				if let fileUUIDStr = (url.lastPathComponent as NSString?)?.stringByDeletingPathExtension, let fileUUID = NSUUID(UUIDString: fileUUIDStr) {
 					toRetUUIDs.append(fileUUID)
 				}
 			}
@@ -491,8 +491,8 @@ private let kPlayerList = "Player List"
 					theHandle(theErr: error)
 				} else {
 					guard let invalidAny = bookmarkData!["lostMusicCount"] as? UInt,
-						selectedAny = bookmarkData!["SelectedMusic"] as? Int,
-						pathsAny = bookmarkData!["MusicPaths"] as? NSArray as? [String] else {
+						let selectedAny = bookmarkData!["SelectedMusic"] as? Int,
+						let pathsAny = bookmarkData!["MusicPaths"] as? NSArray as? [String] else {
 							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: "Invalid data returned from helper"])
 							theHandle(theErr: lolwut)
 							return;

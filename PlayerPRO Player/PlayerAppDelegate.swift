@@ -72,7 +72,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	@IBOutlet var musicListController: NSArrayController!
 	@IBOutlet var exportWindow: NSWindow!
 	@IBOutlet var pauseDockMenuItem: NSMenuItem!
-	dynamic var music: PPMusicObject!
+	dynamic var music: PPMusicObject?
 	
 	@IBOutlet var toolsPanel: NSPanel!
 	var timeChecker: Timer!
@@ -460,7 +460,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			throw err3
 		}
 		
-		music.attach(to: madDriver)
+		music!.attach(to: madDriver)
 		
 		if autoPlay {
 			madDriver.play()
@@ -490,12 +490,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		self.music = PPMusicObject();
 		setTitleForSongLabelBasedOnMusic()
 		NotificationCenter.default.post(name: .musicDidChange, object:self)
-		music.attach(to: madDriver)
+		music!.attach(to: madDriver)
 	}
 	
 	private func setTitleForSongLabelBasedOnMusic() {
-		self.musicName = music.title
-		self.musicInfo = music.information
+		self.musicName = music?.title ?? ""
+		self.musicInfo = music?.information ?? ""
 	}
 	
 	private func MADDriverWithPreferences() {
@@ -779,7 +779,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	func saveMusic(to tosave: URL) {
 		do {
-			try music.saveMusic(to: tosave)
+			try music!.saveMusic(to: tosave)
 		} catch let error as NSError {
 			NSAlert(error: error).runModal()
 		}
@@ -892,7 +892,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			}
 		} else {
 			self.music = PPMusicObject();
-			music.attach(to: madDriver)
+			music!.attach(to: madDriver)
 			setTitleForSongLabelBasedOnMusic()
 		}
 	}
@@ -1411,7 +1411,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				
 				let fileURL = savePanel.url!
 				do {
-					try self.music.exportMusic(to: fileURL, format: self.madLib[tag].type, library: self.madLib)
+					try self.music!.exportMusic(to: fileURL, format: self.madLib[tag].type, library: self.madLib)
 					self.addMusicToMusicList(fileURL, loadIfPreferencesAllow: false)
 					if (self.isQuitting) {
 						NSApplication.shared().reply(toApplicationShouldTerminate: true)
@@ -1583,7 +1583,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
 		let dragPB = info.draggingPasteboard()
-		if let tmpArray = dragPB.readObjects(forClasses: [MusicListDragClass.self], options: nil) where tmpArray.count != 0 {
+		if let tmpArray = dragPB.readObjects(forClasses: [MusicListDragClass.self], options: nil) , tmpArray.count != 0 {
 			var minRow = 0;
 			let dragClass = (tmpArray[0]) as! MusicListDragClass
 			let dragIndexSet = dragClass.theIndexSet;
