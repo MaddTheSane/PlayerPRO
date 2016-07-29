@@ -51,7 +51,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		//TODO: handle selIns
 		var plugType: MADFourChar = 0;
 		var theOSErr = importer.identifyInstrumentFile(sampURL, type: &plugType)
-		if theOSErr != .NoErr {
+		if theOSErr != .noErr {
 			throw theOSErr
 		};
 		var theSamp: Int16 = 0;
@@ -81,28 +81,28 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	}
 	
 	
-	func exportInstrumentListToURL(_ outURL: NSURL) -> MADErr {
-		return currentDocument.theMusic.exportInstrumentListToURL(outURL)
+	func exportInstrumentList(to outURL: URL) -> MADErr {
+		return currentDocument.theMusic.exportInstrumentList(to: outURL)
 	}
 	
-	func importInstrumentListFromURL(_ insURL: URL) throws {
-		try currentDocument.theMusic.importInstrumentListFromURL(insURL)
+	func importInstrumentList(from insURL: URL) throws {
+		try currentDocument.theMusic.importInstrumentList(from: insURL)
 	}
 	
 	@IBAction func importInstrument(_ sender: AnyObject!) {
 		var fileDict = [String: [String]]()
 		for obj in importer {
-			fileDict[obj.menuName] = obj.UTITypes
+			fileDict[obj.menuName] = obj.utiTypes
 		}
 		let openPanel = NSOpenPanel()
 		if let vc = OpenPanelViewController(openPanel: openPanel, instrumentDictionary:fileDict) {
 			vc.setupDefaults()
-			vc.beginOpenPanel(parentWindow: currentDocument.windowForSheet!, completionHandler: { (panelHandle: Int) -> Void in
+			vc.beginOpenPanel(currentDocument.windowForSheet!, completionHandler: { (panelHandle: Int) -> Void in
 					if panelHandle == NSFileHandlingPanelOKButton {
 						do {
 							try self.importSampleFromURL(openPanel.url!)
 						} catch let err as NSError {
-							NSAlert(error: err).beginSheetModal(self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
+							NSAlert(error: err).beginSheetModal(for: self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
 								//do nothing
 								return
 							})
@@ -164,7 +164,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 				self.waveFormImage.image = nil;
 			} else {
 				let untmpObj = obj!
-				self.instrumentSize.integerValue = untmpObj.data.length
+				self.instrumentSize.integerValue = untmpObj.data.count
 				if untmpObj.loopSize != 0 {
 					self.instrumentLoopStart.integerValue = Int(untmpObj.loopBegin)
 					self.instrumentLoopSize.integerValue = Int(untmpObj.loopSize)
@@ -176,7 +176,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 				self.instrumentRate.stringValue = untmpObj.c2spd != 0 ? "\(untmpObj.c2spd) Hz" : PPDoubleDash
 				self.instrumentNote.stringValue = octaveName(from: UInt8(untmpObj.relativeNote)) ?? "---"
 				self.instrumentBits.stringValue = untmpObj.amplitude != 0 ? "\(untmpObj.amplitude)-bit" : PPDoubleDash
-				self.instrumentMode.stringValue = untmpObj.loopType == .PingPong ? "Ping-pong" : "Classic"
+				self.instrumentMode.stringValue = untmpObj.loopType == .pingPong ? "Ping-pong" : "Classic"
 				let tmpIm = untmpObj.waveformImage(view: self.waveFormImage)
 				self.waveFormImage.image = tmpIm
 			}
@@ -184,7 +184,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		
 		if let otherObj = object as? PPInstrumentObject {
 			if otherObj.countOfSamples > 0 {
-				let tmpObj = otherObj.samplesObjectAtIndex(0)
+				let tmpObj = otherObj.samplesObject(at: 0)
 				updateOutlineView(tmpObj)
 			} else {
 				updateOutlineView(nil)
@@ -213,7 +213,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 			return currentDocument.theMusic.instruments[index]
 		}
 		if let obj = item as? PPInstrumentObject {
-			return obj.samplesObjectAtIndex(index)
+			return obj.samplesObject(at: index)
 		}
 		return NSNull()
 	}
@@ -229,29 +229,29 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		if tableColumn == nil {
 			return nil
 		}
-		let theView = outlineView.makeViewWithIdentifier(tableColumn!.identifier, owner: nil) as! PPInstrumentCellView
+		let theView = outlineView.make(withIdentifier: tableColumn!.identifier, owner: nil) as! PPInstrumentCellView
 		theView.controller = self
 		if let obj = item as? PPInstrumentObject {
-			theView.sample = false
+			theView.isSample = false
 			theView.textField!.stringValue = obj.name
 			theView.numField!.stringValue = String(format:"%03ld", obj.number + 1)
-			theView.blank = obj.countOfSamples <= 0;
+			theView.isBlank = obj.countOfSamples <= 0;
 		} else if let obj2 = item as? PPSampleObject {
-			theView.sample = true
+			theView.isSample = true
 			theView.textField!.stringValue = obj2.name
 			if item.loopSize != 0 {
-				theView.loopingSample = true
+				theView.isLoopingSample = true
 			} else {
-				theView.loopingSample = false
+				theView.isLoopingSample = false
 			}
 			theView.sampleButton!.tag = obj2.instrumentIndex * Int(MAXSAMPLE) + obj2.sampleIndex
-			theView.blank = false
+			theView.isBlank = false
 		}
 		return theView
 	}
 	
 	func replaceObjectInInstrumentsAtIndex(_ index: Int, withObject object: PPInstrumentObject!) {
-		currentDocument.theMusic.replaceObjectInInstrumentsAtIndex(index, withObject: object)
+		currentDocument.theMusic.replaceInInstruments(at: index, with: object)
 	}
 	
 }

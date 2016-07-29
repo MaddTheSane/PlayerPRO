@@ -9,7 +9,7 @@
 import Foundation
 import AppKit.NSAlert
 
-private func PPRunAlertPanelBase(title: String, message msgFormat: @autoclosure() -> String, defaultButton: String?, alternateButton: String?, otherButton: String?, alertStyle: NSAlertStyle) -> Int {
+@discardableResult private func PPRunAlertPanelBase(title: String, message msgFormat: @autoclosure() -> String, defaultButton: String?, alternateButton: String?, otherButton: String?, alertStyle: NSAlertStyle) -> Int {
 	let theAlert = NSAlert()
 	theAlert.alertStyle = alertStyle
 	theAlert.messageText = title

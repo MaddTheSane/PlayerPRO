@@ -49,8 +49,8 @@ final class DigitalPlugInObject : PPPlugInObject {
 		}
 		
 		guard let rawBundClass: AnyClass = toInit.principalClass,
-			bundClass = rawBundClass as? PPDigitalPlugin.Type,
-			aPlugCode = bundClass.init(forPlugIn: ()) else {
+			let bundClass = rawBundClass as? PPDigitalPlugin.Type,
+			let aPlugCode = bundClass.init(forPlugIn: ()) else {
 				hasUI = false
 				super.init(bundle: toInit)
 				return nil
@@ -79,13 +79,13 @@ final class DigitalPlugInObject : PPPlugInObject {
 	}
 	
 	func beginCallWithPcmd(_ myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentDocument theDoc: PPDocument, handler: PPPlugErrorBlock) {
-		let outError = plugCode.runWithPcmd(myPcmd, driver: driver)
-		if outError == .OrderNotImplemented {
-			guard let UIFunc = plugCode.beginRunWithPcmd else {
+		let outError = plugCode.run(with: myPcmd, driver: driver)
+		if outError == .orderNotImplemented {
+			guard let UIFunc = plugCode.beginRun else {
 				handler(outError)
 				return
 			}
-			UIFunc(myPcmd, driver: driver, parentWindow: theDoc.windowForSheet!, handler: handler)
+			UIFunc(with: myPcmd, driver: driver, parentWindow: theDoc.windowForSheet!, handler: handler)
 		}
 		handler(outError)
 	}

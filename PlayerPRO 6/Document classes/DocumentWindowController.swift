@@ -14,7 +14,7 @@ import AudioToolbox
 import SwiftAdditions
 import SwiftAudioAdditions
 
-class DocumentWindowController: NSWindowController, SoundSettingsViewControllerDelegate {
+class DocumentWindowController: NSWindowController {
 	@IBOutlet weak var exportWindow:			NSWindow!
 	@IBOutlet weak var exportSettingsBox:		NSBox!
 	@IBOutlet weak var fastForwardButton:		NSButton!
@@ -92,13 +92,13 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 				//let aDoc: (DocumentWindowController) = um.prepareWithInvocationTarget(self) as (DocumentWindowController)
 				
 				if self.currentDocument.musicInfo != self.infoInfoField.stringValue {
-					um.registerUndo(withTarget: self.currentDocument, selector: Selector("setMusicInfo:"), object: self.currentDocument.musicInfo)
+					um.registerUndo(withTarget: self.currentDocument, selector: #selector(setter: PPDocument.musicInfo), object: self.currentDocument.musicInfo)
 					//aDoc.musicInfo = self.currentDocument.musicInfo
 					self.currentDocument.musicInfo = self.infoInfoField.stringValue
 				}
 				
 				if self.currentDocument.musicName != self.infoNameField.stringValue {
-					um.registerUndo(withTarget: self.currentDocument, selector: Selector("setMusicName:"), object: self.currentDocument.musicName)
+					um.registerUndo(withTarget: self.currentDocument, selector: #selector(setter: PPDocument.musicName), object: self.currentDocument.musicName)
 
 					//aDoc.musicName = self.currentDocument.musicName
 					self.currentDocument.musicName = self.infoNameField.stringValue
@@ -125,7 +125,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 		infoWindow.close()
 	}
 	
-	func rawSoundData( _ settings: MADDriverSettings, handler: (Data) -> MADErr, callback: (NSError?) -> Void) {
+	func rawSoundData(_ settings: inout MADDriverSettings, handler: (NSData) -> MADErr, callback: (NSError?) -> Void) {
 		var settings = settings
 		var err: NSError? = nil
 		do {
@@ -136,8 +136,8 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 			
 			while let newData = theRec.directSave() {
 				let anErr = handler(newData)
-				if anErr != .NoErr {
-					callback(createErrorFromMADErrorType(anErr))
+				if anErr != .noErr {
+					callback(createError(from: anErr))
 					return
 				}
 			}
@@ -147,21 +147,21 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 		callback(err)
 	}
 	
-	func rawSoundData(_ theSet1: MADDriverSettings) -> NSMutableData? {
+	func rawSoundData(_ theSet1: inout MADDriverSettings) -> NSMutableData? {
 		var theSet1 = theSet1
-		let mutData = NSMutableData()
+		var mutData = NSMutableData()
 		var err: NSError? = nil
 		
 		func compileRawData(_ theData: NSData) -> MADErr {
-			mutData.appendData(theData)
-			return .NoErr
+			mutData.append(theData as Data)
+			return .noErr
 		}
 		
 		rawSoundData(&theSet1, handler: compileRawData) { (anErr) -> Void in
 			if anErr != nil {
 				err = anErr
-				dispatch_async(dispatch_get_main_queue()) {
-					NSAlert(error: err!).beginSheetModalForWindow(self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
+				DispatchQueue.main.async {
+					NSAlert(error: err!).beginSheetModal(for: self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
 						//Do nothing
 					})
 				}
@@ -184,12 +184,12 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 						return
 					})
 				}
-				return (rsd.copy() as! NSData)
+				return rsd as Data
 			} else {
 				return nil
 			}
 		} else {
-			return (rawSoundData(&theSet)?.copy() as? NSData)
+			return rawSoundData(&theSet) as Data?
 		}
 	}
 	
@@ -206,12 +206,12 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 						return
 					})
 				}
-				return (rsd.copy() as! NSData)
+				return rsd as Data
 			} else {
 				return nil
 			}
 		} else {
-			return rawSoundData(&theSet)?.copy() as? NSData
+			return rawSoundData(&theSet) as Data?
 		}
 	}
 	
@@ -238,13 +238,19 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 		
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
-		var res = AudioFileCreate(URL: theURL, fileType: .WAVE, format: &asbd, flags: .EraseFile, audioFile: &audioFile)
+		var res = AudioFileCreate(URL: theURL, fileType: .WAVE, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
 		if (res != noErr) {
 			if (audioFile != nil) {
 				AudioFileClose(audioFile!)
 			}
-			return .WritingErr
+			return .writingErr
 		}
+		defer {
+			if let audioFile = audioFile {
+				AudioFileClose(audioFile)
+			}
+		}
+		
 		
 		var location = 0
 		
@@ -258,16 +264,16 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 					toWriteBytes[i] = tmpData[i].littleEndian
 				}
 				var tmpToWrite = UInt32(toWriteSize)
-				let res = AudioFileWriteBytes(audioFile, true, Int64(location), &tmpToWrite, toWriteBytes)
+				let res = AudioFileWriteBytes(audioFile!, true, Int64(location), &tmpToWrite, toWriteBytes)
 				location += toWriteSize
 				
 				if res != noErr {
-					return .WritingErr
+					return .writingErr
 				}
 				
-				return .NoErr
+				return .noErr
 			} else {
-				return .NeedMemory
+				return .needMemory
 			}
 		}
 		
@@ -276,26 +282,21 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 		})
 		
 		if let iErr = iErr {
-			res = AudioFileClose(audioFile)
-			audioFile = nil
 			if iErr.domain == PPMADErrorDomain {
-				return MADErr(rawValue: OSErr(iErr.code)) ?? .UnknownErr
+				return MADErr(rawValue: OSErr(iErr.code)) ?? .unknownErr
 			} else {
-				return .UnknownErr
+				return .unknownErr
 			}
 		}
 		
 		applyMetadataToFileID(audioFile!)
-		res = AudioFileClose(audioFile)
+		res = AudioFileClose(audioFile!)
 		audioFile = nil
 		if (res != noErr) {
-			if (audioFile != nil) {
-				AudioFileClose(audioFile!)
-			}
-			return MADErr.WritingErr
+			return MADErr.writingErr
 		}
 		
-		return MADErr.NoErr
+		return MADErr.noErr
 	}
 	
 	private func saveMusic(AIFFToURL theURL: NSURL, theSett: inout MADDriverSettings) -> MADErr {
@@ -317,12 +318,17 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 		
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed, .BigEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
-		var res = AudioFileCreate(URL: theURL, fileType: .AIFF, format: &asbd, flags: .EraseFile, audioFile: &audioFile)
+		var res = AudioFileCreate(URL: theURL, fileType: .AIFF, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
 		if (res != noErr) {
 			if (audioFile != nil) {
 				AudioFileClose(audioFile!)
 			}
-			return .WritingErr
+			return .writingErr
+		}
+		defer {
+			if let audioFile = audioFile {
+				AudioFileClose(audioFile)
+			}
 		}
 		
 		var location = 0
@@ -337,16 +343,16 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 					toWriteBytes[i] = tmpData[i].bigEndian
 				}
 				var tmpToWrite = UInt32(toWriteSize)
-				let res = AudioFileWriteBytes(audioFile, true, Int64(location), &tmpToWrite, toWriteBytes)
+				let res = AudioFileWriteBytes(audioFile!, true, Int64(location), &tmpToWrite, toWriteBytes)
 				location += toWriteSize
 				
 				if res != noErr {
-					return .WritingErr
+					return .writingErr
 				}
 				
-				return .NoErr
+				return .noErr
 			} else {
-				return .NeedMemory
+				return .needMemory
 			}
 		}
 		
@@ -355,26 +361,21 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 		})
 		
 		if let iErr = iErr {
-			res = AudioFileClose(audioFile)
-			audioFile = nil
 			if iErr.domain == PPMADErrorDomain {
-				return MADErr(rawValue: OSErr(iErr.code)) ?? .UnknownErr
+				return MADErr(rawValue: OSErr(iErr.code)) ?? .unknownErr
 			} else {
-				return .UnknownErr
+				return .unknownErr
 			}
 		}
 		
 		applyMetadataToFileID(audioFile!)
-		res = AudioFileClose(audioFile)
+		res = AudioFileClose(audioFile!)
 		audioFile = nil
 		if (res != noErr) {
-			if (audioFile != nil) {
-				AudioFileClose(audioFile!)
-			}
-			return MADErr.WritingErr
+			return MADErr.writingErr
 		}
 		
-		return MADErr.NoErr
+		return MADErr.noErr
 	}
 	
 	private func showExportSettingsWithExportType(_ expType: Int, URL theURL: URL) {
@@ -388,20 +389,18 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 				switch (expType) {
 				case -1:
 					let expObj = ExportObject(destination: theURL, exportBlock: { (theURL, errStr) -> MADErr in
-						if errStr != nil {
-							errStr.memory = nil
-						}
+						errStr?.pointee = nil
 						var expSett = self.exportSettings
 						var theErr = self.saveMusic(AIFFToURL: theURL, theSett: &expSett)
 						self.currentDocument.theDriver.endExport()
 						return theErr
 					})
-					(NSApplication.sharedApplication().delegate as! AppDelegate).addExportObject(expObj)
+					(NSApplication.shared().delegate as! AppDelegate).add(exportObject: expObj)
 					
 				case -2:
 					let expObj = ExportObject(destination: theURL, exportBlock: { (theURL, errStr) -> MADErr in
 						//do {
-						var theErr = MADErr.NoErr;
+						var theErr = MADErr.noErr;
 						func generateAVMetadataInfo(_ oldMusicName: String, oldMusicInfo: String) -> [AVMetadataItem] {
 							let titleName = AVMutableMetadataItem()
 							titleName.keySpace = AVMetadataKeySpaceCommon
@@ -412,19 +411,19 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData;
 							dataInfo.key = (AVMetadataQuickTimeUserDataKeySoftware)
 							dataInfo.value = ("PlayerPRO 6")
-							dataInfo.locale = NSLocale(localeIdentifier: "en")
+							dataInfo.locale = Locale(localeIdentifier: "en")
 							
 							let musicInfoQTUser = AVMutableMetadataItem();
 							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
 							musicInfoQTUser.key = (AVMetadataQuickTimeUserDataKeyInformation)
 							musicInfoQTUser.value = (oldMusicInfo)
-							musicInfoQTUser.locale = NSLocale.currentLocale()
+							musicInfoQTUser.locale = Locale.current
 
 							let musicNameQTUser = AVMutableMetadataItem()
 							musicNameQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
 							musicNameQTUser.key = (AVMetadataQuickTimeUserDataKeyFullName)
 							musicNameQTUser.value = (oldMusicName)
-							musicNameQTUser.locale = NSLocale.currentLocale()
+							musicNameQTUser.locale = Locale.current
 							
 							let musicInfoiTunes = AVMutableMetadataItem()
 							musicInfoiTunes.keySpace = AVMetadataKeySpaceiTunes
@@ -435,79 +434,71 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 							musicInfoQTMeta.keySpace = AVMetadataKeySpaceQuickTimeMetadata
 							musicInfoQTMeta.key = (AVMetadataQuickTimeMetadataKeyInformation)
 							musicInfoQTMeta.value = (oldMusicInfo)
-							musicInfoQTMeta.locale = NSLocale.currentLocale()
+							musicInfoQTMeta.locale = Locale.current
 							
 							return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser];
 						}
 						
-						if errStr != nil {
-							errStr.memory = nil
-						}
+						errStr?.pointee = nil
 						
 						let oldMusicName = self.currentDocument.musicName;
 						let oldMusicInfo = self.currentDocument.musicInfo;
 						let oldURL = self.currentDocument.fileURL;
-						let tmpURL = (try! NSFileManager.defaultManager().URLForDirectory(.ItemReplacementDirectory, inDomain:.UserDomainMask, appropriateForURL:oldURL, create:true)).URLByAppendingPathComponent( (oldMusicName != "" ? oldMusicName : "untitled") + ".aiff", isDirectory: false)
+						let tmpURL = try! (try! FileManager.default.urlForDirectory(.itemReplacementDirectory, in:.userDomainMask, appropriateFor:oldURL, create:true)).appendingPathComponent( (oldMusicName != "" ? oldMusicName : "untitled") + ".aiff", isDirectory: false)
 						var expSett = self.exportSettings
 						theErr = self.saveMusic(AIFFToURL: tmpURL, theSett: &expSett)
 						self.currentDocument.theDriver.endExport()
 						defer {
 							do {
-								try NSFileManager.defaultManager().removeItemAtURL(tmpURL)
+								try FileManager.default.removeItem(at: tmpURL)
 							} catch _ {
 								
 							}
 						}
-						if (theErr != MADErr.NoErr) {
-							if (errStr != nil) {
-								errStr.memory = "Unable to save temporary file to \(tmpURL.path), error \(theErr)."
-							}
+						if (theErr != MADErr.noErr) {
+							errStr?.pointee = "Unable to save temporary file to \(tmpURL.path), error \(theErr)."
 							
 							return theErr;
 						}
 						
-						let exportMov = AVAsset(URL: tmpURL)
+						let exportMov = AVAsset(url: tmpURL)
 						let metadataInfo = generateAVMetadataInfo(oldMusicName, oldMusicInfo: oldMusicInfo)
 						
 						let tmpsession = AVAssetExportSession(asset: exportMov, presetName: AVAssetExportPresetAppleM4A)
 						if (tmpsession == nil) {
-							if (errStr != nil) {
-								errStr.memory = "Export session creation for \(oldMusicName) failed."
-							}
-							return .WritingErr;
+							errStr?.pointee = "Export session creation for \(oldMusicName) failed."
+							return .writingErr;
 						}
 						let session = tmpsession!
 						do {
-							try NSFileManager.defaultManager().removeItemAtURL(theURL)
+							try FileManager.default.removeItem(at: theURL)
 						} catch {
 							
 						}
 						session.outputURL = theURL;
 						session.outputFileType = AVFileTypeAppleM4A;
 						session.metadata = metadataInfo;
-						let sessionWaitSemaphore = dispatch_semaphore_create(0);
-						session.exportAsynchronouslyWithCompletionHandler({ () -> Void in
-							dispatch_semaphore_signal(sessionWaitSemaphore);
+						let sessionWaitSemaphore = DispatchSemaphore(value: 0);
+						session.exportAsynchronously(completionHandler: { () -> Void in
+							sessionWaitSemaphore.signal();
 							return;
 						})
-						dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
+						_ = sessionWaitSemaphore.wait(timeout: DispatchTime.distantFuture)
 						
-						let didFinish = session.status == .Completed;
+						let didFinish = session.status == .completed;
 						
 						if (didFinish) {
-							return .NoErr;
+							return .noErr;
 						} else {
-							if (errStr != nil) {
-								errStr.memory = "export of \"\(oldMusicName)\" failed."
-							}
-							return .WritingErr;
+							errStr?.pointee = "export of \"\(oldMusicName)\" failed."
+							return .writingErr;
 						}
 						//} catch _ {}
 					})
-					(NSApplication.sharedApplication().delegate as! AppDelegate).addExportObject(expObj)
+					(NSApplication.shared().delegate as! AppDelegate).add(exportObject: expObj)
 					
 				default:
-					self.currentDocument.theDriver.exporting = false
+					self.currentDocument.theDriver.isExporting = false
 				}
 			}
 		})
@@ -571,70 +562,71 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 			savePanel.beginSheetModal(for: self.currentDocument.windowForSheet!, completionHandler: { (result) -> Void in
 				if result == NSFileHandlingPanelOKButton {
 					let expObj = ExportObject(destination: savePanel.url!, exportBlock: { (theURL, errStr) -> MADErr in
-						var theErr = MADErr.NoErr
+						var theErr = MADErr.noErr
 						do {
-						try self.currentDocument.theMusic.exportMusicToURL(theURL, format: tmpObj.type, library: globalMadLib)
+						try self.currentDocument.theMusic.exportMusic(to: theURL, format: tmpObj.type, library: globalMadLib)
 						} catch {
 							if let error = error as? MADErr {
 								theErr = error
 							} else {
-								theErr = .UnknownErr
+								theErr = .unknownErr
 							}
 						}
 						self.currentDocument.theDriver.endExport()
 						return theErr
 					})
-					(NSApplication.sharedApplication().delegate as! AppDelegate).addExportObject(expObj)
+					(NSApplication.shared().delegate as! AppDelegate).add(exportObject: expObj)
 				} else {
-					self.currentDocument.theDriver.exporting = false
+					self.currentDocument.theDriver.isExporting = false
 				}
 			})
 			break;
 		}
 	}
+}
 
-
-	func soundOutBitsDidChange(_ bits: Int16) {
+extension DocumentWindowController: SoundSettingsViewControllerDelegate {
+	func sound(view: SoundSettingsViewController, bitsDidChange bits: Int16) {
 		exportSettings.outPutBits = bits;
 	}
 	
-	func soundOutRateDidChange(_ rat: UInt32) {
+	func sound(view: SoundSettingsViewController, rateDidChange rat: UInt32) {
 		exportSettings.outPutRate = rat;
 	}
 	
-	func soundOutReverbDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, reverbDidChangeActive isAct: Bool) {
 		exportSettings.Reverb = isAct;
 	}
 	
-	func soundOutOversamplingDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, oversamplingDidChangeActive isAct: Bool) {
 		if (!isAct) {
 			exportSettings.oversampling = 1;
 		}
 	}
 	
-	func soundOutStereoDelayDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, stereoDelayDidChangeActive isAct: Bool) {
 		if (!isAct) {
 			exportSettings.MicroDelaySize = 0;
 		}
 	}
 	
-	func soundOutSurroundDidChangeActive(_ isAct: Bool) {
+	func sound(view: SoundSettingsViewController, surroundDidChangeActive isAct: Bool) {
 		exportSettings.surround = isAct;
 	}
 	
-	func soundOutReverbStrengthDidChange(_ rev: Int32) {
+	func sound(view: SoundSettingsViewController, reverbStrengthDidChange rev: Int32) {
 		exportSettings.ReverbStrength = rev;
 	}
 	
-	func soundOutReverbSizeDidChange(_ rev: Int32) {
+	func sound(view: SoundSettingsViewController, reverbSizeDidChange rev: Int32) {
 		exportSettings.ReverbSize = rev;
 	}
 	
-	func soundOutOversamplingAmountDidChange(_ ovs: Int32) {
+	func sound(view: SoundSettingsViewController, oversamplingAmountDidChange ovs: Int32) {
 		exportSettings.oversampling = ovs;
 	}
 	
-	func soundOutStereoDelayAmountDidChange(_ std: Int32) {
+	func sound(view: SoundSettingsViewController, stereoDelayAmountDidChange std: Int32) {
 		exportSettings.MicroDelaySize = std;
 	}
 }

@@ -14,13 +14,13 @@ class FilterPlugHandler: NSObject, NSFastEnumeration, Collection, Sequence {
 	
 	override init() {
 		let defaultPlugLocs = DefaultPlugInLocations()
-		let defaultManager = FileManager.default()
+		let defaultManager = FileManager.default
 		for aPlugLoc in defaultPlugLocs {
 			do {
 				let components = try defaultManager.contentsOfDirectory(at: aPlugLoc, includingPropertiesForKeys: [], options: [])
 				let aComp = components.filter({ (aURL) -> Bool in
 					if let ext = aURL.pathExtension {
-						if ext.compare("plugin", options: .caseInsensitiveSearch) == .orderedSame {
+						if ext.compare("plugin", options: .caseInsensitive) == .orderedSame {
 							return true
 						}
 					}
@@ -30,7 +30,7 @@ class FilterPlugHandler: NSObject, NSFastEnumeration, Collection, Sequence {
 				
 				
 				for component in aComp {
-					if let theBundle = Bundle(url: component), tempObj = PPFilterPlugObject(bundle: theBundle) {
+					if let theBundle = Bundle(url: component), let tempObj = PPFilterPlugObject(bundle: theBundle) {
 						plugInArray.append(tempObj)
 					}
 				}

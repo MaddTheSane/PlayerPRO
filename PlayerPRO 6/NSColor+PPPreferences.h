@@ -9,8 +9,8 @@
 #import <AppKit/NSColor.h>
 
 @interface NSColor (PPPreferences) 
-- (NSData *)PPencodeColor;
-+ (NSColor *)PPDecodeColorWithData:(NSData *)theData;
+- (nonnull NSData *)PPencodeColor NS_SWIFT_NAME(encodeColor());
++ (nullable NSColor *)PPDecodeColorWithData:(nonnull NSData *)theData NS_SWIFT_NAME(decodeColor(with:));
 @end
 
 #define PPCOLORPOPULATE() PPCOLOR(1); PPCOLOR(2); PPCOLOR(3); PPCOLOR(4); \

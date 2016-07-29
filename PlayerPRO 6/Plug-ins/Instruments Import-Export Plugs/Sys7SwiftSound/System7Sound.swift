@@ -48,7 +48,7 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 				if res.type == "snd " {
 					for aRes in res.resources {
 						var errStr = MADErr.noErr
-						if let data = aRes.data, asset = assetForSND(data, error: &errStr) {
+						if let data = aRes.data, let asset = assetForSND(data, error: &errStr) {
 							let asample = PPSampleObject()
 							errStr = AIFFAtURL(asset, toSample: asample)
 							if errStr == .noErr {

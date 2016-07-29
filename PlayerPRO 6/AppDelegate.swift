@@ -11,21 +11,21 @@ import PlayerPROCore
 import PlayerPROKit
 import SwiftAdditions
 
-@inline(__always) private func makeNSRGB(_ red: UInt16, _ green: UInt16, _ blue:UInt16) -> NSColor {
+/*@inline(__always)*/ private func makeNSRGB(_ red: UInt16, _ green: UInt16, _ blue:UInt16) -> NSColor {
 	return NSColor(calibratedRed: CGFloat(red) / CGFloat(UInt16.max), green: CGFloat(green) / CGFloat(UInt16.max), blue: CGFloat(blue) / CGFloat(UInt16.max), alpha: 1)
 }
 
 private func CocoaDebugStr(_ line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
-	let swiftFile = FileManager.default().string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
+	let swiftFile = FileManager.default.string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
 	let swiftText = String(cString: text!)
 	print("\(swiftFile):\(line), error text: \(swiftText)")
 	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
-	let mainStr = String(format: NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display"), text)
+	let mainStr = String(format: NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display"), text!)
 	let quitStr = NSLocalizedString("MyDebugStr_Quit", comment: "Quit")
 	let contStr = NSLocalizedString("MyDebugStr_Continue", comment: "Continue")
 	let debuStr = NSLocalizedString("MyDebugStr_Debug", comment: "Debug")
 
-	let alert = PPRunCriticalAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr)
+	let alert = PPRunCriticalAlertPanel(title: errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr)
 	switch (alert) {
 	case NSAlertAlternateReturn:
 		break
@@ -42,11 +42,11 @@ private func CocoaDebugStr(_ line: Int16, file: UnsafePointer<Int8>?, text: Unsa
 }
 
 internal var globalMadLib: PPLibrary {
-	return (NSApplication.sharedApplication().delegate as! AppDelegate).madLib
+	return (NSApplication.shared().delegate as! AppDelegate).madLib
 }
 
 @NSApplicationMain
-class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDelegate {
+class AppDelegate: NSDocumentController, NSApplicationDelegate {
 	private var exportObjects = [ExportObject]()
 	var plugInInfos = [PlugInInfo]()
 	let madLib = PPLibrary()!
@@ -80,7 +80,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		var tmpTrackerDict = self.trackerDict
 		
 		for obj in self.complexImport {
-			tmpTrackerDict[obj.menuName] = (obj.UTITypes) as? [String]
+			tmpTrackerDict[obj.menuName] = (obj.utiTypes) as? [String]
 		}
 		
 		return tmpTrackerDict
@@ -112,9 +112,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		let inf = plugInInfos[tag]
 		
-		let infoCont = PlugInInfoController.windowControllerFromInfo(inf)
+		let infoCont = PlugInInfoController.windowController(from: inf)
 		infoCont.window!.center()
-		NSApplication.sharedApplication().runModalForWindow(infoCont.window!)
+		NSApplication.shared().runModal(for: infoCont.window!)
 	}
 
 	func updatePlugInInfoMenu() {
@@ -221,7 +221,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			PPBEMarkersLoop: 3,
 			PPBEOctaveMarkers: true,
 			PPBENotesProjection: false,
-			PPDEMarkerColorPref: makeNSRGB(0xFFFF, 0xFFFF, 0x9999).PPencodeColor(),
+			PPDEMarkerColorPref: makeNSRGB(0xFFFF, 0xFFFF, 0x9999).encodeColor(),
 			
 			PPMAddExtension: true,
 			PPMMadCompression: true,
@@ -236,110 +236,110 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			PPCETempoUnit: 4,
 			PPCETrackHeight: 130]
 		
-		let colorDefaults = [
-			PPCColor1: makeNSRGB(0xEEEE, 0, 0).PPencodeColor(),
-			PPCColor2: makeNSRGB(0x8C8C, 0xBCBC, 0x1C1C).PPencodeColor(),
-			PPCColor3: makeNSRGB(0x3333, 0xFFFF, 0xFFFF).PPencodeColor(),
-			PPCColor4: NSColor.yellowColor().PPencodeColor(),
-			PPCColor5: makeNSRGB(0x6060, 0xCACA, 36494).PPencodeColor(),
-			PPCColor6: makeNSRGB(0x3333, 0xFFFF, 0xFFFF).PPencodeColor(),
-			PPCColor7: makeNSRGB(0x6666, 0xCCCC, 0xFFFF).PPencodeColor(),
-			PPCColor8: makeNSRGB(0xFFFF, 0x6354, 0xFFFF).PPencodeColor(),
-			PPCColor9: makeNSRGB(0xCCCC, 0x9999, 0x6666).PPencodeColor(),
-			PPCColor10: makeNSRGB(0x3333, 0x6666, 0x3333).PPencodeColor(),
-			PPCColor11: makeNSRGB(0xFFFF, 0x6666, 0xFFFF).PPencodeColor(),
-			PPCColor12: makeNSRGB(0xFFFF, 0x9999, 0).PPencodeColor(),
-			PPCColor13: makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC).PPencodeColor(),
-			PPCColor14: makeNSRGB(0x9999, 0, 0x6666).PPencodeColor(),
-			PPCColor15: makeNSRGB(0x6666, 0xCCCC, 0).PPencodeColor(),
-			PPCColor16: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).PPencodeColor(),
-			PPCColor17: makeNSRGB(0xCCCC, 0xFFFF, 0x6666).PPencodeColor(),
-			PPCColor18: makeNSRGB(0x6666, 0, 0x9999).PPencodeColor(),
-			PPCColor19: makeNSRGB(0xCCCC, 0, 0x9999).PPencodeColor(),
-			PPCColor20: makeNSRGB(0xCCCC, 0x9999, 0xFFFF).PPencodeColor(),
-			PPCColor21: makeNSRGB(0x6666, 0xCCCC, 0x6666).PPencodeColor(),
-			PPCColor22: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).PPencodeColor(),
-			PPCColor23: makeNSRGB(0x9999, 0xCCCC, 0xCCCC).PPencodeColor(),
-			PPCColor24: makeNSRGB(0x6666, 13109, 0x6666).PPencodeColor(),
-			PPCColor25: makeNSRGB(0xCCCC, 0x9999, 0xCCCC).PPencodeColor(),
-			PPCColor26: makeNSRGB(0x3333, 0xFFFF, 0xFFFF).PPencodeColor(),
-			PPCColor27: makeNSRGB(0x3333, 0xFFFF, 0x6666).PPencodeColor(),
-			PPCColor28: makeNSRGB(0x6666, 0xFFFF, 0x3333).PPencodeColor(),
-			PPCColor29: makeNSRGB(0xCCCC, 0x9999, 0xCCCC).PPencodeColor(),
-			PPCColor30: makeNSRGB(0xCCCC, 0x9999, 0x3333).PPencodeColor(),
-			PPCColor31: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).PPencodeColor(),
-			PPCColor32: makeNSRGB(0xFFFF, 0xCCCC, 0).PPencodeColor(),
-			PPCColor33: makeNSRGB(0xEEEE, 0, 0).PPencodeColor(),
-			PPCColor34: makeNSRGB(0, 0xFFFF, 0x6666).PPencodeColor(),
-			PPCColor35: NSColor.cyanColor().PPencodeColor(),
-			PPCColor36: NSColor.yellowColor().PPencodeColor(),
-			PPCColor37: NSColor.greenColor().PPencodeColor(),
-			PPCColor38: makeNSRGB(0x3333, 0xCCCC, 0xFFFF).PPencodeColor(),
-			PPCColor39: makeNSRGB(0x9999, 0xCCCC, 0x9999).PPencodeColor(),
-			PPCColor40: makeNSRGB(0xFFFF, 0x9999, 0x6666).PPencodeColor(),
-			PPCColor41: makeNSRGB(0x9999, 0xFFFF, 0xFFFF).PPencodeColor(),
-			PPCColor42: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).PPencodeColor(),
-			PPCColor43: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).PPencodeColor(),
-			PPCColor44: makeNSRGB(0, 0x5555, 0).PPencodeColor(),
-			PPCColor45: makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC).PPencodeColor(),
-			PPCColor46: makeNSRGB(0x6666, 0, 0).PPencodeColor(),
-			PPCColor47: makeNSRGB(0x3333, 0xFFFF, 0x6666).PPencodeColor(),
-			PPCColor48: makeNSRGB(0xFFFF, 0xFFFF, 0x6666).PPencodeColor(),
-			PPCColor49: makeNSRGB(0xCCCC, 0, 0).PPencodeColor(),
-			PPCColor50: makeNSRGB(0x9999, 0, 0x3333).PPencodeColor(),
-			PPCColor51: makeNSRGB(0x9999, 0xFFFF, 0x9999).PPencodeColor(),
-			PPCColor52: makeNSRGB(0x9999, 0xCCCC, 0xCCCC).PPencodeColor(),
-			PPCColor53: makeNSRGB(0xCCCC, 0xCCCC, 0).PPencodeColor(),
-			PPCColor54: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).PPencodeColor(),
-			PPCColor55: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).PPencodeColor(),
-			PPCColor56: NSColor.redColor().PPencodeColor(),
-			PPCColor57: makeNSRGB(0xFFFF, 0, 0x6666).PPencodeColor(),
-			PPCColor58: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).PPencodeColor(),
-			PPCColor59: makeNSRGB(0x6666, 0xFFFF, 0xCCCC).PPencodeColor(),
-			PPCColor60: makeNSRGB(0x9999, 0xCCCC, 0x6666).PPencodeColor(),
-			PPCColor61: makeNSRGB(0x9999, 0xCCCC, 0x9999).PPencodeColor(),
-			PPCColor62: makeNSRGB(0x9999, 0xCCCC, 0x6666).PPencodeColor(),
-			PPCColor63: makeNSRGB(0xCCCC, 0xCCCC, 0x6666).PPencodeColor(),
-			PPCColor64: makeNSRGB(0xCCCC, 0xCCCC, 0x9999).PPencodeColor(),
-			PPCColor65: makeNSRGB(0xEEEE, 0, 0).PPencodeColor(),
-			PPCColor66: makeNSRGB(0, 0xFFFF, 0x6666).PPencodeColor(),
-			PPCColor67: makeNSRGB(0, 0xFFFF, 0xFFFF).PPencodeColor(),
-			PPCColor68: makeNSRGB(0xFFFF, 0xFFFF, 0).PPencodeColor(),
-			PPCColor69: NSColor.greenColor().PPencodeColor(),
-			PPCColor70: makeNSRGB(0x3333, 0xCCCC, 0xFFFF).PPencodeColor(),
-			PPCColor71: makeNSRGB(0x9999, 0xCCCC, 0x9999).PPencodeColor(),
-			PPCColor72: makeNSRGB(0xFFFF, 0x9999, 0x6666).PPencodeColor(),
-			PPCColor73: makeNSRGB(0x9999, 0xFFFF, 0xFFFF).PPencodeColor(),
-			PPCColor74: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).PPencodeColor(),
-			PPCColor75: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).PPencodeColor(),
-			PPCColor76: makeNSRGB(0, 0x5555, 0).PPencodeColor(),
-			PPCColor77: makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC).PPencodeColor(),
-			PPCColor78: makeNSRGB(0x6666, 0, 0).PPencodeColor(),
-			PPCColor79: makeNSRGB(0x3333, 0xFFFF, 0x6666).PPencodeColor(),
-			PPCColor80: makeNSRGB(0xFFFF, 0xFFFF, 0x6666).PPencodeColor(),
-			PPCColor81: makeNSRGB(0xCCCC, 0, 0).PPencodeColor(),
-			PPCColor82: makeNSRGB(0x9999, 0, 0x3333).PPencodeColor(),
-			PPCColor83: makeNSRGB(0x9999, 0xFFFF, 0x9999).PPencodeColor(),
-			PPCColor84: makeNSRGB(0x9999, 0xCCCC, 0xCCCC).PPencodeColor(),
-			PPCColor85: makeNSRGB(0xCCCC, 0xCCCC, 0).PPencodeColor(),
-			PPCColor86: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).PPencodeColor(),
-			PPCColor87: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).PPencodeColor(),
-			PPCColor88: NSColor.redColor().PPencodeColor(),
-			PPCColor89: makeNSRGB(0x9999, 0, 0x6666).PPencodeColor(),
-			PPCColor90: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).PPencodeColor(),
-			PPCColor91: makeNSRGB(0x6666, 0xFFFF, 0xCCCC).PPencodeColor(),
-			PPCColor92: makeNSRGB(0x9999, 0xCCCC, 0x6666).PPencodeColor(),
-			PPCColor93: makeNSRGB(0x9999, 0xCCCC, 0x9999).PPencodeColor(),
-			PPCColor94: makeNSRGB(0x9999, 0xCCCC, 0x6666).PPencodeColor(),
-			PPCColor95: makeNSRGB(0xCCCC, 0xCCCC, 0x6666).PPencodeColor(),
-			PPCColor96: makeNSRGB(0xCCCC, 0xCCCC, 0x9999).PPencodeColor()]
+		let colorDefaults: [String: Data] = [
+			PPCColor1: makeNSRGB(0xEEEE, 0, 0).encodeColor(),
+			PPCColor2: makeNSRGB(0x8C8C, 0xBCBC, 0x1C1C).encodeColor(),
+			PPCColor3: makeNSRGB(0x3333, 0xFFFF, 0xFFFF).encodeColor(),
+			PPCColor4: NSColor.yellow().encodeColor(),
+			PPCColor5: makeNSRGB(0x6060, 0xCACA, 36494).encodeColor(),
+			PPCColor6: makeNSRGB(0x3333, 0xFFFF, 0xFFFF).encodeColor(),
+			PPCColor7: makeNSRGB(0x6666, 0xCCCC, 0xFFFF).encodeColor(),
+			PPCColor8: makeNSRGB(0xFFFF, 0x6354, 0xFFFF).encodeColor(),
+			PPCColor9: makeNSRGB(0xCCCC, 0x9999, 0x6666).encodeColor(),
+			PPCColor10: makeNSRGB(0x3333, 0x6666, 0x3333).encodeColor(),
+			PPCColor11: makeNSRGB(0xFFFF, 0x6666, 0xFFFF).encodeColor(),
+			PPCColor12: makeNSRGB(0xFFFF, 0x9999, 0).encodeColor(),
+			PPCColor13: makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC).encodeColor(),
+			PPCColor14: makeNSRGB(0x9999, 0, 0x6666).encodeColor(),
+			PPCColor15: makeNSRGB(0x6666, 0xCCCC, 0).encodeColor(),
+			PPCColor16: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).encodeColor(),
+			PPCColor17: makeNSRGB(0xCCCC, 0xFFFF, 0x6666).encodeColor(),
+			PPCColor18: makeNSRGB(0x6666, 0, 0x9999).encodeColor(),
+			PPCColor19: makeNSRGB(0xCCCC, 0, 0x9999).encodeColor(),
+			PPCColor20: makeNSRGB(0xCCCC, 0x9999, 0xFFFF).encodeColor(),
+			PPCColor21: makeNSRGB(0x6666, 0xCCCC, 0x6666).encodeColor(),
+			PPCColor22: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).encodeColor(),
+			PPCColor23: makeNSRGB(0x9999, 0xCCCC, 0xCCCC).encodeColor(),
+			PPCColor24: makeNSRGB(0x6666, 13109, 0x6666).encodeColor(),
+			PPCColor25: makeNSRGB(0xCCCC, 0x9999, 0xCCCC).encodeColor(),
+			PPCColor26: makeNSRGB(0x3333, 0xFFFF, 0xFFFF).encodeColor(),
+			PPCColor27: makeNSRGB(0x3333, 0xFFFF, 0x6666).encodeColor(),
+			PPCColor28: makeNSRGB(0x6666, 0xFFFF, 0x3333).encodeColor(),
+			PPCColor29: makeNSRGB(0xCCCC, 0x9999, 0xCCCC).encodeColor(),
+			PPCColor30: makeNSRGB(0xCCCC, 0x9999, 0x3333).encodeColor(),
+			PPCColor31: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).encodeColor(),
+			PPCColor32: makeNSRGB(0xFFFF, 0xCCCC, 0).encodeColor(),
+			PPCColor33: makeNSRGB(0xEEEE, 0, 0).encodeColor(),
+			PPCColor34: makeNSRGB(0, 0xFFFF, 0x6666).encodeColor(),
+			PPCColor35: NSColor.cyan().encodeColor(),
+			PPCColor36: NSColor.yellow().encodeColor(),
+			PPCColor37: NSColor.green().encodeColor(),
+			PPCColor38: makeNSRGB(0x3333, 0xCCCC, 0xFFFF).encodeColor(),
+			PPCColor39: makeNSRGB(0x9999, 0xCCCC, 0x9999).encodeColor(),
+			PPCColor40: makeNSRGB(0xFFFF, 0x9999, 0x6666).encodeColor(),
+			PPCColor41: makeNSRGB(0x9999, 0xFFFF, 0xFFFF).encodeColor(),
+			PPCColor42: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).encodeColor(),
+			PPCColor43: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).encodeColor(),
+			PPCColor44: makeNSRGB(0, 0x5555, 0).encodeColor(),
+			PPCColor45: makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC).encodeColor(),
+			PPCColor46: makeNSRGB(0x6666, 0, 0).encodeColor(),
+			PPCColor47: makeNSRGB(0x3333, 0xFFFF, 0x6666).encodeColor(),
+			PPCColor48: makeNSRGB(0xFFFF, 0xFFFF, 0x6666).encodeColor(),
+			PPCColor49: makeNSRGB(0xCCCC, 0, 0).encodeColor(),
+			PPCColor50: makeNSRGB(0x9999, 0, 0x3333).encodeColor(),
+			PPCColor51: makeNSRGB(0x9999, 0xFFFF, 0x9999).encodeColor(),
+			PPCColor52: makeNSRGB(0x9999, 0xCCCC, 0xCCCC).encodeColor(),
+			PPCColor53: makeNSRGB(0xCCCC, 0xCCCC, 0).encodeColor(),
+			PPCColor54: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).encodeColor(),
+			PPCColor55: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).encodeColor(),
+			PPCColor56: NSColor.red().encodeColor(),
+			PPCColor57: makeNSRGB(0xFFFF, 0, 0x6666).encodeColor(),
+			PPCColor58: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).encodeColor(),
+			PPCColor59: makeNSRGB(0x6666, 0xFFFF, 0xCCCC).encodeColor(),
+			PPCColor60: makeNSRGB(0x9999, 0xCCCC, 0x6666).encodeColor(),
+			PPCColor61: makeNSRGB(0x9999, 0xCCCC, 0x9999).encodeColor(),
+			PPCColor62: makeNSRGB(0x9999, 0xCCCC, 0x6666).encodeColor(),
+			PPCColor63: makeNSRGB(0xCCCC, 0xCCCC, 0x6666).encodeColor(),
+			PPCColor64: makeNSRGB(0xCCCC, 0xCCCC, 0x9999).encodeColor(),
+			PPCColor65: makeNSRGB(0xEEEE, 0, 0).encodeColor(),
+			PPCColor66: makeNSRGB(0, 0xFFFF, 0x6666).encodeColor(),
+			PPCColor67: makeNSRGB(0, 0xFFFF, 0xFFFF).encodeColor(),
+			PPCColor68: makeNSRGB(0xFFFF, 0xFFFF, 0).encodeColor(),
+			PPCColor69: NSColor.green().encodeColor(),
+			PPCColor70: makeNSRGB(0x3333, 0xCCCC, 0xFFFF).encodeColor(),
+			PPCColor71: makeNSRGB(0x9999, 0xCCCC, 0x9999).encodeColor(),
+			PPCColor72: makeNSRGB(0xFFFF, 0x9999, 0x6666).encodeColor(),
+			PPCColor73: makeNSRGB(0x9999, 0xFFFF, 0xFFFF).encodeColor(),
+			PPCColor74: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).encodeColor(),
+			PPCColor75: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).encodeColor(),
+			PPCColor76: makeNSRGB(0, 0x5555, 0).encodeColor(),
+			PPCColor77: makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC).encodeColor(),
+			PPCColor78: makeNSRGB(0x6666, 0, 0).encodeColor(),
+			PPCColor79: makeNSRGB(0x3333, 0xFFFF, 0x6666).encodeColor(),
+			PPCColor80: makeNSRGB(0xFFFF, 0xFFFF, 0x6666).encodeColor(),
+			PPCColor81: makeNSRGB(0xCCCC, 0, 0).encodeColor(),
+			PPCColor82: makeNSRGB(0x9999, 0, 0x3333).encodeColor(),
+			PPCColor83: makeNSRGB(0x9999, 0xFFFF, 0x9999).encodeColor(),
+			PPCColor84: makeNSRGB(0x9999, 0xCCCC, 0xCCCC).encodeColor(),
+			PPCColor85: makeNSRGB(0xCCCC, 0xCCCC, 0).encodeColor(),
+			PPCColor86: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).encodeColor(),
+			PPCColor87: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).encodeColor(),
+			PPCColor88: NSColor.red().encodeColor(),
+			PPCColor89: makeNSRGB(0x9999, 0, 0x6666).encodeColor(),
+			PPCColor90: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).encodeColor(),
+			PPCColor91: makeNSRGB(0x6666, 0xFFFF, 0xCCCC).encodeColor(),
+			PPCColor92: makeNSRGB(0x9999, 0xCCCC, 0x6666).encodeColor(),
+			PPCColor93: makeNSRGB(0x9999, 0xCCCC, 0x9999).encodeColor(),
+			PPCColor94: makeNSRGB(0x9999, 0xCCCC, 0x6666).encodeColor(),
+			PPCColor95: makeNSRGB(0xCCCC, 0xCCCC, 0x6666).encodeColor(),
+			PPCColor96: makeNSRGB(0xCCCC, 0xCCCC, 0x9999).encodeColor()]
 		
 		tooLargeDict += defaults1
 		tooLargeDict += defaults2
 		tooLargeDict += defaults3
 		tooLargeDict += (colorDefaults as [String: AnyObject])
 		
-		UserDefaults.standard().register(tooLargeDict)
+		UserDefaults.standard.register(tooLargeDict)
 	}
 	
 	override init() {
@@ -347,6 +347,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		registerDefaults()
 	}
 	
+	@discardableResult
 	func handleFile(_ theURL1: URL, ofType theUTI: String) -> Bool {
 		let sharedWorkspace = NSWorkspace.shared()
 		var theURL = theURL1
@@ -381,24 +382,24 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			let cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
 			let unwrapped = String(format: invExtDes, theURL.lastPathComponent!)
 			
-			let retVal = PPRunInformationalAlertPanel(invExt, message: unwrapped, defaultButton: renameFile, alternateButton: openFile, otherButton: cancelOp);
+			let retVal = PPRunInformationalAlertPanel(title: invExt, message: unwrapped, defaultButton: renameFile, alternateButton: openFile, otherButton: cancelOp);
 			switch (retVal) {
 			case NSAlertDefaultReturn:
 				do {
 					let identRet = try madLib.identifyFile(URL: theURL)
 					let info = try! madLib.informationFromFile(URL: theURL, type: identRet)
-					let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(info.signature.lowercaseString)
+					let tmpURL = try! (theURL.deletingPathExtension)().appendingPathExtension(info.signature.lowercased())
 					do {
-						try FileManager.defaultManager().moveItemAtURL(theURL, toURL: tmpURL)
+						try FileManager.default.moveItem(at: theURL, to: tmpURL)
 						theURL = tmpURL
 						//TODO: regenerate the UTI
 						
 					} catch {
 						let couldNotRenameStr = String(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent!, theURL.lastPathComponent!)
-						PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: couldNotRenameStr)
+						PPRunInformationalAlertPanel(title: NSLocalizedString("Rename Error", comment: "Rename Error"), message: couldNotRenameStr)
 					}
 				} catch {
-					PPRunCriticalAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"))
+					PPRunCriticalAlertPanel(title: NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"))
 					return false
 				}
 				
@@ -429,26 +430,26 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		} //else
 		
 		for obj in complexImport {
-			for aUTI in obj.UTITypes as! [String] {
+			for aUTI in obj.utiTypes as! [String] {
 				if sharedWorkspace.type(theUTI, conformsToType: aUTI) {
 					let canImport: Bool
 					do {
-						try obj.canImportURL(theURL1)
+						try obj.canImport(theURL1)
 						canImport = true
 					} catch _ {
 						canImport = false
 					}
 					if canImport {
-						obj.beginImportOfURL(theURL1, withHandler: { (ourObject, anErr) -> Void in
-							if anErr == .NoErr {
+						obj.beginImport(of: theURL1, withHandler: { (ourObject, anErr) -> Void in
+							if anErr == .noErr {
 								let aPPDoc = PPDocument(music: ourObject!)
 								
 								self.addDocument(aPPDoc)
 								aPPDoc.makeWindowControllers()
 								aPPDoc.showWindows()
-								aPPDoc.setDisplayName((theURL1.lastPathComponent! as NSString).stringByDeletingPathExtension)
+								aPPDoc.displayName = ((theURL1.lastPathComponent! as NSString).deletingPathExtension)
 							} else {
-								let nsErr = createErrorFromMADErrorType(anErr)!
+								let nsErr = createError(from: anErr)!
 								if PPErrorIsUserCancelled(nsErr) == false {
 									NSAlert(error: nsErr).runModal()
 								} else {
@@ -468,13 +469,13 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
 				let aType = madLib.typeFromUTI(theUTI)!
 				do {
-					let theWrap = try PPMusicObject(URL: theURL1, stringType: aType, library: madLib)
+					let theWrap = try PPMusicObject(url: theURL1, stringType: aType, library: madLib)
 					let aDoc = PPDocument(music: theWrap)
 					
 					addDocument(aDoc)
 					aDoc.makeWindowControllers()
 					aDoc.showWindows()
-					aDoc.setDisplayName((theURL1.lastPathComponent! as NSString).stringByDeletingPathExtension)
+					aDoc.displayName = ((theURL1.lastPathComponent! as NSString).deletingPathExtension)
 					return true;
 				} catch {
 					return false
@@ -483,7 +484,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		
 		for obj in instrumentPlugHandler {
-			for aUTI in obj.UTITypes {
+			for aUTI in obj.utiTypes {
 				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
 					do {
 						try importInstrument(URL: theURL, makeUserSelectInstrument: true)
@@ -497,7 +498,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		
 		for obj in samplesHandler {
-			for aUTI in obj.UTITypes {
+			for aUTI in obj.utiTypes {
 				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
 					do {
 						try importSample(URL: theURL, makeUserSelectSample: true)
@@ -514,22 +515,22 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	func importSample(URL theURL: URL, makeUserSelectSample: Bool = false) throws {
-		throw MADErr.OrderNotImplemented
+		throw MADErr.orderNotImplemented
 		
 	}
 	
 	func importInstrument(URL theURL: URL, makeUserSelectInstrument: Bool = false) throws {
-		throw MADErr.OrderNotImplemented
+		throw MADErr.orderNotImplemented
 		
 	}
 
 	func importPcmdFromURL(_ url: URL) throws {
-		throw MADErr.OrderNotImplemented
+		throw MADErr.orderNotImplemented
 		
 	}
 	
 	func importInstrumentListFromURL(_ url: URL) throws {
-		throw MADErr.OrderNotImplemented
+		throw MADErr.orderNotImplemented
 		
 	}
 	
@@ -538,17 +539,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		registerDefaults()
 	}
 	
-	@objc(PPExportAddObject:) func addExportObject(_ expObj: ExportObject) {
-		exportObjects.append(expObj);
-		expObj.run()
-	}
-	
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		PPLibrary.registerDebugBlock(CocoaDebugStr)
-		let defaults = UserDefaults.standard()
+		let defaults = UserDefaults.standard
 		
-		for (i, obj) in instrumentPlugHandler.enumerate() {
-			if (obj.mode == MADPlugModes.ImportExport || obj.mode == MADPlugModes.Export) {
+		for (i, obj) in instrumentPlugHandler.enumerated() {
+			if (obj.mode == MADPlugModes.importExport || obj.mode == MADPlugModes.export) {
 				let mi = NSMenuItem(title: obj.menuName, action: Selector("exportInstrument:"), keyEquivalent: "")
 				mi.tag = i;
 				mi.target = nil
@@ -556,7 +552,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		}
 		
-		for (i, obj) in (madLib).enumerate() {
+		for (i, obj) in (madLib).enumerated() {
 			if (obj.canExport) {
 				let mi = NSMenuItem(title: "\(obj.menuName)…", action: Selector("exportMusicAs:"), keyEquivalent: "")
 				mi.tag = i
@@ -566,8 +562,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		
 		for i in 1 ... 96 {
-			let tmpColor = NSColor.ppDecode(with: defaults.data(forKey: "PPColor \(i)"))
-			thePPColors.append(tmpColor!)
+			var theColor: NSColor
+			if let colorData = defaults.data(forKey: "PPColor \(i)"), let tmpColor = NSColor.decodeColor(with: colorData) {
+				theColor = tmpColor
+			} else {
+				defaults.removeObject(forKey: "PPColor \(i)")
+				theColor = NSColor.decodeColor(with: defaults.data(forKey: "PPColor \(i)")!)!
+			}
+			thePPColors.append(theColor)
 		}
 		
 		updatePlugInInfoMenu()
@@ -585,14 +587,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		let otherDict: [String : [String]]  = ["PCMD": [PPPCMDUTI], "Instrument List": [PPInstrumentListUTI]];
 		var samplesDict = [String: [String]]()
 		for obj in instrumentPlugHandler {
-			if (obj.mode == .Import || obj.mode == .ImportExport) {
-				samplesDict[obj.menuName] = (obj.UTITypes );
+			if (obj.mode == .import || obj.mode == .importExport) {
+				samplesDict[obj.menuName] = (obj.utiTypes );
 			}
 		}
 		
 		for obj in samplesHandler {
 			if obj.canImport {
-				samplesDict[obj.menuName] = obj.UTITypes
+				samplesDict[obj.menuName] = obj.utiTypes
 			}
 		}
 		
@@ -613,7 +615,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 						fatalError()
 					}
 					if let err = err {
-						PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", (filename as NSString).lastPathComponent, err.localizedFailureReason!))
+						PPRunAlertPanel(title: "Error opening file", message: String(format:"Unable to open %@: %@", (filename as NSString).lastPathComponent, err.localizedFailureReason!))
 						return
 					}
 					self.handleFile(panelURL, ofType: utiFile!)
@@ -627,17 +629,25 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		do {
 			utiFile = try NSWorkspace.shared().type(ofFile: filename)
 		} catch let err as NSError {
-			PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", (filename as NSString).lastPathComponent, err.localizedFailureReason!))
+			PPRunAlertPanel(title: "Error opening file", message: String(format:"Unable to open %@: %@", (filename as NSString).lastPathComponent, err.localizedFailureReason!))
 			return false
 		}
 		return handleFile(URL(fileURLWithPath: filename), ofType: utiFile!)
 	}
 	
-	@objc(PPExportObjectDidFinish:) func exportObjectDidFinish(_ theObj: ExportObject) {
+}
+
+extension AppDelegate: ExportObjectDelegate {
+func add(exportObject expObj: ExportObject) {
+		exportObjects.append(expObj);
+		expObj.run()
+	}
+
+	func exportObject(didFinish theObj: ExportObject) {
+		
+	}
+	func exportObject(_ theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: String?) {
 		
 	}
 	
-	@objc(PPExportObjectEncounteredError:errorCode:errorString:) func exportObjectEncounteredError(_ theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: String?) {
-		
-	}
 }

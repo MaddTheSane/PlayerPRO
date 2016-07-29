@@ -85,6 +85,6 @@ extension MADErr: ErrorProtocol {
 /// - parameter customUserDictionary: A dictionary with additional information. May be `nil`, defaults to `nil`.
 /// - parameter convertToCocoa: Converts the `MADErr` code into a compatible error in Cocoa's error types. defaults to `false`.
 /// - returns: An `NSError` value, or `nil` if passed `.NoErr`
-public func createErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil, convertToCocoa: Bool = false) -> NSError? {
+public func createError(from theErr: MADErr, customUserDictionary: [String: NSObject]? = nil, convertToCocoa: Bool = false) -> NSError? {
 	return theErr.toNSError(customUserDictionary: customUserDictionary, convertToCocoa: convertToCocoa)
 }

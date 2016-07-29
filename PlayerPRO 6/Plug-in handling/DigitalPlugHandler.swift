@@ -14,13 +14,13 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
 	
 	override init() {
 		let defaultPlugLocs = DefaultPlugInLocations()
-		let defaultManager = FileManager.default()
+		let defaultManager = FileManager.default
 		for aPlugLoc in defaultPlugLocs {
 			do {
-				let components = try defaultManager.contentsOfDirectoryAtURL(aPlugLoc, includingPropertiesForKeys: [], options: [])
+				let components = try defaultManager.contentsOfDirectory(at: aPlugLoc, includingPropertiesForKeys: [], options: [])
 				let aComp = components.filter({ (aURL) -> Bool in
 					if let ext = aURL.pathExtension {
-						if ext.compare("plugin", options: .CaseInsensitiveSearch) == .OrderedSame {
+						if ext.compare("plugin", options: .caseInsensitive) == .orderedSame {
 							return true
 						}
 					}
@@ -30,7 +30,7 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
 				
 				
 				for component in aComp {
-					if let theBundle = NSBundle(URL: component), tempObj = DigitalPlugInObject(bundle: theBundle) {
+					if let theBundle = Bundle(url: component), let tempObj = DigitalPlugInObject(bundle: theBundle) {
 						digitalPlugs.append(tempObj)
 					}
 				}
@@ -78,6 +78,10 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
 		return digitalPlugs.endIndex
 	}
 	
+	@nonobjc func index(after i: Int) -> Int {
+		return i + 1
+	}
+	
 	subscript (subRange: Range<Int>) -> ArraySlice<DigitalPlugInObject> {
 		return digitalPlugs[subRange]
 	}
@@ -86,7 +90,7 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
 		return digitalPlugs[index]
 	}
 	
-	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AutoreleasingUnsafeMutablePointer<AnyObject?>>, count len: Int) -> Int {
+	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
 		return (digitalPlugs as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }
