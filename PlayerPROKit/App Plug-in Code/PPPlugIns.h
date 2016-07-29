@@ -32,7 +32,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 /// Does the plug-in have a UI?
 @property (nonatomic, readonly) BOOL hasUIConfiguration;
 /// Initializer (constructor) for a plug-in.
-- (null_unspecified instancetype)initForPlugIn;
+- (nullable instancetype)initForPlugIn;
 @end
 
 @protocol PPDigitalPlugin <PPPlugin, NSObject>
@@ -54,7 +54,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 
 @protocol PPSampleImportPlugin <NSObject>
-- (null_unspecified instancetype)initForPlugIn;
+- (nullable instancetype)initForPlugIn;
 
 @property (nonatomic, readonly) BOOL hasUIForImport;
 
@@ -69,7 +69,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 
 @protocol PPSampleExportPlugin <NSObject>
-- (null_unspecified instancetype)initForPlugIn;
+- (nullable instancetype)initForPlugIn;
 
 @property (nonatomic, readonly) BOOL hasUIForExport;
 
@@ -82,7 +82,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 
 @protocol PPInstrumentImportPlugin <NSObject>
-- (null_unspecified instancetype)initForPlugIn;
+- (nullable instancetype)initForPlugIn;
 
 @property (nonatomic, readonly) BOOL hasUIForImport;
 
@@ -96,7 +96,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 
 @protocol PPInstrumentExportPlugin <NSObject>
-- (null_unspecified instancetype)initForPlugIn;
+- (nullable instancetype)initForPlugIn;
 
 @property (nonatomic, readonly) BOOL hasUIForExport;
 
@@ -108,7 +108,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 //This doesn't need to conform to PPPlugin because it will always have a UI.
 @protocol PPComplexImportPlugInterface <NSObject>
-- (null_unspecified instancetype)initForPlugIn;
+- (nullable instancetype)initForPlugIn;
 
 - (BOOL)canImportURL:(NSURL*)theURL error:(out NSError * __nullable __autoreleasing* __nullable)outErr;
 - (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler;

@@ -21,9 +21,11 @@ public final class Crop: NSObject, PPFilterPlugin {
 	}
 	
 	public func run(withData theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver) -> MADErr {
-		let ourData = NSMutableData(data: theData.data)
-		ourData.replaceBytes(in: selRange, withBytes: nil, length: 0)
-		theData.data = ourData as Data!
+		guard var ourData = theData.data, let selSwiftRange = selRange.toRange() else {
+			return .parametersErr
+		}
+		ourData.replaceBytes(in: selSwiftRange, with: Data())
+		theData.data = ourData
 		return .noErr
 	}
 }
