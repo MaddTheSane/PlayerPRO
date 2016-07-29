@@ -33,6 +33,7 @@ extern NSString * const PPPCMDUTI;
 extern NSString * const PPGenericTrackerUTI;
 extern NSString * const PPGenericInstrumentUTI;
 extern NSString * const PPInstrumentListUTI;
+//! The drag UTI for music list objects
 extern NSString * const PPMLDCUTI;
 
 #pragma mark Music list preference keys

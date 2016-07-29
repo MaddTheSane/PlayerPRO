@@ -12,7 +12,7 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	let theIndexSet: IndexSet
 	
 	@objc init(indexSet: IndexSet) {
-		theIndexSet = indexSet as IndexSet
+		theIndexSet = indexSet
 		
 		super.init()
 	}
@@ -41,18 +41,13 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	
 	@objc convenience required init?(pasteboardPropertyList propertyList: AnyObject, ofType type: String) {
 		if type == PPMLDCUTI {
-			if let plistData = propertyList as? Data, let unArchive = NSKeyedUnarchiver(forReadingWith: plistData).decodeObject(forKey: PPMLDCUTI) as? NSIndexSet {
-				self.init(indexSet: unArchive as IndexSet)
-			} else {
-				self.init()
-				
-				return nil
+			if let plistData = propertyList as? Data, let unArchive = NSKeyedUnarchiver(forReadingWith: plistData).decodeObject(forKey: PPMLDCUTI) as? IndexSet {
+				self.init(indexSet: unArchive)
+				return
 			}
-		} else {
-			self.init()
-			
-			return nil
 		}
+			
+		return nil
 	}
 	
 	@objc func pasteboardPropertyList(forType type: String) -> AnyObject? {
