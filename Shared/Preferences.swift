@@ -110,7 +110,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 				return false
 			}
 		}
-		assert(ourController.count == 1 || ourController.count == 0, "There should only be one preference class is labeled \(name)")
+		assert(ourController.count == 1 || ourController.count == 0, "There should only be one preference class labeled \(name)")
 
 		if ourController.count == 1 {
 			displayViewController(ourController[0])

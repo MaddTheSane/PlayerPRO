@@ -854,7 +854,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		defaultCenter.addObserver(self, selector: #selector(PlayerAppDelegate.soundPreferencesDidChange(_:)), name: PPSoundPreferencesDidChange, object: nil)
 		
 		MADDriverWithPreferences()
-		for (i, obj) in (madLib).enumerate() {
+		for (i, obj) in madLib.enumerate() {
 			if obj.canExport {
 				let mi = NSMenuItem(title: "\(obj.menuName)…", action: #selector(PlayerAppDelegate.exportMusicAs(_:)), keyEquivalent: "")
 				mi.tag = i
