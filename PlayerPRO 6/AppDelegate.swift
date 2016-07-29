@@ -11,7 +11,7 @@ import PlayerPROCore
 import PlayerPROKit
 import SwiftAdditions
 
-/*@inline(__always)*/ private func makeNSRGB(_ red: UInt16, _ green: UInt16, _ blue:UInt16) -> NSColor {
+@inline(__always) private func makeNSRGB(_ red: UInt16, _ green: UInt16, _ blue:UInt16) -> NSColor {
 	return NSColor(calibratedRed: CGFloat(red) / CGFloat(UInt16.max), green: CGFloat(green) / CGFloat(UInt16.max), blue: CGFloat(blue) / CGFloat(UInt16.max), alpha: 1)
 }
 
@@ -545,7 +545,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		
 		for (i, obj) in instrumentPlugHandler.enumerated() {
 			if (obj.mode == MADPlugModes.importExport || obj.mode == MADPlugModes.export) {
-				let mi = NSMenuItem(title: obj.menuName, action: Selector("exportInstrument:"), keyEquivalent: "")
+				let mi = NSMenuItem(title: obj.menuName, action: #selector(InstrumentPanelController.exportInstrument(_:)), keyEquivalent: "")
 				mi.tag = i;
 				mi.target = nil
 				instrumentExportMenu.addItem(mi);
@@ -554,7 +554,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		
 		for (i, obj) in (madLib).enumerated() {
 			if (obj.canExport) {
-				let mi = NSMenuItem(title: "\(obj.menuName)…", action: Selector("exportMusicAs:"), keyEquivalent: "")
+				let mi = NSMenuItem(title: "\(obj.menuName)…", action: #selector(DocumentWindowController.exportMusicAs
+					), keyEquivalent: "")
 				mi.tag = i
 				mi.target = nil
 				musicExportMenu.addItem(mi)
@@ -638,7 +639,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 }
 
 extension AppDelegate: ExportObjectDelegate {
-func add(exportObject expObj: ExportObject) {
+	func add(exportObject expObj: ExportObject) {
 		exportObjects.append(expObj);
 		expObj.run()
 	}
