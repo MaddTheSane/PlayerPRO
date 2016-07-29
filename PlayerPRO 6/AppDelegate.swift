@@ -67,7 +67,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 	private(set) lazy var trackerDict: [String: [String]] = {
 		let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", value: "MADK Tracker", comment: "MADK Tracker")
 		let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
-		var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]] as [String: [String]]
+		var tmpTrackerDict: [String: [String]] = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]]
 		
 		for obj in self.madLib {
 			tmpTrackerDict[obj.menuName] = obj.UTITypes
@@ -413,7 +413,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		}
 		if (sharedWorkspace.type(theUTI, conformsToType:PPPCMDUTI)) {
 			do {
-				try importPcmdFromURL(theURL)
+				try importPcmd(from: theURL)
 				return true
 			} catch let error as NSError {
 				NSAlert(error: error).runModal()
@@ -421,7 +421,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			}
 		} else if (sharedWorkspace.type(theUTI, conformsToType:PPInstrumentListUTI)) {
 			do {
-				try importInstrumentListFromURL(theURL)
+				try importInstrumentList(from: theURL)
 				return true
 			} catch let err as NSError {
 				NSAlert(error: err).runModal()
@@ -487,7 +487,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			for aUTI in obj.utiTypes {
 				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
 					do {
-						try importInstrument(URL: theURL, makeUserSelectInstrument: true)
+						try importInstrument(from: theURL, makeUserSelectInstrument: true)
 						return true
 					} catch let theErr as NSError {
 						NSAlert(error: theErr).runModal()
@@ -501,7 +501,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			for aUTI in obj.utiTypes {
 				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
 					do {
-						try importSample(URL: theURL, makeUserSelectSample: true)
+						try importSample(from: theURL, makeUserSelectSample: true)
 						return true
 					} catch let theErr as NSError {
 						NSAlert(error: theErr).runModal()
@@ -514,22 +514,22 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		return false;
 	}
 	
-	func importSample(URL theURL: URL, makeUserSelectSample: Bool = false) throws {
+	func importSample(from theURL: URL, makeUserSelectSample: Bool = false) throws {
 		throw MADErr.orderNotImplemented
 		
 	}
 	
-	func importInstrument(URL theURL: URL, makeUserSelectInstrument: Bool = false) throws {
+	func importInstrument(from theURL: URL, makeUserSelectInstrument: Bool = false) throws {
 		throw MADErr.orderNotImplemented
 		
 	}
 
-	func importPcmdFromURL(_ url: URL) throws {
+	func importPcmd(from url: URL) throws {
 		throw MADErr.orderNotImplemented
 		
 	}
 	
-	func importInstrumentListFromURL(_ url: URL) throws {
+	func importInstrumentList(from url: URL) throws {
 		throw MADErr.orderNotImplemented
 		
 	}
