@@ -64,9 +64,6 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	#endif
 	
 	@objc private(set) lazy var fileName: String = {
-		var val: AnyObject? = nil;
-		var err: NSError? = nil;
-		
 		do {
 			var values = try self.musicURL.resourceValues(forKeys: [URLResourceKey.localizedNameKey])
 			let retStr = values.localizedName!

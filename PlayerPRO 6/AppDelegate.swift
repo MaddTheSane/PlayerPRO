@@ -386,8 +386,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			switch (retVal) {
 			case NSAlertDefaultReturn:
 				do {
-					let identRet = try madLib.identifyFile(URL: theURL)
-					let info = try! madLib.informationFromFile(URL: theURL, type: identRet)
+					let identRet = try madLib.identifyFile(at: theURL)
+					let info = try! madLib.information(from: theURL, type: identRet)
 					let tmpURL = try! (theURL.deletingPathExtension)().appendingPathExtension(info.signature.lowercased())
 					do {
 						try FileManager.default.moveItem(at: theURL, to: tmpURL)

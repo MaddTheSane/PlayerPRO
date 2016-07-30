@@ -27,7 +27,7 @@ class PlayerPROKit_Tests: XCTestCase {
 		MADRegisterDebugFunc(cXTCFail)
 		
 		ourBundle = Bundle(for: PlayerPROKit_Tests.self)
-			if let ourPlugPath = ourBundle?.builtInPlugInsURL where ((try? ourPlugPath.checkResourceIsReachable()) ?? false) {
+			if let ourPlugPath = ourBundle?.builtInPlugInsURL, ((try? ourPlugPath.checkResourceIsReachable()) ?? false) {
 				ourLib = PPLibrary(plugInURL: ourPlugPath)
 			} else {
 				ourLib = PPLibrary()
@@ -43,7 +43,7 @@ class PlayerPROKit_Tests: XCTestCase {
 	func testMADKInformation() {
 		let musicPath = ourBundle!.urlForResource("TestMADK", withExtension: "madk")!
 		do {
-			let info = try ourLib!.informationFromFile(URL: musicPath, type: "MADK")
+			let info = try ourLib!.information(from: musicPath, type: "MADK")
 			print(info)
 			XCTAssertEqual("MADK", info.signature)
 			XCTAssertEqual(info.totalPatterns, 7)
@@ -60,7 +60,7 @@ class PlayerPROKit_Tests: XCTestCase {
 	func testObjcMADKInformation() {
 		var dict: NSDictionary = [:]
 		let musicPath = ourBundle!.urlForResource("TestMADK", withExtension: "madk")!
-		let err = ourLib!.getInformationFromFile(URL: musicPath, type: "MADK", info: &dict)
+		let err = ourLib!.getInformation(from: musicPath, type: "MADK", info: &dict)
 		XCTAssertEqual(err, MADErr.noErr)
 	}
 	

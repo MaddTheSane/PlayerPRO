@@ -427,7 +427,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		do {
 			let fileUTI = try NSWorkspace.shared().type(ofFile: musicToLoad.path!)
 			if let afileType = madLib.typeFromUTI(fileUTI) {
-				theOSErr = madLib.testFile(URL: musicToLoad, type: afileType)
+				theOSErr = madLib.testFile(at: musicToLoad, type: afileType)
 				if theOSErr == .noErr {
 					fileType = afileType
 				} else {
@@ -439,7 +439,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		
 		if fileType == nil {
 			do {
-				fileType = try madLib.identifyFile(URL: musicToLoad)
+				fileType = try madLib.identifyFile(at: musicToLoad)
 				theOSErr = .noErr
 			} catch let err3 as NSError {
 				error = err3
@@ -537,7 +537,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			do {
 				madDriver = try PPDriver(library: madLib, settings: &theSettinit)
 			} catch let error as NSError {
-				let defaults = UserDefaults.standard
 				for pref in [PPSoundOutBits, PPSoundOutRate, PPSoundDriver, PPStereoDelayToggle,
 					PPReverbToggle, PPSurroundToggle, PPOversamplingToggle, PPStereoDelayAmount,
 					PPReverbAmount, PPReverbStrength, PPOversamplingAmount] {
@@ -548,6 +547,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				let alert = NSAlert()
 				alert.messageText = "Sound Driver failure"
 				alert.informativeText = "Unable to create the PlayerPRO sound driver due to error type \(error.code). Sound preferences will be reset.\n\nPlayerPRO will now close."
+				alert.alertStyle = .critical
 				alert.runModal()
 				
 				print("Could not create initial driver, error \(error)")
@@ -672,7 +672,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			case NSAlertDefaultReturn:
 				
 				do {
-					let identRet = try madLib.identifyFile(URL: theURL)
+					let identRet = try madLib.identifyFile(at: theURL)
 					let tmpURL = try theURL.deletingPathExtension().appendingPathExtension(identRet.lowercased())
 					
 					do {
@@ -731,8 +731,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			// Final check, just in case the UTI is messed up...
 			// Yes, it does happen.
 			do {
-				let aType = try madLib.identifyFile(URL: theURL)
-				let theRet = madLib.testFile(URL: theURL, type: aType)
+				let aType = try madLib.identifyFile(at: theURL)
+				let theRet = madLib.testFile(at: theURL, type: aType)
 				if theRet == .noErr {
 					addMusicToMusicList(theURL)
 				} else {
@@ -1531,8 +1531,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		}
 		
 		let selected = tableView.selectedRowIndexes
-		var info = ""
-		var NSSig = ""
 		
 		if selected.count > 0 {
 			musicList.selectedMusic = selected.first!
@@ -1549,8 +1547,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		
 		func badValues() {
 			do {
-				let strType = try madLib.identifyFile(URL: musicURL)
-				aPPInfo = try madLib.informationFromFile(URL: musicURL, type: strType)
+				let strType = try madLib.identifyFile(at: musicURL)
+				aPPInfo = try madLib.information(from: musicURL, type: strType)
 			} catch {
 				aPPInfo = nil
 			}
@@ -1559,7 +1557,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		do {
 			let fileUTI = try NSWorkspace.shared().type(ofFile: musicURL.path!)
 			if let info = madLib.typeFromUTI(fileUTI) {
-				aPPInfo = try madLib.informationFromFile(URL:musicURL, type: info)
+				aPPInfo = try madLib.information(from: musicURL, type: info)
 			} else {
 				badValues()
 			}
