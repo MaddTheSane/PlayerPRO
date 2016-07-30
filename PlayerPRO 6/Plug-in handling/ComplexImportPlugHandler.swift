@@ -42,7 +42,7 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, Collection {
 				})
 				
 				for component in aComp {
-					if let theBundle = Bundle(url: component), aPlug = PPComplexImportPlugObject(bundle: theBundle) {
+					if let theBundle = Bundle(url: component), let aPlug = PPComplexImportPlugObject(bundle: theBundle) {
 						plugIns.append(aPlug)
 					}
 				}

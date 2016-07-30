@@ -149,7 +149,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		var audioFile: AudioFileID? = nil
 		var res: OSStatus = 0
 		let data: Data
-		if isBigEndian {
+		if ByteOrder.isBig {
 			if (sample.amplitude == 16) {
 				let mutData = NSMutableData(data: sample.data)
 				let mutShortBytes = UnsafeMutablePointer<UInt16>(mutData.mutableBytes)

@@ -173,7 +173,7 @@ class DocumentWindowController: NSWindowController {
 	
 	func rawBESoundData(_ theSet: MADDriverSettings) -> Data? {
 		var theSet = theSet
-		if isLittleEndian {
+		if ByteOrder.isLittle {
 			if let rsd = rawSoundData(&theSet) {
 				if (theSet.outPutBits == 16) {
 					let sndSize = rsd.length;
@@ -195,7 +195,7 @@ class DocumentWindowController: NSWindowController {
 	
 	func rawLESoundData(_ theSet: MADDriverSettings) -> Data? {
 		var theSet = theSet
-		if !isLittleEndian {
+		if ByteOrder.isBig {
 			if let rsd = rawSoundData(&theSet) {
 				if (theSet.outPutBits == 16) {
 					let sndSize = rsd.length;

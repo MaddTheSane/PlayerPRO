@@ -46,7 +46,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 			return sample.data.withUnsafeBytes({ (aData: UnsafePointer<Void>) -> MADErr in
 				var myErr = MADErr.noErr
 				if sample.amplitude == 16 {
-					if isBigEndian {
+					if ByteOrder.isBig {
 						//sample.data.
 						res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, aData);
 					} else {
