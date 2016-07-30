@@ -70,7 +70,7 @@ public func note(from myTT: String) -> Int16?
 	let theRest = myTT[myTT.startIndex ..< idx]
 	
 	let theRet: (outString: String, sharp: Bool) = {
-		let idx2 = myTT.index(after: idx)
+		let idx2 = myTT.index(before: idx)
 		let maybeSign = myTT[idx2]
 		let maybeStr = myTT[myTT.startIndex ..< idx2]
 		switch maybeSign {
