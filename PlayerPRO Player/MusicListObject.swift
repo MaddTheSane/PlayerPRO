@@ -12,25 +12,34 @@ import Foundation
 #endif
 
 private let kMusicListURLKey		= "URLKey"
+private let kMusicListURLBookmark	= "Bookmark"
 private let kMusicListDateAddedKey	= "DateAdded"
 
-private func URLsPointingToTheSameFile(_ urlA: NSURL, _ urlB: NSURL) -> Bool {
-	var dat1: AnyObject? = nil
-	var dat2: AnyObject? = nil
+#if os(OSX)
+private let homeURL: URL = {
+	return URL(fileURLWithPath: NSHomeDirectory())
+}()
+#endif
+
+private func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
+	var dat1: (NSCopying & NSSecureCoding & NSObjectProtocol)? = nil
+	var dat2: (NSCopying & NSSecureCoding & NSObjectProtocol)? = nil
 	var bothAreValid = true
 	var theSame = false
 	do {
-		try urlA.getResourceValue(&dat1, forKey: URLResourceKey.fileResourceIdentifierKey)
+		let vals = try urlA.resourceValues(forKeys: [.fileResourceIdentifierKey])
+		dat1 = vals.fileResourceIdentifier
 	} catch _ {
 		bothAreValid = false;
 	}
 	do {
-		try urlB.getResourceValue(&dat2, forKey: URLResourceKey.fileResourceIdentifierKey)
+		let vals = try urlB.resourceValues(forKeys: [.fileResourceIdentifierKey])
+		dat2 = vals.fileResourceIdentifier
 	} catch _ {
 		bothAreValid = false;
 	}
 	if bothAreValid {
-		theSame = (dat1 as! NSObject) == (dat2 as! NSObject)
+		theSame = dat1?.isEqual(dat2) ?? false
 	}
 	return theSame
 }
@@ -166,7 +175,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 	}
 
-	@objc(pointsToFileAtURL:) func pointsToFile(url URL: NSURL?) -> Bool {
+	@objc(pointsToFileAtURL:) func pointsToFile(url URL: URL?) -> Bool {
 		if let unwrapped = URL {
 			return URLsPointingToTheSameFile(musicURL, unwrapped)
 		} else {
@@ -217,16 +226,36 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	static let supportsSecureCoding = true
 	
 	func encode(with aCoder: NSCoder) {
+		#if os(OSX)
+		if let bookmark = try? musicURL.bookmarkData(options: [], includingResourceValuesForKeys: nil, relativeTo: homeURL) {
+			aCoder.encode(bookmark, forKey: kMusicListURLBookmark)
+		}
+		#endif
 		aCoder.encode(musicURL, forKey: kMusicListURLKey)
 		aCoder.encode(addedDate, forKey: kMusicListDateAddedKey)
 	}
 	
 	convenience required init?(coder aDecoder: NSCoder) {
-		guard let aURL = aDecoder.decodeObject(forKey: kMusicListURLKey) as? NSURL,
+		var fileURL: URL?
+		
+		#if os(OSX)
+		if let bookmarkData = aDecoder.decodeObject(forKey: kMusicListURLBookmark) as? Data {
+			var unusedStale: Bool = false
+			if let hi = try? URL(resolvingBookmarkData: bookmarkData, options: [], relativeTo: homeURL, bookmarkDataIsStale: &unusedStale) {
+				fileURL = hi
+			}
+		}
+		#endif
+		
+		if fileURL == nil {
+			fileURL = aDecoder.decodeObject(forKey: kMusicListURLKey) as? URL
+		}
+		
+		guard let aURL = fileURL,
 			let aaddedDate = aDecoder.decodeObject(forKey: kMusicListDateAddedKey) as? Date else {
 				return nil
 		}
 		
-		self.init(url: aURL as URL, date: aaddedDate)
+		self.init(url: aURL, date: aaddedDate)
 	}
 }

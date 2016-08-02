@@ -252,7 +252,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			return
 			
 		case .SimilarURL:
-			let similarMusicIndex = musicList.indexOfObjectSimilar(URL: theURL)!
+			let similarMusicIndex = musicList.indexOfObjectSimilar(to: theURL)!
 			let similarAlert = NSAlert()
 			similarAlert.messageText = "Existing object";
 			similarAlert.informativeText = "There is already a tracker file that points to the added file. Do you still wish to add it?";
@@ -383,7 +383,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	@objc(loadMusicFromCurrentlyPlayingIndexAndReturnError:) func loadMusicFromCurrentlyPlayingIndex() throws {
 		var theErr: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
-		currentlyPlayingIndex.playbackURL = musicList.URLAtIndex(currentlyPlayingIndex.index)
+		currentlyPlayingIndex.playbackURL = musicList.url(at: currentlyPlayingIndex.index)
 		let isGood: Bool
 		do {
 			try loadMusic(url: currentlyPlayingIndex.playbackURL!)
@@ -883,9 +883,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		if selMus != -1 {
 			selectMusic(atIndex: selMus)
 			do {
-				try loadMusic(url: musicList.URLAtIndex(selMus), autoPlay: false)
+				try loadMusic(url: musicList.url(at: selMus), autoPlay: false)
 				currentlyPlayingIndex.index = selMus
-				currentlyPlayingIndex.playbackURL = musicList.URLAtIndex(selMus)
+				currentlyPlayingIndex.playbackURL = musicList.url(at: selMus)
 				previouslyPlayingIndex = currentlyPlayingIndex
 			} catch let error1 as NSError {
 				NSAlert(error: error1).runModal()
@@ -1648,22 +1648,15 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		if (row >= 0 || row <= musicList.countOfMusicList) {
 			return ""
 		}
-		return musicList.URLAtIndex(row).path ?? ""
+		return musicList.url(at: row).path ?? ""
 	}
 	
 	func tableView(_ tableView: NSTableView, writeRowsWith rowIndexes: IndexSet, to pboard: NSPasteboard) -> Bool {
 		var status = false;
 		let dragClass = MusicListDragClass(indexSet: rowIndexes)
 		let ppmobjects = musicList.objectsInMusicList(at: rowIndexes)
-		let urlArrays = ppmobjects.map({ (mlo) -> URL in
-			return mlo.musicURL
-		})
-		var tmpObjs: [NSPasteboardWriting] = [dragClass] //+ urlArrays
-		for obj in urlArrays {
-			tmpObjs.append(obj)
-		}
-		//tmpObjs.extend(urlArrays)
-		//tmpObjs += urlArrays
+		let urlArrays = ppmobjects.map({ $0.musicURL })
+		let tmpObjs: [NSPasteboardWriting] = [dragClass] + (urlArrays as [NSPasteboardWriting])
 		pboard.clearContents(); // clear pasteboard to take ownership
 		status = pboard.writeObjects(tmpObjs) // write the URLs
 		return status;
@@ -1671,7 +1664,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	func tableView(_ atableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
 		changeValueForMusicListKey({
-			self.musicList.sortMusicList(descriptors: atableView.sortDescriptors )
+			self.musicList.sortMusicList(descriptors: atableView.sortDescriptors)
 		})
 		atableView.reloadData()
 		musicListContentsDidMove()

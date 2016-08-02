@@ -78,14 +78,14 @@ private let kPlayerList = "Player List"
 	/// Returns `NSNotFound` if the URL couldn't be found.
 	///
 	/// Use `indexOfObjectSimilar(URL:)` on Swift instead.
-	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
-		return indexOfObjectSimilar(URL: theURL) ?? NSNotFound
+	func indexOfObjectSimilarToURL(_ theURL: URL) -> Int {
+		return indexOfObjectSimilar(to: theURL) ?? NSNotFound
 	}
 	
 	/// Returns `nil` if the URL couldn't be found.
 	///
 	/// This cannot be represented in Objective C.
-	func indexOfObjectSimilar(URL theURL: NSURL) -> Int? {
+	func indexOfObjectSimilar(to theURL: URL) -> Int? {
 		for (i, obj) in musicList.enumerated() {
 			if obj.pointsToFile(url: theURL) {
 				return i
@@ -96,7 +96,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	/// Returns `nil` if the URL couldn't be found.
-	@objc(indexesOfObjectsSimilarToURL:) func indexesOfObjectsSimilar(URL theURL: NSURL) -> NSIndexSet? {
+	@objc(indexesOfObjectsSimilarToURL:) func indexesOfObjectsSimilar(to theURL: URL) -> NSIndexSet? {
 		let anIDXSet = NSMutableIndexSet()
 		
 		for (i, obj) in musicList.enumerated() {
@@ -298,8 +298,6 @@ private let kPlayerList = "Player List"
 			}
 			selectedMusic = -1;
 		} else {
-			selectedMusic = -1
-			super.init()
 			return nil
 		}
 		
@@ -317,7 +315,7 @@ private let kPlayerList = "Player List"
 	static let supportsSecureCoding = true
 	
 	//MARK: -
-	func URLAtIndex(_ index: Int) -> URL {
+	@objc(URLAtIndex:) func url(at index: Int) -> URL {
 		assert(index < musicList.count)
 		return musicList[index].musicURL
 	}
