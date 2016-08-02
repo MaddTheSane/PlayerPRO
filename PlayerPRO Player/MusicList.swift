@@ -35,7 +35,7 @@ private let kPlayerList = "Player List"
 	}()
 #elseif os(iOS)
 	private let listExtension = "pplist"
-	private let PPPPath = (try! FileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)).URLByAppendingPathComponent("Playlists", isDirectory: true)
+	private let PPPPath = (try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)).appendingPathComponent("Playlists", isDirectory: true)
 #endif
 
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, Collection {
@@ -44,7 +44,7 @@ private let kPlayerList = "Player List"
 	dynamic var		selectedMusic: Int
 	#if os(iOS)
 	dynamic var		name = "New Music List"
-	private(set)	var fileUUID = NSUUID()
+	private(set)	var fileUUID = UUID()
 	#endif
 	
 	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
@@ -184,16 +184,16 @@ private let kPlayerList = "Player List"
 	}
 	
 	#if os(iOS)
-	class func availablePlaylistUUIDs() -> [NSUUID]! {
-		let fm = FileManager.defaultManager()
-		let docDir = try! fm.URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
-		let playlistDir = docDir.URLByAppendingPathComponent("Playlists")
+	class func availablePlaylistUUIDs() -> [UUID]! {
+		let fm = FileManager.default
+		let docDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+		let playlistDir = docDir.appendingPathComponent("Playlists")
 		do {
-			try fm.createDirectoryAtURL(playlistDir, withIntermediateDirectories: true, attributes: nil)
-			let dirConts = try fm.contentsOfDirectoryAtURL(playlistDir, includingPropertiesForKeys: nil, options: [])
-			var toRetUUIDs = [NSUUID]()
+			try fm.createDirectory(at: playlistDir, withIntermediateDirectories: true, attributes: nil)
+			let dirConts = try fm.contentsOfDirectory(at: playlistDir, includingPropertiesForKeys: nil, options: [])
+			var toRetUUIDs = [UUID]()
 			for url in dirConts {
-				if let fileUUIDStr = (url.lastPathComponent as NSString?)?.stringByDeletingPathExtension, let fileUUID = NSUUID(UUIDString: fileUUIDStr) {
+				if let fileUUIDStr = (url.lastPathComponent as NSString?)?.deletingPathExtension, let fileUUID = UUID(uuidString: fileUUIDStr) {
 					toRetUUIDs.append(fileUUID)
 				}
 			}
@@ -204,18 +204,19 @@ private let kPlayerList = "Player List"
 		}
 	}
 	
-	convenience init?(UUID: NSUUID) {
-		let path = PPPPath.URLByAppendingPathComponent(UUID.UUIDString).URLByAppendingPathExtension(listExtension)
+	convenience init?(uuid: UUID) {
+		let path = PPPPath.appendingPathComponent(uuid.uuidString).appendingPathExtension(listExtension)
 		self.init()
-		fileUUID = UUID
-		if !loadMusicListFromURL(path) {
+		fileUUID = uuid
+		if !loadMusicList(from: path) {
 			return nil
 		}
 	}
 	
+	@discardableResult
 	func save() -> Bool {
-		let saveURL = PPPPath.URLByAppendingPathComponent(fileUUID.UUIDString).URLByAppendingPathExtension(listExtension)
-		return saveMusicList(URL: saveURL)
+		let saveURL = PPPPath.appendingPathComponent(fileUUID.uuidString).appendingPathExtension(listExtension)
+		return saveMusicList(to: saveURL)
 	}
 	#endif
 	
@@ -226,7 +227,7 @@ private let kPlayerList = "Player List"
 		if let BookmarkArray = aDecoder.decodeObject(forKey: kMusicListKey4) as? [MusicListObject] {
 			selectedMusic = aDecoder.decodeInteger(forKey: kMusicListLocation4)
 			#if os(iOS)
-				if let aName = aDecoder.decodeObjectForKey(kMusicListName4) as? String {
+				if let aName = aDecoder.decodeObject(forKey: kMusicListName4) as? String {
 					name = aName
 				}
 			#endif
@@ -308,7 +309,7 @@ private let kPlayerList = "Player List"
 		aCoder.encode(selectedMusic, forKey: kMusicListLocation4)
 		aCoder.encode(musicList as NSArray, forKey: kMusicListKey4)
 		#if os(iOS)
-			aCoder.encodeObject(name, forKey: kMusicListName4)
+			aCoder.encode(name, forKey: kMusicListName4)
 		#endif
 	}
 	
