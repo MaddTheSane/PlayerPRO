@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
  *		A pointer to an \c NSError object. On failure, is populated with an error in the \c PPMADErrorDomain
  *	@return \c YES if successful, otherwise <code>NO</code>.
  */
-- (BOOL)changeDriverSettingsToSettings:(MADDriverSettings*)theSett error:(out NSError* __nullable __autoreleasing* __nullable)error;
+- (BOOL)changeDriverSettingsToSettings:(MADDriverSettings*)theSett error:(out NSError* __nullable __autoreleasing* __nullable)error NS_SWIFT_NAME(changeDriverSettings(to:));
 
 - (void)beginExport;
 - (void)endExport;

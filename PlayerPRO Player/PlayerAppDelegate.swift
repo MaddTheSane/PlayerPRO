@@ -555,7 +555,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			}
 		} else {
 			do {
-				try madDriver.changeDriverSettingsToSettings(&theSettinit)
+				try madDriver.changeDriverSettings(to: &theSettinit)
 			} catch let error as NSError {
 				NSNotificationCenter.defaultCenter().postNotificationName(PPDriverDidChange, object: self)
 				NSAlert(error: error).runModal()
@@ -958,11 +958,16 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	// MARK: - Tools functions
 	
 	@IBAction func fastForwardButtonPressed(sender: AnyObject!) {
-		
+		let currentPos = madDriver.musicPosition
+		let totalPos = madDriver.totalMusicPlaybackTime
+		guard currentPos + 2 < totalPos else {
+			return
+		}
+		madDriver.musicPosition = currentPos + 2
 	}
 	
 	@IBAction func loopButtonPressed(sender: AnyObject!) {
-		
+		//TODO: implement
 	}
 	
 	@IBAction func nextButtonPressed(sender: AnyObject!) {
@@ -1029,7 +1034,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	}
 	
 	@IBAction func rewindButtonPressed(sender: AnyObject!) {
-		
+		let currentPos = madDriver.musicPosition
+		guard currentPos - 2 >= 0 else {
+			return
+		}
+		madDriver.musicPosition = currentPos - 2
 	}
 	
 	@IBAction func sliderChanged(sender: AnyObject!) {
