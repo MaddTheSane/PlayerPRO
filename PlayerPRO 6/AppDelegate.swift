@@ -167,7 +167,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			}
 		}
 		
-		plugInInfos.sort(isOrderedBefore: { (obj1, obj2) -> Bool in
+		plugInInfos.sort(by: { (obj1, obj2) -> Bool in
 			let menuNam1 = obj1.plugName
 			let menuNam2 = obj2.plugName
 			let res = menuNam1.localizedStandardCompare(menuNam2)
@@ -240,7 +240,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			PPCColor1: makeNSRGB(0xEEEE, 0, 0).encodeColor(),
 			PPCColor2: makeNSRGB(0x8C8C, 0xBCBC, 0x1C1C).encodeColor(),
 			PPCColor3: makeNSRGB(0x3333, 0xFFFF, 0xFFFF).encodeColor(),
-			PPCColor4: NSColor.yellow().encodeColor(),
+			PPCColor4: NSColor.yellow.encodeColor(),
 			PPCColor5: makeNSRGB(0x6060, 0xCACA, 36494).encodeColor(),
 			PPCColor6: makeNSRGB(0x3333, 0xFFFF, 0xFFFF).encodeColor(),
 			PPCColor7: makeNSRGB(0x6666, 0xCCCC, 0xFFFF).encodeColor(),
@@ -271,9 +271,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			PPCColor32: makeNSRGB(0xFFFF, 0xCCCC, 0).encodeColor(),
 			PPCColor33: makeNSRGB(0xEEEE, 0, 0).encodeColor(),
 			PPCColor34: makeNSRGB(0, 0xFFFF, 0x6666).encodeColor(),
-			PPCColor35: NSColor.cyan().encodeColor(),
-			PPCColor36: NSColor.yellow().encodeColor(),
-			PPCColor37: NSColor.green().encodeColor(),
+			PPCColor35: NSColor.cyan.encodeColor(),
+			PPCColor36: NSColor.yellow.encodeColor(),
+			PPCColor37: NSColor.green.encodeColor(),
 			PPCColor38: makeNSRGB(0x3333, 0xCCCC, 0xFFFF).encodeColor(),
 			PPCColor39: makeNSRGB(0x9999, 0xCCCC, 0x9999).encodeColor(),
 			PPCColor40: makeNSRGB(0xFFFF, 0x9999, 0x6666).encodeColor(),
@@ -292,7 +292,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			PPCColor53: makeNSRGB(0xCCCC, 0xCCCC, 0).encodeColor(),
 			PPCColor54: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).encodeColor(),
 			PPCColor55: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).encodeColor(),
-			PPCColor56: NSColor.red().encodeColor(),
+			PPCColor56: NSColor.red.encodeColor(),
 			PPCColor57: makeNSRGB(0xFFFF, 0, 0x6666).encodeColor(),
 			PPCColor58: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).encodeColor(),
 			PPCColor59: makeNSRGB(0x6666, 0xFFFF, 0xCCCC).encodeColor(),
@@ -305,7 +305,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			PPCColor66: makeNSRGB(0, 0xFFFF, 0x6666).encodeColor(),
 			PPCColor67: makeNSRGB(0, 0xFFFF, 0xFFFF).encodeColor(),
 			PPCColor68: makeNSRGB(0xFFFF, 0xFFFF, 0).encodeColor(),
-			PPCColor69: NSColor.green().encodeColor(),
+			PPCColor69: NSColor.green.encodeColor(),
 			PPCColor70: makeNSRGB(0x3333, 0xCCCC, 0xFFFF).encodeColor(),
 			PPCColor71: makeNSRGB(0x9999, 0xCCCC, 0x9999).encodeColor(),
 			PPCColor72: makeNSRGB(0xFFFF, 0x9999, 0x6666).encodeColor(),
@@ -324,7 +324,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			PPCColor85: makeNSRGB(0xCCCC, 0xCCCC, 0).encodeColor(),
 			PPCColor86: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).encodeColor(),
 			PPCColor87: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).encodeColor(),
-			PPCColor88: NSColor.red().encodeColor(),
+			PPCColor88: NSColor.red.encodeColor(),
 			PPCColor89: makeNSRGB(0x9999, 0, 0x6666).encodeColor(),
 			PPCColor90: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).encodeColor(),
 			PPCColor91: makeNSRGB(0x6666, 0xFFFF, 0xCCCC).encodeColor(),
@@ -339,7 +339,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		tooLargeDict += defaults3
 		tooLargeDict += (colorDefaults as [String: AnyObject])
 		
-		UserDefaults.standard.register(tooLargeDict)
+		UserDefaults.standard.register(defaults: tooLargeDict)
 	}
 	
 	override init() {
@@ -380,7 +380,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			let renameFile =  NSLocalizedString("Rename", comment: "rename file")
 			let openFile = NSLocalizedString("Open", comment: "Open a file")
 			let cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
-			let unwrapped = String(format: invExtDes, theURL.lastPathComponent!)
+			let unwrapped = String(format: invExtDes, theURL.lastPathComponent)
 			
 			let retVal = PPRunInformationalAlertPanel(title: invExt, message: unwrapped, defaultButton: renameFile, alternateButton: openFile, otherButton: cancelOp);
 			switch (retVal) {
@@ -395,7 +395,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 						//TODO: regenerate the UTI
 						
 					} catch {
-						let couldNotRenameStr = String(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent!, theURL.lastPathComponent!)
+						let couldNotRenameStr = String(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent, theURL.lastPathComponent)
 						PPRunInformationalAlertPanel(title: NSLocalizedString("Rename Error", comment: "Rename Error"), message: couldNotRenameStr)
 					}
 				} catch {
@@ -447,7 +447,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 								self.addDocument(aPPDoc)
 								aPPDoc.makeWindowControllers()
 								aPPDoc.showWindows()
-								aPPDoc.displayName = ((theURL1.lastPathComponent! as NSString).deletingPathExtension)
+								aPPDoc.displayName = ((theURL1.lastPathComponent as NSString).deletingPathExtension)
 							} else {
 								let nsErr = createError(from: anErr)!
 								if PPErrorIsUserCancelled(nsErr) == false {
@@ -475,7 +475,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 					addDocument(aDoc)
 					aDoc.makeWindowControllers()
 					aDoc.showWindows()
-					aDoc.displayName = ((theURL1.lastPathComponent! as NSString).deletingPathExtension)
+					aDoc.displayName = ((theURL1.lastPathComponent as NSString).deletingPathExtension)
 					return true;
 				} catch {
 					return false
@@ -604,7 +604,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			av.beginWithCompletionHandler { (retval) -> Void in
 				if retval == NSFileHandlingPanelOKButton {
 					let panelURL = panel.url!
-					let filename = panelURL.path!
+					let filename = panelURL.path
 					var err: NSError? = nil
 					let utiFile: String?
 					do {

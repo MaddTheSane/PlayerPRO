@@ -220,7 +220,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			PPMNoLoadMixerFromFiles: false,
 			PPMOscilloscopeDrawLines: true]
 		
-		UserDefaults.standard.register(ourDefaults);
+		UserDefaults.standard.register(defaults: ourDefaults);
 		super.init()
 	}
 	
@@ -425,7 +425,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		}
 		
 		do {
-			let fileUTI = try NSWorkspace.shared().type(ofFile: musicToLoad.path!)
+			let fileUTI = try NSWorkspace.shared().type(ofFile: musicToLoad.path)
 			if let afileType = madLib.typeFromUTI(fileUTI) {
 				theOSErr = madLib.testFile(at: musicToLoad, type: afileType)
 				if theOSErr == .noErr {
@@ -586,7 +586,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			}
 		}
 		
-		plugInInfos.sort(isOrderedBefore: { (lhs, rhs) -> Bool in
+		plugInInfos.sort(by: { (lhs, rhs) -> Bool in
 			let menuNam1 = lhs.plugName
 			let menuNam2 = rhs.plugName
 			let res = menuNam1.localizedStandardCompare(menuNam2)
@@ -663,7 +663,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		var theURL = theURL1
 		if (theUTI  == MADGenericUTI) {
 			let invExt = NSLocalizedString("Invalid Extension", comment: "Invalid Extension")
-			let invExtDes = String(format: NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description"), theURL.lastPathComponent!)
+			let invExtDes = String(format: NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description"), theURL.lastPathComponent)
 			let renameFile =  NSLocalizedString("Rename", comment: "rename file")
 			let openFile = NSLocalizedString("Open", comment: "Open a file")
 			let cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
@@ -681,7 +681,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						//TODO: regenerate the UTI
 					} catch let err as NSError {
 						print("Could not move file, error \(err)")
-						let couldNotRenameStr = String(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent!, theURL.lastPathComponent!)
+						let couldNotRenameStr = String(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent, theURL.lastPathComponent)
 						_ = PPRunInformationalAlertPanel(title: NSLocalizedString("Rename Error", comment: "Rename Error"), message: couldNotRenameStr)
 					}
 					
@@ -760,7 +760,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				let ws = NSWorkspace.shared()
 				let panelURLs = panel.urls
 				for theURL in panelURLs {
-					let fileName = theURL.path!
+					let fileName = theURL.path
 					var err: NSError?
 					do {
 						let utiFile = try ws.type(ofFile: fileName)
@@ -814,7 +814,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			saveMusicAs(sender)
 		} else {
 			let fileURL = previouslyPlayingIndex.playbackURL!
-			let filename = fileURL.path!
+			let filename = fileURL.path
 			let sharedWorkspace = NSWorkspace.shared()
 			let utiFile = try! sharedWorkspace.type(ofFile: filename)
 			if /*[sharedWorkspace type:utiFile conformsToType:MADNativeUTI]*/ utiFile == MADNativeUTI {
@@ -1192,7 +1192,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 								if self.isQuitting {
 									NSApplication.shared().reply(toApplicationShouldTerminate: true)
 								} else {
-									let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+									let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
 									if (retVal == NSAlertAlternateReturn) {
 										NSWorkspace.shared().activateFileViewerSelecting([savePanel.url!])
 									}
@@ -1251,7 +1251,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData
 							dataInfo.key = AVMetadataQuickTimeUserDataKeySoftware
 							dataInfo.value = "PlayerPRO Player"
-							dataInfo.locale = Locale(localeIdentifier: "en")
+							dataInfo.locale = Locale(identifier: "en")
 							
 							let musicInfoQTUser = AVMutableMetadataItem();
 							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
@@ -1280,7 +1280,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						}
 						
 						let tmpName = oldMusicName != "" ? oldMusicName : "untitled"
-						let tmpURL = try! (try! FileManager.default.urlForDirectory(.itemReplacementDirectory, in: .userDomainMask, appropriateFor: oldURL, create: true)).appendingPathComponent("\(tmpName).aiff", isDirectory: false)
+						let tmpURL = try! (try! FileManager.default.url(for: .itemReplacementDirectory, in: .userDomainMask, appropriateFor: oldURL, create: true)).appendingPathComponent("\(tmpName).aiff", isDirectory: false)
 						
 						do {
 							try self.saveMusic(AIFFToURL: tmpURL, theSett: &self.exportSettings)
@@ -1324,7 +1324,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 								if (self.isQuitting) {
 									NSApplication.shared().reply(toApplicationShouldTerminate: true)
 								} else {
-									let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+									let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
 									if (retVal == NSAlertAlternateReturn) {
 										NSWorkspace.shared().activateFileViewerSelecting([savePanel.url!])
 									}
@@ -1366,7 +1366,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 									if self.isQuitting {
 										NSApplication.shared().reply(toApplicationShouldTerminate: true)
 									} else {
-										let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+										let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
 										if (retVal == NSAlertAlternateReturn) {
 											NSWorkspace.shared().activateFileViewerSelecting([savePanel.url!])
 										}
@@ -1416,7 +1416,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					if (self.isQuitting) {
 						NSApplication.shared().reply(toApplicationShouldTerminate: true)
 					} else {
-						let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+						let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
 						if (retVal == NSAlertAlternateReturn) {
 							NSWorkspace.shared().activateFileViewerSelecting([fileURL])
 						}
@@ -1555,7 +1555,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		}
 		
 		do {
-			let fileUTI = try NSWorkspace.shared().type(ofFile: musicURL.path!)
+			let fileUTI = try NSWorkspace.shared().type(ofFile: musicURL.path)
 			if let info = madLib.typeFromUTI(fileUTI) {
 				aPPInfo = try madLib.information(from: musicURL, type: info)
 			} else {
@@ -1573,7 +1573,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			musicPatterns.integerValue = actualInfo.totalPatterns
 			musicPlugType.stringValue = actualInfo.formatDescription
 			musicSignature.stringValue = actualInfo.signature
-			fileLocation.stringValue = musicURL.absoluteURL!.path!
+			fileLocation.stringValue = musicURL.absoluteURL.path
 		} else {
 			badTracker()
 		}
@@ -1669,7 +1669,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		return status;
 	}
 	
-	func tableView(_ atableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [SortDescriptor]) {
+	func tableView(_ atableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
 		changeValueForMusicListKey({
 			self.musicList.sortMusicList(descriptors: atableView.sortDescriptors )
 		})

@@ -25,9 +25,9 @@ private let kPlayerList = "Player List"
 #if os(OSX)
 	private let PPPPath: URL = {
 		do {
-			var retURL = try FileManager.default.urlForDirectory(.applicationSupportDirectory, in:.userDomainMask, appropriateFor:nil, create:true)
-			try retURL.appendPathComponent("PlayerPRO")
-			try retURL.appendPathComponent("Player", isDirectory: true)
+			var retURL = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor:nil, create:true)
+			retURL.appendPathComponent("PlayerPRO")
+			retURL.appendPathComponent("Player", isDirectory: true)
 			return retURL
 		} catch {
 			fatalError("Encountered error with ")
@@ -121,13 +121,13 @@ private let kPlayerList = "Player List"
 	
 	@objc(sortMusicListUsingBlock:) func sortMusicList(block: (lhs: MusicListObject, rhs: MusicListObject) -> Bool) {
 		self.willChangeValue(forKey: kMusicListKVO)
-		musicList.sort(isOrderedBefore: block)
+		musicList.sort(by: block)
 		self.didChangeValue(forKey: kMusicListKVO)
 	}
 	
 	@objc(sortMusicListUsingComparator:) func sortMusicList(comparator: Comparator) {
 		self.willChangeValue(forKey: kMusicListKVO)
-		musicList.sort( isOrderedBefore: { (obj1, obj2) -> Bool in
+		musicList.sort(by: { (obj1, obj2) -> Bool in
 			return comparator(obj1, obj2) == .orderedAscending
 		})
 		self.didChangeValue(forKey: kMusicListKVO)
@@ -135,14 +135,14 @@ private let kPlayerList = "Player List"
 	
 	func sortMusicListByName() {
 		self.willChangeValue(forKey: kMusicListKVO)
-		musicList.sort(isOrderedBefore: { (var1, var2) -> Bool in
+		musicList.sort(by: { (var1, var2) -> Bool in
 			let result = var1.fileName.localizedStandardCompare(var2.fileName)
 			return result == .orderedAscending
 			})
 		self.didChangeValue(forKey: kMusicListKVO)
 	}
 	
-	@objc(sortMusicListUsingDescriptors:) func sortMusicList(descriptors: [SortDescriptor]) {
+	@objc(sortMusicListUsingDescriptors:) func sortMusicList(descriptors: [NSSortDescriptor]) {
 		let anArray = musicList.sort(using: descriptors)
 		musicList = anArray
 	}
@@ -375,7 +375,7 @@ private let kPlayerList = "Player List"
 			}
 			
 		}
-		return loadMusicList(from: try! PPPPath.appendingPathComponent(kPlayerList, isDirectory: false))
+		return loadMusicList(from: PPPPath.appendingPathComponent(kPlayerList, isDirectory: false))
 	}
 	
 	@objc(saveMusicListToURL:) func saveMusicList(url URL: Foundation.URL) -> Bool {
@@ -400,7 +400,7 @@ private let kPlayerList = "Player List"
 			}
 		}
 		
-		return self.saveMusicList(url: try! PPPPath.appendingPathComponent(kPlayerList, isDirectory: false))
+		return self.saveMusicList(url: PPPPath.appendingPathComponent(kPlayerList, isDirectory: false))
 	}
 	
 	// MARK: - Key-valued Coding
@@ -482,7 +482,7 @@ private let kPlayerList = "Player List"
 		
 		conn.resume()
 		
-		conn.remoteObjectProxy.loadStcf(at: toOpen, withReply: {(bookmarkData:[String : AnyObject]?, error: NSError?) -> Void in
+		(conn.remoteObjectProxy as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData:[String : AnyObject]?, error: Error?) -> Void in
 			OperationQueue.main.addOperation({
 				defer {
 					conn.invalidate()

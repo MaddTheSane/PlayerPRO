@@ -335,7 +335,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			}
 		}
 		
-		tmpUTIs.sort(isOrderedBefore: {(lhs, rhs) -> Bool in
+		tmpUTIs.sort(by: {(lhs, rhs) -> Bool in
 			if (lhs.theUtiType.rawValue < rhs.theUtiType.rawValue) {
 				return true
 			} else if (lhs.theUtiType.rawValue > rhs.theUtiType.rawValue) {

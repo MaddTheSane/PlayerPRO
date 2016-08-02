@@ -13,7 +13,7 @@ struct CurrentlyPlayingIndex: CustomDebugStringConvertible, CustomStringConverti
 	var playbackURL: URL? = nil
 	
 	var description: String {
-		return "Index: \(index) URL: \(playbackURL!.relativePath!)"
+		return "Index: \(index) URL: \(playbackURL!.relativePath)"
 	}
 	
 	var debugDescription: String {

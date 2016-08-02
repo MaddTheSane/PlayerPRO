@@ -57,7 +57,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 
 	#if os(OSX)
 	@objc private(set) lazy var fileIcon: NSImage = {
-		let image = NSWorkspace.shared().icon(forFile: self.musicURL.path!)
+		let image = NSWorkspace.shared().icon(forFile: self.musicURL.path)
 		image.size = NSSize(width: 16, height: 16)
 		return image
 		}()
@@ -69,7 +69,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 			let retStr = values.localizedName!
 			return retStr
 		} catch {
-			return self.musicURL.lastPathComponent!
+			return self.musicURL.lastPathComponent
 		}
 		}()
 	
@@ -81,7 +81,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		} catch {
 			let manager = FileManager.default;
 			do {
-				let theparam = try manager.attributesOfItem(atPath: self.musicURL.path!)
+				let theparam = try manager.attributesOfItem(atPath: self.musicURL.path)
 				if let tmpfilesize: AnyObject = theparam[FileAttributeKey.size] {
 					let aFileSize = tmpfilesize as! NSNumber
 					return aFileSize.uint64Value
@@ -94,12 +94,12 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 		}()
 	
-	init(url URL: Foundation.URL, date: Date = Date()) {
-		if URL.isFileReferenceURL {
-			musicURL = URL;
+	init(url: URL, date: Date = Date()) {
+		if (url as NSURL).isFileReferenceURL() {
+			musicURL = url;
 		} else {
-			let tmpURL = try? URL.fileReferenceURL()
-			musicURL = tmpURL ?? URL
+			let tmpURL = (url as NSURL).fileReferenceURL()
+			musicURL = tmpURL ?? url
 		}
 		addedDate = date
 		super.init()
@@ -139,15 +139,15 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}
 	
 	override var hashValue: Int {
-		return musicURL.absoluteString!.hashValue ^ (addedDate as NSDate).hash
+		return musicURL.absoluteString.hashValue ^ (addedDate as NSDate).hash
 	}
 
 	override var description: String {
-		return "\(musicURL.path!): \(fileName)"
+		return "\(musicURL.path): \(fileName)"
 	}
 	
 	override var debugDescription: String {
-		return "\(musicURL.description) \(musicURL.path!): \(fileName) size: \(fileSize), added: \(addedDate)"
+		return "\(musicURL.description) \(musicURL.path): \(fileName) size: \(fileSize), added: \(addedDate)"
 	}
 
 	override func isEqual(_ object: AnyObject?) -> Bool {

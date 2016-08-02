@@ -52,7 +52,7 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 							let asample = PPSampleObject()
 							errStr = AIFFAtURL(asset, toSample: asample)
 							if errStr == .noErr {
-								asample.name = (sampleURL.lastPathComponent! as NSString).deletingPathExtension
+								asample.name = (sampleURL.lastPathComponent as NSString).deletingPathExtension
 								sample?.pointee = asample
 							}
 							do {

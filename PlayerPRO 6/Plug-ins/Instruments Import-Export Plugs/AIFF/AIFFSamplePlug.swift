@@ -109,7 +109,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		let aSamp = PPSampleObject()
 		let iErr = AIFFAtURL(sampleURL, toSample: aSamp)
 		if iErr == .noErr {
-			aSamp.name = (sampleURL.lastPathComponent! as NSString).deletingPathExtension
+			aSamp.name = (sampleURL.lastPathComponent as NSString).deletingPathExtension
 			sample!.pointee = aSamp
 		}
 		

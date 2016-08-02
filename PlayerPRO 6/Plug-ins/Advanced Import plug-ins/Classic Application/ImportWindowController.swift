@@ -62,12 +62,12 @@ class ImportWindowController: NSWindowController {
 				}
 				
 				var unusedDriverSettings = MADDriverSettings.new()
-				madMusic = UnsafeMutablePointer<MADMusic>(allocatingCapacity: 1)
+				madMusic = UnsafeMutablePointer<MADMusic>.allocate(capacity: 1)
 				errVal = madLoad(UnsafePointer<Int8>((aData as NSData).bytes), aData.count, madMusic, &unusedDriverSettings)
 				
 				if errVal != .noErr {
 					// The importers *should* have cleaned up after themselves...
-					madMusic.deallocateCapacity(1)
+					madMusic.deallocate(capacity: 1)
 					NSApplication.shared().endModalSession(modalSession)
 					currentBlock(nil, errVal)
 					
@@ -116,8 +116,8 @@ class ImportWindowController: NSWindowController {
 		
 		dictionaryCont.setSelectionIndex(0)
 		
-		resourceNamesTable?.sortDescriptors = [SortDescriptor(key: "key", ascending: true)]
-		resourceIDsTable?.sortDescriptors = [SortDescriptor(key: "resourceID", ascending: true)]
+		resourceNamesTable?.sortDescriptors = [NSSortDescriptor(key: "key", ascending: true)]
+		resourceIDsTable?.sortDescriptors = [NSSortDescriptor(key: "resourceID", ascending: true)]
 	}
 	
 	override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {

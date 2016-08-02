@@ -19,7 +19,7 @@ public protocol CommandIterator {
 }
 
 extension CommandIterator {
-	public mutating func iterateCommands(commandBlock block: (inout command: Cmd, row: Int16, track: Int16) -> Bool) {
+	public mutating func iterateCommands(commandBlock block: (command: inout Cmd, row: Int16, track: Int16) -> Bool) {
 		for i in 0 ..< commandLength {
 			for x in 0 ..< commandTracks {
 				var aCmd = getCommand(row: i, track: x)
@@ -43,6 +43,6 @@ public func modifyCommand<X where X: CommandIterator>(row: Int16, track: Int16, 
 	aPcmd.modifyCommand(row: row, track: track, commandBlock: commandBlock)
 }
 
-public func iterateCommands<X where X: CommandIterator>( aPcmd: inout X, commandBlock block: (inout command: Cmd, row: Int16, track: Int16) -> Bool) {
+public func iterateCommands<X where X: CommandIterator>( aPcmd: inout X, commandBlock block: (command: inout Cmd, row: Int16, track: Int16) -> Bool) {
 	aPcmd.iterateCommands(commandBlock: block)
 }

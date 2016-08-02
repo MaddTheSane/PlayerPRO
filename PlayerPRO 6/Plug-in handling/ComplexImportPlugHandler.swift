@@ -32,10 +32,9 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, Collection {
 			do {
 				let components = try defaultManager.contentsOfDirectory(at: url, includingPropertiesForKeys: [], options: [])
 				let aComp = components.filter({ (aURL) -> Bool in
-					if let ext = aURL.pathExtension {
-						if ext.compare("ppextimp", options: .caseInsensitive) == .orderedSame {
-							return true
-						}
+					let ext = aURL.pathExtension
+					if ext.compare("ppextimp", options: .caseInsensitive) == .orderedSame {
+						return true
 					}
 					
 					return false

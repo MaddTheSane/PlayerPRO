@@ -24,7 +24,7 @@ public final class Crop: NSObject, PPFilterPlugin {
 		guard var ourData = theData.data, let selSwiftRange = selRange.toRange() else {
 			return .parametersErr
 		}
-		ourData.replaceBytes(in: selSwiftRange, with: Data())
+		ourData.replaceSubrange(selSwiftRange, with: Data())
 		theData.data = ourData
 		return .noErr
 	}

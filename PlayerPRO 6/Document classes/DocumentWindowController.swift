@@ -411,7 +411,7 @@ class DocumentWindowController: NSWindowController {
 							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData;
 							dataInfo.key = (AVMetadataQuickTimeUserDataKeySoftware)
 							dataInfo.value = ("PlayerPRO 6")
-							dataInfo.locale = Locale(localeIdentifier: "en")
+							dataInfo.locale = Locale(identifier: "en")
 							
 							let musicInfoQTUser = AVMutableMetadataItem();
 							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
@@ -444,7 +444,7 @@ class DocumentWindowController: NSWindowController {
 						let oldMusicName = self.currentDocument.musicName;
 						let oldMusicInfo = self.currentDocument.musicInfo;
 						let oldURL = self.currentDocument.fileURL;
-						let tmpURL = try! (try! FileManager.default.urlForDirectory(.itemReplacementDirectory, in:.userDomainMask, appropriateFor:oldURL, create:true)).appendingPathComponent( (oldMusicName != "" ? oldMusicName : "untitled") + ".aiff", isDirectory: false)
+						let tmpURL = (try! FileManager.default.url(for: .itemReplacementDirectory, in:.userDomainMask, appropriateFor:oldURL, create:true)).appendingPathComponent( (oldMusicName != "" ? oldMusicName : "untitled") + ".aiff", isDirectory: false)
 						var expSett = self.exportSettings
 						theErr = self.saveMusic(AIFFToURL: tmpURL, theSett: &expSett)
 						self.currentDocument.theDriver.endExport()

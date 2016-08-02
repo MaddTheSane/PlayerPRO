@@ -20,10 +20,9 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 			do {
 				let components = try defaultManager.contentsOfDirectory(at:url, includingPropertiesForKeys: [], options: [])
 				let aComp = components.filter({ (aURL) -> Bool in
-					if let ext = aURL.pathExtension {
-						if ext.compare("plugin", options: .caseInsensitive) == .orderedSame {
-							return true
-						}
+					let ext = aURL.pathExtension
+					if ext.compare("plugin", options: .caseInsensitive) == .orderedSame {
+						return true
 					}
 					
 					return false

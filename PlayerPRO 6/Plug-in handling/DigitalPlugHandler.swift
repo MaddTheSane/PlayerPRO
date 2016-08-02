@@ -19,10 +19,9 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
 			do {
 				let components = try defaultManager.contentsOfDirectory(at: aPlugLoc, includingPropertiesForKeys: [], options: [])
 				let aComp = components.filter({ (aURL) -> Bool in
-					if let ext = aURL.pathExtension {
-						if ext.compare("plugin", options: .caseInsensitive) == .orderedSame {
-							return true
-						}
+					let ext = aURL.pathExtension
+					if ext.compare("plugin", options: .caseInsensitive) == .orderedSame {
+						return true
 					}
 					
 					return false

@@ -58,8 +58,8 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 	public func newIntPcmd() -> UnsafeMutablePointer<IntPcmd>? {
 		if let _ = structSize {
 			let ourIntPcmd = intPcmd!
-			let toRet = UnsafeMutablePointer<IntPcmd>(allocatingCapacity: 1)
-			toRet.initialize(with: ourIntPcmd)
+			let toRet = UnsafeMutablePointer<IntPcmd>.allocate(capacity: 1)
+			toRet.initialize(to: ourIntPcmd)
 			
 			return toRet
 		} else {
@@ -83,7 +83,7 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 			toRet.trackStart = trackStart
 			toRet.posStart = positionStart
 			toRet.cmdCount = Int32(myCmd.count)
-			toRet.myCmd = UnsafeMutablePointer<Cmd>(allocatingCapacity: myCmd.count)
+			toRet.myCmd = UnsafeMutablePointer<Cmd>.allocate(capacity: myCmd.count)
 			
 			for (i, aCmd) in myCmd.enumerated() {
 				toRet.myCmd[i] = aCmd
