@@ -278,13 +278,13 @@ extension PPSampleObject {
 		let oneShiftedBy16 = 1 / CGFloat(1 << 16)
 		let oneShiftedBy8 = 1 / CGFloat(1 << 8)
 
-		if (curData.amplitude == 16) {
+		if curData.amplitude == 16 {
 			let theShortSample = UnsafePointer<UInt16>((curData.data as NSData).bytes)
 			let sampleSize = curData.data.count / 2
 			start /= 2
 			
 			var BS = start + (tSS * sampleSize) / larg
-			if (isStereo) {
+			if isStereo {
 				BS /= 2; BS *= 2;
 				BS += Int(channel)
 			}
@@ -296,7 +296,7 @@ extension PPSampleObject {
 				BS = start + (i * sampleSize) / larg
 				var BE = start + ((i + 1) * sampleSize) / larg
 				
-				if (isStereo) {
+				if isStereo {
 					BS /= 2; BS *= 2;
 					BE /= 2; BE *= 2;
 					
@@ -309,7 +309,7 @@ extension PPSampleObject {
 				temp *= CGFloat(high) * oneShiftedBy16
 				ctxRef.addLineTo(x: CGFloat(trueH + i), y: temp + CGFloat(trueV))
 				
-				if (BS != BE) {
+				if BS != BE {
 					var x = BS
 					while x < BE {
 						temp = CGFloat(theShortSample[x] &+ 0x8000)
@@ -335,7 +335,7 @@ extension PPSampleObject {
 			let theSample = UnsafePointer<UInt8>((curData.data as NSData).bytes)
 
 			var BS = start + (tSS * sampleSize) / larg;
-			if (isStereo) {
+			if isStereo {
 				BS /= 2; BS *= 2;
 				BS += Int(channel)
 			}
@@ -349,7 +349,7 @@ extension PPSampleObject {
 				BS = start + (i * sampleSize) / larg
 				var BE = start + ((i + 1) * sampleSize) / larg
 				
-				if (isStereo) {
+				if isStereo {
 					BS /= 2; BS *= 2;
 					BE /= 2; BE *= 2;
 					
@@ -362,7 +362,7 @@ extension PPSampleObject {
 				temp *= CGFloat(high) * oneShiftedBy8
 				ctxRef.addLineTo(x: CGFloat(trueH + i), y: temp + CGFloat(trueV))
 				
-				if (BS != BE) {
+				if BS != BE {
 					var x = BS
 					while x < BE {
 						temp = CGFloat(theSample[x] &- 0x80)

@@ -649,7 +649,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		savePanel.canSelectHiddenExtension = true
 		savePanel.beginSheetModal(for: self.window, completionHandler: { (result) -> Void in
 			if result == NSFileHandlingPanelOKButton {
-				_=self.musicList.saveMusicList(url: savePanel.url!)
+				self.musicList.saveMusicList(to: savePanel.url!)
 			}
 		})
 	}
@@ -1062,7 +1062,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		window.beginSheet(exportWindow, completionHandler: theHandle)
 	}
 	
-	private func rawSoundData(_ settings: inout MADDriverSettings, handler: (NSData) throws -> Void) throws {
+	private func rawSoundData(_ settings: inout MADDriverSettings, handler: (Data) throws -> Void) throws {
 		let theRec = try PPDriver(library: madLib, settings: &settings)
 		theRec.cleanDriver()
 		theRec.currentMusic = music
@@ -1095,13 +1095,14 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		
 		audioFile.clientDataFormat = realFormat
 		
-		func handler(data: NSData) throws {
+		func handler(data data1: Data) throws {
+			let data = data1 as NSData
 			let toWriteSize = data.length
 			
 			var audBufList = AudioBufferList()
 			audBufList.mNumberBuffers = 1
 			audBufList.mBuffers.mNumberChannels = tmpChannels
-			audBufList.mBuffers.mDataByteSize = UInt32(data.length)
+			audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
 			audBufList.mBuffers.mData = UnsafeMutablePointer<Void>(data.bytes)
 			
 			try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
@@ -1135,13 +1136,14 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		
 		audioFile.clientDataFormat = realFormat
 		
-		func handler(data: NSData) throws {
+		func handler(data data1: Data) throws {
+			let data = data1 as NSData
 			let toWriteSize = data.length
 			
 			var audBufList = AudioBufferList()
 			audBufList.mNumberBuffers = 1
 			audBufList.mBuffers.mNumberChannels = tmpChannels
-			audBufList.mBuffers.mDataByteSize = UInt32(data.length)
+			audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
 			audBufList.mBuffers.mData = UnsafeMutablePointer<Void>(data.bytes)
 			
 			try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)

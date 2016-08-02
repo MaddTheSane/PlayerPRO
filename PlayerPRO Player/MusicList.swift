@@ -25,12 +25,12 @@ private let kPlayerList = "Player List"
 #if os(OSX)
 	private let PPPPath: URL = {
 		do {
-			var retURL = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor:nil, create:true)
+			var retURL = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 			retURL.appendPathComponent("PlayerPRO")
 			retURL.appendPathComponent("Player", isDirectory: true)
 			return retURL
 		} catch {
-			fatalError("Encountered error with ")
+			fatalError("Encountered error with locating Application Support directory")
 		}
 	}()
 #elseif os(iOS)
@@ -376,7 +376,8 @@ private let kPlayerList = "Player List"
 		return loadMusicList(from: PPPPath.appendingPathComponent(kPlayerList, isDirectory: false))
 	}
 	
-	@objc(saveMusicListToURL:) func saveMusicList(url URL: Foundation.URL) -> Bool {
+	@discardableResult
+	@objc(saveMusicListToURL:) func saveMusicList(to URL: Foundation.URL) -> Bool {
 		let theList = NSKeyedArchiver.archivedData(withRootObject: self)
 		do {
 			try theList.write(to: URL, options: [])
@@ -386,6 +387,7 @@ private let kPlayerList = "Player List"
 		}
 	}
 	
+	@discardableResult
 	func saveApplicationMusicList() -> Bool {
 		let manager = FileManager.default
 		
@@ -398,7 +400,7 @@ private let kPlayerList = "Player List"
 			}
 		}
 		
-		return self.saveMusicList(url: PPPPath.appendingPathComponent(kPlayerList, isDirectory: false))
+		return self.saveMusicList(to: PPPPath.appendingPathComponent(kPlayerList, isDirectory: false))
 	}
 	
 	// MARK: - Key-valued Coding
@@ -499,7 +501,7 @@ private let kPlayerList = "Player List"
 					// Have all the new MusicListObjects use the same date
 					let currentDate = Date()
 					for aPath in pathsAny {
-						let tmpURL = NSURL.fileURL(withPath: aPath)
+						let tmpURL = URL(fileURLWithPath: aPath)
 						let tmpObj = MusicListObject(url: tmpURL, date: currentDate)
 						pathsURL.append(tmpObj)
 					}
