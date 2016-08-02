@@ -61,7 +61,7 @@
 - (void)instrumentSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	if (sheet == [self window]) {
-		if (returnCode == NSOKButton) {
+		if (returnCode == NSModalResponseOK) {
 			[delegate replaceObjectInInstrumentsAtIndex:[instrument number] withObject:instrument];
 		}
 	}
@@ -86,12 +86,12 @@
 
 - (IBAction)okayButton:(id)sender
 {
-	[NSApp endSheet:[self window] returnCode:NSOKButton];
+	[NSApp endSheet:[self window] returnCode:NSModalResponseOK];
 }
 
 - (IBAction)cancelButton:(id)sender
 {
-	[NSApp endSheet:[self window] returnCode:NSCancelButton];
+	[NSApp endSheet:[self window] returnCode:NSModalResponseCancel];
 }
 
 - (IBAction)volumeEditButtonPressed:(id)sender

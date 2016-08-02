@@ -70,12 +70,12 @@ class DocumentWindowController: NSWindowController {
 	}
 	
 	@IBAction func okayExportSettings(_ sender: AnyObject!) {
-		currentDocument.windowForSheet!.endSheet(exportWindow, returnCode: NSAlertDefaultReturn)
+		currentDocument.windowForSheet!.endSheet(exportWindow, returnCode: NSAlertFirstButtonReturn)
 		exportWindow.close()
 	}
 	
 	@IBAction func cancelExportSettings(_ sender: AnyObject!) {
-		currentDocument.windowForSheet!.endSheet(exportWindow, returnCode: NSAlertAlternateReturn)
+		currentDocument.windowForSheet!.endSheet(exportWindow, returnCode: NSAlertSecondButtonReturn)
 		exportWindow.close()
 	}
 	
@@ -85,7 +85,7 @@ class DocumentWindowController: NSWindowController {
 		
 		currentDocument.windowForSheet!.beginSheet(infoWindow, completionHandler: { (response) -> Void in
 			switch response {
-			case NSAlertDefaultReturn:
+			case NSAlertFirstButtonReturn:
 				let um = self.currentDocument.undoManager!
 				um.beginUndoGrouping()
 				
@@ -116,12 +116,12 @@ class DocumentWindowController: NSWindowController {
 	}
 	
 	@IBAction func okayMusicInfo(_ sender: AnyObject?) {
-		currentDocument.windowForSheet!.endSheet(infoWindow, returnCode: NSAlertDefaultReturn)
+		currentDocument.windowForSheet!.endSheet(infoWindow, returnCode: NSAlertFirstButtonReturn)
 		infoWindow.close()
 	}
 	
 	@IBAction func cancelMusicInfo(_ sender: AnyObject?) {
-		currentDocument.windowForSheet!.endSheet(infoWindow, returnCode: NSCancelButton)
+		currentDocument.windowForSheet!.endSheet(infoWindow, returnCode: NSModalResponseCancel)
 		infoWindow.close()
 	}
 	
@@ -385,7 +385,7 @@ class DocumentWindowController: NSWindowController {
 		exportController.settingsFromDriverSettings(exportSettings)
 		
 		self.currentDocument.windowForSheet!.beginSheet(exportWindow, completionHandler: { (returnCode) -> Void in
-			if (returnCode == NSAlertDefaultReturn) {
+			if (returnCode == NSAlertFirstButtonReturn) {
 				switch (expType) {
 				case -1:
 					let expObj = ExportObject(destination: theURL, exportBlock: { (theURL, errStr) -> MADErr in

@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (PPMadCommandObject *)objectAtIndexedSubscript:(NSInteger)index;
 
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (nullable instancetype)initWithMusic:(PPMusicObject *)mus NS_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithMusic:(PPMusicObject *)mus patternAtIndex:(short)ptnIdx;
 

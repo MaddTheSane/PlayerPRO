@@ -27,13 +27,13 @@ private func CocoaDebugStr(_ line: Int16, file: UnsafePointer<Int8>?, text: Unsa
 
 	let alert = PPRunCriticalAlertPanel(title: errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr)
 	switch (alert) {
-	case NSAlertAlternateReturn:
+	case NSAlertSecondButtonReturn:
 		break
 		
-	case NSAlertOtherReturn:
+	case NSAlertThirdButtonReturn:
 		assert(false, "Chose to go to debugger.")
 		
-	case NSAlertDefaultReturn:
+	case NSAlertFirstButtonReturn:
 		print("Choosing to fail!")
 		fallthrough
 	default:
@@ -384,11 +384,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			
 			let retVal = PPRunInformationalAlertPanel(title: invExt, message: unwrapped, defaultButton: renameFile, alternateButton: openFile, otherButton: cancelOp);
 			switch (retVal) {
-			case NSAlertDefaultReturn:
+			case NSAlertFirstButtonReturn:
 				do {
 					let identRet = try madLib.identifyFile(at: theURL)
 					let info = try! madLib.information(from: theURL, type: identRet)
-					let tmpURL = try! (theURL.deletingPathExtension)().appendingPathExtension(info.signature.lowercased())
+					let tmpURL = (theURL.deletingPathExtension)().appendingPathExtension(info.signature.lowercased())
 					do {
 						try FileManager.default.moveItem(at: theURL, to: tmpURL)
 						theURL = tmpURL
@@ -403,10 +403,10 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 					return false
 				}
 				
-			case NSAlertAlternateReturn:
+			case NSAlertSecondButtonReturn:
 				break;
 				
-				//case NSAlertOtherReturn:
+				//case NSAlertThirdButtonReturn:
 			default:
 				return false;
 			}

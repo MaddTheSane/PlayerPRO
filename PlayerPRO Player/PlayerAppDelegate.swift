@@ -29,13 +29,13 @@ private func cocoaDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: Unsafe
 	
 	let alert = PPRunCriticalAlertPanel(title: errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr)
 	switch (alert) {
-	case NSAlertAlternateReturn:
+	case NSAlertSecondButtonReturn:
 		break
 		
-	case NSAlertOtherReturn:
+	case NSAlertThirdButtonReturn:
 		assert(false, "Chose to go to debugger.")
 		
-	case NSAlertDefaultReturn:
+	case NSAlertFirstButtonReturn:
 		print("Choosing to fail!")
 		fallthrough
 	default:
@@ -629,7 +629,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			
 			let returnVal = PPRunAlertPanel(title: NSLocalizedString("Clear list", comment: "Clear Music List"), message: clearMusicListStr, defaultButton: NSLocalizedString("No", comment: "No"), alternateButton: NSLocalizedString("Yes", comment: "Yes"));
 			
-			if (returnVal == NSAlertAlternateReturn) {
+			if (returnVal == NSAlertSecondButtonReturn) {
 				changeValueForMusicListKey( {
 					self.musicList.clearMusicList()
 				})
@@ -669,11 +669,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			let cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
 			let retVal = PPRunInformationalAlertPanel(title: invExt, message:invExtDes, defaultButton: renameFile, alternateButton:openFile, otherButton: cancelOp)
 			switch (retVal) {
-			case NSAlertDefaultReturn:
+			case NSAlertFirstButtonReturn:
 				
 				do {
 					let identRet = try madLib.identifyFile(at: theURL)
-					let tmpURL = try theURL.deletingPathExtension().appendingPathExtension(identRet.lowercased())
+					let tmpURL = theURL.deletingPathExtension().appendingPathExtension(identRet.lowercased())
 					
 					do {
 						try FileManager.default.moveItem(at: theURL, to: tmpURL)
@@ -690,10 +690,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					return false
 				}
 				
-			case NSAlertAlternateReturn:
+			case NSAlertSecondButtonReturn:
 				break;
 				
-				//case NSAlertOtherReturn:
+				//case NSAlertThirdButtonReturn:
 			default:
 				return true;
 			}
@@ -1045,12 +1045,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	// MARK: - Exporting functions
 	
 	@IBAction func okayExportSettings(_ sender: AnyObject!) {
-		window.endSheet(exportWindow, returnCode: NSAlertDefaultReturn)
+		window.endSheet(exportWindow, returnCode: NSAlertFirstButtonReturn)
 		exportWindow.close()
 	}
 	
 	@IBAction func cancelExportSettings(_ sender: AnyObject!) {
-		window.endSheet(exportWindow, returnCode: NSAlertAlternateReturn)
+		window.endSheet(exportWindow, returnCode: NSAlertSecondButtonReturn)
 		exportWindow.close()
 	}
 	
@@ -1179,7 +1179,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				}
 				
 				self.beginExportSettings(with: { (result) -> Void in
-					guard result == NSAlertDefaultReturn else {
+					guard result == NSAlertFirstButtonReturn else {
 						self.madDriver.endExport()
 						return
 					}
@@ -1193,7 +1193,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 									NSApplication.shared().reply(toApplicationShouldTerminate: true)
 								} else {
 									let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
-									if (retVal == NSAlertAlternateReturn) {
+									if (retVal == NSAlertSecondButtonReturn) {
 										NSWorkspace.shared().activateFileViewerSelecting([savePanel.url!])
 									}
 								}
@@ -1222,7 +1222,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				
 				self.beginExportSettings(with: { (result) -> Void in
 					let saveURL = savePanel.url!
-					if result != NSAlertDefaultReturn {
+					if result != NSAlertFirstButtonReturn {
 						self.madDriver.endExport()
 						return;
 					}
@@ -1280,7 +1280,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						}
 						
 						let tmpName = oldMusicName != "" ? oldMusicName : "untitled"
-						let tmpURL = try! (try! FileManager.default.url(for: .itemReplacementDirectory, in: .userDomainMask, appropriateFor: oldURL, create: true)).appendingPathComponent("\(tmpName).aiff", isDirectory: false)
+						let tmpURL = (try! FileManager.default.url(for: .itemReplacementDirectory, in: .userDomainMask, appropriateFor: oldURL, create: true)).appendingPathComponent("\(tmpName).aiff", isDirectory: false)
 						
 						do {
 							try self.saveMusic(AIFFToURL: tmpURL, theSett: &self.exportSettings)
@@ -1325,7 +1325,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 									NSApplication.shared().reply(toApplicationShouldTerminate: true)
 								} else {
 									let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
-									if (retVal == NSAlertAlternateReturn) {
+									if (retVal == NSAlertSecondButtonReturn) {
 										NSWorkspace.shared().activateFileViewerSelecting([savePanel.url!])
 									}
 								}
@@ -1349,7 +1349,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					return;
 				}
 				self.beginExportSettings(with: { (result) -> Void in
-					guard result == NSAlertDefaultReturn else {
+					guard result == NSAlertFirstButtonReturn else {
 						self.madDriver.endExport()
 						if (self.isQuitting) {
 							NSApplication.shared().reply(toApplicationShouldTerminate: true)
@@ -1367,7 +1367,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 										NSApplication.shared().reply(toApplicationShouldTerminate: true)
 									} else {
 										let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
-										if (retVal == NSAlertAlternateReturn) {
+										if (retVal == NSAlertSecondButtonReturn) {
 											NSWorkspace.shared().activateFileViewerSelecting([savePanel.url!])
 										}
 									}
@@ -1417,7 +1417,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						NSApplication.shared().reply(toApplicationShouldTerminate: true)
 					} else {
 						let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
-						if (retVal == NSAlertAlternateReturn) {
+						if (retVal == NSAlertSecondButtonReturn) {
 							NSWorkspace.shared().activateFileViewerSelecting([fileURL])
 						}
 					}

@@ -16,19 +16,19 @@ import AppKit.NSAlert
 	theAlert.informativeText = msgFormat()
 	if defaultButton == nil && alternateButton == nil && otherButton == nil {
 		let defButt = theAlert.addButton(withTitle: "OK")
-		defButt.tag = NSAlertDefaultReturn
+		defButt.tag = NSAlertFirstButtonReturn
 	} else {
 		if let aDefaultButton = defaultButton {
 			let defButt = theAlert.addButton(withTitle: aDefaultButton)
-			defButt.tag = NSAlertDefaultReturn
+			defButt.tag = NSAlertFirstButtonReturn
 		}
 		if let aAlternateButton = alternateButton {
 			let altButt = theAlert.addButton(withTitle: aAlternateButton)
-			altButt.tag = NSAlertAlternateReturn
+			altButt.tag = NSAlertSecondButtonReturn
 		}
 		if let aOtherButton = otherButton {
 			let othButt = theAlert.addButton(withTitle: aOtherButton)
-			othButt.tag = NSAlertOtherReturn
+			othButt.tag = NSAlertThirdButtonReturn
 		}
 	}
 	return theAlert.runModal()
