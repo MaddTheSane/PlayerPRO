@@ -854,7 +854,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		defaultCenter.addObserver(self, selector: #selector(PlayerAppDelegate.soundPreferencesDidChange(_:)), name: NSNotification.Name(rawValue: PPSoundPreferencesDidChange), object: nil)
 		
 		MADDriverWithPreferences()
-		for (i, obj) in (madLib).enumerated() {
+		for (i, obj) in madLib.enumerated() {
 			if obj.canExport {
 				let mi = NSMenuItem(title: "\(obj.menuName)…", action: #selector(PlayerAppDelegate.exportMusicAs(_:)), keyEquivalent: "")
 				mi.tag = i
@@ -958,11 +958,16 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	// MARK: - Tools functions
 	
 	@IBAction func fastForwardButtonPressed(_ sender: AnyObject!) {
-		
+		let currentPos = madDriver.musicPosition
+		let totalPos = madDriver.totalMusicPlaybackTime
+		guard currentPos + 2 < totalPos else {
+			return
+		}
+		madDriver.musicPosition = currentPos + 2
 	}
 	
 	@IBAction func loopButtonPressed(_ sender: AnyObject!) {
-		
+		//TODO: implement
 	}
 	
 	@IBAction func nextButtonPressed(_ sender: AnyObject!) {
@@ -1029,7 +1034,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	@IBAction func rewindButtonPressed(_ sender: AnyObject!) {
-		
+		let currentPos = madDriver.musicPosition
+		guard currentPos - 2 >= 0 else {
+			return
+		}
+		madDriver.musicPosition = currentPos - 2
 	}
 	
 	@IBAction func sliderChanged(_ sender: AnyObject!) {
