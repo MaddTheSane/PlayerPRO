@@ -456,7 +456,7 @@
                             <rect key="frame" x="1" y="0.0" width="497" height="368"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" autosaveColumns="NO" headerView="F6Y-TG-a0s" id="733">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="reverseSequential" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" autosaveName="MusicListColumnInfo" headerView="F6Y-TG-a0s" id="733">
                                     <rect key="frame" x="0.0" y="0.0" width="497" height="345"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -474,7 +474,7 @@
                                                 <binding destination="536" name="value" keyPath="arrangedObjects.fileIcon" id="46z-do-JzH"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn editable="NO" width="373" minWidth="10" maxWidth="3.4028234663852886e+38" id="NKI-PH-Tz3">
+                                        <tableColumn editable="NO" width="371" minWidth="10" maxWidth="3.4028234663852886e+38" id="NKI-PH-Tz3">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -486,12 +486,12 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <sortDescriptor key="sortDescriptorPrototype" selector="localizedStandardCompare:" sortKey="fileName"/>
-                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <connections>
                                                 <binding destination="536" name="value" keyPath="arrangedObjects.fileName" id="wtd-fk-Rb4"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn editable="NO" width="95" minWidth="10" maxWidth="3.4028234663852886e+38" id="C10-5a-0pU">
+                                        <tableColumn editable="NO" width="97" minWidth="10" maxWidth="3.4028234663852886e+38" id="C10-5a-0pU">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Size">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
