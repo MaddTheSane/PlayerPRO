@@ -72,7 +72,7 @@ import AudioToolbox
 		theSett.repeatMusic = false;
 		
 		do {
-			try theDriver.changeDriverSettingsToSettings(&theSett)
+			try theDriver.changeDriverSettings(to: &theSett)
 		} catch let error as NSError {
 			print("Unable to change driver for \(self), error \(error)")
 			//NSAlert(error: createErrorFromMADErrorType(returnerr)).beginSheetModalForWindow(self.windowForSheet, completionHandler: { (returnCode) -> Void in

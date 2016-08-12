@@ -425,11 +425,14 @@ typedef MADENUM(MADFourChar, MADPlugModes) {
 	MADPlugExport =				'EXPL',
 	MADPlugInfo =				'INFO',
 	MADPlugTest =				'TEST',
-	MADPlugPlay =				'PLAY',
 	MADPlugImportExport =		'EXIM',
+};
+	
+MADENUM(MADFourChar) {
 	MADPlugSampleImporter =		'SAMP',
 	MADPlugInstrumentImporter =	'INST',
-	MADPlugNonePlug =			'NONE'
+	MADPlugPlay =				'PLAY',
+	MADPlugNonePlug =			'NONE',
 };
 
 #pragma pack(pop)
@@ -835,7 +838,7 @@ PPEXPORT MADErr MADMusicTestCFURL(MADLibrary *inMADDriver, char *kindFile, CFURL
  *	@abstract	Dispose the current music, freeing memory
  *	@param		aMus A pointer to the music struct you want to free.<br>
  *				On return, the data pointed to will be freed, and the pointer 
- *		set to <code>NULL</code>.
+ *				set to <code>NULL</code>.
  *	@param		MDriver A pointer to the driver that has the music loaded.
  *				May be <code>NULL</code>.
  *	@return		An error type on failure, or \c MADNoErr on success
@@ -846,7 +849,7 @@ PPEXPORT MADErr	MADDisposeMusic(MADMusic **aMus, MADDriverRecPtr MDriver);
 PPEXPORT void	MADChangeTracks(MADDriverRecPtr MDriver, short);
 
 /*!
- *	@abstract Extract a Command from a PatData structure
+ *	@abstract Extract a Command from a \c PatData structure
  *
  *	@return a pointer to the specified \c Cmd data.
  */

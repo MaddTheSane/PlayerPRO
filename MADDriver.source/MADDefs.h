@@ -46,17 +46,21 @@
 #ifndef __has_extension
 #define __has_extension(x) 0
 #endif
+#define __MADENUM_GET_MACRO(_1, _2, NAME, ...) NAME
 #if (__cplusplus && __cplusplus >= 201103L && (__has_extension(cxx_strong_enums) || __has_feature(objc_fixed_enum))) || (!__cplusplus && __has_feature(objc_fixed_enum))
-#define MADENUM(_type, _name) enum _name : _type _name; enum _name : _type
+#define __MADNAMEDENUM(_type, _name)     enum _name : _type _name; enum _name : _type
+#define __MADANONENUM(_type)             enum : _type
 #if (__cplusplus)
 #define MADOPTIONS(_type, _name) _type _name; enum : _type
 #else
 #define MADOPTIONS(_type, _name) enum _name : _type _name; enum _name : _type
 #endif
 #else
-#define MADENUM(_type, _name) _type _name; enum
+#define __MADNAMEDENUM(_type, _name) _type _name; enum
+#define __MADANONENUM(_type) enum
 #define MADOPTIONS(_type, _name) _type _name; enum
 #endif
+#define MADENUM(...) __MADENUM_GET_MACRO(__VA_ARGS__, __MADNAMEDENUM, __MADANONENUM)(__VA_ARGS__)
 #endif
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
