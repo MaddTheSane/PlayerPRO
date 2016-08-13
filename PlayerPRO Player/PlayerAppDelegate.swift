@@ -555,7 +555,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			}
 		} else {
 			do {
-				try madDriver.changeSettings(to: &theSettinit)
+				try madDriver.changeDriverSettings(to: &theSettinit)
 			} catch let error as NSError {
 				NotificationCenter.default.post(name: .driverDidChange, object: self)
 				NSAlert(error: error).runModal()
