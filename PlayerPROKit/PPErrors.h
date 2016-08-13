@@ -23,10 +23,13 @@ extern NSString * __nonnull const PPMADErrorDomain;
  *	@param		theErr
  *				The error to encapsulate
  *	@return		A retained \c NSError object, or \c nil if passed \c MADNoErr .
- *	@discussion	Creates an \c NSError object in the \c PPMADErrorDomain with \c NSLocalizedDescriptionKey,
- *				\c NSLocalizedFailureReasonErrorKey, and \c NSLocalizedRecoverySuggestionErrorKey set.<br>
- *				If the value in \c theErr isn't a value in \c MADErr, it returns an \c NSError in the
- *				\c NSOSStatusErrorDomain with nothing in the \c userInfo dictionary.
+ *	@discussion	Creates an \c NSError object in the \c PPMADErrorDomain with 
+ *				\c NSLocalizedDescriptionKey,
+ *				\c NSLocalizedFailureReasonErrorKey, and 
+ *				\c NSLocalizedRecoverySuggestionErrorKey set.<br>
+ *				If the value in \c theErr isn't a value in <code>MADErr</code>, 
+ *				it returns an \c NSError in the \c NSOSStatusErrorDomain with 
+ *				nothing in the \c userInfo dictionary.
  */
 extern NSError* __nullable PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETURNS_RETAINED;
 
@@ -48,10 +51,17 @@ extern NSError* __nullable PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETUR
  */
 extern NSError* __nullable PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa) NS_RETURNS_RETAINED;
 
-//! Checks if the error sent to it is a user cancelled error.
-//! This checks for \c MADUserCanceledErr in the <code>PPMADErrorDomain</code>,
-//! \c NSUserCancelledError in the <code>NSCocoaErrorDomain</code>, and \c userCanceledErr
-//! in the <code>NSOSStatusErrorDomain</code>.
+/*!
+ *	@function	PPErrorIsUserCancelled
+ *	@abstract	Checks to see if the error type was cancelled by the user.
+ *	@param		theErr
+ *				The \c NSError object to check.
+ *	@return		\c YES if the value was user cahcelled, \c NO otherwise.
+ *	@discussion	Checks if the error sent to it is a user cancelled error.
+ *				This checks for \c MADUserCanceledErr in the <code>PPMADErrorDomain</code>,
+ *				\c NSUserCancelledError in the <code>NSCocoaErrorDomain</code>, and \c userCanceledErr
+ *				in the <code>NSOSStatusErrorDomain</code>.
+*/
 extern BOOL PPErrorIsUserCancelled(NSError * __nonnull theErr);
 
 __END_DECLS
