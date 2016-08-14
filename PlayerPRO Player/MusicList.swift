@@ -143,7 +143,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	@objc(sortMusicListUsingDescriptors:) func sortMusicList(descriptors: [NSSortDescriptor]) {
-		let anArray = musicList.sort(using: descriptors)
+		let anArray = musicList.sorted(using: descriptors)
 		musicList = anArray
 	}
 	
