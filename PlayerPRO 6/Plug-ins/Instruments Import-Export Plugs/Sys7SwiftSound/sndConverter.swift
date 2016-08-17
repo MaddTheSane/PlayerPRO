@@ -10,6 +10,7 @@ import Foundation
 import AudioToolbox
 import SwiftAudioAdditions
 import PlayerPROCore.Defines
+import ResourceFork
 
 private func fixedToFloat(_ a: UInt32) -> Double {
 	let fixed1 = Double(0x00010000)
@@ -118,7 +119,7 @@ internal func canOpenData(_ data: Data) -> Bool {
 }
 
 internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
-	func errmsg( _ message: @autoclosure(escaping) () -> String) {
+	func errmsg( _ message: @autoclosure @escaping  () -> String) {
 		print("Sys7 import: \(message())")
 	}
 	
@@ -255,7 +256,7 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	// Create a temporary file for storage
 	let url = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent("\(arc4random())-\(Date.timeIntervalSinceReferenceDate).aif"))
 		var audioFile: ExtAudioFileRef? = nil
-		let createStatus = ExtAudioFileCreate(URL: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
+		let createStatus = ExtAudioFileCreate(URL: url as NSURL, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
 		if createStatus != noErr {
 			error = .writingErr
 			errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")
@@ -263,12 +264,12 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 		}
 		
 		// Configure the AudioBufferList
-		let srcData = UnsafePointer<UInt8>((sampleData! as NSData).bytes)
+		let srcData = ((sampleData! as NSData).bytes).assumingMemoryBound(to: UInt8.self)
 		var audioBuffer = AudioBuffer()
 		audioBuffer.mNumberChannels = 1
 		audioBuffer.mDataByteSize = header.length
-		audioBuffer.mData = UnsafeMutablePointer(srcData)
-		let audioBufferData = UnsafeMutablePointer<UInt8>(audioBuffer.mData)
+	audioBuffer.mData = UnsafeMutableRawPointer(mutating: srcData)
+		let audioBufferData = audioBuffer.mData?.assumingMemoryBound(to: UInt8.self)
 		for i in 0 ..< Int(header.length) {
 			audioBufferData?[i] ^= 0x80
 		}

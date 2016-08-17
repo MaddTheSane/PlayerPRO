@@ -35,7 +35,7 @@ class DocumentWindowController: NSWindowController {
 	@IBOutlet weak var infoInfoField:	NSTextField!
 	
 	weak var currentDocument: PPDocument!
-	private var exportSettings = MADDriverSettings.new()
+	internal var exportSettings = MADDriverSettings.new()
 
 	let exportController = SoundSettingsViewController.newSoundSettingWindow()!
 
@@ -135,7 +135,7 @@ class DocumentWindowController: NSWindowController {
 			theRec.play()
 			
 			while let newData = theRec.directSave() {
-				let anErr = handler(newData)
+				let anErr = handler(newData as NSData)
 				if anErr != .noErr {
 					callback(createError(from: anErr))
 					return
@@ -189,8 +189,8 @@ class DocumentWindowController: NSWindowController {
 		func handler(_ data: NSData) -> MADErr {
 			let toWriteSize = data.length
 			if let mutData = NSMutableData(length: data.length) {
-				let tmpData = UnsafePointer<Int16>(data.bytes)
-				let toWriteBytes = UnsafeMutablePointer<Int16>(mutData.mutableBytes)
+				let tmpData = data.bytes.assumingMemoryBound(to: Int16.self)
+				let toWriteBytes = mutData.mutableBytes.assumingMemoryBound(to: Int16.self)
 				
 				for i in 0..<(toWriteSize / 2) {
 					toWriteBytes[i] = tmpData[i].littleEndian
@@ -231,7 +231,7 @@ class DocumentWindowController: NSWindowController {
 		return MADErr.noErr
 	}
 	
-	private func saveMusic(AIFFToURL theURL: NSURL, theSett: inout MADDriverSettings) -> MADErr {
+	private func saveMusic(AIFFToURL theURL: URL, theSett: inout MADDriverSettings) -> MADErr {
 		var iErr: NSError? = nil
 		
 		var audioFile: AudioFileID? = nil;
@@ -250,7 +250,7 @@ class DocumentWindowController: NSWindowController {
 		
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed, .BigEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
-		var res = AudioFileCreate(URL: theURL, fileType: .AIFF, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
+		var res = AudioFileCreate(URL: theURL as NSURL, fileType: .AIFF, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
 		if (res != noErr) {
 			if (audioFile != nil) {
 				AudioFileClose(audioFile!)
@@ -268,8 +268,8 @@ class DocumentWindowController: NSWindowController {
 		func handler(_ data: NSData) -> MADErr {
 			let toWriteSize = data.length
 			if let mutData = NSMutableData(length: data.length) {
-				let tmpData = UnsafePointer<Int16>(data.bytes)
-				let toWriteBytes = UnsafeMutablePointer<Int16>(mutData.mutableBytes)
+				let tmpData = data.bytes.assumingMemoryBound(to: Int16.self)
+				let toWriteBytes = mutData.mutableBytes.assumingMemoryBound(to: Int16.self)
 				
 				for i in 0..<(toWriteSize / 2) {
 					toWriteBytes[i] = tmpData[i].bigEndian
@@ -336,36 +336,36 @@ class DocumentWindowController: NSWindowController {
 						func generateAVMetadataInfo(_ oldMusicName: String, oldMusicInfo: String) -> [AVMetadataItem] {
 							let titleName = AVMutableMetadataItem()
 							titleName.keySpace = AVMetadataKeySpaceCommon
-							titleName.key = (AVMetadataCommonKeyTitle)
-							titleName.value = (oldMusicName)
+							titleName.key = AVMetadataCommonKeyTitle as NSString
+							titleName.value = oldMusicName as NSString
 							
 							let dataInfo = AVMutableMetadataItem()
 							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData;
-							dataInfo.key = (AVMetadataQuickTimeUserDataKeySoftware)
-							dataInfo.value = ("PlayerPRO 6")
+							dataInfo.key = (AVMetadataQuickTimeUserDataKeySoftware) as NSString
+							dataInfo.value = "PlayerPRO 6" as NSString
 							dataInfo.locale = Locale(identifier: "en")
 							
 							let musicInfoQTUser = AVMutableMetadataItem();
 							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
-							musicInfoQTUser.key = (AVMetadataQuickTimeUserDataKeyInformation)
-							musicInfoQTUser.value = (oldMusicInfo)
+							musicInfoQTUser.key = (AVMetadataQuickTimeUserDataKeyInformation) as NSString
+							musicInfoQTUser.value = (oldMusicInfo) as NSString
 							musicInfoQTUser.locale = Locale.current
 
 							let musicNameQTUser = AVMutableMetadataItem()
 							musicNameQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
-							musicNameQTUser.key = (AVMetadataQuickTimeUserDataKeyFullName)
-							musicNameQTUser.value = (oldMusicName)
+							musicNameQTUser.key = (AVMetadataQuickTimeUserDataKeyFullName) as NSString
+							musicNameQTUser.value = (oldMusicName) as NSString
 							musicNameQTUser.locale = Locale.current
 							
 							let musicInfoiTunes = AVMutableMetadataItem()
 							musicInfoiTunes.keySpace = AVMetadataKeySpaceiTunes
-							musicInfoiTunes.key = (AVMetadataiTunesMetadataKeyUserComment)
-							musicInfoiTunes.value = (oldMusicInfo)
+							musicInfoiTunes.key = (AVMetadataiTunesMetadataKeyUserComment) as NSString
+							musicInfoiTunes.value = (oldMusicInfo) as NSString
 							
 							let musicInfoQTMeta = AVMutableMetadataItem();
 							musicInfoQTMeta.keySpace = AVMetadataKeySpaceQuickTimeMetadata
-							musicInfoQTMeta.key = (AVMetadataQuickTimeMetadataKeyInformation)
-							musicInfoQTMeta.value = (oldMusicInfo)
+							musicInfoQTMeta.key = (AVMetadataQuickTimeMetadataKeyInformation) as NSString
+							musicInfoQTMeta.value = (oldMusicInfo) as NSString
 							musicInfoQTMeta.locale = Locale.current
 							
 							return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser];
@@ -388,7 +388,7 @@ class DocumentWindowController: NSWindowController {
 							}
 						}
 						if (theErr != MADErr.noErr) {
-							errStr?.pointee = "Unable to save temporary file to \(tmpURL.path), error \(theErr)."
+							errStr?.pointee = "Unable to save temporary file to \(tmpURL.path), error \(theErr)."  as NSString
 							
 							return theErr;
 						}
@@ -398,7 +398,7 @@ class DocumentWindowController: NSWindowController {
 						
 						let tmpsession = AVAssetExportSession(asset: exportMov, presetName: AVAssetExportPresetAppleM4A)
 						if (tmpsession == nil) {
-							errStr?.pointee = "Export session creation for \(oldMusicName) failed."
+							errStr?.pointee = "Export session creation for \(oldMusicName) failed." as NSString
 							return .writingErr;
 						}
 						let session = tmpsession!
@@ -422,7 +422,7 @@ class DocumentWindowController: NSWindowController {
 						if (didFinish) {
 							return .noErr;
 						} else {
-							errStr?.pointee = "export of \"\(oldMusicName)\" failed."
+							errStr?.pointee = "export of \"\(oldMusicName)\" failed." as NSString
 							return .writingErr;
 						}
 						//} catch _ {}

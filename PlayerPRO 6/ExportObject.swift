@@ -9,8 +9,8 @@
 import Cocoa
 import PlayerPROKit
 
-typealias PPExportBlock = @convention(block) (theURL: URL, errStr: AutoreleasingUnsafeMutablePointer<NSString?>?) -> MADErr
-typealias PPSwiftExportBlock = (theURL: URL, errStr: inout String?) -> MADErr
+typealias PPExportBlock = @convention(block) (_ theURL: URL, _ errStr: AutoreleasingUnsafeMutablePointer<NSString?>?) -> MADErr
+typealias PPSwiftExportBlock = (_ theURL: URL, _ errStr: inout String?) -> MADErr
 
 @objc protocol ExportObjectDelegate: NSObjectProtocol {
 	func exportObject(didFinish theObj: ExportObject)
@@ -40,8 +40,8 @@ final class ExportObject: NSObject {
 	convenience init(destination dest: URL, block: PPSwiftExportBlock) {
 		let tmpExportBlock: PPExportBlock = { (theURL, errStr) -> MADErr in
 			var tmpStr: String? = nil
-			let retErr = block(theURL: dest, errStr: &tmpStr)
-			errStr?.pointee = tmpStr
+			let retErr = block(dest, &tmpStr)
+			errStr?.pointee = tmpStr as NSString?
 			return retErr
 		}
 		
@@ -52,7 +52,7 @@ final class ExportObject: NSObject {
 		status = .Running
 		DispatchQueue.global().async(execute: { () -> Void in
 			var aStr: NSString? = nil
-			let errVal = self.exportBlock(theURL: self.destination, errStr: &aStr)
+			let errVal = self.exportBlock(self.destination, &aStr)
 			if errVal == .noErr {
 				DispatchQueue.main.async(execute: { () -> Void in
 					self.delegate?.exportObject(didFinish: self)
@@ -62,7 +62,7 @@ final class ExportObject: NSObject {
 			} else {
 				if aStr == nil {
 					let tmpErr = createError(from: errVal)!
-					aStr = tmpErr.description
+					aStr = tmpErr.description as NSString
 				}
 				let bStr: String = (aStr ?? "Unknown error") as String
 				DispatchQueue.main.async(execute: { () -> Void in

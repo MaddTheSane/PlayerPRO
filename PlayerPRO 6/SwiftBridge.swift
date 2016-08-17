@@ -13,7 +13,7 @@ public func ==(lhs: PPPlugInObject, rhs: PPPlugInObject) -> Bool {
 }
 
 extension PPPlugInObject {
-	override public var hashValue: Int {
+	override open var hashValue: Int {
 		return self.hash
 	}
 }

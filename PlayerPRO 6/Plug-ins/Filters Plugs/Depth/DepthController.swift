@@ -26,9 +26,9 @@ class DepthController: NSWindowController {
 
 	@IBAction func okay(_ sender: AnyObject!) {
 		let ourData = NSMutableData(data: theData.data)
-		//let rawData = ourData.mutableBytes
-		var Sample8Ptr = UnsafeMutablePointer<Int8>(ourData.mutableBytes)
-		var Sample16Ptr = UnsafeMutablePointer<Int16>(ourData.mutableBytes)
+		let rawData = UnsafeMutableRawPointer(ourData.mutableBytes)
+		var Sample8Ptr = rawData.assumingMemoryBound(to: Int8.self)
+		var Sample16Ptr = rawData.assumingMemoryBound(to: Int16.self)
 		var Inc = depthAmmount
 		if Inc == 0 {
 			Inc = 1

@@ -12,6 +12,7 @@ import PlayerPROCore
 import PlayerPROKit
 import SwiftAdditions
 import SwiftAudioAdditions
+import ResourceFork
 
 
 public final class System7Sound: NSObject, PPSampleImportPlugin {

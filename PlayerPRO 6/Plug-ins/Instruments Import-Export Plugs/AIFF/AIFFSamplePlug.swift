@@ -30,7 +30,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		let datLen = sample.data.count
 		var audioFile: AudioFileID? = nil
 		
-		var res = AudioFileCreate(URL: sampleURL, fileType: .AIFF, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
+		var res = AudioFileCreate(URL: sampleURL as NSURL, fileType: .AIFF, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
 		
 		if res != noErr {
 			return .writingErr
@@ -55,7 +55,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 						var location = 0
 						var toWriteSize = 16
 						var toWriteBytes = [Int16](repeating: 0, count: 8)
-						let tmpData = UnsafePointer<Int16>(aData)
+						let tmpData = UnsafeRawPointer(aData).assumingMemoryBound(to: Int16.self)
 						repeat {
 							for i in 0..<(toWriteSize / 2) {
 								toWriteBytes[i] = tmpData[location / 2 + i].bigEndian
@@ -90,9 +90,9 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		var audioFile: AudioFileID? = nil
 		var res: OSStatus = noErr
 		
-		res = AudioFileOpen(URL: AlienFileURL, permissions: .readPermission, fileTypeHint: .AIFF, audioFile: &audioFile);
+		res = AudioFileOpen(URL: AlienFileURL as NSURL, permissions: .readPermission, fileTypeHint: .AIFF, audioFile: &audioFile);
 		if (res != noErr) {
-			res = AudioFileOpen(URL: AlienFileURL, permissions: .readPermission, fileTypeHint: .AIFC, audioFile: &audioFile);
+			res = AudioFileOpen(URL: AlienFileURL as NSURL, permissions: .readPermission, fileTypeHint: .AIFC, audioFile: &audioFile);
 			if (res != noErr) {
 				myErr = .fileNotSupportedByThisPlug;
 			} else {

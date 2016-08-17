@@ -36,7 +36,7 @@ final class DigitalPlugInObject : PPPlugInObject {
 		
 		var hasArch = false
 		for arch in archs {
-			if arch == NSBundleExecutableArchitectureX86_64 {
+			if arch.intValue == NSBundleExecutableArchitectureX86_64 {
 				hasArch = true
 				break
 			}
@@ -70,7 +70,7 @@ final class DigitalPlugInObject : PPPlugInObject {
 		return self.hashValue
 	}
 
-	override func isEqual(_ object: AnyObject?) -> Bool {
+	override func isEqual(_ object: Any?) -> Bool {
 		if let other = object as? DigitalPlugInObject {
 			return self == other
 		}
@@ -85,7 +85,7 @@ final class DigitalPlugInObject : PPPlugInObject {
 				handler(outError)
 				return
 			}
-			UIFunc(with: myPcmd, driver: driver, parentWindow: theDoc.windowForSheet!, handler: handler)
+			UIFunc(myPcmd, driver, theDoc.windowForSheet!, handler)
 			return
 		}
 		handler(outError)

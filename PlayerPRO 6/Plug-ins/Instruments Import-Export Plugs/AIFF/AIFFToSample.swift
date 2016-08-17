@@ -16,9 +16,9 @@ import SwiftAudioAdditions
 private let kSrcBufSize: UInt32 = 32768;
 
 
-internal func AIFFAtURL(_ url: NSURL, toSample sample: PPSampleObject) -> MADErr {
+internal func AIFFAtURL(_ url: URL, toSample sample: PPSampleObject) -> MADErr {
 	var fileRef1: ExtAudioFileRef? = nil
-	var iErr = ExtAudioFileOpenURL(url, &fileRef1)
+	var iErr = ExtAudioFileOpenURL(url as CFURL, &fileRef1)
 	if iErr != noErr {
 		return .readingErr
 	}
@@ -31,7 +31,7 @@ internal func AIFFAtURL(_ url: NSURL, toSample sample: PPSampleObject) -> MADErr
 	if let mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) {
 		var realFormat = AudioStreamBasicDescription()
 		
-		var asbdSize = UInt32(sizeof(AudioStreamBasicDescription.self))
+		var asbdSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
 		iErr = ExtAudioFileGetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
 		if iErr != noErr {
 			return .unknownErr
@@ -60,7 +60,7 @@ internal func AIFFAtURL(_ url: NSURL, toSample sample: PPSampleObject) -> MADErr
 			realFormat.mChannelsPerFrame = 2
 		}
 		
-		iErr = ExtAudioFileSetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: sizeof(AudioStreamBasicDescription.self), data: &realFormat)
+		iErr = ExtAudioFileSetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: MemoryLayout<AudioStreamBasicDescription>.size, data: &realFormat)
 		if iErr != noErr {
 			return .unknownErr
 		}

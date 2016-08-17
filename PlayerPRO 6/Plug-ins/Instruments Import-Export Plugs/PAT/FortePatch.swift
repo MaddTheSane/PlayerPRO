@@ -14,7 +14,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 	var PATHeader: UnsafePointer<PatchHeader>
 	var PATIns: UnsafePointer<PatInsHeader>
 	var PATSamp: UnsafePointer<PatSampHeader>
-	var PATData = UnsafePointer<UInt8>(data.bytes)
+	var PATData = data.bytes.assumingMemoryBound(to: UInt8.self)
 	let scale_table: [UInt32] = {
 		var toRet: [UInt32] = [
 		16351, 17323, 18354, 19445, 20601, 21826, 23124, 24499, 25956, 27500, 29135, 30867,
@@ -34,7 +34,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 	}()
 	
 	// PATCH HEADER
-	PATHeader = UnsafePointer<PatchHeader>(PATData)
+	PATHeader = UnsafeRawPointer(PATData).assumingMemoryBound(to: PatchHeader.self)
 	PATData += 129
 	
 	insHeader.resetInstrument()
@@ -46,7 +46,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 	let sampleCount = (Int(PATHeader.pointee.LoSamp) << 8) + Int(PATHeader.pointee.HiSamp)
 	
 	// INS HEADER -- Read only the first instrument
-	PATIns = UnsafePointer<PatInsHeader>(PATData)
+	PATIns = UnsafeRawPointer(PATData).assumingMemoryBound(to: PatInsHeader.self)
 
 	//let patSize = PATIns.memory.size.littleEndian
 	PATData += 63;
@@ -69,7 +69,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 		let curData = PPSampleObject();
 		var signedData: Bool
 		
-		PATSamp = UnsafePointer<PatSampHeader>(PATData)
+		PATSamp = UnsafeRawPointer(PATData).assumingMemoryBound(to: PatSampHeader.self)
 		//curData = sample[x] = inMADCreateSample();
 		
 		curData.name = {
@@ -156,12 +156,12 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 		
 		// DATA
 		let aDataObj = NSMutableData(bytes: UnsafePointer<Void>(PATData), length: Int(sampSize))
-		let aData = UnsafeMutablePointer<UInt8>(aDataObj.mutableBytes)
+		let aData = aDataObj.mutableBytes.assumingMemoryBound(to: UInt8.self)
 		
 		//if aData != nil {
 			
 			if (curData.amplitude == 16) {
-				let tt = UnsafeMutablePointer<UInt16>(aData)
+				let tt = aDataObj.mutableBytes.assumingMemoryBound(to: UInt16.self)
 				
 				DispatchQueue.concurrentPerform(iterations: Int(sampSize / 2), execute: { (tL) -> Void in
 					tt[tL] = tt[tL].littleEndian
@@ -226,7 +226,7 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 			if let ourIns = PPInstrumentObject() {
 				ourIns.resetInstrument()
 				
-				let iErr = importPAT(ourIns, data: inData)
+				let iErr = importPAT(ourIns, data: inData as NSData)
 				if iErr == .noErr {
 					InsHeader?.pointee = ourIns
 				}

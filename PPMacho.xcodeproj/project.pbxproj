@@ -148,10 +148,6 @@
 		5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5518A41A1B03E4E3005AF928 /* System 7.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55D5E9581B01466D00EB2C84 /* System 7.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5518A4391B03F561005AF928 /* ClassicSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5518A4381B03F561005AF928 /* ClassicSound.swift */; };
-		5518A43A1B03F59F005AF928 /* FVDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */; };
-		5518A43B1B03F59F005AF928 /* FVResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9851B0149FE00EB2C84 /* FVResource.swift */; };
-		5518A43C1B03F59F005AF928 /* FVResourceFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB995F1B027ED5009B3EDD /* FVResourceFile.swift */; };
-		5518A43D1B03F59F005AF928 /* FVResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */; };
 		5518A43E1B03F5CE005AF928 /* sndConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9A21B0151A500EB2C84 /* sndConverter.swift */; };
 		5518A43F1B03F94C005AF928 /* AIFFToSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */; };
 		5518A44A1B03FFD1005AF928 /* Classic Sound.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 555E85451A041E810018FDBC /* Classic Sound.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -245,6 +241,8 @@
 		553672D419C2847900D4E2A5 /* DepthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553672D319C2847900D4E2A5 /* DepthController.swift */; };
 		553672D619C284AE00D4E2A5 /* DepthPlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553672D519C284AE00D4E2A5 /* DepthPlug.swift */; };
 		553672DA19C2A05700D4E2A5 /* PPFadePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 553672D919C2A05700D4E2A5 /* PPFadePlug.m */; };
+		55379CB01D63E36D00387CF3 /* ResourceFork.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55379CA51D63E35500387CF3 /* ResourceFork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		55379CB31D63E38C00387CF3 /* ResourceFork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55379CA51D63E35500387CF3 /* ResourceFork.framework */; };
 		553B8B7219B3CD85007C2C64 /* xm-ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6E19B3CD85007C2C64 /* xm-ios.png */; };
 		553B8B7319B3CD85007C2C64 /* xm-ios@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6F19B3CD85007C2C64 /* xm-ios@2x.png */; };
 		553B8B7419B3CD85007C2C64 /* xm-ipad-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B7019B3CD85007C2C64 /* xm-ipad-large.png */; };
@@ -645,7 +643,6 @@
 		55B7E669161D1DF3000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B8E1B71A3BB5790010CE33 /* MADDebugStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */; };
 		55B8E1B81A3BB57A0010CE33 /* MADDebugStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */; };
-		55BB99611B027F3D009B3EDD /* FVResourceFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB995F1B027ED5009B3EDD /* FVResourceFile.swift */; };
 		55BD5AF519ADBBF500D63F54 /* PPKPcmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */; };
 		55BD5AF619ADBBF500D63F54 /* PPKPcmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */; };
 		55BF238919A93742005B1F96 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
@@ -700,9 +697,6 @@
 		55D59C2C1A646F60008A6E51 /* PPKSwiftToC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */; };
 		55D59C2D1A646F60008A6E51 /* PPKSwiftToC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */; };
 		55D5E9661B01471300EB2C84 /* System7Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9651B01471300EB2C84 /* System7Sound.swift */; };
-		55D5E98A1B0149FE00EB2C84 /* FVDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */; };
-		55D5E98B1B0149FE00EB2C84 /* FVResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9851B0149FE00EB2C84 /* FVResource.swift */; };
-		55D5E98D1B0149FE00EB2C84 /* FVResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */; };
 		55D5E9991B014EEF00EB2C84 /* AIFFToSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */; };
 		55D5E9A11B014EF900EB2C84 /* AIFFToSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */; };
 		55D5E9A31B0151A500EB2C84 /* sndConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9A21B0151A500EB2C84 /* sndConverter.swift */; };
@@ -759,10 +753,6 @@
 		55EE2D8B17E12F9300FED42A /* Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7BC10E08D8400177B4C /* Fade.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8C17E12F9300FED42A /* Length.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE84210E08D9E00177B4C /* Length.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8E17E12F9300FED42A /* Sampling Rate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		55EF657C1B0AD6A400B556D4 /* FVDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */; };
-		55EF657D1B0AD6A400B556D4 /* FVResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9851B0149FE00EB2C84 /* FVResource.swift */; };
-		55EF657E1B0AD6A400B556D4 /* FVResourceFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB995F1B027ED5009B3EDD /* FVResourceFile.swift */; };
-		55EF657F1B0AD6A400B556D4 /* FVResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */; };
 		55EF658A1B0AD7BF00B556D4 /* APPLImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EF65891B0AD7BF00B556D4 /* APPLImporter.swift */; };
 		55F013E5187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F013EB1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
@@ -1047,6 +1037,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5533411010BB547C005208D1;
 			remoteInfo = MOD;
+		};
+		55379CA21D63E35500387CF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55379C9C1D63E35500387CF3 /* ForkView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D15AC370486D014006FF6A4;
+			remoteInfo = ForkView;
+		};
+		55379CA41D63E35500387CF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55379C9C1D63E35500387CF3 /* ForkView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 557168431AF06F5600B5DAD9;
+			remoteInfo = ResourceFork;
+		};
+		55379CA61D63E35500387CF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55379C9C1D63E35500387CF3 /* ForkView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A5FFD8FE1B0048EA008AB914;
+			remoteInfo = PICTConverter;
+		};
+		55379CB11D63E38100387CF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55379C9C1D63E35500387CF3 /* ForkView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 557168421AF06F5600B5DAD9;
+			remoteInfo = ResourceFork;
+		};
+		55379CB41D64180B00387CF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55379C9C1D63E35500387CF3 /* ForkView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 557168421AF06F5600B5DAD9;
+			remoteInfo = ResourceFork;
+		};
+		55379CB61D64191100387CF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55379C9C1D63E35500387CF3 /* ForkView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 557168421AF06F5600B5DAD9;
+			remoteInfo = ResourceFork;
 		};
 		554E10F510D6F09500BB619C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2048,6 +2080,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				55379CB01D63E36D00387CF3 /* ResourceFork.framework in Copy Frameworks */,
 				5570033F1B2261C300C623AB /* SwiftAdditions.framework in Copy Frameworks */,
 				5573A1621658A3E700A5AECA /* PlayerPROCore.framework in Copy Frameworks */,
 				5578C4F917DAB28A0057D11B /* PlayerPROKit.framework in Copy Frameworks */,
@@ -2414,6 +2447,7 @@
 		553672D519C284AE00D4E2A5 /* DepthPlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepthPlug.swift; sourceTree = "<group>"; };
 		553672D819C2A05700D4E2A5 /* PPFadePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFadePlug.h; sourceTree = "<group>"; };
 		553672D919C2A05700D4E2A5 /* PPFadePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFadePlug.m; sourceTree = "<group>"; };
+		55379C9C1D63E35500387CF3 /* ForkView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ForkView.xcodeproj; path = ForkView/ForkView.xcodeproj; sourceTree = "<group>"; };
 		5539D88F1978B90D005A1569 /* PlayerPRO 6-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO 6-Bridging-Header.h"; sourceTree = "<group>"; };
 		553B8B6E19B3CD85007C2C64 /* xm-ios.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ios.png"; sourceTree = "<group>"; };
 		553B8B6F19B3CD85007C2C64 /* xm-ios@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ios@2x.png"; sourceTree = "<group>"; };
@@ -2687,7 +2721,6 @@
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADDebugStr.m; sourceTree = "<group>"; };
-		55BB995F1B027ED5009B3EDD /* FVResourceFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVResourceFile.swift; sourceTree = "<group>"; };
 		55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPKPcmd.swift; sourceTree = "<group>"; };
 		55BE998717978BB100D6DECC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		55BE998917978BB100D6DECC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/schema.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -2725,9 +2758,6 @@
 		55D5E95B1B01466D00EB2C84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55D5E9651B01471300EB2C84 /* System7Sound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = System7Sound.swift; sourceTree = "<group>"; };
 		55D5E9671B0148CA00EB2C84 /* BridgeHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeader.h; sourceTree = "<group>"; };
-		55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVDataReader.swift; sourceTree = "<group>"; };
-		55D5E9851B0149FE00EB2C84 /* FVResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVResource.swift; sourceTree = "<group>"; };
-		55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVResourceType.swift; sourceTree = "<group>"; };
 		55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIFFToSample.swift; sourceTree = "<group>"; };
 		55D5E9A21B0151A500EB2C84 /* sndConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sndConverter.swift; sourceTree = "<group>"; };
 		55D64A8B1AA805020017158E /* MusicListPreferenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListPreferenceController.swift; sourceTree = "<group>"; };
@@ -3317,6 +3347,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55379CB31D63E38C00387CF3 /* ResourceFork.framework in Frameworks */,
 				55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */,
 				55BF238919A93742005B1F96 /* Cocoa.framework in Frameworks */,
 				55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */,
@@ -4129,6 +4160,16 @@
 			path = Xcconfigs;
 			sourceTree = "<group>";
 		};
+		55379C9D1D63E35500387CF3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55379CA31D63E35500387CF3 /* ForkView.app */,
+				55379CA51D63E35500387CF3 /* ResourceFork.framework */,
+				55379CA71D63E35500387CF3 /* PICTConverter.xpc */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		553B8B6C19B3CD85007C2C64 /* Tracker Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -4740,7 +4781,7 @@
 			isa = PBXGroup;
 			children = (
 				55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */,
-				55D5E9831B0149FE00EB2C84 /* ForkView */,
+				55379C9C1D63E35500387CF3 /* ForkView.xcodeproj */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -4759,18 +4800,6 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
-		};
-		55D5E9831B0149FE00EB2C84 /* ForkView */ = {
-			isa = PBXGroup;
-			children = (
-				55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */,
-				55D5E9851B0149FE00EB2C84 /* FVResource.swift */,
-				55BB995F1B027ED5009B3EDD /* FVResourceFile.swift */,
-				55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */,
-			);
-			path = ForkView;
-			sourceTree = "<group>";
-			usesTabs = 0;
 		};
 		55D8E1861C4EC0A600C2B397 /* ITv2 */ = {
 			isa = PBXGroup;
@@ -5527,6 +5556,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55379CB51D64180B00387CF3 /* PBXTargetDependency */,
 				5518A44E1B04000A005AF928 /* PBXTargetDependency */,
 				5518A44C1B03FFFA005AF928 /* PBXTargetDependency */,
 			);
@@ -6110,6 +6140,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55379CB21D63E38100387CF3 /* PBXTargetDependency */,
 				55868A5910BFB46100FCC24D /* PBXTargetDependency */,
 			);
 			name = "Classic App";
@@ -6295,6 +6326,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55379CB71D64191100387CF3 /* PBXTargetDependency */,
 				55D5E9911B014A4B00EB2C84 /* PBXTargetDependency */,
 				55D5E9931B014A4B00EB2C84 /* PBXTargetDependency */,
 			);
@@ -6540,6 +6572,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 55379C9D1D63E35500387CF3 /* Products */;
+					ProjectRef = 55379C9C1D63E35500387CF3 /* ForkView.xcodeproj */;
+				},
+				{
 					ProductGroup = 55D5E9691B01496100EB2C84 /* Products */;
 					ProjectRef = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
 				},
@@ -6621,6 +6657,27 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		55379CA31D63E35500387CF3 /* ForkView.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ForkView.app;
+			remoteRef = 55379CA21D63E35500387CF3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55379CA51D63E35500387CF3 /* ResourceFork.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ResourceFork.framework;
+			remoteRef = 55379CA41D63E35500387CF3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55379CA71D63E35500387CF3 /* PICTConverter.xpc */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.xpc-service";
+			path = PICTConverter.xpc;
+			remoteRef = 55379CA61D63E35500387CF3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -7434,12 +7491,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5518A43E1B03F5CE005AF928 /* sndConverter.swift in Sources */,
-				5518A43A1B03F59F005AF928 /* FVDataReader.swift in Sources */,
 				5518A43F1B03F94C005AF928 /* AIFFToSample.swift in Sources */,
-				5518A43B1B03F59F005AF928 /* FVResource.swift in Sources */,
 				5518A4391B03F561005AF928 /* ClassicSound.swift in Sources */,
-				5518A43D1B03F59F005AF928 /* FVResourceType.swift in Sources */,
-				5518A43C1B03F59F005AF928 /* FVResourceFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7767,15 +7820,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55EF657E1B0AD6A400B556D4 /* FVResourceFile.swift in Sources */,
 				55E4D8021A2A3BCA0054675C /* PPAPPLHelpers.m in Sources */,
 				5501BEC818AC05A400602206 /* MADH.c in Sources */,
-				55EF657D1B0AD6A400B556D4 /* FVResource.swift in Sources */,
 				5501BEC918AC092500602206 /* MADI.c in Sources */,
 				55E4D8041A2A40EE0054675C /* ImportWindowController.swift in Sources */,
 				55EF658A1B0AD7BF00B556D4 /* APPLImporter.swift in Sources */,
-				55EF657C1B0AD6A400B556D4 /* FVDataReader.swift in Sources */,
-				55EF657F1B0AD6A400B556D4 /* FVResourceType.swift in Sources */,
 				5501BEC718AC029E00602206 /* MADfg.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7939,13 +7988,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55D5E98A1B0149FE00EB2C84 /* FVDataReader.swift in Sources */,
 				55D5E9A31B0151A500EB2C84 /* sndConverter.swift in Sources */,
-				55D5E98B1B0149FE00EB2C84 /* FVResource.swift in Sources */,
-				55BB99611B027F3D009B3EDD /* FVResourceFile.swift in Sources */,
 				55D5E9A11B014EF900EB2C84 /* AIFFToSample.swift in Sources */,
 				55D5E9661B01471300EB2C84 /* System7Sound.swift in Sources */,
-				55D5E98D1B0149FE00EB2C84 /* FVResourceType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8180,6 +8225,21 @@
 			isa = PBXTargetDependency;
 			target = 5533411010BB547C005208D1 /* MOD */;
 			targetProxy = 5533429210BB73F3005208D1 /* PBXContainerItemProxy */;
+		};
+		55379CB21D63E38100387CF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ResourceFork;
+			targetProxy = 55379CB11D63E38100387CF3 /* PBXContainerItemProxy */;
+		};
+		55379CB51D64180B00387CF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ResourceFork;
+			targetProxy = 55379CB41D64180B00387CF3 /* PBXContainerItemProxy */;
+		};
+		55379CB71D64191100387CF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ResourceFork;
+			targetProxy = 55379CB61D64191100387CF3 /* PBXContainerItemProxy */;
 		};
 		554E10F610D6F09500BB619C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

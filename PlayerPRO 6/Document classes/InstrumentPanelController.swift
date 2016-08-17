@@ -149,7 +149,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	}
 	
 	@objc func outlineViewSelectionDidChange(_ notification: Notification) {
-		var object: AnyObject! = instrumentOutline.item(atRow: instrumentOutline.selectedRow)
+		var object: AnyObject! = instrumentOutline.item(atRow: instrumentOutline.selectedRow) as? AnyObject
 		
 		func updateOutlineView(_ obj: PPSampleObject?) {
 			if obj == nil {

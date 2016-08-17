@@ -47,7 +47,7 @@ internal var globalMadLib: PPLibrary {
 
 @NSApplicationMain
 class AppDelegate: NSDocumentController, NSApplicationDelegate {
-	private var exportObjects = [ExportObject]()
+	internal var exportObjects = [ExportObject]()
 	var plugInInfos = [PlugInInfo]()
 	let madLib = PPLibrary()!
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
@@ -186,9 +186,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 	}
 	
 	private func registerDefaults() {
-		var tooLargeDict: [String: AnyObject] = [PPSoundDriver: Int(MADSoundOutput.CoreAudioDriver.rawValue)]
+		var tooLargeDict: [String: Any] = [PPSoundDriver: Int(MADSoundOutput.CoreAudioDriver.rawValue)]
 		
-		let defaults1: [String: AnyObject]  = [PPSoundOutBits: 16,
+		let defaults1: [String: Any]  = [PPSoundOutBits: 16,
 			PPSoundOutRate: 44100,
 			PPStereoDelayToggle: true,
 			PPReverbToggle: false,
@@ -199,7 +199,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			PPReverbStrength: 30,
 			PPOversamplingAmount: 1]
 		
-		let defaults2: [String: AnyObject]  = [PPDEShowInstrument: true,
+		let defaults2: [String: Any]  = [PPDEShowInstrument: true,
 			PPDEShowNote: true,
 			PPDEShowEffect: true,
 			PPDEShowArgument: true,
@@ -216,7 +216,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			PPDEPatternWrappingPartition: true,
 			PPDEDragAsPcmd: true]
 		
-		let defaults3: [String: AnyObject]  = [PPBEMarkersEnabled: true,
+		let defaults3: [String: Any]  = [PPBEMarkersEnabled: true,
 			PPBEMarkersOffset: 0,
 			PPBEMarkersLoop: 3,
 			PPBEOctaveMarkers: true,

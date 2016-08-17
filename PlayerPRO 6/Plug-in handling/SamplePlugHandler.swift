@@ -85,7 +85,7 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 		}
 	}
 	
-	func beginImportingSample(type: OSType, URL url: URL, driver: PPDriver, parentDocument document: PPDocument, handler: (errorCode: MADErr, createdIns: PPSampleObject?) -> Void) {
+	func beginImportingSample(type: OSType, URL url: URL, driver: PPDriver, parentDocument document: PPDocument, handler: @escaping (_ errorCode: MADErr, _ createdIns: PPSampleObject?) -> Void) {
 		var aPlug: PPSamplePlugObject? = nil
 		
 		for plug in plugIns {
@@ -98,7 +98,7 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 		if let plug = aPlug {
 			plug.beginImportSample(at: url, driver: driver, parentDocument: document, handler: handler)
 		} else {
-			handler(errorCode: .cannotFindPlug, createdIns: nil)
+			handler(.cannotFindPlug, nil)
 		}
 	}
 	

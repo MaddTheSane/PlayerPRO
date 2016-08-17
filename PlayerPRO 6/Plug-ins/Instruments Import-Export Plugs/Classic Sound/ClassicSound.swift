@@ -38,7 +38,7 @@ public final class ClassicSound: NSObject, PPSampleImportPlugin {
 	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject>?, driver: PPDriver) -> MADErr {
 		let aSamp = PPSampleObject()
 		var iErr = MADErr.noErr
-		if let data = try? Data(contentsOf: sampleURL), tmpURL = assetForSND(data, error: &iErr), iErr == .noErr {
+		if let data = try? Data(contentsOf: sampleURL), let tmpURL = assetForSND(data, error: &iErr), iErr == .noErr {
 			iErr = AIFFAtURL(tmpURL, toSample: aSamp)
 			if iErr == .noErr {
 				sample?.pointee = aSamp

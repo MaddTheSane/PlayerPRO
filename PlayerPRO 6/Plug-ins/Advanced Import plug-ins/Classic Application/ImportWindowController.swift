@@ -9,6 +9,7 @@
 import Cocoa
 import PlayerPROKit
 import SwiftAdditions
+import ResourceFork
 
 class ImportWindowController: NSWindowController {
 	@IBOutlet weak var resourceNamesTable: NSTableView? = nil
@@ -25,7 +26,7 @@ class ImportWindowController: NSWindowController {
 	@IBAction func importMusicObject(_ sender: AnyObject?) {
 		if let anObject = arrayCont.selectedObjects[0] as? FVResource {
 			var madMusic: UnsafeMutablePointer<MADMusic>
-			var madTest: (UnsafePointer<Void>) -> MADErr
+			var madTest: (UnsafeRawPointer!) -> MADErr
 			var madLoad: (UnsafePointer<Int8>, size_t, UnsafeMutablePointer<MADMusic>, UnsafeMutablePointer<MADDriverSettings>) -> MADErr
 			switch anObject.type!.type {
 			case "MADI":
@@ -63,7 +64,7 @@ class ImportWindowController: NSWindowController {
 				
 				var unusedDriverSettings = MADDriverSettings.new()
 				madMusic = UnsafeMutablePointer<MADMusic>.allocate(capacity: 1)
-				errVal = madLoad(UnsafePointer<Int8>((aData as NSData).bytes), aData.count, madMusic, &unusedDriverSettings)
+				errVal = madLoad((aData as NSData).bytes.assumingMemoryBound(to: Int8.self), aData.count, madMusic, &unusedDriverSettings)
 				
 				if errVal != .noErr {
 					// The importers *should* have cleaned up after themselves...
@@ -120,10 +121,10 @@ class ImportWindowController: NSWindowController {
 		resourceIDsTable?.sortDescriptors = [NSSortDescriptor(key: "resourceID", ascending: true)]
 	}
 	
-	override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
-		if object === dictionaryCont {
+	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+		if object as? AnyObject === dictionaryCont {
 			if dictionaryCont.selectedObjects.count > 0 {
-				let aValue: AnyObject?
+				let aValue: Any?
 				if #available(OSX 10.11, *) {
 				    let aSelect = dictionaryCont.selectedObjects[0] as? NSDictionaryControllerKeyValuePair
 					aValue = aSelect?.value
@@ -132,7 +133,7 @@ class ImportWindowController: NSWindowController {
 					// ...but it does respond to "value", which is public
 					// ...but the NSObject informal protocol was hidden in OS X 10.11,
 					// so we call a wrapper function.
-					aValue = GetValueUsingKVO(dictionaryCont.selectedObjects[0])
+					aValue = GetValueUsingKVO(dictionaryCont.selectedObjects[0] as? AnyObject)
 				}
 				if let aValue = aValue as? [FVResource] {
 					self.resourceArray = aValue

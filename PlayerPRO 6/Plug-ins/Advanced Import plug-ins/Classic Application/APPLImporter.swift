@@ -9,6 +9,7 @@
 import Cocoa
 import PlayerPROKit
 import SwiftAdditions
+import ResourceFork
 
 final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 	//let madTypes: [OSType] = ["MADK", "MADI", "MADF", "MADG", "MADH"]

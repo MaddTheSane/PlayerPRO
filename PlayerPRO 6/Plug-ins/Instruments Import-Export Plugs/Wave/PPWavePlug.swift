@@ -32,7 +32,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		var audioFile: AudioFileID? = nil
 		var res: OSStatus = noErr
 		
-		res = AudioFileOpen(URL: sampleURL, permissions: .readPermission, fileTypeHint: .WAVE, audioFile: &audioFile);
+		res = AudioFileOpen(URL: sampleURL as NSURL, permissions: .readPermission, fileTypeHint: .WAVE, audioFile: &audioFile);
 		if (res != noErr) {
 			myErr = .fileNotSupportedByThisPlug;
 		} else {
@@ -45,7 +45,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 	public func importSample(at url: URL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject>?, driver: PPDriver) -> MADErr {
 		let newSample = PPSampleObject()
 		var fileRef1: ExtAudioFileRef? = nil
-		var iErr = ExtAudioFileOpenURL(url, &fileRef1)
+		var iErr = ExtAudioFileOpenURL(url as NSURL, &fileRef1)
 		if iErr != noErr {
 			return .readingErr
 		}
@@ -59,7 +59,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		if let mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) {
 			var realFormat = AudioStreamBasicDescription()
 			
-			var asbdSize = UInt32(sizeof(AudioStreamBasicDescription.self))
+			var asbdSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
 			iErr = ExtAudioFileGetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
 			if iErr != noErr {
 				return .unknownErr
@@ -88,7 +88,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 				realFormat.mChannelsPerFrame = 2
 			}
 			
-			iErr = ExtAudioFileSetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: sizeof(AudioStreamBasicDescription.self), data: &realFormat)
+			iErr = ExtAudioFileSetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: MemoryLayout<AudioStreamBasicDescription>.size, data: &realFormat)
 			if iErr != noErr {
 				return .unknownErr
 			}
@@ -152,7 +152,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		if ByteOrder.isBig {
 			if (sample.amplitude == 16) {
 				let mutData = NSMutableData(data: sample.data)
-				let mutShortBytes = UnsafeMutablePointer<UInt16>(mutData.mutableBytes)
+				let mutShortBytes = mutData.mutableBytes.assumingMemoryBound(to: UInt16.self)
 				DispatchQueue.concurrentPerform(iterations: sample.data.count / 2, execute: { (i) -> Void in
 					mutShortBytes[i] = mutShortBytes[i].littleEndian
 				})
@@ -165,7 +165,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			data = sample.data
 		}
 		
-		res = AudioFileCreate(URL: sampleURL, fileType: .WAVE, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
+		res = AudioFileCreate(URL: sampleURL as NSURL, fileType: .WAVE, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
 		if (res != noErr) {
 			myErr = .writingErr;
 		} else {

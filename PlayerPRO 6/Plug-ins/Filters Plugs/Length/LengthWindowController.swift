@@ -92,14 +92,14 @@ class LengthWindowController: NSWindowController {
 		var srcSize = theData.data.count
 		var dstSize = destinationSize
 		return theData.data.withUnsafeBytes { (src8: UnsafePointer<Int8>) -> NSMutableData? in
-			let src16 = UnsafePointer<Int16>(src8)
+			let src16 = UnsafeRawPointer(src8).assumingMemoryBound(to: Int16.self)
 			let realsrcSize = srcSize
 
 			if let dst = NSMutableData(length: destinationSize) {
 				var tempL = 0
 				var tempR = 0
-				let dst16 = UnsafeMutablePointer<Int16>(dst.mutableBytes)
-				let dst8 = UnsafeMutablePointer<Int8>(dst16)
+				let dst16 = dst.mutableBytes.assumingMemoryBound(to: Int16.self)
+				let dst8 = dst.mutableBytes.assumingMemoryBound(to: Int8.self)
 				
 				srcSize /= 100
 				dstSize /= 100
