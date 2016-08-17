@@ -91,7 +91,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 			let manager = FileManager.default;
 			do {
 				let theparam = try manager.attributesOfItem(atPath: self.musicURL.path)
-				if let tmpfilesize: AnyObject = theparam[FileAttributeKey.size] {
+				if let tmpfilesize: Any = theparam[FileAttributeKey.size] {
 					let aFileSize = tmpfilesize as! NSNumber
 					return aFileSize.uint64Value
 				} else {
@@ -159,16 +159,15 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		return "\(musicURL.description) \(musicURL.path): \(fileName) size: \(fileSize), added: \(addedDate)"
 	}
 
-	override func isEqual(_ object: AnyObject?) -> Bool {
+	override func isEqual(_ object: Any?) -> Bool {
 		if object == nil {
 			return false;
 		}
 		
-		if (self === object!) {
-			return true
-		}
-		
 		if let unwrapped = object as? MusicListObject {
+			if self === unwrapped {
+				return true
+			}
 			return self == unwrapped
 		} else {
 			return false
@@ -218,7 +217,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}
 	
 	// MARK: NSCopying protocol
-	func copy(with: NSZone?) -> AnyObject {
+	func copy(with: NSZone?) -> Any {
 		return MusicListObject(url: musicURL)
 	}
 

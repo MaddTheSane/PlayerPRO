@@ -119,7 +119,7 @@ private let kPlayerList = "Player List"
 		self.didChange(.removal, valuesAt: theIndex, forKey: kMusicListKVO)
 	}
 	
-	@objc(sortMusicListUsingBlock:) func sortMusicList(block: (lhs: MusicListObject, rhs: MusicListObject) -> Bool) {
+	@objc(sortMusicListUsingBlock:) func sortMusicList(block: (_ lhs: MusicListObject, _ rhs: MusicListObject) -> Bool) {
 		self.willChangeValue(forKey: kMusicListKVO)
 		musicList.sort(by: block)
 		self.didChangeValue(forKey: kMusicListKVO)
@@ -423,7 +423,7 @@ private let kPlayerList = "Player List"
 		return musicList[index];
 	}
 	
-	@objc(removeMusicListAtIndexes:) func remove(at idxSet: NSIndexSet) {
+	@objc(removeMusicListAtIndexes:) func remove(at idxSet: IndexSet) {
 		if idxSet.contains(selectedMusic) {
 			selectedMusic = -1;
 		}
@@ -439,28 +439,27 @@ private let kPlayerList = "Player List"
 		musicList.insert(object, at: index)
 	}
 	
-	@objc(arrayOfObjectsInMusicListAtIndexes:) func objectsInMusicList(at theSet : NSIndexSet) -> [MusicListObject] {
+	@objc(arrayOfObjectsInMusicListAtIndexes:) func objectsInMusicList(at theSet : IndexSet) -> [MusicListObject] {
 		return musicList.filter({ (include) -> Bool in
 			let idx = self.musicList.index(of: include)!
 			return theSet.contains(idx)
 		})
 	}
 	
-	@objc(insertMusicLists:atIndexes:) func insertMusicLists(_ anObj: [MusicListObject], at indexes: NSIndexSet) {
+	@objc(insertMusicLists:atIndexes:) func insertMusicLists(_ anObj: [MusicListObject], at indexes: IndexSet) {
+		
 		var idx = anObj.endIndex
-		var i = indexes.lastIndex
-		while i != NSNotFound {
+		for i in indexes.reversed() {
 			idx -= 1
 			musicList.insert(anObj[idx], at: i)
-			i = indexes.indexLessThanIndex(i)
 		}
 	}
 	
-	@objc(insertObjects:inMusicListAtIndexes:) func insert(_ objs: [MusicListObject], at indexes: NSIndexSet) {
+	@objc(insertObjects:inMusicListAtIndexes:) func insert(_ objs: [MusicListObject], at indexes: IndexSet) {
 		insertMusicLists(objs, at: indexes)
 	}
 	
-	@objc(removeObjectsInMusicListAtIndexes:) func removeObjectsInMusicListAtIndexes(_ idxSet: NSIndexSet) {
+	@objc(removeObjectsInMusicListAtIndexes:) func removeObjectsInMusicListAtIndexes(_ idxSet: IndexSet) {
 		remove(at: idxSet)
 	}
 	
@@ -477,25 +476,25 @@ private let kPlayerList = "Player List"
 	}
 	
 	#if os(OSX)
-	func beginLoadingOfOldMusicListAtURL(toOpen: URL, completionHandle theHandle: (theErr: NSError?) -> Void) {
+	func beginLoadingOfOldMusicListAtURL(toOpen: URL, completionHandle theHandle: @escaping (_ theErr: NSError?) -> Void) {
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
 		conn.remoteObjectInterface = NSXPCInterface(with: PPSTImporterHelper.self)
 		
 		conn.resume()
 		
-		(conn.remoteObjectProxy as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData:[String : AnyObject]?, error: Error?) -> Void in
+		(conn.remoteObjectProxy as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData:[String : Any]?, error: Error?) -> Void in
 			OperationQueue.main.addOperation({
 				defer {
 					conn.invalidate()
 				}
 				if error != nil {
-					theHandle(theErr: error)
+					theHandle(error as NSError?)
 				} else {
 					guard let invalidAny = bookmarkData!["lostMusicCount"] as? UInt,
 						let selectedAny = bookmarkData!["SelectedMusic"] as? Int,
 						let pathsAny = bookmarkData!["MusicPaths"] as? NSArray as? [String] else {
 							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: "Invalid data returned from helper"])
-							theHandle(theErr: lolwut)
+							theHandle(lolwut)
 							return;
 					}
 					var pathsURL = [MusicListObject]()
@@ -510,7 +509,7 @@ private let kPlayerList = "Player List"
 					self.lostMusicCount = invalidAny
 					self.selectedMusic = selectedAny
 					
-					theHandle(theErr: nil)
+					theHandle(nil)
 				}
 			})
 		})

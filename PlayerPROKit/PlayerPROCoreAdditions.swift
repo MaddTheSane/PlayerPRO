@@ -255,8 +255,8 @@ public let maximumChannelVolume: MADByte = 128
 public let maximumArpeggio: Int32 = 3
 public let equalizerPacketElements = 512
 
-public func MADDebug(string text: String, line: UInt = #line, file: StaticString = #file) {
-	MADDebugStr(Int16(line), (String(file) as NSString).fileSystemRepresentation, text)
+public func MADDebug(string text: String, line: UInt = #line, file: /*Static*/String = #file) {
+	MADDebugStr(Int16(line), (file as NSString).fileSystemRepresentation, text)
 }
 
 private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)

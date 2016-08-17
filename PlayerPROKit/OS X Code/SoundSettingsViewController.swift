@@ -96,7 +96,7 @@ private let OversamplingCoupling = [TagCoupling(1, 1), TagCoupling(2, 2), TagCou
 	func sound(view: SoundSettingsViewController, driverDidChange driv: MADSoundOutput)
 }
 
-public class SoundSettingsViewController: NSViewController {
+open class SoundSettingsViewController: NSViewController {
 	private var reverbActive		= false
 	private var surroundActive		= false
 	private var stereoDelayActive	= false
@@ -116,7 +116,7 @@ public class SoundSettingsViewController: NSViewController {
 	@IBOutlet weak public var delegate:			SoundSettingsViewControllerDelegate? = nil
 	
     @available(OSX 10.10, *)
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
     }
@@ -225,7 +225,7 @@ public class SoundSettingsViewController: NSViewController {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
 	
-	public class func newSoundSettingWindow() -> Self? {
+	open class func newSoundSettingWindow() -> Self? {
 		return self.init(nibName: "PPSoundSettingsViewController", bundle: Bundle(for: SoundSettingsViewController.self))
 	}
 
@@ -239,10 +239,10 @@ public class SoundSettingsViewController: NSViewController {
 		self.stereoDelayActive = stereoDelayState;
 		self.surroundActive = sett.surround;
 		
-			oversampling.state = Int(oversamplingState)
-			reverb.state = Int(reverbState)
-			stereoDelay.state = Int(stereoDelayState)
-			surround.state = Int(sett.surround)
+		oversampling.state = oversamplingState ? NSOnState : NSOffState
+		reverb.state = reverbState ? NSOnState : NSOffState
+		stereoDelay.state = stereoDelayState ? NSOnState : NSOffState
+		surround.state = sett.surround ? NSOnState : NSOffState
 			
 			oversamplingNum.isEnabled = oversamplingState
 			reverbNum.isEnabled = reverbState

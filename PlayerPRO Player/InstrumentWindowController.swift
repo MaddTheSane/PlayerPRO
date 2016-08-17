@@ -43,14 +43,14 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		instrumentView?.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection:false)
     }
 
-	override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
-		if keyPath == "music" {
-			instrumentView?.reloadData()
-		}
+	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+			if keyPath == "music" {
+				instrumentView?.reloadData()
+			}
 	}
 	
 	func outlineViewSelectionDidChange(_ notification: Notification) {
-		var object: AnyObject? = instrumentView!.item(atRow: instrumentView!.selectedRow)
+		var object: AnyObject? = instrumentView!.item(atRow: instrumentView!.selectedRow) as? AnyObject
 		
 		if object == nil {
 			return
@@ -95,7 +95,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		}
 	}
 	
-	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
+	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		if (item == nil) {
 			return (NSApplication.shared().delegate as! PlayerAppDelegate).music!.instruments.count
 		}
@@ -105,7 +105,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		return 0
 	}
 	
-	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
+	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		if (item == nil) {
 			return (NSApplication.shared().delegate as! PlayerAppDelegate).music!.instruments[index];
 		}
@@ -115,7 +115,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		return NSNull();
 	}
 	
-	func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: AnyObject?) -> AnyObject? {
+	func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: Any?) -> Any? {
 		var toRet: String? = nil
 		if let item = item as? PPInstrumentObject {
 			toRet = item.name
@@ -125,7 +125,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		return toRet
 	}
 	
-	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
+	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
 		if let item = item as? PPInstrumentObject {
 			return item.countOfSamples != 0
 		}

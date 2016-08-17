@@ -12,7 +12,7 @@ import Foundation
 public final class MusicNoteFormatter: Formatter {
 	@IBInspectable public var useSingleLetter = true
 	
-	override public func string(for obj: AnyObject?) -> String? {
+	override public func string(for obj: Any?) -> String? {
 		if let objInt = obj as? Int {
 			switch objInt {
 			case 0xFF, 0xFE:
@@ -33,7 +33,7 @@ public final class MusicNoteFormatter: Formatter {
 	override public func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
 		obj?.pointee = nil
 		if string == "---" {
-			obj?.pointee = 0xFF
+			obj?.pointee = NSNumber(value: 0xFF)
 			if let error = error {
 				error.pointee = nil
 			}
@@ -41,7 +41,7 @@ public final class MusicNoteFormatter: Formatter {
 		}
 		
 		if let aNum = note(from: string) {
-			obj?.pointee = Int(aNum)
+			obj?.pointee = NSNumber(value: Int(aNum))
 			if let error = error {
 				error.pointee = nil
 			}

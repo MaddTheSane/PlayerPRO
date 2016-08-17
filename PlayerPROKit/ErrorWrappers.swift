@@ -41,14 +41,14 @@ extension MADErr: Error {
 	/// - parameter customUserDictionary: A dictionary with additional information. May be `nil`, default is `nil`.
 	/// - parameter convertToCocoa: Converts `self` into a comparable error in Cocoa's error types. Default is `true`.
 	/// - returns: An `NSError` value, or `nil` if `self` is `.NoErr`
-	public func toNSError(customUserDictionary cud: [String: NSObject]? = nil, convertToCocoa: Bool = true) -> NSError? {
+	public func toNSError(customUserDictionary cud: [AnyHashable: Any]? = nil, convertToCocoa: Bool = true) -> NSError? {
 		if self == .noErr {
 			return nil
 		}
 		
 		func populate(error: NSError) -> NSError {
 			if let cud = cud {
-				var errDict: [NSObject: AnyObject] = error.userInfo
+				var errDict: [AnyHashable: Any] = error.userInfo
 				errDict[NSLocalizedDescriptionKey] = error.localizedDescription
 				if let aFailReason = error.localizedFailureReason {
 					errDict[NSLocalizedFailureReasonErrorKey] = aFailReason
@@ -68,7 +68,7 @@ extension MADErr: Error {
 		
 		if convertToCocoa {
 			let cocoaErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(self, true)!
-			return populate(error: cocoaErr)
+			return populate(error: cocoaErr as NSError)
 		}
 		
 		do {

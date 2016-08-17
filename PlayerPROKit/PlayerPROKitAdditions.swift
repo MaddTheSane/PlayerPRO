@@ -42,7 +42,7 @@ public func ReplaceCmd(position: Int16, channel: Int16, command: Cmd, aPat: PPPa
 	aPat.replaceCommand(atPosition: position, channel: channel, cmd: command)
 }
 
-public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObject, commandBlock: (inout Cmd)-> ()) {
+public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObject, commandBlock: @escaping (inout Cmd)-> ()) {
 	aPat.modifyCommand(atPosition: position, channel: channel, command: { (aCmd) -> Void in
 		var tmpCmd = aCmd.pointee
 		commandBlock(&tmpCmd)
@@ -279,7 +279,7 @@ extension PPSampleObject {
 		let oneShiftedBy8 = 1 / CGFloat(1 << 8)
 
 		if curData.amplitude == 16 {
-			let theShortSample = UnsafePointer<UInt16>((curData.data as NSData).bytes)
+			let theShortSample = (curData.data as NSData).bytes.assumingMemoryBound(to: UInt16.self)
 			let sampleSize = curData.data.count / 2
 			start /= 2
 			
@@ -290,7 +290,7 @@ extension PPSampleObject {
 			}
 			temp = CGFloat(theShortSample[BS] &+ 0x8000)
 			temp *= CGFloat(high) * oneShiftedBy16
-			ctxRef.moveTo(x: CGFloat(trueH) + CGFloat(tSS), y: CGFloat(trueV) + temp)
+			ctxRef.move(to: CGPoint(x: CGFloat(trueH) + CGFloat(tSS), y: CGFloat(trueV) + temp))
 			
 			for i in tSS ..< tSE {
 				BS = start + (i * sampleSize) / larg
@@ -307,7 +307,7 @@ extension PPSampleObject {
 				temp = CGFloat(theShortSample[BS] &+ 0x8000)
 				minY = temp; maxY = temp;
 				temp *= CGFloat(high) * oneShiftedBy16
-				ctxRef.addLineTo(x: CGFloat(trueH + i), y: temp + CGFloat(trueV))
+				ctxRef.addLine(to: CGPoint(x: CGFloat(trueH + i), y: temp + CGFloat(trueV)))
 				
 				if BS != BE {
 					var x = BS
@@ -326,13 +326,13 @@ extension PPSampleObject {
 					maxY *= CGFloat(high) * oneShiftedBy16
 					minY *= CGFloat(high) * oneShiftedBy16
 					
-					ctxRef.moveTo(x: CGFloat(trueH + i), y: minY + CGFloat(trueV))
-					ctxRef.addLineTo(x: CGFloat(trueH + i), y: maxY + CGFloat(trueV))
+					ctxRef.move(to: CGPoint(x: CGFloat(trueH + i), y: minY + CGFloat(trueV)))
+					ctxRef.addLine(to: CGPoint(x: CGFloat(trueH + i), y: maxY + CGFloat(trueV)))
 				}
 			}
 		} else {
 			let sampleSize = curData.data.count
-			let theSample = UnsafePointer<UInt8>((curData.data as NSData).bytes)
+			let theSample = (curData.data as NSData).bytes.assumingMemoryBound(to: UInt8.self)
 
 			var BS = start + (tSS * sampleSize) / larg;
 			if isStereo {
@@ -343,7 +343,7 @@ extension PPSampleObject {
 			temp = CGFloat(theSample[BS] &- 0x80)
 			temp *= CGFloat(high) * oneShiftedBy8
 			
-			ctxRef.moveTo(x: CGFloat(trueH + tSS), y: CGFloat(trueV) + temp)
+			ctxRef.move(to: CGPoint(x: CGFloat(trueH + tSS), y: CGFloat(trueV) + temp))
 			
 			for i in tSS ..< tSE {
 				BS = start + (i * sampleSize) / larg
@@ -360,7 +360,7 @@ extension PPSampleObject {
 				temp = CGFloat(theSample[BS] &- 0x80);
 				minY = temp; maxY = temp;
 				temp *= CGFloat(high) * oneShiftedBy8
-				ctxRef.addLineTo(x: CGFloat(trueH + i), y: temp + CGFloat(trueV))
+				ctxRef.addLine(to: CGPoint(x: CGFloat(trueH + i), y: temp + CGFloat(trueV)))
 				
 				if BS != BE {
 					var x = BS
@@ -378,8 +378,8 @@ extension PPSampleObject {
 					maxY *= CGFloat(high) * oneShiftedBy8
 					minY *= CGFloat(high) * oneShiftedBy8
 					
-					ctxRef.moveTo(x: CGFloat(trueH) + CGFloat(i), y: minY + CGFloat(trueV))
-					ctxRef.addLineTo(x: CGFloat(trueH) + CGFloat(i), y: maxY + CGFloat(trueV))
+					ctxRef.move(to: CGPoint(x: CGFloat(trueH) + CGFloat(i), y: minY + CGFloat(trueV)))
+					ctxRef.addLine(to: CGPoint(x: CGFloat(trueH) + CGFloat(i), y: maxY + CGFloat(trueV)))
 				}
 			}
 		}
@@ -387,7 +387,7 @@ extension PPSampleObject {
 	}
 	
 	@objc(octaveNameFromNote:) final public class func octaveName(from octNote: Int16) -> String {
-		return octaveName(from: octNote) ?? "---"
+		return PlayerPROKit.octaveName(from: octNote) ?? "---"
 	}
 
 	@objc(octaveNameFromNote:usingSingularLetter:) final public class func octaveName(from octNote: Int16, usingSingularLetter: Bool) -> String {
@@ -429,7 +429,7 @@ extension PPInstrumentObject: Sequence {
 }
 
 extension PPDriver {
-	public func playSoundData(pointer theSnd: UnsafePointer<()>, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
+	public func playSoundData(pointer theSnd: UnsafeRawPointer, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
 		var loopStart = iloopStart
 		var loopLen = iloopLen
 		if (loopLen == 0) {
@@ -439,11 +439,11 @@ extension PPDriver {
 		return self.playSoundData(fromPointer: theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopStart), andLoopLength: UInt(loopLen))
 	}
 
-	public func playSoundData(pointer theSnd: UnsafePointer<()>, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
+	public func playSoundData(pointer theSnd: UnsafeRawPointer, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
 		return self.playSoundData(fromPointer: theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopIn: loopRange)
 	}
 	
-	public func playSoundData(pointer theSnd: UnsafePointer<()>, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: Range<Int>) -> MADErr {
+	public func playSoundData(pointer theSnd: UnsafeRawPointer, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: Range<Int>) -> MADErr {
 		return playSoundData(pointer: theSnd, size: sndSize, channel: theChan, amplitude: amp, bitRate: rate, stereo: stereo, note: theNote, loopInRange: NSRange(loopRange))
 	}
 	
@@ -478,7 +478,7 @@ extension PPDriver {
 		}
 	}
 	
-	public var oscilloscope: (size: size_t, pointer: UnsafePointer<Void>?) {
-		return (oscilloscopeSize, UnsafePointer<Void>(oscilloscopePointer))
+	public var oscilloscope: (size: size_t, pointer: UnsafeRawPointer?) {
+		return (oscilloscopeSize, UnsafeRawPointer(oscilloscopePointer))
 	}
 }

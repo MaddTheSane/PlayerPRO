@@ -159,7 +159,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		}
 	}
 	
-	private func changeValueForMusicListKey(_ theClosure: @noescape() -> Void) {
+	private func changeValueForMusicListKey(_ theClosure: () -> Void) {
 		willChangeValue(forKey: kMusicListKVO)
 		theClosure()
 		didChangeValue(forKey: kMusicListKVO)
@@ -195,7 +195,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	override init() {
-		let ourDefaults: [String: AnyObject] = [PPRememberMusicList: true,
+		let ourDefaults: [String: Any] = [PPRememberMusicList: true,
 			PPLoadMusicAtListLoad: false,
 			PPAfterPlayingMusic: Int(PlaylistMode.StopPlaying.rawValue),
 			PPGotoStartupAfterPlaying: true,
@@ -1063,12 +1063,14 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		exportWindow.close()
 	}
 	
-	private func beginExportSettings(with theHandle: (Int) -> Void) {
+	private func beginExportSettings(with theHandle: @escaping (NSModalResponse) -> Void) {
 		exportSettings.resetToBestDriver()
 		exportSettings.driverMode = .NoHardwareDriver;
 		exportSettings.repeatMusic = false;
 		exportController.settingsFromDriverSettings(exportSettings)
-		window.beginSheet(exportWindow, completionHandler: theHandle)
+		window.beginSheet(exportWindow) { (resp) in
+			theHandle(resp)
+		}
 	}
 	
 	private func rawSoundData(_ settings: inout MADDriverSettings, handler: (Data) throws -> Void) throws {
@@ -1112,7 +1114,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			audBufList.mNumberBuffers = 1
 			audBufList.mBuffers.mNumberChannels = tmpChannels
 			audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
-			audBufList.mBuffers.mData = UnsafeMutablePointer<Void>(data.bytes)
+			audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: data.bytes)
 			
 			try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 		}
@@ -1153,7 +1155,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			audBufList.mNumberBuffers = 1
 			audBufList.mBuffers.mNumberChannels = tmpChannels
 			audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
-			audBufList.mBuffers.mData = UnsafeMutablePointer<Void>(data.bytes)
+			audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: data.bytes)
 			
 			try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 		}
@@ -1255,36 +1257,36 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						func generateAVMetadataInfo() -> [AVMetadataItem] {
 							let titleName = AVMutableMetadataItem()
 							titleName.keySpace = AVMetadataKeySpaceCommon
-							titleName.key = AVMetadataCommonKeyTitle
-							titleName.value = oldMusicName
+							titleName.key = AVMetadataCommonKeyTitle as NSString
+							titleName.value = oldMusicName as NSString
 							
 							let dataInfo = AVMutableMetadataItem()
 							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData
-							dataInfo.key = AVMetadataQuickTimeUserDataKeySoftware
-							dataInfo.value = "PlayerPRO Player"
+							dataInfo.key = AVMetadataQuickTimeUserDataKeySoftware as NSString
+							dataInfo.value = "PlayerPRO Player" as NSString
 							dataInfo.locale = Locale(identifier: "en")
 							
 							let musicInfoQTUser = AVMutableMetadataItem();
 							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
-							musicInfoQTUser.key = AVMetadataQuickTimeUserDataKeyInformation
-							musicInfoQTUser.value = oldMusicInfo
+							musicInfoQTUser.key = AVMetadataQuickTimeUserDataKeyInformation as NSString
+							musicInfoQTUser.value = oldMusicInfo as NSString
 							musicInfoQTUser.locale = Locale.current
 							
 							let musicNameQTUser = AVMutableMetadataItem()
 							musicNameQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
-							musicNameQTUser.key = AVMetadataQuickTimeUserDataKeyFullName
-							musicNameQTUser.value = oldMusicName
+							musicNameQTUser.key = AVMetadataQuickTimeUserDataKeyFullName as NSString
+							musicNameQTUser.value = oldMusicName as NSString
 							musicNameQTUser.locale = Locale.current
 							
 							let musicInfoiTunes = AVMutableMetadataItem()
 							musicInfoiTunes.keySpace = AVMetadataKeySpaceiTunes
-							musicInfoiTunes.key = AVMetadataiTunesMetadataKeyUserComment
-							musicInfoiTunes.value = oldMusicInfo
+							musicInfoiTunes.key = AVMetadataiTunesMetadataKeyUserComment as NSString
+							musicInfoiTunes.value = oldMusicInfo as NSString
 							
 							let musicInfoQTMeta = AVMutableMetadataItem();
 							musicInfoQTMeta.keySpace = AVMetadataKeySpaceQuickTimeMetadata
-							musicInfoQTMeta.key = AVMetadataQuickTimeMetadataKeyInformation
-							musicInfoQTMeta.value = oldMusicInfo
+							musicInfoQTMeta.key = AVMetadataQuickTimeMetadataKeyInformation as NSString
+							musicInfoQTMeta.value = oldMusicInfo as NSString
 							musicInfoQTMeta.locale = Locale.current
 							
 							return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser];
@@ -1633,7 +1635,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	func tableView(_ tableView1: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
 		var result: NSDragOperation = [];
 		
-		if (info.draggingSource() === tableView1) {
+		if (info.draggingSource() as? AnyObject === tableView1) {
 			result = .move;
 			//TODO: check for number of indexes that are greater than the drop row.
 			tableView1.setDropRow(row, dropOperation: .above)

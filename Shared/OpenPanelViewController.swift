@@ -8,18 +8,6 @@
 
 import Cocoa
 
-private func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelViewController.OpenPanelViewItem) -> Bool {
-	if lhs.theUtiType != rhs.theUtiType {
-		return false
-	} else if lhs.name != rhs.name {
-		return false
-	} else if lhs.utis != rhs.utis {
-		return false
-	} else {
-		return true
-	}
-}
-
 private var OpenPanelsInUse = [OpenPanelViewController]()
 
 private func allOpenableTypes(uti anUTI: String) -> [String] {
@@ -30,7 +18,7 @@ private func allOpenableTypes(uti anUTI: String) -> [String] {
 			/*kUTTagClassNSPboardType as String*/]
 		
 		for utiTag in utiTagClasses {
-			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI, utiTag) else {
+			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, utiTag as NSString) else {
 				continue
 			}
 			
@@ -41,14 +29,14 @@ private func allOpenableTypes(uti anUTI: String) -> [String] {
 			}
 			theOpenables += anArr
 		}
-		if let unPreArr = UTTypeCopyAllTagsWithClass(anUTI, kUTTagClassOSType),
+		if let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as CFString, kUTTagClassOSType),
 			let anArr = unPreArr.takeRetainedValue() as NSArray as? [String] {
-				let convertedArr = anArr.map({UTGetOSTypeFromString($0)}).map({NSFileTypeForHFSTypeCode($0)!})
+				let convertedArr = anArr.map({UTGetOSTypeFromString($0 as NSString)}).map({NSFileTypeForHFSTypeCode($0)!})
 				theOpenables += convertedArr
 		}
 	} else {
 		// Fallback on earlier versions
-		if let aType = UTTypeCopyPreferredTagWithClass(anUTI, kUTTagClassFilenameExtension)?.takeRetainedValue() {
+		if let aType = UTTypeCopyPreferredTagWithClass(anUTI as NSString, kUTTagClassFilenameExtension)?.takeRetainedValue() {
 			theOpenables.append(aType as NSString as String)
 		}
 	}
@@ -134,6 +122,18 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 				des = "Unknown";
 			}
 			return "\(name): \(des)"
+		}
+		
+		static func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelViewController.OpenPanelViewItem) -> Bool {
+			if lhs.theUtiType != rhs.theUtiType {
+				return false
+			} else if lhs.name != rhs.name {
+				return false
+			} else if lhs.utis != rhs.utis {
+				return false
+			} else {
+				return true
+			}
 		}
 	}
 	
@@ -353,27 +353,27 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		openPanel.delegate = self
 	}
 	
-	func beginOpenPanel(_ completionHandler: (result: Int) -> Void) {
+	func beginOpenPanel(_ completionHandler: @escaping (_ result: Int) -> Void) {
 		beginWithCompletionHandler(completionHandler)
 	}
 	
-	func beginWithCompletionHandler(_ resultHandle: (result: Int) -> Void) {
+	func beginWithCompletionHandler(_ resultHandle: @escaping (_ result: Int) -> Void) {
 		OpenPanelsInUse.append(self)
 		openPanel.begin(completionHandler: { (result) -> Void in
 			if let anInt = OpenPanelsInUse.index(of: self) {
 				OpenPanelsInUse.remove(at: anInt)
 			}
-			resultHandle(result: result)
+			resultHandle(result)
 		})
 	}
 
-	@objc func beginOpenPanel(_ parentWindow: NSWindow, completionHandler resultHandle: (result: Int) -> Void) {
+	@objc func beginOpenPanel(_ parentWindow: NSWindow, completionHandler resultHandle: @escaping (_ result: Int) -> Void) {
 		OpenPanelsInUse.append(self)
 		openPanel.beginSheetModal(for: parentWindow, completionHandler: { (result) -> Void in
 			if let anInt = OpenPanelsInUse.index(of: self) {
 				OpenPanelsInUse.remove(at: anInt)
 			}
-			resultHandle(result: result)
+			resultHandle(result)
 		})
 	}
 	
@@ -493,7 +493,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		return false;
 	}
 	
-	func panel(_ sender: AnyObject, shouldEnable url: URL) -> Bool {
+	func panel(_ sender: Any, shouldEnable url: URL) -> Bool {
 		// We don't support non-file URLs yet.
 		if !url.isFileURL {
 			return false

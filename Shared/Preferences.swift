@@ -106,7 +106,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 			if let ourVal = aVal as? /*NSViewController where NSViewController:*/ PPPreferenceObject {
 				return ourVal.preferenceIdentifier == name
 			} else {
-				assert(false, "\(aVal.dynamicType) should implement the \"PPPreferenceObject\" protocol!")
+				assert(false, "\(type(of: aVal)) should implement the \"PPPreferenceObject\" protocol!")
 				return false
 			}
 		}

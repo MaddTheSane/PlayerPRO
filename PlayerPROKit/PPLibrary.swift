@@ -23,8 +23,8 @@ private func toDictionary(infoRec: MADInfoRec) -> NSDictionary {
 		kPPSignature:			OSTypeToString(infoRec.signature, useHexIfInvalid: ()),
 		kPPTotalTracks:			Int(infoRec.totalTracks),
 		kPPTotalInstruments:	Int(infoRec.totalInstruments),
-		kPPInternalFileName:	String(CString: aArray, encoding: String.Encoding.macOSRoman) ?? "",
-		kPPFormatDescription:	String(CString: bArray, encoding: String.Encoding.macOSRoman) ?? ""]
+		kPPInternalFileName:	String(cString: aArray, encoding: String.Encoding.macOSRoman) ?? "",
+		kPPFormatDescription:	String(cString: bArray, encoding: String.Encoding.macOSRoman) ?? ""]
 }
 
 /// Class that represents the additional tracker types that PlayerPRO can load via plug-ins.
@@ -98,7 +98,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	///Sets the debug function called by `MADDebugStr` to that of the passed in C function.
 	///
 	///- parameter newDebugFunc: The debug function to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
-	public class func registerDebugFunction(_ newDebugFunc: @convention(c) (Int16, UnsafePointer<Int8>?, UnsafePointer<Int8>?) -> Void) {
+	public class func registerDebugFunction(_ newDebugFunc: (@escaping @convention(c) (Int16, UnsafePointer<Int8>?, UnsafePointer<Int8>?) -> Swift.Void)!) {
 		MADRegisterDebugFunc(newDebugFunc)
 	}
 	
@@ -107,7 +107,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	///- parameter newDebugFunc: The debug block to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
 	///
 	///Swift functions are interchangeable with blocks: use this method to set the debug catcher in Swift code.
-	public class func registerDebugBlock(_ newDebugFunc: @convention(block) (Int16, UnsafePointer<Int8>?, UnsafePointer<Int8>?) -> Void) {
+	public class func registerDebugBlock(_ newDebugFunc: (@escaping @convention(block) (Int16, UnsafePointer<Int8>?, UnsafePointer<Int8>?) -> Swift.Void)!) {
 		MADRegisterDebugBlock(newDebugFunc)
 	}
 
@@ -202,7 +202,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	@objc(identifyFileAtURL:error:) public func identifyFile(at apath: URL) throws -> String {
 		var cType = [Int8](repeating: 0, count: 5)
 		
-		let aRet = MADMusicIdentifyCFURL(theLibrary, &cType, apath)
+		let aRet = MADMusicIdentifyCFURL(theLibrary, &cType, apath as NSURL)
 		let sRet = String(cString: cType, encoding: String.Encoding.macOSRoman)
 		
 		if aRet == .noErr {
@@ -236,7 +236,8 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 		}
 		
 		do {
-			type.pointee = try identifyFile(at: apath)
+			let tmpPointee = try identifyFile(at: apath)
+			type.pointee = tmpPointee as NSString
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
@@ -262,7 +263,8 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 		}
 		
 		do {
-			type.pointee = try identifyFile(at: apath)
+			let tmpPointee = try identifyFile(at: apath)
+			type.pointee = tmpPointee as NSString
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
@@ -274,11 +276,11 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 		return .unknownErr
 	}
 	
-	private func information(from URL: URL, cType: [Int8]) throws -> MADInfoRec {
+	internal func information(from URL: URL, cType: [Int8]) throws -> MADInfoRec {
 		var cStrType = cType
 		var infoRec = MADInfoRec()
 
-		let anErr = MADMusicInfoCFURL(theLibrary, &cStrType, URL, &infoRec)
+		let anErr = MADMusicInfoCFURL(theLibrary, &cStrType, URL as NSURL, &infoRec)
 		
 		try anErr.throwIfNotNoErr()
 		
@@ -367,7 +369,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			return .parametersErr
 		}
 		
-		return MADMusicTestCFURL(theLibrary, &cStrType, URL)
+		return MADMusicTestCFURL(theLibrary, &cStrType, URL as NSURL)
 	}
 	
 	/// Test the tracker at the path is actually of type `type`.
@@ -449,7 +451,7 @@ extension PPLibrary {
 		}
 		
 		do {
-			let aRet = try information(from: path, cType: cStrType)
+			let aRet: MADInfoRec = try information(from: path, cType: cStrType)
 			let tmpDict = toDictionary(infoRec: aRet)
 			info.pointee = tmpDict
 			return .noErr
