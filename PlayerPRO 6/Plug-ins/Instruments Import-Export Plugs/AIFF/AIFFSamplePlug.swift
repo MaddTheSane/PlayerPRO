@@ -43,7 +43,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 			}
 			var numBytes = UInt32(datLen)
 			
-			return sample.data.withUnsafeBytes({ (aData: UnsafePointer<Void>) -> MADErr in
+			return sample.data.withUnsafeBytes({ (aData: UnsafePointer<Int8>) -> MADErr in
 				var myErr = MADErr.noErr
 				if sample.amplitude == 16 {
 					if ByteOrder.isBig {

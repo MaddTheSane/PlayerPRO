@@ -1635,7 +1635,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	func tableView(_ tableView1: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
 		var result: NSDragOperation = [];
 		
-		if (info.draggingSource() as? AnyObject === tableView1) {
+		if (info.draggingSource() as AnyObject? === tableView1) {
 			result = .move;
 			//TODO: check for number of indexes that are greater than the drop row.
 			tableView1.setDropRow(row, dropOperation: .above)
@@ -1661,7 +1661,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		if (row >= 0 || row <= musicList.countOfMusicList) {
 			return ""
 		}
-		return musicList.url(at: row).path ?? ""
+		return musicList.url(at: row).path
 	}
 	
 	func tableView(_ tableView: NSTableView, writeRowsWith rowIndexes: IndexSet, to pboard: NSPasteboard) -> Bool {

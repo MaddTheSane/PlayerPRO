@@ -122,7 +122,7 @@ class ImportWindowController: NSWindowController {
 	}
 	
 	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-		if object as? AnyObject === dictionaryCont {
+		if object as AnyObject? === dictionaryCont {
 			if dictionaryCont.selectedObjects.count > 0 {
 				let aValue: Any?
 				if #available(OSX 10.11, *) {
@@ -133,7 +133,7 @@ class ImportWindowController: NSWindowController {
 					// ...but it does respond to "value", which is public
 					// ...but the NSObject informal protocol was hidden in OS X 10.11,
 					// so we call a wrapper function.
-					aValue = GetValueUsingKVO(dictionaryCont.selectedObjects[0] as? AnyObject)
+					aValue = GetValueUsingKVO(dictionaryCont.selectedObjects[0] as AnyObject?)
 				}
 				if let aValue = aValue as? [FVResource] {
 					self.resourceArray = aValue

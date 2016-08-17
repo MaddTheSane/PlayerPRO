@@ -149,7 +149,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	}
 	
 	@objc func outlineViewSelectionDidChange(_ notification: Notification) {
-		var object: AnyObject! = instrumentOutline.item(atRow: instrumentOutline.selectedRow) as? AnyObject
+		var object: AnyObject! = instrumentOutline.item(atRow: instrumentOutline.selectedRow) as AnyObject?
 		
 		func updateOutlineView(_ obj: PPSampleObject?) {
 			if obj == nil {
@@ -197,7 +197,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		}
 	}
 	
-	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
+	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		if item == nil {
 			return currentDocument.theMusic.instruments.count
 		}
@@ -208,7 +208,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return 0
 	}
 	
-	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
+	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		if item == nil {
 			return currentDocument.theMusic.instruments[index]
 		}
@@ -218,14 +218,14 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return NSNull()
 	}
 	
-	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
+	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
 		if let obj = item as? PPInstrumentObject {
 			return obj.countOfSamples != 0
 		}
 		return false
 	}
 	
-	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: AnyObject) -> NSView? {
+	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		if tableColumn == nil {
 			return nil
 		}
@@ -239,7 +239,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		} else if let obj2 = item as? PPSampleObject {
 			theView.isSample = true
 			theView.textField!.stringValue = obj2.name
-			if item.loopSize != 0 {
+			if (item as AnyObject).loopSize != 0 {
 				theView.isLoopingSample = true
 			} else {
 				theView.isLoopingSample = false

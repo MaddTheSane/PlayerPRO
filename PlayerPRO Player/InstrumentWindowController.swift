@@ -50,7 +50,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	}
 	
 	func outlineViewSelectionDidChange(_ notification: Notification) {
-		var object: AnyObject? = instrumentView!.item(atRow: instrumentView!.selectedRow) as? AnyObject
+		var object: AnyObject? = instrumentView!.item(atRow: instrumentView!.selectedRow) as AnyObject?
 		
 		if object == nil {
 			return

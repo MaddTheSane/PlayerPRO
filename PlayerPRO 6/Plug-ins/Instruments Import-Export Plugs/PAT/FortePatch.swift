@@ -155,7 +155,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 		PATData += 96;
 		
 		// DATA
-		let aDataObj = NSMutableData(bytes: UnsafePointer<Void>(PATData), length: Int(sampSize))
+		let aDataObj = NSMutableData(bytes: UnsafeRawPointer(PATData), length: Int(sampSize))
 		let aData = aDataObj.mutableBytes.assumingMemoryBound(to: UInt8.self)
 		
 		//if aData != nil {
