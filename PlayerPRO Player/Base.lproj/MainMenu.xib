@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <development version="7000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11198.2"/>
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
@@ -445,7 +443,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES" unifiedTitleAndToolbar="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="497" height="367"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="497" height="367"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -463,7 +461,7 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn editable="NO" width="20" minWidth="20" maxWidth="40" id="736">
+                                        <tableColumn identifier="MusicListIconColumn" editable="NO" width="20" minWidth="20" maxWidth="40" id="736">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -474,7 +472,7 @@
                                                 <binding destination="536" name="value" keyPath="arrangedObjects.fileIcon" id="46z-do-JzH"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn editable="NO" width="371" minWidth="10" maxWidth="3.4028234663852886e+38" id="NKI-PH-Tz3">
+                                        <tableColumn identifier="MusicListNameColumn" editable="NO" width="371" minWidth="10" maxWidth="3.4028234663852886e+38" id="NKI-PH-Tz3">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -491,7 +489,7 @@
                                                 <binding destination="536" name="value" keyPath="arrangedObjects.fileName" id="wtd-fk-Rb4"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn editable="NO" width="97" minWidth="10" maxWidth="3.4028234663852886e+38" id="C10-5a-0pU">
+                                        <tableColumn identifier="MusicListSizeColumn" editable="NO" width="97" minWidth="10" maxWidth="3.4028234663852886e+38" id="C10-5a-0pU">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Size">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -520,7 +518,6 @@
                                     </connections>
                                 </tableView>
                             </subviews>
-                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="734">
                             <rect key="frame" x="-100" y="-100" width="223" height="15"/>
@@ -873,12 +870,12 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES" texturedBackground="YES"/>
             <windowPositionMask key="initialPositionMask" rightStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="1548" y="115" width="326" height="89"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
-            <view key="contentView" id="556">
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" misplaced="YES" id="556">
                 <rect key="frame" x="0.0" y="0.0" width="326" height="89"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="559">
+                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="559">
                         <rect key="frame" x="0.0" y="57" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="ObX-e3-2YW"/>
@@ -892,7 +889,7 @@
                             <action selector="prevButtonPressed:" target="494" id="861"/>
                         </connections>
                     </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="599">
+                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="599">
                         <rect key="frame" x="42" y="57" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPReverse" imagePosition="only" alignment="center" continuous="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="601">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -902,7 +899,7 @@
                             <action selector="rewindButtonPressed:" target="494" id="862"/>
                         </connections>
                     </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="597">
+                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="597">
                         <rect key="frame" x="84" y="57" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRefreshTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="604">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -912,7 +909,7 @@
                             <action selector="loopButtonPressed:" target="494" id="863"/>
                         </connections>
                     </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="596">
+                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="596">
                         <rect key="frame" x="126" y="57" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPStop" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="605">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -922,7 +919,7 @@
                             <action selector="stopButtonPressed:" target="494" id="864"/>
                         </connections>
                     </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="595">
+                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="595">
                         <rect key="frame" x="168" y="57" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPPlay" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="606">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -932,7 +929,7 @@
                             <action selector="playButtonPressed:" target="494" id="865"/>
                         </connections>
                     </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="591">
+                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="591">
                         <rect key="frame" x="252" y="57" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPFastForward" imagePosition="only" alignment="center" continuous="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="614">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -942,7 +939,7 @@
                             <action selector="fastForwardButtonPressed:" target="494" id="867"/>
                         </connections>
                     </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="592">
+                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="592">
                         <rect key="frame" x="294" y="57" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPNextTrack" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="613">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -962,7 +959,7 @@
                         </textFieldCell>
                     </textField>
                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="558">
-                        <rect key="frame" x="54" y="31" width="218" height="20"/>
+                        <rect key="frame" x="54" y="31" width="218" height="21"/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="618"/>
                         <connections>
                             <action selector="sliderChanged:" target="494" id="895"/>
@@ -980,7 +977,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="590">
+                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="590">
                         <rect key="frame" x="210" y="57" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPPause" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="615">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -1060,20 +1057,18 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="207" width="403" height="419"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <value key="minSize" type="size" width="403" height="419"/>
             <view key="contentView" id="542">
                 <rect key="frame" x="0.0" y="0.0" width="403" height="419"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box autoresizesSubviews="NO" title="Box" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="551">
+                    <box autoresizesSubviews="NO" borderType="none" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="551">
                         <rect key="frame" x="-3" y="57" width="410" height="364"/>
                         <view key="contentView" id="jCf-gC-COx">
                             <rect key="frame" x="0.0" y="0.0" width="410" height="364"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="544">
                         <rect key="frame" x="304" y="13" width="82" height="32"/>
