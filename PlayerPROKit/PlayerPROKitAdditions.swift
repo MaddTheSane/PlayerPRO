@@ -158,33 +158,40 @@ extension PPSampleObject {
 			
 			return aimageSize
 			}()
+		let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
 		let datIsStereo = theDat.isStereo
 		let aRect = CGRect(origin: CGPoint.zero, size: imageSize)
 		let rowBytes = 4 * Int(imageSize.width)
-		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.byteOrder32Host, CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)]
-		let bitmapContext = CGContext(data: nil, width: Int(imageSize.width), height: Int(imageSize.height), bitsPerComponent: 8, bytesPerRow: rowBytes, space: CGColorSpace(name: CGColorSpace.genericRGBLinear)!, bitmapInfo: bitMapFormat.rawValue)!
+		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.byteOrder32Host, CGBitmapInfo(alphaInfo: .premultipliedLast)]
+		let bitmapContext = CGContext(data: nil, width: Int(imageSize.width), height: Int(imageSize.height), bitsPerComponent: 8, bytesPerRow: rowBytes, space: colorSpace, bitmapInfo: bitMapFormat.rawValue)!
 		
 		bitmapContext.clear(aRect)
 		bitmapContext.setLineWidth(1)
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		if datIsStereo {
-			bitmapContext.setStrokeColor(CGColor(red: 0, green: 0, blue: 1, alpha: stereoTrans))
+			let colorComps: [CGFloat] = [0,0,1,stereoTrans]
+			let colorRef = CGColor(colorSpace: colorSpace, components: colorComps)!
+			bitmapContext.setStrokeColor(colorRef)
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
 		}
 		
-		bitmapContext.setStrokeColor(CGColor(red: 1, green: 0, blue: 0, alpha: stereoTrans));
+		do {
+			let colorComps: [CGFloat] = [1,0,0,stereoTrans]
+			let colorRef = CGColor(colorSpace: colorSpace, components: colorComps)!
+			bitmapContext.setStrokeColor(colorRef)
+		}
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
 		if theDat.loopSize != 0 {
-			bitmapContext.setStrokeColor(CGColor(red: 0.2, green: 0.1, blue: 0.5, alpha: 0.8))
-			var loopRect = aRect
+			let colorComps: [CGFloat] = [0.2,0.1,0.5,0.8]
+			let colorRef = CGColor(colorSpace: colorSpace, components: colorComps)!
+			bitmapContext.setStrokeColor(colorRef)
 			let lineSize = view.convertToBacking(NSSize(width: 2, height: 2)).width * 2
 			let padSize = view.convertToBacking(NSSize(width: 1, height: 1)).width * 2
 			bitmapContext.setLineWidth(lineSize)
+			var loopRect = aRect.insetBy(dx: padSize, dy: padSize)
 			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.count)
-			loopRect.origin.y += padSize
 			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.count)
-			loopRect.size.height -= padSize * 2
 			bitmapContext.stroke(loopRect)
 		}
 		
@@ -211,35 +218,45 @@ extension PPSampleObject {
 		let aRect = CGRect(origin: CGPoint.zero, size: imageSize)
 		let rowBytes = 4 * Int(imageSize.width)
 		//let bitMapFormat = CGBitmapInfo(alphaInfo: .PremultipliedLast, additionalInfo: .ByteOrder32Host)
-		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.byteOrder32Host, CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)]
-		guard let bitmapContext = CGContext(data: nil, width: Int(imageSize.width), height: Int(imageSize.height), bitsPerComponent: 8, bytesPerRow: rowBytes, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: bitMapFormat.rawValue) else {
+		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.byteOrder32Host, CGBitmapInfo(alphaInfo: .premultipliedLast)]
+		let colorSpace: CGColorSpace
+		if #available(iOS 9.0, *) {
+			colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
+		} else {
+			colorSpace = CGColorSpaceCreateDeviceRGB()
+		}
+		guard let bitmapContext = CGContext(data: nil, width: Int(imageSize.width), height: Int(imageSize.height), bitsPerComponent: 8, bytesPerRow: rowBytes, space: colorSpace, bitmapInfo: bitMapFormat.rawValue) else {
 			return nil
 		}
 		bitmapContext.clear(aRect)
 		bitmapContext.setLineWidth(1)
-		var colorRef: UIColor
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		if datIsStereo {
-			colorRef = UIColor(red: 0, green: 0, blue: 1, alpha: stereoTrans)
-			bitmapContext.setStrokeColor(colorRef.cgColor)
+			let colorComps: [CGFloat] = [0,0,1,stereoTrans]
+			let colorRef = CGColor(colorSpace: colorSpace, components: colorComps)!
+			bitmapContext.setStrokeColor(colorRef)
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
 		}
 		
-		colorRef = UIColor(red: 1, green: 0, blue: 0, alpha: stereoTrans)
-		bitmapContext.setStrokeColor(colorRef.cgColor)
+		do {
+			let colorComps: [CGFloat] = [1,0,0,stereoTrans]
+			let colorRef = CGColor(colorSpace: colorSpace, components: colorComps)!
+			bitmapContext.setStrokeColor(colorRef)
+		}
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
 		if theDat.loopSize != 0 {
-			colorRef = UIColor(red: 0.2, green: 0.1, blue: 0.5, alpha: 0.8)
-			bitmapContext.setStrokeColor(colorRef.cgColor)
-			var loopRect = aRect
+			let colorComps: [CGFloat] = [0.2,0.1,0.5,0.8]
+			let colorRef = CGColor(colorSpace: colorSpace, components: colorComps)!
+			bitmapContext.setStrokeColor(colorRef)
 			let lineSize = 2 * scale
 			let padSize = 1 * scale
 			bitmapContext.setLineWidth(lineSize)
+			var loopRect = aRect.insetBy(dx: padSize, dy: padSize)
 			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.count)
-			loopRect.origin.y += padSize
+			//loopRect.origin.y += padSize
 			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.count)
-			loopRect.size.height -= padSize * 2
+			//loopRect.size.height -= padSize * 2
 			bitmapContext.stroke(loopRect)
 		}
 		
@@ -382,6 +399,7 @@ extension PPSampleObject {
 				}
 			}
 		}
+		ctxRef.closePath();
 		ctxRef.strokePath();
 	}
 	
@@ -414,16 +432,8 @@ extension PPPatternObject: Sequence {
 }
 
 extension PPInstrumentObject: Sequence {
-	public func makeIterator() -> AnyIterator<PPSampleObject> {
-		var index = 0
-		return AnyIterator {
-			if index < self.samples.count {
-				let idx = self[index]
-				index += 1
-				return idx
-			}
-			return nil
-		}
+	public func makeIterator() -> IndexingIterator<[PPSampleObject]> {
+		return samples.makeIterator()
 	}
 }
 

@@ -259,7 +259,11 @@ public func MADDebug(string text: String, line: UInt = #line, file: /*Static*/St
 	MADDebugStr(Int16(line), (file as NSString).fileSystemRepresentation, text)
 }
 
-private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+private var BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8,
+	Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8,
+	Int8, Int8, Int8, Int8, Int8, Int8) = {
+	return (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}()
 
 extension sData32 {
 	private init() {
@@ -395,15 +399,15 @@ private func getCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePoin
 	return GetMADCommand(position, channel, aPat)
 }
 
-public func ReplaceCmd(position: Int16, channel: Int16, command: Cmd, aPat: UnsafeMutablePointer<PatData>) {
+public func replaceCmd(position: Int16, channel: Int16, command: Cmd, aPat: UnsafeMutablePointer<PatData>) {
 	let aCmd: UnsafeMutablePointer<Cmd> = getCommand(position: position, channel: channel, aPat: aPat)
 	aCmd.pointee = command
 }
 
-public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>, commandBlock: (inout Cmd)-> ()) {
+public func modifyCmdAtRow(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>, commandBlock: (inout Cmd)-> ()) {
 	var aCmd: Cmd = getCommand(position: position, channel: channel, aPat: aPat)
 	commandBlock(&aCmd)
-	ReplaceCmd(position: position, channel: channel, command: aCmd, aPat: aPat)
+	replaceCmd(position: position, channel: channel, command: aCmd, aPat: aPat)
 }
 
 public func getCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> Cmd {
