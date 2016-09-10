@@ -77,7 +77,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	@IBOutlet var toolsPanel: NSPanel!
 	var timeChecker: NSTimer!
 	var madDriver: PPDriver!
-	var madLib = PPLibrary()!
+	let madLib: PPLibrary = {
+		return try! PPLibrary()
+	}()
 	
 	dynamic var paused: Bool = true {
 		didSet {

@@ -41,7 +41,7 @@ private func CocoaDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafeP
 	}
 }
 
-internal let globalMadLib = PPLibrary()!
+internal let globalMadLib = try! PPLibrary()
 
 @NSApplicationMain
 class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDelegate {

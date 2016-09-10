@@ -28,9 +28,9 @@ class PlayerPROKit_Tests: XCTestCase {
 		
 		ourBundle = NSBundle(forClass: PlayerPROKit_Tests.self)
 			if let ourPlugPath = ourBundle?.builtInPlugInsURL where ourPlugPath.checkResourceIsReachableAndReturnError(nil) {
-				ourLib = PPLibrary(plugInURL: ourPlugPath)
+				ourLib = try! PPLibrary(plugInURL: ourPlugPath)
 			} else {
-				ourLib = PPLibrary()
+				ourLib = try! PPLibrary()
 			}
 	}
 	
