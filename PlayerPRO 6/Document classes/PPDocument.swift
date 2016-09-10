@@ -36,6 +36,51 @@ import AudioToolbox
 		}
 	}
 	
+	// MARK: - NSDocument type info
+	override class func isNativeType(_ aType: String) -> Bool {
+		return aType == MADNativeUTI
+	}
+	
+	override class func readableTypes() -> [String] {
+		struct StaticStorage {
+			static var readables: [String]?
+		}
+		
+		if let readables = StaticStorage.readables {
+			return readables
+		}
+		
+		let importUTIsArray = globalMadLib.filter({ $0.canImport == true }).map({ $0.UTITypes })
+		let importUTISet: Set<String> = {
+			var toRet = Set<String>()
+			for arr in importUTIsArray {
+				toRet.formUnion(arr)
+			}
+			return toRet
+		}()
+		var toRet = Array(importUTISet)
+		toRet.append(MADNativeUTI)
+		StaticStorage.readables = toRet
+		return toRet
+	}
+	
+	override class func writableTypes() -> [String] {
+		struct StaticStorage {
+			static var readables: [String]?
+		}
+		
+		if let readables = StaticStorage.readables {
+			return readables
+		}
+		
+		var toRet = globalMadLib.filter({ $0.canExport == true }).map({ $0.UTITypes.first! })
+		toRet.append(MADNativeUTI)
+		StaticStorage.readables = toRet
+		return toRet
+	}
+	
+	// MARK: -
+	
 	override func makeWindowControllers() {
 		let docWinCon = DocumentWindowController(windowNibName: "PPDocument")
 		addWindowController(docWinCon)
@@ -130,16 +175,16 @@ import AudioToolbox
 
 	override func write(to url: URL, ofType typeName: String) throws {
 		if typeName != MADNativeUTI {
-			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
+			guard let type = globalMadLib.typeFromUTI(typeName) else {
+				throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
+			}
+			try theMusic.exportMusic(to: url, format: type, library: globalMadLib)
 		} else {
 			do {
 				try theMusic.saveMusic(to: url, compress: UserDefaults.standard.bool(forKey: PPMMadCompression))
 			} catch {
 				if let error = error as? MADErr {
 					throw error.convertToCocoaType()
-				} else if (error as NSError).domain == PPMADErrorDomain {
-					let bErr = MADErr(rawValue: Int16((error as NSError).code))!
-					throw bErr.convertToCocoaType()
 				} else {
 					throw error
 				}
@@ -147,12 +192,25 @@ import AudioToolbox
 		}
 	}
 	
+	//override func writeToURL(url: NSURL, ofType typeName: String, forSaveOperation saveOperation: NSSaveOperationType, originalContentsURL absoluteOriginalContentsURL: NSURL?) throws {
+	//
+	//}
+	
 	override func read(from url: URL, ofType typeName: String) throws {
-		if typeName != MADNativeUTI {
-			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
+		func getType() throws -> String {
+			if let type = globalMadLib.typeFromUTI(typeName) {
+				return type
+			}
+			
+			return try globalMadLib.identifyFile(at: url)
 		}
 		
-		theMusic = try PPMusicObject(url: url, driver: theDriver)
+		if typeName == MADNativeUTI {
+			theMusic = try PPMusicObject(url: url, driver: theDriver)
+		} else {
+			let theType = try getType()
+			theMusic = try PPMusicObject(url: url, stringType: theType, driver: theDriver)
+		}
 	}
 	
     override class func autosavesInPlace() -> Bool {

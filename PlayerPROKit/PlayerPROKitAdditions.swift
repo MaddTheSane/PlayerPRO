@@ -50,8 +50,7 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 	})
 }
 
-public func note(from myTT: String) -> Int16?
-{
+public func note(from myTT: String) -> Int16? {
 	if myTT == "" || myTT == "---" || myTT.characters.count < 2 {
 		return nil
 	}
@@ -168,7 +167,7 @@ extension PPSampleObject {
 		bitmapContext.clear(aRect)
 		bitmapContext.setLineWidth(1)
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
-		if (datIsStereo) {
+		if datIsStereo {
 			bitmapContext.setStrokeColor(CGColor(red: 0, green: 0, blue: 1, alpha: stereoTrans))
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
 		}
@@ -176,7 +175,7 @@ extension PPSampleObject {
 		bitmapContext.setStrokeColor(CGColor(red: 1, green: 0, blue: 0, alpha: stereoTrans));
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
-		if (theDat.loopSize != 0) {
+		if theDat.loopSize != 0 {
 			bitmapContext.setStrokeColor(CGColor(red: 0.2, green: 0.1, blue: 0.5, alpha: 0.8))
 			var loopRect = aRect
 			let lineSize = view.convertToBacking(NSSize(width: 2, height: 2)).width * 2
@@ -220,7 +219,7 @@ extension PPSampleObject {
 		bitmapContext.setLineWidth(1)
 		var colorRef: UIColor
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
-		if (datIsStereo) {
+		if datIsStereo {
 			colorRef = UIColor(red: 0, green: 0, blue: 1, alpha: stereoTrans)
 			bitmapContext.setStrokeColor(colorRef.cgColor)
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
@@ -230,7 +229,7 @@ extension PPSampleObject {
 		bitmapContext.setStrokeColor(colorRef.cgColor)
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
-		if (theDat.loopSize != 0) {
+		if theDat.loopSize != 0 {
 			colorRef = UIColor(red: 0.2, green: 0.1, blue: 0.5, alpha: 0.8)
 			bitmapContext.setStrokeColor(colorRef.cgColor)
 			var loopRect = aRect
@@ -317,7 +316,7 @@ extension PPSampleObject {
 						maxY = max(temp, maxY)
 						minY = min(temp, minY)
 						
-						if (isStereo) {
+						if isStereo {
 							x += 1
 						}
 						x += 1
@@ -370,7 +369,7 @@ extension PPSampleObject {
 						maxY = max(temp, maxY)
 						minY = min(temp, minY)
 						
-						if (isStereo) {
+						if isStereo {
 							x += 1;
 						}
 						x += 1

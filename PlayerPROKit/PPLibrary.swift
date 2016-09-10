@@ -111,16 +111,8 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 		MADRegisterDebugBlock(newDebugFunc)
 	}
 
-	public func makeIterator() -> AnyIterator<PPLibraryObject> {
-		var index = 0
-		return AnyIterator {
-			if index < self.trackerLibs.count {
-				let idx = self[index]
-				index += 1
-				return idx
-			}
-			return nil
-		}
+	public func makeIterator() -> IndexingIterator<[PPLibraryObject]> {
+		return trackerLibs.makeIterator()
 	}
 	
 	@nonobjc public var startIndex: Int {
@@ -140,22 +132,23 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	}
 	
 	#if false
-	public override convenience init?() {
-		self.init(plugInCPath: nil)
+	public override convenience init() throws {
+		try self.init(plugInCPath: nil)
 	}
 	
 	#else
 	///Init a PPLibrary object without a specific plug-in directory
 	///
 	///- parameter ignore: unused, needed for Swift-ObjC interop.
-	@objc(init:) public convenience init?(_ ignore: Bool = false) {
-		self.init(plugInCPath: nil)
+	@objc(init:error:) public convenience init(_ ignore: Bool = false) throws {
+		try self.init(plugInCPath: nil)
 	}
 	#endif
 	
-	private init?(plugInCPath cPath: UnsafePointer<Int8>?) {
-		if MADInitLibrary(cPath, &theLibrary) != .noErr {
-			return nil
+	private init(plugInCPath cPath: UnsafePointer<Int8>?) throws {
+		let errVal = MADInitLibrary(cPath, &theLibrary)
+		if errVal != .noErr {
+			throw errVal
 		}
 		var tmpArray = [PPLibraryObject]()
 
@@ -177,16 +170,16 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 
 	/// Init a `PPLibrary` object, including plug-ins from `plugInPath`.
 	///
-	/// - parameter path: The path to a directory that has additional plug-ins.
-	public convenience init?(plugInPath path: String) {
-		self.init(plugInCPath: (path as NSString).fileSystemRepresentation)
+	///- parameter path: The path to a directory that has additional plug-ins.
+	public convenience init(plugInPath path: String) throws {
+		try self.init(plugInCPath: (path as NSString).fileSystemRepresentation)
 	}
 	
 	/// Init a `PPLibrary` object, including plug-ins from `plugInURL`.
 	///
 	/// - parameter URL: The file URL to a directory that has additional plug-ins.
-	public convenience init?(plugInURL URL: URL) {
-		self.init(plugInCPath: (URL as NSURL).fileSystemRepresentation)
+	public convenience init?(plugInURL URL: URL) throws {
+		try self.init(plugInCPath: (URL as NSURL).fileSystemRepresentation)
 	}
 	
 	/// The amount of plug-ins registered by the library.
@@ -236,8 +229,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 		}
 		
 		do {
-			let tmpPointee = try identifyFile(at: apath)
-			type.pointee = tmpPointee as NSString
+			type.pointee = try identifyFile(at: apath) as NSString
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
@@ -263,8 +255,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 		}
 		
 		do {
-			let tmpPointee = try identifyFile(at: apath)
-			type.pointee = tmpPointee as NSString
+			type.pointee = try identifyFile(at: apath) as NSString
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr

@@ -41,15 +41,15 @@ private func CocoaDebugStr(_ line: Int16, file: UnsafePointer<Int8>?, text: Unsa
 	}
 }
 
-internal var globalMadLib: PPLibrary {
-	return (NSApplication.shared().delegate as! AppDelegate).madLib
-}
+internal let globalMadLib = try! PPLibrary()
 
 @NSApplicationMain
 class AppDelegate: NSDocumentController, NSApplicationDelegate {
-	internal var exportObjects = [ExportObject]()
+	fileprivate var exportObjects = [ExportObject]()
 	var plugInInfos = [PlugInInfo]()
-	let madLib = PPLibrary()!
+	var madLib: PPLibrary {
+		return globalMadLib
+	}
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
 	let digitalHandler = DigitalPlugHandler()
 	let filterHandler = FilterPlugHandler()
@@ -449,7 +449,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 								aPPDoc.showWindows()
 								aPPDoc.displayName = ((theURL1.lastPathComponent as NSString).deletingPathExtension)
 							} else {
-								let nsErr = createError(from: anErr)!
+								let nsErr = createNSError(from: anErr)!
 								if PPErrorIsUserCancelled(nsErr) == false {
 									NSAlert(error: nsErr).runModal()
 								} else {
@@ -554,8 +554,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		
 		for (i, obj) in (madLib).enumerated() {
 			if (obj.canExport) {
-				let mi = NSMenuItem(title: "\(obj.menuName)…", action: #selector(DocumentWindowController.exportMusicAs
-					), keyEquivalent: "")
+				let mi = NSMenuItem(title: "\(obj.menuName)…", action: #selector(DocumentWindowController.exportMusicAs(_:)) , keyEquivalent: "")
 				mi.tag = i
 				mi.target = nil
 				musicExportMenu.addItem(mi)

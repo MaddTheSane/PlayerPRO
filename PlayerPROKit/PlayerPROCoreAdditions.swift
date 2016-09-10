@@ -433,15 +433,15 @@ extension IntPcmd: CommandIterator, Equatable {
 	private func getCommandIndex(row arow: Int16, track atrack: Int16) -> Int {
 		var row = arow
 		var track = atrack
-		if (row < 0) {
+		if row < 0 {
 			row = 0;
-		} else if (row >= length) {
+		} else if row >= length {
 			row = length - 1;
 		}
 		
-		if (track < 0) {
+		if track < 0 {
 			track = 0;
-		} else if (track >= tracks) {
+		} else if track >= tracks {
 			track = tracks - 1;
 		}
 		

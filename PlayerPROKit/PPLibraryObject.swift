@@ -48,9 +48,9 @@ public final class PPLibraryObject: NSObject {
 	///The mode indicates, via `OSType`, the export and import capabilities of the plug-in.
 	///You can just use `canImport` and `canExport` instead.
 	public var mode: MADFourChar {
-		if (self.canExport && self.canImport) {
+		if self.canExport && self.canImport {
 			return MADPlugModes.importExport.rawValue
-		} else if (self.canExport) {
+		} else if self.canExport {
 			return MADPlugModes.export.rawValue
 		} else {
 			return MADPlugModes.import.rawValue
@@ -74,7 +74,7 @@ public final class PPLibraryObject: NSObject {
 		let tmpArray: [CChar] = try! arrayFromObject(reflecting: tupleType)
 		type = String(cString: tmpArray, encoding: String.Encoding.macOSRoman)!
 		plugVersion = unwrapped.version
-		switch (unwrapped.mode) {
+		switch unwrapped.mode {
 		case MADPlugModes.importExport.rawValue:
 			canImport = true
 			canExport = true

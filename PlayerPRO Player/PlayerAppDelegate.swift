@@ -77,7 +77,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	@IBOutlet var toolsPanel: NSPanel!
 	var timeChecker: Timer!
 	var madDriver: PPDriver!
-	var madLib = PPLibrary()!
+	let madLib: PPLibrary = {
+		return try! PPLibrary()
+	}()
 	
 	dynamic var paused: Bool = true {
 		didSet {

@@ -137,7 +137,7 @@ class DocumentWindowController: NSWindowController {
 			while let newData = theRec.directSave() {
 				let anErr = handler(newData as NSData)
 				if anErr != .noErr {
-					callback(createError(from: anErr))
+					callback(createNSError(from: anErr))
 					return
 				}
 			}
