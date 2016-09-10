@@ -24,7 +24,7 @@ public final class ComplexFade: NSObject, PPDigitalPlugin {
 		return .orderNotImplemented
 	}
 	
-	public func beginRun(with aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentWindow window: NSWindow, handler: PPPlugErrorBlock) {
+	public func beginRun(with aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentWindow window: NSWindow, handler: @escaping PPPlugErrorBlock) {
 		let controller = ComplexFadeController(windowNibName: "ComplexFadeController")
 		controller.thePcmd = aPcmd;
 		controller.fadeType = .instrument;

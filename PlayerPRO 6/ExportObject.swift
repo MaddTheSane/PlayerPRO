@@ -30,14 +30,14 @@ final class ExportObject: NSObject {
 	let destination: URL
 	private let exportBlock: PPExportBlock
 	private(set) var status = ExportStatus.NotRan
-	@objc init(destination dest: URL, exportBlock exportCode: PPExportBlock) {
+	@objc init(destination dest: URL, exportBlock exportCode: @escaping PPExportBlock) {
 		exportBlock = exportCode
 		destination = dest
 		
 		super.init()
 	}
 	
-	convenience init(destination dest: URL, block: PPSwiftExportBlock) {
+	convenience init(destination dest: URL, block: @escaping PPSwiftExportBlock) {
 		let tmpExportBlock: PPExportBlock = { (theURL, errStr) -> MADErr in
 			var tmpStr: String? = nil
 			let retErr = block(dest, &tmpStr)

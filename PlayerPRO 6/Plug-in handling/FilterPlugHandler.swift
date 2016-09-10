@@ -74,7 +74,7 @@ class FilterPlugHandler: NSObject, NSFastEnumeration, Collection, Sequence {
 		return plugInArray.makeIterator();
 	}
 
-	func beginWithPlugAtIndex(_ idx: Int, data theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver, parentDocument document: NSDocument, handler: PPPlugErrorBlock) {
+	func beginWithPlugAtIndex(_ idx: Int, data theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver, parentDocument document: NSDocument, handler: @escaping PPPlugErrorBlock) {
 		let aPlug = plugInArray[idx]
 		aPlug.beginRun(withData: theData, selectionRange: selRange, onlyCurrentChannel: StereoMode, driver: driver, parentDocument: document, handler: handler)
 	}

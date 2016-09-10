@@ -35,7 +35,7 @@ class DocumentWindowController: NSWindowController {
 	@IBOutlet weak var infoInfoField:	NSTextField!
 	
 	weak var currentDocument: PPDocument!
-	internal var exportSettings = MADDriverSettings.new()
+	fileprivate var exportSettings = MADDriverSettings.new()
 
 	let exportController = SoundSettingsViewController.newSoundSettingWindow()!
 

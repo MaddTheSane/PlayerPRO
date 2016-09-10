@@ -12,6 +12,10 @@ import SwiftAdditions
 import ResourceFork
 
 final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
+	//public func beginImport(of theURL: URL, withHandler handler: PPComplexImportHandler) {
+	//	<#code#>
+	//}
+
 	//let madTypes: [OSType] = ["MADK", "MADI", "MADF", "MADG", "MADH"]
 	override init() {
 		super.init()
@@ -21,7 +25,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 		self.init()
 	}
 	
-	public func beginImport(of theURL: URL, withHandler handler: PPComplexImportHandler) {
+	public func beginImport(of theURL: URL, withHandler handler: @escaping PPComplexImportHandler) {
 		do {
 			let resFile = try FVResourceFile.resourceFileWithContentsOfURL(theURL)
 			var aRet = [String: [FVResource]]()

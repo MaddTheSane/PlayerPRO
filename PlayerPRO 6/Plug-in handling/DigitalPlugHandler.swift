@@ -38,7 +38,7 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
 		super.init()
 	}
 	
-	func beginCallDigitalPlugIn(_ plugNum: Int, pcmd myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentDocument doc: PPDocument, handler: PPPlugErrorBlock) {
+	func beginCallDigitalPlugIn(_ plugNum: Int, pcmd myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentDocument doc: PPDocument, handler: @escaping PPPlugErrorBlock) {
 		let tmp = digitalPlugs[plugNum];
 		tmp.beginCall(with: myPcmd, driver: driver, parentDocument: doc, handler: handler)
 	}

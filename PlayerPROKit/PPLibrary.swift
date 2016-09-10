@@ -98,7 +98,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	///Sets the debug function called by `MADDebugStr` to that of the passed in C function.
 	///
 	///- parameter newDebugFunc: The debug function to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
-	public class func registerDebugFunction(_ newDebugFunc: (@escaping @convention(c) (Int16, UnsafePointer<Int8>?, UnsafePointer<Int8>?) -> Swift.Void)!) {
+	public class func registerDebugFunction(_ newDebugFunc: (@convention(c) (Int16, UnsafePointer<Int8>?, UnsafePointer<Int8>?) -> Swift.Void)!) {
 		MADRegisterDebugFunc(newDebugFunc)
 	}
 	
@@ -107,7 +107,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	///- parameter newDebugFunc: The debug block to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
 	///
 	///Swift functions are interchangeable with blocks: use this method to set the debug catcher in Swift code.
-	public class func registerDebugBlock(_ newDebugFunc: (@escaping @convention(block) (Int16, UnsafePointer<Int8>?, UnsafePointer<Int8>?) -> Swift.Void)!) {
+	public class func registerDebugBlock(_ newDebugFunc: (@convention(block) (Int16, UnsafePointer<Int8>?, UnsafePointer<Int8>?) -> Swift.Void)!) {
 		MADRegisterDebugBlock(newDebugFunc)
 	}
 

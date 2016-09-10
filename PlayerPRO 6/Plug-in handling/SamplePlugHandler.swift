@@ -68,7 +68,7 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 		return plugIns[index]
 	}
 	
-	func beginExportingSample(_ sample: PPSampleObject, type: OSType, URL url: URL, driver: PPDriver, parentDocument document: PPDocument, handler: PPPlugErrorBlock) {
+	func beginExportingSample(_ sample: PPSampleObject, type: OSType, URL url: URL, driver: PPDriver, parentDocument document: PPDocument, handler: @escaping PPPlugErrorBlock) {
 		var aPlug: PPSamplePlugObject? = nil
 		
 		for plug in plugIns {
