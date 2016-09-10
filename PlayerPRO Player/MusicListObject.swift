@@ -16,9 +16,9 @@ private let kMusicListURLBookmark	= "Bookmark"
 private let kMusicListDateAddedKey	= "DateAdded"
 
 #if os(OSX)
-private let homeURL: URL = {
+internal var homeURL: URL {
 	return URL(fileURLWithPath: NSHomeDirectory())
-}()
+}
 #endif
 
 private func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
@@ -240,7 +240,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		#if os(OSX)
 		if let bookmarkData = aDecoder.decodeObject(forKey: kMusicListURLBookmark) as? Data {
 			var unusedStale: Bool = false
-			if let hi = try? URL(resolvingBookmarkData: bookmarkData, options: [], relativeTo: homeURL, bookmarkDataIsStale: &unusedStale) {
+			if let hi = try? URL(resolvingBookmarkData: bookmarkData, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &unusedStale) {
 				fileURL = hi
 			}
 		}

@@ -270,11 +270,10 @@ private let kPlayerList = "Player List"
 			} else {
 				selectedMusic = -1
 			}
-			let aHomeURL = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
 			// Have all the new MusicListObjects use the same date
 			let currentDate = Date()
 			for bookData in bookmarkArray {
-				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .withoutUI, relativeURL: aHomeURL, date: currentDate) {
+				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .withoutUI, relativeURL: homeURL, date: currentDate) {
 					musicList.append(fullURL)
 				} else {
 					if (selectedMusic == -1) {
