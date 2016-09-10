@@ -41,15 +41,15 @@ private func CocoaDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafeP
 	}
 }
 
-internal var globalMadLib: PPLibrary {
-	return (NSApplication.sharedApplication().delegate as! AppDelegate).madLib
-}
+internal let globalMadLib = PPLibrary()!
 
 @NSApplicationMain
 class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDelegate {
 	private var exportObjects = [ExportObject]()
 	var plugInInfos = [PlugInInfo]()
-	let madLib = PPLibrary()!
+	var madLib: PPLibrary {
+		return globalMadLib
+	}
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
 	let digitalHandler = DigitalPlugHandler()
 	let filterHandler = FilterPlugHandler()
@@ -549,7 +549,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		
 		for (i, obj) in instrumentPlugHandler.enumerate() {
 			if (obj.mode == MADPlugModes.ImportExport || obj.mode == MADPlugModes.Export) {
-				let mi = NSMenuItem(title: obj.menuName, action: Selector("exportInstrument:"), keyEquivalent: "")
+				let mi = NSMenuItem(title: obj.menuName, action: #selector(InstrumentPanelController.exportInstrument(_:)), keyEquivalent: "")
 				mi.tag = i;
 				mi.target = nil
 				instrumentExportMenu.addItem(mi);
@@ -558,7 +558,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		
 		for (i, obj) in (madLib).enumerate() {
 			if (obj.canExport) {
-				let mi = NSMenuItem(title: "\(obj.menuName)…", action: Selector("exportMusicAs:"), keyEquivalent: "")
+				let mi = NSMenuItem(title: "\(obj.menuName)…", action: #selector(DocumentWindowController.exportMusicAs(_:)) , keyEquivalent: "")
 				mi.tag = i
 				mi.target = nil
 				musicExportMenu.addItem(mi)
