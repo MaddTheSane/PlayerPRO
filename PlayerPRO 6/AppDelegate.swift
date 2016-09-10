@@ -448,7 +448,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 								aPPDoc.showWindows()
 								aPPDoc.setDisplayName((theURL1.lastPathComponent! as NSString).stringByDeletingPathExtension)
 							} else {
-								let nsErr = createErrorFromMADErrorType(anErr)!
+								let nsErr = createNSErrorFromMADErrorType(anErr)!
 								if PPErrorIsUserCancelled(nsErr) == false {
 									NSAlert(error: nsErr).runModal()
 								} else {

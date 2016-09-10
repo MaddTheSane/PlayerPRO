@@ -136,7 +136,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 			while let newData = theRec.directSave() {
 				let anErr = handler(newData)
 				if anErr != .NoErr {
-					callback(createErrorFromMADErrorType(anErr))
+					callback(createNSErrorFromMADErrorType(anErr))
 					return
 				}
 			}

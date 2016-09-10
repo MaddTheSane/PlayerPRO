@@ -50,8 +50,7 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 	})
 }
 
-public func noteFromString(myTT: String) -> Int16?
-{
+public func noteFromString(myTT: String) -> Int16? {
 	if myTT == "" || myTT == "---" || myTT.characters.count < 2 {
 		return nil
 	}
@@ -168,7 +167,7 @@ extension PPSampleObject {
 		CGContextClearRect(bitmapContext, aRect)
 		CGContextSetLineWidth(bitmapContext, 1)
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
-		if (datIsStereo) {
+		if datIsStereo {
 			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(0, 0, 1, stereoTrans))
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
 		}
@@ -176,7 +175,7 @@ extension PPSampleObject {
 		CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(1, 0, 0, stereoTrans));
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
-		if (theDat.loopSize != 0) {
+		if theDat.loopSize != 0 {
 			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(0.2, 0.1, 0.5, 0.8))
 			var loopRect = aRect
 			let lineSize = view.convertSizeToBacking(NSSize(width: 2, height: 2)).width * 2
@@ -218,7 +217,7 @@ extension PPSampleObject {
 		CGContextSetLineWidth(bitmapContext, 1)
 		var colorRef: UIColor
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
-		if (datIsStereo) {
+		if datIsStereo {
 			colorRef = UIColor(red: 0, green: 0, blue: 1, alpha: stereoTrans)
 			CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
@@ -228,7 +227,7 @@ extension PPSampleObject {
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
-		if (theDat.loopSize != 0) {
+		if theDat.loopSize != 0 {
 			colorRef = UIColor(red: 0.2, green: 0.1, blue: 0.5, alpha: 0.8)
 			CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
 			var loopRect = aRect
@@ -273,13 +272,13 @@ extension PPSampleObject {
 		let oneShiftedBy16 = 1 / CGFloat(1 << 16)
 		let oneShiftedBy8 = 1 / CGFloat(1 << 8)
 
-		if (curData.amplitude == 16) {
+		if curData.amplitude == 16 {
 			let theShortSample = UnsafePointer<UInt16>(curData.data.bytes)
 			let sampleSize = curData.data.length / 2
 			start /= 2
 			
 			var BS = start + (tSS * sampleSize) / larg
-			if (isStereo) {
+			if isStereo {
 				BS /= 2; BS *= 2;
 				BS += Int(channel)
 			}
@@ -291,7 +290,7 @@ extension PPSampleObject {
 				BS = start + (i * sampleSize) / larg
 				var BE = start + ((i + 1) * sampleSize) / larg
 				
-				if (isStereo) {
+				if isStereo {
 					BS /= 2; BS *= 2;
 					BE /= 2; BE *= 2;
 					
@@ -304,7 +303,7 @@ extension PPSampleObject {
 				temp *= CGFloat(high) * oneShiftedBy16
 				CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), temp + CGFloat(trueV))
 				
-				if (BS != BE) {
+				if BS != BE {
 					var x = BS
 					while x < BE {
 						temp = CGFloat(theShortSample[x] &+ 0x8000)
@@ -312,7 +311,7 @@ extension PPSampleObject {
 						maxY = max(temp, maxY)
 						minY = min(temp, minY)
 						
-						if (isStereo) {
+						if isStereo {
 							x += 1
 						}
 						x += 1
@@ -330,7 +329,7 @@ extension PPSampleObject {
 			let theSample = UnsafePointer<UInt8>(curData.data.bytes)
 
 			var BS = start + (tSS * sampleSize) / larg;
-			if (isStereo) {
+			if isStereo {
 				BS /= 2; BS *= 2;
 				BS += Int(channel)
 			}
@@ -344,7 +343,7 @@ extension PPSampleObject {
 				BS = start + (i * sampleSize) / larg
 				var BE = start + ((i + 1) * sampleSize) / larg
 				
-				if (isStereo) {
+				if isStereo {
 					BS /= 2; BS *= 2;
 					BE /= 2; BE *= 2;
 					
@@ -357,7 +356,7 @@ extension PPSampleObject {
 				temp *= CGFloat(high) * oneShiftedBy8
 				CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), temp + CGFloat(trueV))
 				
-				if (BS != BE) {
+				if BS != BE {
 					var x = BS
 					while x < BE {
 						temp = CGFloat(theSample[x] &- 0x80)
@@ -365,7 +364,7 @@ extension PPSampleObject {
 						maxY = max(temp, maxY)
 						minY = min(temp, minY)
 						
-						if (isStereo) {
+						if isStereo {
 							x += 1;
 						}
 						x += 1

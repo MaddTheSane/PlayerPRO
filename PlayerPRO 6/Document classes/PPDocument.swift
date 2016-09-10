@@ -175,7 +175,10 @@ import AudioToolbox
 
 	override func writeToURL(url: NSURL, ofType typeName: String) throws {
 		if typeName != MADNativeUTI {
-			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
+			guard let type = globalMadLib.typeFromUTI(typeName) else {
+				throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
+			}
+			try theMusic.exportMusicToURL(url, format: type, library: globalMadLib)
 		} else {
 			do {
 				try theMusic.saveMusicToURL(url, compress: NSUserDefaults.standardUserDefaults().boolForKey(PPMMadCompression))
