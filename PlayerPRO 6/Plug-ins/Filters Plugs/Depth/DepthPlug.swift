@@ -25,7 +25,7 @@ final public class Depth: NSObject, PPFilterPlugin {
 		return .orderNotImplemented
 	}
 	
-	public func beginRun(withData theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver, parentWindow document: NSWindow, handler handle: PPPlugErrorBlock) {
+	public func beginRun(withData theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver, parentWindow document: NSWindow, handler handle: @escaping PPPlugErrorBlock) {
 		let controller = DepthController(windowNibName: "DepthController")
 		controller.depthAmmount = 8
 		controller.theData = theData

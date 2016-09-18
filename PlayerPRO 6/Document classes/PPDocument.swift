@@ -59,7 +59,7 @@ import AudioToolbox
 			return toRet
 		}()
 		var toRet = Array(importUTISet)
-		toRet.append(MADNativeUTI)
+		toRet.insert(MADNativeUTI, at: 0)
 		StaticStorage.readables = toRet
 		return toRet
 	}

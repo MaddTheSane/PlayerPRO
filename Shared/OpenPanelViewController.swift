@@ -14,11 +14,11 @@ private func allOpenableTypes(uti anUTI: String) -> [String] {
 	var theOpenables = [anUTI]
 	
 	if #available(OSX 10.10, *) {
-		let utiTagClasses = [kUTTagClassFilenameExtension as String, kUTTagClassMIMEType as String,
+		let utiTagClasses: [NSString] = [kUTTagClassFilenameExtension, kUTTagClassMIMEType,
 			/*kUTTagClassNSPboardType as String*/]
 		
 		for utiTag in utiTagClasses {
-			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, utiTag as NSString) else {
+			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, utiTag) else {
 				continue
 			}
 			
@@ -31,7 +31,7 @@ private func allOpenableTypes(uti anUTI: String) -> [String] {
 		}
 		if let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as CFString, kUTTagClassOSType),
 			let anArr = unPreArr.takeRetainedValue() as NSArray as? [String] {
-				let convertedArr = anArr.map({UTGetOSTypeFromString($0 as NSString)}).map({NSFileTypeForHFSTypeCode($0)!})
+				let convertedArr = anArr.map({NSFileTypeForHFSTypeCode(UTGetOSTypeFromString($0 as NSString))!})
 				theOpenables += convertedArr
 		}
 	} else {
@@ -53,16 +53,20 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		case otherType = -5
 	}
 	
-	private enum trackerType: Int {
+	private enum TrackerType: Int, Comparable {
 		case tracker = 1
 		case playlist
 		case instrument
 		case other
+		
+		static func <(lhs: OpenPanelViewController.TrackerType, rhs: OpenPanelViewController.TrackerType) -> Bool {
+			return lhs.rawValue < rhs.rawValue
+		}
 	}
 	
 	private struct OpenPanelViewItem: CustomDebugStringConvertible, CustomStringConvertible, Hashable {
 		let name: String
-		let theUtiType: trackerType
+		let theUtiType: TrackerType
 		let utis: [String]
 		
 		init(type typ: utiType, utis ut: [String], name nam: String) {
@@ -157,7 +161,10 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 	}
 	
 	@IBAction func selectUTI(_ sender: AnyObject?) {
-		if let menuIte = sender as? NSMenuItem {
+		guard let menuIte = sender as? NSMenuItem else {
+			NSBeep()
+			return
+		}
 			let tag = menuIte.tag;
 			var allowedUTIs = [String]();
 			switch (tag) {
@@ -177,13 +184,13 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 				}()
 				
 				openPanel.allowedFileTypes = fileTypes
-				if (allowsMultipleSelectionOfTrackers) {
+				if allowsMultipleSelectionOfTrackers {
 					openPanel.allowsMultipleSelection = true
 				}
 				
 			case utiType.trackerType.rawValue:
 				for obj in utiObjects {
-					if (obj.theUtiType == trackerType.tracker) {
+					if obj.theUtiType == .tracker {
 						allowedUTIs += obj.utis
 					}
 				}
@@ -199,13 +206,13 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 				}()
 				
 				openPanel.allowedFileTypes = fileTypes
-				if (allowsMultipleSelectionOfTrackers) {
+				if allowsMultipleSelectionOfTrackers {
 					openPanel.allowsMultipleSelection = true
 				}
 				
 			case utiType.playlistType.rawValue:
 				for obj in utiObjects {
-					if (obj.theUtiType == .playlist) {
+					if obj.theUtiType == .playlist {
 						allowedUTIs += obj.utis
 					}
 				}
@@ -221,13 +228,13 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 				}()
 				
 				openPanel.allowedFileTypes = fileTypes
-				if (allowsMultipleSelectionOfTrackers) {
+				if allowsMultipleSelectionOfTrackers {
 					openPanel.allowsMultipleSelection = true
 				}
 				
 			case utiType.instrumentType.rawValue:
 				for obj in utiObjects {
-					if (obj.theUtiType == .instrument) {
+					if obj.theUtiType == .instrument {
 						allowedUTIs += obj.utis
 					}
 				}
@@ -243,7 +250,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 				}()
 				
 				openPanel.allowedFileTypes = fileTypes
-				if (allowsMultipleSelectionOfTrackers) {
+				if allowsMultipleSelectionOfTrackers {
 					openPanel.allowsMultipleSelection = true
 				}
 				
@@ -265,13 +272,13 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 				}()
 
 				openPanel.allowedFileTypes = fileTypes
-				if (allowsMultipleSelectionOfTrackers) {
+				if allowsMultipleSelectionOfTrackers {
 					openPanel.allowsMultipleSelection = true
 				}
 				break;
 				
 			default:
-				if (tag < utiObjects.count && tag >= 0) {
+				if tag < utiObjects.count && tag >= 0 {
 					let selObj = utiObjects[tag];
 					let fileTypes: [String] = {
 						var aTyp = [String]()
@@ -284,8 +291,8 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					}()
 					
 					openPanel.allowedFileTypes = fileTypes
-					if (allowsMultipleSelectionOfTrackers == true) {
-						if (selObj.theUtiType == .tracker) {
+					if allowsMultipleSelectionOfTrackers {
+						if selObj.theUtiType == .tracker {
 							openPanel.allowsMultipleSelection = true
 						} else {
 							openPanel.allowsMultipleSelection = false
@@ -293,9 +300,6 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					}
 				}
 			}
-		} else {
-			NSBeep()
-		}
 	}
 	
 	override init?(nibName: String?, bundle: Bundle?) {
@@ -336,14 +340,14 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		}
 		
 		tmpUTIs.sort(by: {(lhs, rhs) -> Bool in
-			if (lhs.theUtiType.rawValue < rhs.theUtiType.rawValue) {
+			if lhs.theUtiType < rhs.theUtiType {
 				return true
-			} else if (lhs.theUtiType.rawValue > rhs.theUtiType.rawValue) {
+			} else if lhs.theUtiType > rhs.theUtiType {
 				return false
 			} else {
 				
-				let result = lhs.name.localizedStandardCompare(rhs.name);
-				return result == ComparisonResult.orderedAscending;
+				let result = lhs.name.localizedStandardCompare(rhs.name)
+				return result == ComparisonResult.orderedAscending
 			}
 			})
 		
@@ -383,7 +387,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		
 		if let fileTypeSelectionMenu = popUp?.menu {
 			let moreThanTwoTypes = hasMoreThanTwoTypes
-			if (moreThanTwoTypes) {
+			if moreThanTwoTypes {
 				let mi0 = NSMenuItem(title: "All Openable Files", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 				mi0.tag = utiType.allType.rawValue
 				mi0.target = self
@@ -393,7 +397,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			}
 			
 			for item in utiObjects {
-				if (item.theUtiType == .tracker) {
+				if item.theUtiType == .tracker {
 					let mi0 = NSMenuItem(title: "All Trackers", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.trackerType.rawValue
 					mi0.target = self
@@ -404,7 +408,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			}
 			
 			for item in utiObjects {
-				if (item.theUtiType == .playlist) {
+				if item.theUtiType == .playlist {
 					let mi0 = NSMenuItem(title: "All Playlists", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.playlistType.rawValue
 					mi0.target = self
@@ -415,7 +419,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			}
 			
 			for item in utiObjects {
-				if (item.theUtiType == .instrument) {
+				if item.theUtiType == .instrument {
 					let mi0 = NSMenuItem(title: "All Instruments", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.instrumentType.rawValue
 					mi0.target = self
@@ -426,7 +430,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			}
 			
 			for item in utiObjects {
-				if (item.theUtiType == .other) {
+				if item.theUtiType == .other {
 					let mi0 = NSMenuItem(title: "All Other", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.otherType.rawValue
 					mi0.target = self
@@ -438,8 +442,8 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			fileTypeSelectionMenu.addItem(NSMenuItem.separator())
 			
 			for (i, curItem) in utiObjects.enumerated()  {
-				if (moreThanTwoTypes) {
-					if (i - 1 >= 0) {
+				if moreThanTwoTypes {
+					if i - 1 >= 0 {
 						let prevItem = utiObjects[i - 1];
 						if (curItem.theUtiType != prevItem.theUtiType) {
 							fileTypeSelectionMenu.addItem(NSMenuItem.separator())
@@ -462,7 +466,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			fileUTIs += obj.utis
 		}
 		
-		if (!allowsMultipleSelectionOfTrackers) {
+		if !allowsMultipleSelectionOfTrackers {
 			openPanel.allowsMultipleSelection = false
 		}
 		
@@ -479,14 +483,14 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 	
 	private var hasMoreThanTwoTypes: Bool {
 		let utiCount = utiObjects.count
-		if (utiCount < 2) {
+		if utiCount < 2 {
 			return false
 		}
 		
 		for i in 1 ..< utiCount {
 			let obj1 = utiObjects[i - 1]
 			let obj2 = utiObjects[i]
-			if (obj1.theUtiType != obj2.theUtiType) {
+			if obj1.theUtiType != obj2.theUtiType {
 				return true
 			}
 		}
