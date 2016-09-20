@@ -56,13 +56,13 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 		toSet = 130;
 	}
 	[[NSUserDefaults standardUserDefaults] setInteger:toSet forKey:PPCETrackHeight];
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPClassicalEditorPreferencesDidChange object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPClassicalEditorPreferencesDidChangeNotification object:self];
 }
 
 - (IBAction)toggleNoteLength:(id)sender
 {
 	[[NSUserDefaults standardUserDefaults] setBool:[notesLengthCheck state] forKey:PPCEShowNotesLen];
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPClassicalEditorPreferencesDidChange object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPClassicalEditorPreferencesDidChangeNotification object:self];
 
 }
 
@@ -72,7 +72,7 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 	[[NSUserDefaults standardUserDefaults] setBool:state forKey:PPCEShowMarkers];
 	[markersLoopValue setEnabled:state];
 	[markersOffsetValue setEnabled:state];
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPClassicalEditorPreferencesDidChange object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPClassicalEditorPreferencesDidChangeNotification object:self];
 }
 
 - (void)awakeFromNib

@@ -40,6 +40,6 @@ final class MiscPreferenceController: NSViewController, PPPreferenceObject {
 		defaults[PPMNoLoadMixerFromFiles] = noLoadMixerFromFile.state == NSOnState
 		defaults[PPMOscilloscopeDrawLines] = oscDrawLines.state == NSOnState
 		
-		NotificationCenter.default.post(name: .miscPreferencesDidChange, object: self)
+		NotificationCenter.default.post(name: .PPMiscPreferencesDidChange, object: self)
 	}
 }

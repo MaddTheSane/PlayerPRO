@@ -37,7 +37,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 {
 	if (self = [super init]) {
 		theMus = mus;
-		[[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChange object:nil];
+		[[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChangeNotification object:nil];
 		patternList = [[NSMutableArray alloc] init];
 	}
 	return self;

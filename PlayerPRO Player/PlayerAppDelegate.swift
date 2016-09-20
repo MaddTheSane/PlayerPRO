@@ -476,7 +476,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		setTitleForSongLabelBasedOnMusic()
 		songTotalTime.integerValue = time.total
 		
-		NotificationCenter.default.post(name: .musicDidChange, object:self)
+		NotificationCenter.default.post(name: NSNotification.Name.PPMusicDidChange, object:self)
 	}
 	
 	private func clearMusic() {
@@ -491,7 +491,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		previouslyPlayingIndex = currentlyPlayingIndex
 		self.music = PPMusicObject();
 		setTitleForSongLabelBasedOnMusic()
-		NotificationCenter.default.post(name: .musicDidChange, object:self)
+		NotificationCenter.default.post(name: NSNotification.Name.PPMusicDidChange, object:self)
 		music!.attach(to: madDriver)
 	}
 	
@@ -559,12 +559,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			do {
 				try madDriver.changeDriverSettings(to: &theSettinit)
 			} catch let error as NSError {
-				NotificationCenter.default.post(name: .driverDidChange, object: self)
+				NotificationCenter.default.post(name: .PPDriverDidChange, object: self)
 				NSAlert(error: error).runModal()
 				return;
 			}
 		}
-		NotificationCenter.default.post(name: .driverDidChange, object: self)
+		NotificationCenter.default.post(name: .PPDriverDidChange, object: self)
 		//MADStartDriver(madDriver);
 		if self.music != nil {
 			//MADAttachDriverToMusic(madDriver, music, NULL);
@@ -853,7 +853,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		tableView.doubleAction = #selector(PlayerAppDelegate.doubleClickMusicList)
 		
 		let defaultCenter = NotificationCenter.default
-		defaultCenter.addObserver(self, selector: #selector(PlayerAppDelegate.soundPreferencesDidChange(_:)), name: NSNotification.Name(rawValue: PPSoundPreferencesDidChange), object: nil)
+		defaultCenter.addObserver(self, selector: #selector(PlayerAppDelegate.soundPreferencesDidChange(_:)), name: NSNotification.Name.PPSoundPreferencesDidChange, object: nil)
 		
 		MADDriverWithPreferences()
 		for (i, obj) in madLib.enumerated() {

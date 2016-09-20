@@ -51,7 +51,7 @@
 	[defaults setBool:[octaveCheck state] forKey:PPBEOctaveMarkers];
 	[defaults setBool:[markersCheck state] forKey:PPBEMarkersEnabled];
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPBoxEditorPreferencesDidChange object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPBoxEditorPreferencesDidChangeNotification object:self];
 }
 
 @end

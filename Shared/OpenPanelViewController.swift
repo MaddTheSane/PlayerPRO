@@ -29,15 +29,15 @@ private func allOpenableTypes(uti anUTI: String) -> [String] {
 			}
 			theOpenables += anArr
 		}
-		if let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as CFString, kUTTagClassOSType),
+		if let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassOSType),
 			let anArr = unPreArr.takeRetainedValue() as NSArray as? [String] {
 				let convertedArr = anArr.map({NSFileTypeForHFSTypeCode(UTGetOSTypeFromString($0 as NSString))!})
 				theOpenables += convertedArr
 		}
 	} else {
 		// Fallback on earlier versions
-		if let aType = UTTypeCopyPreferredTagWithClass(anUTI as NSString, kUTTagClassFilenameExtension)?.takeRetainedValue() {
-			theOpenables.append(aType as NSString as String)
+		if let aType = UTTypeCopyPreferredTagWithClass(anUTI as NSString, kUTTagClassFilenameExtension)?.takeRetainedValue() as String? {
+			theOpenables.append(aType)
 		}
 	}
 	

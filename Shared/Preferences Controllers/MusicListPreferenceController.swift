@@ -51,7 +51,7 @@ final class MusicListPreferenceController: NSViewController, PPPreferenceObject 
 		
 		defaults.set(playedMusic.rawValue, forKey: PPAfterPlayingMusic)
 		
-		NotificationCenter.default.post(name: .listPreferencesDidChange, object: self)
+		NotificationCenter.default.post(name: .PPListPreferencesDidChange, object: self)
 	}
 	
 	@IBAction func toggleButton(_ sender: AnyObject?) {
@@ -64,7 +64,7 @@ final class MusicListPreferenceController: NSViewController, PPPreferenceObject 
 		defaults.set(loopMusic.state == NSOnState, forKey: PPLoopMusicWhenDone)
 		defaults.set(goToStartupPos.state == NSOnState, forKey: PPGotoStartupAfterPlaying)
 		
-		NotificationCenter.default.post(name: .listPreferencesDidChange, object: self)
+		NotificationCenter.default.post(name: .PPListPreferencesDidChange, object: self)
 	}
 	
 	var playedMusic: PlaylistMode {

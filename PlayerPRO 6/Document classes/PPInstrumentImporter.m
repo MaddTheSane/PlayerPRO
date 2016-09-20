@@ -56,8 +56,8 @@
 		instrumentIEArray = [[NSMutableArray alloc] initWithCapacity:10];
 		
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-		[defaultCenter addObserver:self selector:@selector(driverRecDidChange:) name:PPDriverDidChange object:nil];
-		[defaultCenter addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChange object:nil];
+		[defaultCenter addObserver:self selector:@selector(driverRecDidChange:) name:PPDriverDidChangeNotification object:nil];
+		[defaultCenter addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChangeNotification object:nil];
 
 		NSArray *plugLocs = DefaultPlugInLocations();
 		

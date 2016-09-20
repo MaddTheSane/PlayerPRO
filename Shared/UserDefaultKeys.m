@@ -11,17 +11,17 @@
 #import "NSColor+PPPreferences.h"
 #endif
 
-NSString * const PPListPreferencesDidChange = @"Music List Preferences Changed";
-NSString * const PPSoundPreferencesDidChange = @"Sound Preferences changed";
-NSString * const PPDigitalEditorPrefrencesDidChange = @"Digital Editor Preferences changed";
-NSString * const PPBoxEditorPreferencesDidChange = @"Box Editor Preferences changed";
-NSString * const PPClassicalEditorPreferencesDidChange = @"Classical Preferences changed";
-NSString * const PPMiscPreferencesDidChange = @"Misc. Preferences Changed";
-NSString * const PPColorsDidChange = @"PPColor Preferences changed";
-NSString * const PPColorChangedColor = @"PPColor Preferences Changed Color";
-NSString * const PPColorChangedValue = @"PPColor Preferences Changed Color Value";
-NSString * const PPMusicDidChange = @"PP Music changed";
-NSString * const PPDriverDidChange = @"PlayerPRO Driver did change";
+NSString * const PPListPreferencesDidChangeNotification = @"Music List Preferences Changed";
+NSString * const PPSoundPreferencesDidChangeNotification = @"Sound Preferences changed";
+NSString * const PPDigitalEditorPrefrencesDidChangeNotification = @"Digital Editor Preferences changed";
+NSString * const PPBoxEditorPreferencesDidChangeNotification = @"Box Editor Preferences changed";
+NSString * const PPClassicalEditorPreferencesDidChangeNotification = @"Classical Preferences changed";
+NSString * const PPMiscPreferencesDidChangeNotification = @"Misc. Preferences Changed";
+NSString * const PPColorsDidChangeNotification = @"PPColor Preferences changed";
+NSString * const PPColorChangedColorKey = @"PPColor Preferences Changed Color";
+NSString * const PPColorChangedValueKey = @"PPColor Preferences Changed Color Value";
+NSString * const PPMusicDidChangeNotification = @"PP Music changed";
+NSString * const PPDriverDidChangeNotification = @"PlayerPRO Driver did change";
 
 NSString * const kMusicListKVO = @"musicList";
 NSString * const PPDoubleDash = @"--";

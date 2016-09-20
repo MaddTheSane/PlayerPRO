@@ -78,10 +78,10 @@ colorObj = [[ColorPreferenceObject alloc] initWithColor:[NSColor PPDecodeColorWi
 	NSString *keyToChange;
 	NSInteger wellIdx = [self indexOfColorWell:sender];
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPColorsDidChange
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPColorsDidChangeNotification
 														object:self
-													  userInfo:@{PPColorChangedValue: @(wellIdx),
-																 PPColorChangedColor: sentColor}];
+													  userInfo:@{PPColorChangedValueKey: @(wellIdx),
+																 PPColorChangedColorKey: sentColor}];
 #define PPCOLOR(num) case num - 1: \
 keyToChange = PPCColor ## num; \
 break

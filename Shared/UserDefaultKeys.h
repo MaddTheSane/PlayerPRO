@@ -12,17 +12,17 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Notifications
-extern NSString * const PPListPreferencesDidChange;
-extern NSString * const PPSoundPreferencesDidChange;
-extern NSString * const PPDigitalEditorPrefrencesDidChange;
-extern NSString * const PPBoxEditorPreferencesDidChange;
-extern NSString * const PPClassicalEditorPreferencesDidChange;
-extern NSString * const PPMiscPreferencesDidChange;
-extern NSString * const PPColorsDidChange;
-extern NSString * const PPMusicDidChange;
-extern NSString * const PPDriverDidChange;
-extern NSString * const PPColorChangedColor;
-extern NSString * const PPColorChangedValue;
+extern NSString * const PPListPreferencesDidChangeNotification;
+extern NSString * const PPSoundPreferencesDidChangeNotification;
+extern NSString * const PPDigitalEditorPrefrencesDidChangeNotification;
+extern NSString * const PPBoxEditorPreferencesDidChangeNotification;
+extern NSString * const PPClassicalEditorPreferencesDidChangeNotification;
+extern NSString * const PPMiscPreferencesDidChangeNotification;
+extern NSString * const PPColorsDidChangeNotification;
+extern NSString * const PPMusicDidChangeNotification;
+extern NSString * const PPDriverDidChangeNotification;
+extern NSString * const PPColorChangedColorKey;
+extern NSString * const PPColorChangedValueKey;
 
 #pragma mark UTIs
 extern NSString * const MADNativeUTI;
