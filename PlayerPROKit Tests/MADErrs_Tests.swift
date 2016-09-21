@@ -30,7 +30,7 @@ class MADErrs_Tests: XCTestCase {
 			let anErr = PPCreateErrorFromMADErrorType(mad)
 			XCTAssertNotNil(anErr)
 			if let anErr = anErr {
-				XCTAssertEqual(anErr.code, raw)
+				XCTAssertEqual(anErr._code, raw)
 			}
 		}
     }
@@ -43,8 +43,8 @@ class MADErrs_Tests: XCTestCase {
 				XCTAssert(false, "huh!?")
 				return
 			}
-			XCTAssertEqual(error.domain, anErr.domain)
-			XCTAssertEqual(error.code, anErr.code)
+			XCTAssertEqual(error.domain, anErr._domain)
+			XCTAssertEqual(error.code, anErr._code)
 		}
 	}
 	

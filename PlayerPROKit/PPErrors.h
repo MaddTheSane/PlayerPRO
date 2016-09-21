@@ -22,7 +22,7 @@ extern NSString * __nonnull const PPMADErrorDomain;
  *	@abstract	Create an \c NSError object encapulating a PlayerPROCore's \c MADErr
  *	@param		theErr
  *				The error to encapsulate
- *	@return		A retained \c NSError object, or \c nil if passed \c MADNoErr .
+ *	@return		A retained \c NSError object, or \c nil if passed <code>MADNoErr</code>.
  *	@discussion	Creates an \c NSError object in the \c PPMADErrorDomain with 
  *				\c NSLocalizedDescriptionKey,
  *				\c NSLocalizedFailureReasonErrorKey, and 
@@ -41,7 +41,7 @@ extern NSError* __nullable PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETUR
  *	@param		convertToCocoa
  *				If <code>YES</code>, attempts to convert the error value into an error
  *				value native to Cocoa.
- *	@return		A retained \c NSError object, or \c nil if passed \c MADNoErr .
+ *	@return		A retained \c NSError object, or \c nil if passed <code>MADNoErr</code>.
  *	@discussion	Attempts to create an \c NSError object in an error domain that is native to the
  *				Foundation framework, such as \c NSPOSIXErrorDomain. If there isn't an equivalent,
  *				creates an \c NSError object in the \c PPMADErrorDomain with \c NSLocalizedDescriptionKey,

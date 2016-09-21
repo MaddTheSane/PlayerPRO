@@ -31,11 +31,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable instancetype)initWithMusic:(PPMusicObject *)mus NS_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithMusic:(PPMusicObject *)mus patternAtIndex:(short)ptnIdx;
 
-- (PPMadCommandObject*)getCommandFromPosition:(short)PosX channel:(short)TrackIdX;
+- (PPMadCommandObject*)getCommandFromPosition:(short)PosX channel:(short)TrackIdX NS_SWIFT_NAME(getCommand(position:channel:));
 - (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX cmd:(Cmd)aCmd;
 - (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX command:(PPMadCommandObject*)aCmd;
-- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX commandBlock:(void (^)(Cmd *))block;
-- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX madCommandBlock:(void (^)(PPMadCommandObject*))block;
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX commandBlock:(void (NS_NOESCAPE^)(Cmd *))block;
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX madCommandBlock:(void (NS_NOESCAPE^)(PPMadCommandObject*))block;
 
 @end
 

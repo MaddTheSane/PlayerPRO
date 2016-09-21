@@ -34,7 +34,7 @@ public func ==(lhs: PPFXSetObject, rhs: FXSets) -> Bool {
 }
 
 public func getCommand(position: Int16, channel: Int16, aPat: PPPatternObject) -> Cmd {
-	let aCmd = aPat.getCommandFromPosition(position, channel: channel)
+	let aCmd = aPat.getCommand(position: position, channel: channel)
 	return aCmd.theCommand
 }
 
