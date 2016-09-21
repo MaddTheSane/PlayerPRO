@@ -251,12 +251,12 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	}
 	
 	// Generate an AudioStreamBasicDescription for conversion
-	var stream = AudioStreamBasicDescription(sampleRate: fixedToFloat(header.sampleRate), formatFlags: .SignedInteger, bitsPerChannel: 8, channelsPerFrame: 1)
+	var stream = AudioStreamBasicDescription(sampleRate: fixedToFloat(header.sampleRate), formatFlags: .signedInteger, bitsPerChannel: 8, channelsPerFrame: 1)
 	
 	// Create a temporary file for storage
 	let url = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent("\(arc4random())-\(Date.timeIntervalSinceReferenceDate).aif"))
 		var audioFile: ExtAudioFileRef? = nil
-		let createStatus = ExtAudioFileCreate(URL: url as NSURL, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
+		let createStatus = ExtAudioFileCreate(URL: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
 		if createStatus != noErr {
 			error = .writingErr
 			errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")

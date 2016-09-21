@@ -40,7 +40,7 @@ internal func AIFFAtURL(_ url: URL, toSample sample: PPSampleObject) -> MADErr {
 		//Constrain the audio conversion to values supported by PlayerPRO
 		realFormat.mSampleRate = ceil(realFormat.mSampleRate)
 		realFormat.mSampleRate = clamp(value: realFormat.mSampleRate, minimum: 5000, maximum: 44100)
-		realFormat.formatFlags = [.NativeEndian, .Packed, .SignedInteger]
+		realFormat.formatFlags = [.nativeEndian, .packed, .signedInteger]
 		switch realFormat.mBitsPerChannel {
 		case 8, 16:
 			break

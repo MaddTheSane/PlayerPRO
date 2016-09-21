@@ -1101,8 +1101,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			tmpChannels = 2
 		}
 		
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
-		var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed, .NativeEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+		var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
 		audioFile = try ExtAudioFile(createURL: theURL, fileType: .WAVE, streamDescription: &asbd, flags: .eraseFile)
 		
@@ -1142,8 +1142,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			tmpChannels = 2
 		}
 		
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed, .BigEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
-		var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed, .NativeEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+		var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
 		audioFile = try ExtAudioFile(createURL: theURL, fileType: .AIFF, streamDescription: &asbd, flags: .eraseFile)
 		

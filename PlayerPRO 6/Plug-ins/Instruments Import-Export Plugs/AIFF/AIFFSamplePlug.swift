@@ -25,12 +25,12 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 	}
 		
 	public func exportSample(_ sample: PPSampleObject, to sampleURL: URL, driver: PPDriver) -> MADErr {
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .LinearPCM, formatFlags: [.SignedInteger, .Packed, .BigEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.isStereo ? 2 : 1)
+		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [AudioFormatFlag.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.isStereo ? 2 : 1)
 		
 		let datLen = sample.data.count
 		var audioFile: AudioFileID? = nil
 		
-		var res = AudioFileCreate(URL: sampleURL as NSURL, fileType: .AIFF, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
+		var res = AudioFileCreate(URL: sampleURL, fileType: .AIFF, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
 		
 		if res != noErr {
 			return .writingErr

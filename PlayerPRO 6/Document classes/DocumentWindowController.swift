@@ -151,7 +151,7 @@ class DocumentWindowController: NSWindowController {
 		//TODO: implement, but how?
 	}
 	
-	private func saveMusic(waveToURL theURL: NSURL, theSett: inout MADDriverSettings) -> MADErr {
+	private func saveMusic(waveToURL theURL: URL, theSett: inout MADDriverSettings) -> MADErr {
 		var iErr: NSError? = nil
 		
 		var audioFile: AudioFileID? = nil;
@@ -168,7 +168,7 @@ class DocumentWindowController: NSWindowController {
 			tmpChannels = 2
 		}
 		
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
 		var res = AudioFileCreate(URL: theURL, fileType: .WAVE, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
 		if (res != noErr) {
@@ -248,9 +248,9 @@ class DocumentWindowController: NSWindowController {
 			tmpChannels = 2
 		}
 		
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed, .BigEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
-		var res = AudioFileCreate(URL: theURL as NSURL, fileType: .AIFF, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
+		var res = AudioFileCreate(URL: theURL, fileType: .AIFF, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
 		if (res != noErr) {
 			if (audioFile != nil) {
 				AudioFileClose(audioFile!)

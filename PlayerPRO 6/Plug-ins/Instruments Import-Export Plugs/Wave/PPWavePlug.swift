@@ -68,7 +68,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			//Constrain the audio conversion to values supported by PlayerPRO
 			realFormat.mSampleRate = ceil(realFormat.mSampleRate)
 			realFormat.mSampleRate = clamp(value: realFormat.mSampleRate, minimum: 5000, maximum: 44100)
-			realFormat.formatFlags = [.NativeEndian, .Packed, .SignedInteger]
+			realFormat.formatFlags = [.nativeEndian, .packed, .signedInteger]
 			switch realFormat.mBitsPerChannel {
 			case 8, 16:
 				break
@@ -144,7 +144,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 	
 	public func exportSample(_ sample: PPSampleObject, to sampleURL: URL, driver: PPDriver) -> MADErr {
 		var myErr = MADErr.noErr
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .LinearPCM, formatFlags: [.SignedInteger, .Packed], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.isStereo ? 2 : 1)
+		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [AudioFormatFlag.signedInteger, .packed], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.isStereo ? 2 : 1)
 		
 		var audioFile: AudioFileID? = nil
 		var res: OSStatus = 0
@@ -165,7 +165,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			data = sample.data
 		}
 		
-		res = AudioFileCreate(URL: sampleURL as NSURL, fileType: .WAVE, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
+		res = AudioFileCreate(URL: sampleURL, fileType: .WAVE, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
 		if (res != noErr) {
 			myErr = .writingErr;
 		} else {
