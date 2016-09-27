@@ -38,12 +38,13 @@
 
 #include "MADDefs.h"
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
 /*!
  * @typedef		UNFILE
- * @abstract	A pointer to a file structure.
+ * @abstract	A pointer to a \c FILE structure.
  */
 typedef FILE* UNFILE;
 
@@ -53,18 +54,18 @@ extern "C" {
 
 /*!
  * @function	iFileOpen
- * @abstract	Deprecated: Calls <code>iFileOpenRead()</code>
- * @discussion	You should be using <code>iFileOpenRead()</code> instead
- * @deprecated	Use <code>iFileOpenRead()</code> instead
+ * @abstract	Deprecated: Calls \c iFileOpenRead()
+ * @discussion	You should be using \c iFileOpenRead() instead.
+ * @deprecated	Use \c iFileOpenRead() instead.
  */
 PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
 
 /*!
  * @function	iFileOpenRead
  * @abstract	Opens a file for reading
- * @result		an UNFILE that can be read from
+ * @result		An \c UNFILE that can be read from.
  * @param		name
- *					The location of the file to read
+ *					The location of the file to read.
  * @discussion	The file location can be either relative to the current directory or absolute.
  */
 PPEXPORT UNFILE	iFileOpenRead(const char *name);
@@ -72,9 +73,9 @@ PPEXPORT UNFILE	iFileOpenRead(const char *name);
 /*!
  * @function	iFileOpenWrite
  * @abstract	Opens a file for writing
- * @result		an UNFILE that can be written to
+ * @result		An \c UNFILE that can be written to.
  * @param		name
- *					The location of the file to write
+ *					The location of the file to write.
  * @discussion	The file location can be either relative to the current directory or absolute.
  */
 PPEXPORT UNFILE	iFileOpenWrite(const char *name);
@@ -83,9 +84,9 @@ PPEXPORT UNFILE	iFileOpenWrite(const char *name);
  * @function	iFileCreate
  * @abstract	Create a file at path, optionally setting the file type
  * @param		path
- *					The path to create the new file
+ *					The path to create the new file.
  * @param		type
- *					The File Type to set the file to
+ *					The File Type to set the file to.
  * @discussion	\c type is ignored on platforms that aren't OS X. This includes iOS.<br>
  *				\c type is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
  *				It has been replaced by file extensions denoting the file type.<br>
@@ -109,9 +110,9 @@ PPEXPORT long	iGetEOF(UNFILE iFileRefI);
  * @abstract	Reads data in file referenced from \c iFileRefI
  * @result		An error value. 0, or \c MADNoErr if there was no error.
  * @param		size
- *					The size of the data to read
+ *					The size of the data to read.
  * @param		dest
- *					A pointer to put the data
+ *					A pointer to put the data.
  * @param		iFileRefI
  *					The file reference to read from. Must have been opened with \c iFileOpenRead()
  * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
@@ -123,9 +124,9 @@ PPEXPORT MADErr	iRead(long size, void *dest, UNFILE iFileRefI);
  * @abstract	Writes data to file reference from \c iFileRefI
  * @result		An error value. 0, or \c MADNoErr if there was no error.
  * @param		size
- *					The size of the data to write
+ *					The size of the data to write.
  * @param		src
- *					A pointer to read data from
+ *					A pointer to read data from.
  * @param		iFileRefI
  *					The file reference to write to. Must have been opened with \c iFileOpenWrite()
  * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
@@ -138,9 +139,9 @@ PPEXPORT MADErr	iWrite(long size, const void *src, UNFILE iFileRefI);
  * @abstract	Change the file position of file pointed at by \c iFileRefI
  * @result		An error value. 0, or \c MADNoErr if there was no error.
  * @param		size
- *					The offset from the current position
+ *					The offset from the current position.
  * @param		iFileRefI
- *					The file reference to change the file position on
+ *					The file reference to change the file position on.
  */
 PPEXPORT MADErr	iSeekCur(long size, UNFILE iFileRefI);
 
@@ -148,7 +149,7 @@ PPEXPORT MADErr	iSeekCur(long size, UNFILE iFileRefI);
  * @function	iClose
  * @abstract	Closes the file reference
  * @param		iFileRefI
- *					The file reference to close
+ *					The file reference to close.
  */
 PPEXPORT void	iClose(UNFILE iFileRefI);
 
@@ -164,10 +165,12 @@ PPEXPORT void	iClose(UNFILE iFileRefI);
  *					A pointer to a 32-bit value. On return, the value will be byte-swapped.
  * @discussion  Refrain from using this function directly: use either \c MADLE32() or \c MADBE32()
  */
-static inline void MADByteSwap32(void *msg_buf)
+PPINLINE void MADByteSwap32(void *msg_buf)
 {
 	uint32_t temp = *((uint32_t*)msg_buf);
-#ifdef _MAC_H
+#if defined(__llvm__)
+	*((uint32_t*)msg_buf) =  __builtin_bswap32(temp);
+#elif defined(_MAC_H)
 	*((uint32_t*)msg_buf) = CFSwapInt32(temp);
 #else
 	*((uint32_t*)msg_buf) = ((((temp & 0xff000000) >> 24) | \
@@ -184,10 +187,12 @@ static inline void MADByteSwap32(void *msg_buf)
  *					a pointer to a 16-bit value. On return, the value will be byte-swapped.
  * @discussion  Refrain from using this function directly: use either \c MADLE16() or \c MADBE16()
  */
-static inline void MADByteSwap16(void *msg_buf)
+PPINLINE void MADByteSwap16(void *msg_buf)
 {
 	uint16_t buf = *((uint16_t*)msg_buf);
-#ifdef _MAC_H
+#if defined(__llvm__)
+	*((uint16_t*)msg_buf) =  __builtin_bswap16(buf);
+#elif defined(_MAC_H)
 	*((uint16_t*)msg_buf) = CFSwapInt16(buf);
 #else
 	*((uint16_t*)msg_buf) = ((((buf) << 8) & 0xFF00) | (((buf) >> 8) & 0x00FF));
@@ -202,7 +207,7 @@ static inline void MADByteSwap16(void *msg_buf)
  *					On return, the value is swapped on little-endian machines.
  *	@discussion	On big-endian machines, this is a no-op.
  */
-static inline void MADBE32(void *msg_buf)
+PPINLINE void MADBE32(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap32(msg_buf);
@@ -217,7 +222,7 @@ static inline void MADBE32(void *msg_buf)
  *					On return, the value is swapped on little-endian machines.
  *	@discussion	On big-endian machines, this is a no-op.
  */
-static inline void MADBE16(void *msg_buf)
+PPINLINE void MADBE16(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap16(msg_buf);
@@ -232,7 +237,7 @@ static inline void MADBE16(void *msg_buf)
  *					On return, the value is swapped on big-endian machines.
  *	@discussion	On little-endian machines, this is a no-op.
  */
-static inline void MADLE32(void *msg_buf)
+PPINLINE void MADLE32(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap32(msg_buf);
@@ -247,7 +252,7 @@ static inline void MADLE32(void *msg_buf)
  *					On return, the value is swapped on big-endian machines.
  *	@discussion	On little-endian machines, this is a no-op.
  */
-static inline void MADLE16(void *msg_buf)
+PPINLINE void MADLE16(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap16(msg_buf);
@@ -265,7 +270,7 @@ static inline void MADLE16(void *msg_buf)
  *				Note that <code>OSType</code>s use the Mac OS Roman string encoding.
  *				If needed, use the iconv library (or similar) to convert from the Mac OS Roman encoding.
  */
-static inline void OSType2Ptr(MADFourChar type, char *str)
+PPINLINE void OSType2Ptr(MADFourChar type, char *str)
 {
 	MADBE32(&type);
 	memcpy(str, &type, 4);
@@ -281,7 +286,7 @@ static inline void OSType2Ptr(MADFourChar type, char *str)
  * @discussion  Note that <code>OSType</code>s use the Mac OS Roman string encoding. UTF-8 special characters may cause issues.
  *				If needed, use the iconv library (or similar) to convert to the Mac OS Roman encoding.
  */
-static inline MADFourChar Ptr2OSType(const char *str)
+PPINLINE MADFourChar Ptr2OSType(const char *str)
 {
 	short		i;
 	MADFourChar	type = '    ';

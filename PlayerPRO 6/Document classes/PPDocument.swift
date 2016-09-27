@@ -66,16 +66,16 @@ import AudioToolbox
 	
 	override class func writableTypes() -> [String] {
 		struct StaticStorage {
-			static var readables: [String]?
+			static var writables: [String]?
 		}
 		
-		if let readables = StaticStorage.readables {
-			return readables
+		if let writables = StaticStorage.writables {
+			return writables
 		}
 		
 		var toRet = globalMadLib.filter({ $0.canExport == true }).map({ $0.UTITypes.first! })
-		toRet.append(MADNativeUTI)
-		StaticStorage.readables = toRet
+		toRet.insert(MADNativeUTI, at: 0)
+		StaticStorage.writables = toRet
 		return toRet
 	}
 	
@@ -118,8 +118,8 @@ import AudioToolbox
 		
 		do {
 			try theDriver.changeDriverSettings(to: &theSett)
-		} catch let error as NSError {
-			Swift.print("Unable to change driver for \(self), error \(error)")
+		} catch {
+			Swift.print("Unable to change driver for \(self), error '\(error)'")
 			//NSAlert(error: createErrorFromMADErrorType(returnerr)).beginSheetModalForWindow(self.windowForSheet, completionHandler: { (returnCode) -> Void in
 			//currently, do nothing
 			//})

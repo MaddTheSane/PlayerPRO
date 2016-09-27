@@ -53,7 +53,9 @@ class ImportWindowController: NSWindowController {
 			}
 			
 			if let aData = anObject.data {
-				var errVal = madTest((aData as NSData).bytes)
+				var errVal = aData.withUnsafeBytes({ (rawDat: UnsafePointer<Int8>) -> MADErr in
+					return madTest(rawDat)
+				})
 				
 				if errVal != .noErr {
 					NSApplication.shared().endModalSession(modalSession)
@@ -64,7 +66,9 @@ class ImportWindowController: NSWindowController {
 				
 				var unusedDriverSettings = MADDriverSettings.new()
 				madMusic = UnsafeMutablePointer<MADMusic>.allocate(capacity: 1)
-				errVal = madLoad((aData as NSData).bytes.assumingMemoryBound(to: Int8.self), aData.count, madMusic, &unusedDriverSettings)
+				errVal = aData.withUnsafeBytes({ (rawDat: UnsafePointer<Int8>) -> MADErr in
+					return madLoad(rawDat, aData.count, madMusic, &unusedDriverSettings)
+				})
 				
 				if errVal != .noErr {
 					// The importers *should* have cleaned up after themselves...

@@ -12,10 +12,6 @@ import SwiftAdditions
 import ResourceFork
 
 final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
-	//public func beginImport(of theURL: URL, withHandler handler: PPComplexImportHandler) {
-	//	<#code#>
-	//}
-
 	//let madTypes: [OSType] = ["MADK", "MADI", "MADF", "MADG", "MADH"]
 	override init() {
 		super.init()
@@ -50,25 +46,17 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 	}
 	
 	public func canImport(_ theURL: URL) throws {
-		var outErr: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
-		do {
-			let resFile = try FVResourceFile.resourceFileWithContentsOfURL(theURL)
-			for resType in resFile.types {
-				switch resType.type {
-					
-				case "MADK", "MADI", "MADH", "MADF", "MADG":
-					return
-					
-				default:
-					continue
-				}
+		let resFile = try FVResourceFile.resourceFileWithContentsOfURL(theURL)
+		for resType in resFile.types {
+			switch resType.type {
+			case "MADK", "MADI", "MADH", "MADF", "MADG":
+				return
+				
+			default:
+				continue
 			}
-			
-			throw MADErr.fileNotSupportedByThisPlug
-		} catch let error as NSError {
-			outErr = error
 		}
 		
-		throw outErr
+		throw MADErr.fileNotSupportedByThisPlug
 	}
 }

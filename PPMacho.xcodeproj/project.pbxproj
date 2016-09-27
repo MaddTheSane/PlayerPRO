@@ -324,7 +324,7 @@
 		55680A1E19045F0A00F7616D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55680A2419045F0A00F7616D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55680A2219045F0A00F7616D /* InfoPlist.strings */; };
 		55680A2719045F0A00F7616D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A2619045F0A00F7616D /* main.m */; };
-		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A3919046D9800F7616D /* PPSTImporter.m */; };
 		55680A45190497B400F7616D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A44190497B400F7616D /* UIKit.framework */; };
 		55680A47190497E400F7616D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A46190497E400F7616D /* CoreGraphics.framework */; };
@@ -339,7 +339,7 @@
 		556BC17A19CF47FC00508F49 /* PPCoreInstrumentPlugBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A519C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m */; };
 		556BC17B19CF47FC00508F49 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		556BC18419CF482600508F49 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		556BC18A19CF75F900508F49 /* PPCoreInstrumentPlugBridge32.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		556BC18A19CF75F900508F49 /* PPCoreInstrumentPlugBridge32.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		557003361B2261B300C623AB /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; };
 		557003371B2261B300C623AB /* SwiftAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -510,7 +510,7 @@
 		5591708219C23C0600998D7F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5591708419C23C0600998D7F /* InfoPlist.strings */; };
 		559170A619C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A519C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m */; };
 		559170A819C26E1D00998D7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A719C26E1D00998D7F /* main.m */; };
-		559170AB19C26E1D00998D7F /* PPCoreInstrumentPlugBridge.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 5591709F19C26E1C00998D7F /* PPCoreInstrumentPlugBridge.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		559170AB19C26E1D00998D7F /* PPCoreInstrumentPlugBridge.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 5591709F19C26E1C00998D7F /* PPCoreInstrumentPlugBridge.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5599119E1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5599119D1A0ACB8C00D1D5C3 /* CommandIterator.swift */; };
 		5599119F1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5599119D1A0ACB8C00D1D5C3 /* CommandIterator.swift */; };
 		55993EF619A340FF00C2078E /* PPRunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF519A340FF00C2078E /* PPRunAlert.swift */; };
@@ -9332,7 +9332,6 @@
 		551292E8163DD68500C2C639 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -9359,7 +9358,6 @@
 		551292E9163DD68500C2C639 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -9923,6 +9921,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = "";
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -9948,6 +9947,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -10113,7 +10113,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = YES;
@@ -10194,6 +10194,7 @@
 			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
 			buildSettings = {
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				CODE_SIGN_IDENTITY = "-";
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
@@ -10224,6 +10225,7 @@
 			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
 			buildSettings = {
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				CODE_SIGN_IDENTITY = "-";
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
@@ -10253,6 +10255,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -10273,6 +10276,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -11170,7 +11174,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -11487,6 +11491,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = EditorIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -11512,6 +11517,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = EditorIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (

@@ -24,16 +24,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-#ifndef WIN32
 #include <stdbool.h>
-#else
+#ifdef WIN32
 #include <Windows.h>
 #ifndef __cplusplus
 #define inline __inline
-#define true TRUE
-#define false FALSE
 #endif
 #define __LITTLE_ENDIAN__ 1
+#endif
+
+#if __STDC_VERSION__ < 199901L
+#warning C99 minimum is required!
 #endif
 
 #ifdef __APPLE__
@@ -139,6 +140,18 @@
 #else
 #define EXP PPEXPORT
 #endif
+#endif
+
+#if defined(__GNUC__) && (__GNUC__ == 4) && !defined(DEBUG)
+#define PPINLINE static __inline__ __attribute__((always_inline))
+#elif defined(__GNUC__)
+#define PPINLINE static __inline__
+#elif defined(__cplusplus)
+#define PPINLINE static inline
+#elif defined(_MSC_VER)
+#define PPINLINE static __inline
+#elif TARGET_OS_WIN32
+#define PPINLINE static __inline__
 #endif
 
 #if !defined(_MAC_H)
