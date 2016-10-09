@@ -1688,48 +1688,47 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 
 //MARK: - PPSoundSettingsViewController delegate methods
 extension PlayerAppDelegate: SoundSettingsViewControllerDelegate {
-	func sound(view: SoundSettingsViewController, bitsDidChange bits: Int16) {
+	func soundView(_ view: SoundSettingsViewController, bitsDidChange bits: Int16) {
 		exportSettings.outPutBits = bits;
 	}
 	
-	func sound(view: SoundSettingsViewController, rateDidChange rat: UInt32) {
+	func soundView(_ view: SoundSettingsViewController, rateDidChange rat: UInt32) {
 		exportSettings.outPutRate = rat;
 	}
 	
-	func sound(view: SoundSettingsViewController, reverbDidChangeActive isAct: Bool) {
+	func soundView(_ view: SoundSettingsViewController, reverbDidChangeActive isAct: Bool) {
 		exportSettings.Reverb = isAct;
 	}
 	
-	func sound(view: SoundSettingsViewController, oversamplingDidChangeActive isAct: Bool) {
+	func soundView(_ view: SoundSettingsViewController, oversamplingDidChangeActive isAct: Bool) {
 		if (!isAct) {
 			exportSettings.oversampling = 1;
 		}
 	}
 	
-	func sound(view: SoundSettingsViewController, stereoDelayDidChangeActive isAct: Bool) {
+	func soundView(_ view: SoundSettingsViewController, stereoDelayDidChangeActive isAct: Bool) {
 		if (!isAct) {
 			exportSettings.MicroDelaySize = 0;
 		}
 	}
 	
-	func sound(view: SoundSettingsViewController, surroundDidChangeActive isAct: Bool) {
+	func soundView(_ view: SoundSettingsViewController, surroundDidChangeActive isAct: Bool) {
 		exportSettings.surround = isAct;
 	}
 	
-	func sound(view: SoundSettingsViewController, reverbStrengthDidChange rev: Int32) {
+	func soundView(_ view: SoundSettingsViewController, reverbStrengthDidChange rev: Int32) {
 		exportSettings.ReverbStrength = rev;
 	}
 	
-	func sound(view: SoundSettingsViewController, reverbSizeDidChange rev: Int32) {
+	func soundView(_ view: SoundSettingsViewController, reverbSizeDidChange rev: Int32) {
 		exportSettings.ReverbSize = rev;
 	}
 	
-	func sound(view: SoundSettingsViewController, oversamplingAmountDidChange ovs: Int32) {
+	func soundView(_ view: SoundSettingsViewController, oversamplingAmountDidChange ovs: Int32) {
 		exportSettings.oversampling = ovs;
 	}
 	
-	func sound(view: SoundSettingsViewController, stereoDelayAmountDidChange std: Int32) {
+	func soundView(_ view: SoundSettingsViewController, stereoDelayAmountDidChange std: Int32) {
 		exportSettings.MicroDelaySize = std;
 	}
-
 }

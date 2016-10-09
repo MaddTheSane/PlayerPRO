@@ -29,7 +29,7 @@ private func toDictionary(infoRec: MADInfoRec) -> NSDictionary {
 
 /// Class that represents the additional tracker types that PlayerPRO can load via plug-ins.
 public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
-	internal let trackerLibs: [PPLibraryObject]
+	public let trackerLibraries: [PPLibraryObject]
 	private(set) internal var theLibrary: UnsafeMutablePointer<MADLibrary>? = nil
 	/// Comparable to `MADInfoRec`, but more Swift-friendly
 	public struct MusicFileInfo: CustomStringConvertible {
@@ -112,7 +112,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	}
 
 	public func makeIterator() -> IndexingIterator<[PPLibraryObject]> {
-		return trackerLibs.makeIterator()
+		return trackerLibraries.makeIterator()
 	}
 	
 	@nonobjc public var startIndex: Int {
@@ -120,11 +120,11 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	}
 	
 	@nonobjc public var endIndex: Int {
-		return trackerLibs.count
+		return trackerLibraries.count
 	}
 
 	public subscript(index: Int) -> PPLibraryObject {
-		return trackerLibs[index]
+		return trackerLibraries[index]
 	}
 	
 	@nonobjc public func index(after: Int) -> Int {
@@ -157,7 +157,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			tmpArray.append(tmp)
 		}
 		
-		trackerLibs = tmpArray
+		trackerLibraries = tmpArray
 
 		super.init()
 	}
@@ -171,6 +171,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// Init a `PPLibrary` object, including plug-ins from `plugInPath`.
 	///
 	///- parameter path: The path to a directory that has additional plug-ins.
+	@objc(initWithPlugInPath:error:)
 	public convenience init(plugInPath path: String) throws {
 		try self.init(plugInCPath: (path as NSString).fileSystemRepresentation)
 	}
@@ -178,13 +179,14 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// Init a `PPLibrary` object, including plug-ins from `plugInURL`.
 	///
 	/// - parameter URL: The file URL to a directory that has additional plug-ins.
-	public convenience init?(plugInURL URL: URL) throws {
+	@objc(initWithPlugInURL:error:)
+	public convenience init(plugInURL URL: URL) throws {
 		try self.init(plugInCPath: (URL as NSURL).fileSystemRepresentation)
 	}
 	
 	/// The amount of plug-ins registered by the library.
 	public var pluginCount: Int {
-		return trackerLibs.count
+		return trackerLibraries.count
 	}
 	
 	/// Attempts to identify the file at the URL passed to it.
@@ -261,13 +263,16 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			return anErr
 		} catch let anErr as NSError {
 			if anErr.domain == PPMADErrorDomain {
-				return MADErr(rawValue: Int16(anErr.code)) ?? .unknownErr
+				if let iErr = Int16(exactly: anErr.code) {
+					return MADErr(rawValue: iErr) ?? .unknownErr
+				}
+				return .unknownErr
 			}
 		}
 		return .unknownErr
 	}
 	
-	internal func information(from URL: URL, cType: [Int8]) throws -> MADInfoRec {
+	fileprivate func information(from URL: URL, cType: [Int8]) throws -> MADInfoRec {
 		var cStrType = cType
 		var infoRec = MADInfoRec()
 
@@ -330,7 +335,10 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			return anErr
 		} catch let anErr as NSError {
 			if anErr.domain == PPMADErrorDomain {
-				return MADErr(rawValue: Int16(anErr.code)) ?? .unknownErr
+				if let iErr = Int16(exactly: anErr.code) {
+					return MADErr(rawValue: iErr) ?? .unknownErr
+				}
+				return .unknownErr
 			}
 		}
 		
@@ -369,8 +377,8 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// - parameter type: The type to test for.
 	/// - returns: An error value, or `MADNoErr` if the tracker is of the specified type.
 	@objc(testFileAtPath:stringType:) public func testFile(at path: String, type: String) -> MADErr {
-		let URL = Foundation.URL(fileURLWithPath: path)
-		return testFile(at: URL, type: type)
+		let url = URL(fileURLWithPath: path)
+		return testFile(at: url, type: type)
 	}
 	
 	/// Gets a plug-in type from a UTI
@@ -382,7 +390,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			return MadIDString
 		}
 		
-		for obj in trackerLibs {
+		for obj in trackerLibraries {
 			for bUTI in obj.UTITypes {
 				if aUTI == bUTI {
 					return obj.type
@@ -403,7 +411,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			return kPlayerPROMADKUTI
 		}
 		
-		for obj in trackerLibs {
+		for obj in trackerLibraries {
 			if aType == obj.type {
 				return obj.UTITypes.first!
 			}
@@ -414,21 +422,21 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	
 	/// `NSFastEnumeration` protocol method.
 	public func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
-		return (trackerLibs as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
+		return (trackerLibraries as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }
 
 ///Deprecated functions
 extension PPLibrary {
 	///Deprecated: do not use
-	@available(*, deprecated, message:"Use -getInformationFromFileAtPath:stringType:info: (Obj-C) or informationFromFile(path:type:) (Swift) instead", renamed:"information(at:type:)")
+	@available(*, deprecated, message:"Use -getInformationFromFileAtPath:stringType:info: (Obj-C) or information(at:type:) (Swift) instead", renamed:"information(at:type:)")
 	@objc(getInformationFromFileAtPath:type:info:) public func getInformationFromFile(path: String, type: UnsafeMutablePointer<Int8>, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
 		let anURL = URL(fileURLWithPath: path)
 		return getInformationFromFile(URL: anURL, type: type, info: info)
 	}
 
 	///Deprecated: do not use
-	@available(*, deprecated, message:"Use -getInformationFromFileAtURL:stringType:info: (Obj-C) or informationFromFile(URL:type:) (Swift) instead", renamed:"information(at:type:)")
+	@available(*, deprecated, message:"Use -getInformationFromFileAtURL:stringType:info: (Obj-C) or information(at:type:) (Swift) instead", renamed:"information(at:type:)")
 	@objc(getInformationFromFileAtURL:type:info:) public func getInformationFromFile(URL path: URL, type: UnsafeMutablePointer<Int8>, info: AutoreleasingUnsafeMutablePointer<NSDictionary>?) -> MADErr {
 		guard let info = info else {
 			return .parametersErr
@@ -450,14 +458,17 @@ extension PPLibrary {
 			return anErr
 		} catch let anErr as NSError {
 			if anErr.domain == PPMADErrorDomain {
-				return MADErr(rawValue: Int16(anErr.code)) ?? .unknownErr
+				if let iErr = Int16(exactly: anErr.code) {
+					return MADErr(rawValue: iErr) ?? .unknownErr
+				}
+				return .unknownErr
 			}
 		}
 		return .unknownErr
 	}
 	
 	/// Deprecated: do not use
-	@available(*, deprecated, message:"Use -identifyFileAtURL:stringType: (Obj-C) or 'identifyFile(URL:) throws' (Swift) instead", renamed:"identifyFile(at:)" )
+	@available(*, deprecated, message:"Use -identifyFileAtURL:stringType: (Obj-C) or 'identifyFile(at:) throws' (Swift) instead", renamed:"identifyFile(at:)" )
 	@objc(identifyFileAtURL:type:) public func identifyFile(URL apath: URL, type: UnsafeMutablePointer<Int8>?) -> MADErr {
 		if type == nil {
 			return .parametersErr
@@ -474,7 +485,10 @@ extension PPLibrary {
 			return anErr
 		} catch let anErr as NSError {
 			if anErr.domain == PPMADErrorDomain {
-				return MADErr(rawValue: Int16(anErr.code)) ?? .unknownErr
+				if let iErr = Int16(exactly: anErr.code) {
+					return MADErr(rawValue: iErr) ?? .unknownErr
+				}
+				return .unknownErr
 			}
 		}
 		return .unknownErr
@@ -498,7 +512,10 @@ extension PPLibrary {
 			return anErr
 		} catch let anErr as NSError {
 			if anErr.domain == PPMADErrorDomain {
-				return MADErr(rawValue: Int16(anErr.code)) ?? .unknownErr
+				if let iErr = Int16(exactly: anErr.code) {
+					return MADErr(rawValue: iErr) ?? .unknownErr
+				}
+				return .unknownErr
 			}
 		}
 		

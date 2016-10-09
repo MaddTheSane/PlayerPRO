@@ -388,7 +388,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 				do {
 					let identRet = try madLib.identifyFile(at: theURL)
 					let info = try! madLib.information(from: theURL, type: identRet)
-					let tmpURL = (theURL.deletingPathExtension)().appendingPathExtension(info.signature.lowercased())
+					let tmpURL = theURL.deletingPathExtension().appendingPathExtension(info.signature.lowercased())
 					do {
 						try FileManager.default.moveItem(at: theURL, to: tmpURL)
 						theURL = tmpURL

@@ -12,8 +12,8 @@ import SwiftAdditions
 import ResourceFork
 
 class ImportWindowController: NSWindowController {
-	@IBOutlet weak var resourceNamesTable: NSTableView? = nil
-	@IBOutlet weak var resourceIDsTable: NSTableView? = nil
+	@IBOutlet weak var resourceNamesTable: NSTableView!
+	@IBOutlet weak var resourceIDsTable: NSTableView!
 	@IBOutlet weak var dictionaryCont: NSDictionaryController!
 	@IBOutlet weak var arrayCont: NSArrayController!
 	
@@ -121,8 +121,8 @@ class ImportWindowController: NSWindowController {
 		
 		dictionaryCont.setSelectionIndex(0)
 		
-		resourceNamesTable?.sortDescriptors = [NSSortDescriptor(key: "key", ascending: true)]
-		resourceIDsTable?.sortDescriptors = [NSSortDescriptor(key: "resourceID", ascending: true)]
+		resourceNamesTable.sortDescriptors = [NSSortDescriptor(key: "key", ascending: true)]
+		resourceIDsTable.sortDescriptors = [NSSortDescriptor(key: "resourceID", ascending: true)]
 	}
 	
 	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
