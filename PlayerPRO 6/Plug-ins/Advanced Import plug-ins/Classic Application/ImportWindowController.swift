@@ -26,7 +26,7 @@ class ImportWindowController: NSWindowController {
 	@IBAction func importMusicObject(_ sender: AnyObject?) {
 		if let anObject = arrayCont.selectedObjects[0] as? FVResource {
 			var madMusic: UnsafeMutablePointer<MADMusic>
-			var madTest: (UnsafeRawPointer!) -> MADErr
+			var madTest: (UnsafeRawPointer) -> MADErr
 			var madLoad: (UnsafePointer<Int8>, size_t, UnsafeMutablePointer<MADMusic>, UnsafeMutablePointer<MADDriverSettings>) -> MADErr
 			switch anObject.type!.type {
 			case "MADI":
@@ -70,7 +70,7 @@ class ImportWindowController: NSWindowController {
 					return madLoad(rawDat, aData.count, madMusic, &unusedDriverSettings)
 				})
 				
-				if errVal != .noErr {
+				guard errVal == .noErr else {
 					// The importers *should* have cleaned up after themselves...
 					madMusic.deallocate(capacity: 1)
 					NSApplication.shared().endModalSession(modalSession)

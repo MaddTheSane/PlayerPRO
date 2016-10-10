@@ -69,7 +69,7 @@ final class MusicListPreferenceController: NSViewController, PPPreferenceObject 
 	
 	var playedMusic: PlaylistMode {
 		get {
-			let curSelected: AnyObject! = musicPlayingOutlet.selectedCell()
+			let curSelected = musicPlayingOutlet.selectedCell()
 			
 			if musicPlayingOutlet.cell(atRow: 0, column: 0) === curSelected {
 				return .StopPlaying
