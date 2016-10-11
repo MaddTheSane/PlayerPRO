@@ -4,3 +4,6 @@
 [submodule "Vendor/ForkView"]
 	path = Vendor/ForkView
 	url = https://github.com/MaddTheSane/ForkView.git
+[submodule "Vendor/MASPreferences"]
+	path = Vendor/MASPreferences
+	url = https://github.com/MaddTheSane/MASPreferences.git

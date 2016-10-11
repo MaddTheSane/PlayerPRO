@@ -7,13 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PPPreferences.h"
+#import <MASPreferences/MASPreferencesViewController.h>
 
 @class ColorPreferenceObject;
 
-@interface ColorPreferenceController : NSViewController <PPPreferenceObject>
+@interface ColorPreferenceController : NSViewController <MASPreferencesViewController>
 @property (weak) IBOutlet NSCollectionView *colorWells;
-@property (copy) NSArray *colors;
+@property (copy) NSArray<ColorPreferenceObject*> *colors;
+
++ (instancetype)newPreferenceView NS_RETURNS_RETAINED;
 
 - (IBAction)changeColorWell:(id)sender;
 

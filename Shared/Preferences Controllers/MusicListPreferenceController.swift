@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import MASPreferences.MASPreferencesViewController
 
 enum PlaylistMode: Int {
 	case StopPlaying = 0
@@ -15,7 +16,7 @@ enum PlaylistMode: Int {
 	case LoadRandom
 }
 
-final class MusicListPreferenceController: NSViewController, PPPreferenceObject {
+final class MusicListPreferenceController: NSViewController, MASPreferencesViewController {
 	@IBOutlet weak var askToSave: NSButtonCell!
 	@IBOutlet weak var autoPlay: NSButtonCell!
 	@IBOutlet weak var goToStartupPos: NSButtonCell!
@@ -24,7 +25,22 @@ final class MusicListPreferenceController: NSViewController, PPPreferenceObject 
 	@IBOutlet weak var rememberMusicList: NSButtonCell!
 	@IBOutlet weak var loopMusic: NSButtonCell!
 	
-	let preferenceIdentifier = PPMusicListPrefID
+	override var identifier: String? {
+		get {
+			return PPMusicListPrefID
+		}
+		set {
+			// do nothing
+		}
+	}
+	
+	var toolbarItemLabel: String? {
+		return NSLocalizedString("Music List", tableName: "PreferenceNames", comment: "Music List")
+	}
+	
+	var toolbarItemImage: NSImage? {
+		return nil //TODO: implement
+	}
 	
 	static func newPreferenceView() -> MusicListPreferenceController? {
 		let aCont = MusicListPreferenceController(nibName:"MusicListPrefs", bundle:nil)
@@ -98,5 +114,13 @@ final class MusicListPreferenceController: NSViewController, PPPreferenceObject 
 				musicPlayingOutlet.selectCell(atRow: 0, column: 0)
 			}
 		}
+	}
+	
+	var hasResizableWidth: Bool {
+		return false
+	}
+	
+	var hasResizableHeight: Bool {
+		return false
 	}
 }

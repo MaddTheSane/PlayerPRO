@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PPPreferences.h"
+#import <MASPreferences/MASPreferencesViewController.h>
 
-@interface DigitalEditorPreferenceControler : NSViewController <PPPreferenceObject>
+@interface DigitalEditorPreferenceControler : NSViewController <MASPreferencesViewController>
 @property (weak) IBOutlet NSButton *PPDEEffect;
 @property (weak) IBOutlet NSButton *PPDENote;
 @property (weak) IBOutlet NSButton *PPDEInstrument;
@@ -29,6 +29,8 @@
 @property (weak) IBOutlet NSMatrix *PPDEMusicTraceMatrix;
 @property (weak) IBOutlet NSMatrix *PPDEPatternWrappingMatrix;
 @property (weak) IBOutlet NSMatrix *PPDEDragAsMatrix;
+
++ (instancetype)newPreferenceView NS_RETURNS_RETAINED;
 
 - (IBAction)cellInformationCheckClicked:(id)sender;
 - (IBAction)mouseCheckClicked:(id)sender;

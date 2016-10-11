@@ -32,6 +32,21 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 	return PPClassicPrefID;
 }
 
+- (NSString*)identifier
+{
+	return PPBoxPrefID;
+}
+
+- (NSString*)toolbarItemLabel
+{
+	return NSLocalizedStringFromTable(@"Classic Editor", @"PreferenceNames", @"Classic Editor");
+}
+
+- (NSImage*)toolbarItemImage
+{
+	return nil;
+}
+
 - (instancetype)init
 {
 	if (self = [super initWithNibName:@"ClassicPrefs" bundle:nil]) {
@@ -105,6 +120,16 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 	[markersLoopValue setEnabled:markersVal];
 	[markersOffsetValue setEnabled:markersVal];
 	[markersCheck setState:markersVal];
+}
+
+- (BOOL)hasResizableWidth
+{
+	return NO;
+}
+
+- (BOOL)hasResizableHeight
+{
+	return NO;
 }
 
 @end

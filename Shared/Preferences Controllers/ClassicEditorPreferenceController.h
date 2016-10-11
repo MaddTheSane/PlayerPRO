@@ -7,9 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <MASPreferences/MASPreferencesViewController.h>
 #import "PPPreferences.h"
 
-@interface ClassicEditorPreferenceController : NSViewController <PPPreferenceObject>
+@interface ClassicEditorPreferenceController : NSViewController <MASPreferencesViewController>
 @property (weak) IBOutlet NSTextField *tempoUnitValue;
 @property (weak) IBOutlet NSTextField *tempoNumberValue;
 @property (weak) IBOutlet NSTextField *markersLoopValue;
@@ -17,6 +18,8 @@
 @property (weak) IBOutlet NSButton *markersCheck;
 @property (weak) IBOutlet NSButton *notesLengthCheck;
 @property (weak) IBOutlet NSPopUpButton *trackHeightButton;
+
++ (instancetype)newPreferenceView NS_RETURNS_RETAINED;
 
 - (IBAction)changeTrackHeight:(id)sender;
 - (IBAction)toggleNoteLength:(id)sender;

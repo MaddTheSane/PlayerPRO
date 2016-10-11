@@ -230,9 +230,9 @@ open class SoundSettingsViewController: NSViewController {
 	}
 
 	public func settingsFromDriverSettings(_ sett: MADDriverSettings) {
-		let oversamplingState: Bool = sett.oversampling > 1;
-		let reverbState = sett.Reverb;
-		let stereoDelayState: Bool = sett.MicroDelaySize > 0;
+		let oversamplingState: Bool = sett.oversampling > 1
+		let reverbState = sett.Reverb
+		let stereoDelayState: Bool = sett.MicroDelaySize > 0
 		
 		self.reverbActive = reverbState;
 		self.oversamplingActive = oversamplingState;
@@ -243,117 +243,119 @@ open class SoundSettingsViewController: NSViewController {
 		reverb.state = reverbState ? NSOnState : NSOffState
 		stereoDelay.state = stereoDelayState ? NSOnState : NSOffState
 		surround.state = sett.surround ? NSOnState : NSOffState
+		
+		oversamplingNum.isEnabled = oversamplingState
+		reverbNum.isEnabled = reverbState
+		reverbPercent.isEnabled = reverbState
+		stereoDelayNum.isEnabled = stereoDelayState
+		
+		setCurrentSoundDriver(sett.driverMode)
+		
+		let unConvBits = sett.outPutBits
+		var ConvBits = bitRate.bits8
+		switch (unConvBits) {
+		case 8:
+			ConvBits = .bits8;
+			break;
 			
-			oversamplingNum.isEnabled = oversamplingState
-			reverbNum.isEnabled = reverbState
-			reverbPercent.isEnabled = reverbState
-			stereoDelayNum.isEnabled = stereoDelayState
+		case 20:
+			ConvBits = .bits20;
+			break;
 			
-			setCurrentSoundDriver(sett.driverMode)
+		case 24:
+			ConvBits = .bits24;
+			break;
 			
-			let unConvBits = sett.outPutBits
-			var ConvBits = bitRate.bits8
-			switch (unConvBits) {
-			case 8:
-				ConvBits = .bits8;
-				break;
-				
-			case 20:
-				ConvBits = .bits20;
-				break;
-				
-			case 24:
-				ConvBits = .bits24;
-				break;
-				
-			default:
-				ConvBits = .bits16;
-				break;
-			}
-			set(bits: ConvBits)
+		default:
+			ConvBits = .bits16;
+			break;
+		}
+		set(bits: ConvBits)
+		
+		let unConvRate = sett.outPutRate
+		var convRate = soundRate.rate11Khz
+		switch (unConvRate) {
+		case 11025:
+			convRate = .rate11Khz;
+			break;
 			
-			let unConvRate = sett.outPutRate
-			var convRate = soundRate.rate11Khz
-			switch (unConvRate) {
-			case 11025:
-				convRate = .rate11Khz;
-				break;
-				
-			case 22050:
-				convRate = .rate22Khz;
-				break;
-				
-			case 48000:
-				convRate = .rate48Khz;
-				break;
-				
-			default:
-				convRate = .rate44Khz;
-				break;
-			}
+		case 22050:
+			convRate = .rate22Khz;
+			break;
+			
+		case 48000:
+			convRate = .rate48Khz;
+			break;
+			
+		default:
+			convRate = .rate44Khz;
+			break;
+		}
 		set(rate: convRate)
-			
-			let theRate = sett.MicroDelaySize
-			var toSet: Int? = nil
-			for i in ReverbPercentCoupling {
-				if i.amount == theRate {
-					toSet = i.tag
-					break
-				}
-			}
-			
-			if toSet == nil {
-				toSet = 4;
-			}
-			
-			stereoDelayNum.selectItem(at: toSet! - 1)
-			
-			toSet = nil
-			let reverbAmount = sett.ReverbSize
-			for i in ReverbAmountCoupling {
-				if i.amount == reverbAmount {
-					toSet = i.tag
-					break
-				}
-			}
-			
-			if toSet == nil {
-				toSet = 4;
-			}
-			reverbNum.selectItem(at: toSet! - 1)
-			
-			toSet = nil
-			let reverbPercentage = sett.ReverbStrength;
-			for i in ReverbPercentCoupling {
-				if i.amount == reverbPercentage {
-					toSet = i.tag
-					break
-				}
-			}
-			
-			if toSet == nil {
-				toSet = 3;
-			}
-			reverbPercent.selectItem(at: toSet! - 1)
-			
-			toSet = nil
-			let oversamplingAmount = sett.oversampling;
-			for i in OversamplingCoupling {
-				if i.amount == oversamplingAmount {
-					toSet = i.tag
-					break
-				}
-			}
-			
-			if toSet == nil {
-				toSet = 1;
-			}
-			oversamplingNum.selectItem(at: toSet! - 1)
-			
-			if delegate is SoundSettingsViewWithDriverControllerDelegate {
-				soundDriver.isEnabled = false;
+		
+		let theRate = sett.MicroDelaySize
+		var toSet: Int? = nil
+		for i in ReverbPercentCoupling {
+			if i.amount == theRate {
+				toSet = i.tag
+				break
 			}
 		}
+		
+		if toSet == nil {
+			toSet = 4;
+		}
+		
+		stereoDelayNum.selectItem(at: toSet! - 1)
+		
+		toSet = nil
+		let reverbAmount = sett.ReverbSize
+		for i in ReverbAmountCoupling {
+			if i.amount == reverbAmount {
+				toSet = i.tag
+				break
+			}
+		}
+		
+		if toSet == nil {
+			toSet = 4;
+		}
+		reverbNum.selectItem(at: toSet! - 1)
+		
+		toSet = nil
+		let reverbPercentage = sett.ReverbStrength;
+		for i in ReverbPercentCoupling {
+			if i.amount == reverbPercentage {
+				toSet = i.tag
+				break
+			}
+		}
+		
+		if toSet == nil {
+			toSet = 3;
+		}
+		reverbPercent.selectItem(at: toSet! - 1)
+		
+		toSet = nil
+		let oversamplingAmount = sett.oversampling;
+		for i in OversamplingCoupling {
+			if i.amount == oversamplingAmount {
+				toSet = i.tag
+				break
+			}
+		}
+		
+		if toSet == nil {
+			toSet = 1;
+		}
+		oversamplingNum.selectItem(at: toSet! - 1)
+		
+		if delegate is SoundSettingsViewWithDriverControllerDelegate {
+			soundDriver.isEnabled = true
+		} else {
+			soundDriver.isEnabled = false
+		}
+	}
 
 	required public init?(coder: NSCoder) {
 		super.init(coder: coder)

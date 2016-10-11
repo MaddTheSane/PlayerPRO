@@ -14,8 +14,3 @@ typedef struct TagCoupling {
 	NSInteger tag;
 } TagCoupling;
 #pragma pack(pop)
-
-@protocol PPPreferenceObject <NSObject>
-+ (nullable instancetype)newPreferenceView NS_RETURNS_RETAINED;
-@property (nonatomic, readonly, nonnull) NSString *preferenceIdentifier;
-@end

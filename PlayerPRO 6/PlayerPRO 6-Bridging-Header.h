@@ -25,6 +25,7 @@
 #import "PPSamplePlugObject.h"
 
 //Preferences
+#import "PPPreferences.h"
 #import "PianoPreferencesController.h"
 #import "ColorPreferenceController.h"
 #import "BoxEditorPreferenceController.h"

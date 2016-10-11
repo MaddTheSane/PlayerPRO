@@ -7,8 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PPPreferences.h"
+#import <MASPreferences/MASPreferencesViewController.h>
 
-@interface MidiHardwarePreferenceController : NSViewController <PPPreferenceObject>
+@interface MidiHardwarePreferenceController : NSViewController <MASPreferencesViewController>
+
++ (nullable instancetype)newPreferenceView NS_RETURNS_RETAINED;
 
 @end

@@ -17,10 +17,21 @@
 	return [[self alloc] init];
 }
 
-- (NSString*)preferenceIdentifier
+- (NSString*)identifier
 {
-	return PPMIDIPrefID;
+	return PPBoxPrefID;
 }
+
+- (NSString*)toolbarItemLabel
+{
+	return NSLocalizedStringFromTable(@"MIDI Hardware", @"PreferenceNames", @"MIDI Hardware");
+}
+
+- (NSImage*)toolbarItemImage
+{
+	return nil;
+}
+
 
 - (instancetype)init
 {
@@ -35,6 +46,16 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
 	defaults = nil;
+}
+
+- (BOOL)hasResizableWidth
+{
+	return NO;
+}
+
+- (BOOL)hasResizableHeight
+{
+	return NO;
 }
 
 @end

@@ -8,8 +8,9 @@
 
 import Cocoa
 import SwiftAdditions
+import MASPreferences.MASPreferencesViewController
 
-final class MiscPreferenceController: NSViewController, PPPreferenceObject {
+final class MiscPreferenceController: NSViewController, MASPreferencesViewController {
 	@IBOutlet weak var addExt: NSButtonCell!
 	@IBOutlet weak var madCompression: NSButtonCell!
 	@IBOutlet weak var noLoadMixerFromFile: NSButtonCell!
@@ -21,8 +22,23 @@ final class MiscPreferenceController: NSViewController, PPPreferenceObject {
 		return aCont
 	}
 	
-	let preferenceIdentifier = PPMiscPrefID
+	override var identifier: String? {
+		get {
+			return PPMiscPrefID
+		}
+		set {
+			//do nothing
+		}
+	}
 	
+	var toolbarItemLabel: String? {
+		return NSLocalizedString("Misc.", tableName: "PreferenceNames", comment: "Misc.")
+	}
+	
+	var toolbarItemImage: NSImage? {
+		return NSImage(named: NSImageNameAdvanced)
+	}
+
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		let defaults = UserDefaults.standard
@@ -41,5 +57,13 @@ final class MiscPreferenceController: NSViewController, PPPreferenceObject {
 		defaults[PPMOscilloscopeDrawLines] = oscDrawLines.state == NSOnState
 		
 		NotificationCenter.default.post(name: .PPMiscPreferencesDidChange, object: self)
+	}
+	
+	var hasResizableWidth: Bool {
+		return false
+	}
+	
+	var hasResizableHeight: Bool {
+		return false
 	}
 }

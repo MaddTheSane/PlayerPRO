@@ -36,9 +36,19 @@
 	return [[self alloc] init];
 }
 
-- (NSString*)preferenceIdentifier
+- (NSString*)identifier
 {
 	return PPColorPrefID;
+}
+
+- (NSString*)toolbarItemLabel
+{
+	return NSLocalizedStringFromTable(@"Colors", @"PreferenceNames", @"Colors");
+}
+
+- (NSImage*)toolbarItemImage
+{
+	return [NSImage imageNamed:NSImageNameColorPanel];
 }
 
 - (instancetype)init
@@ -96,6 +106,16 @@ break
 	if (keyToChange != nil) {
 		[[NSUserDefaults standardUserDefaults] setObject:encData forKey:keyToChange];
 	}
+}
+
+- (BOOL)hasResizableWidth
+{
+	return NO;
+}
+
+- (BOOL)hasResizableHeight
+{
+	return NO;
 }
 
 @end

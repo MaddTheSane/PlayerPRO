@@ -17,9 +17,19 @@
 	return [[self alloc] init];
 }
 
-- (NSString*)preferenceIdentifier
+- (NSString*)identifier
 {
 	return PPPianoPrefID;
+}
+
+- (NSString*)toolbarItemLabel
+{
+	return NSLocalizedStringFromTable(@"Piano", @"PreferenceNames", @"Piano");
+}
+
+- (NSImage*)toolbarItemImage
+{
+	return nil;
 }
 
 - (instancetype)init
@@ -35,6 +45,16 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
 	defaults = nil;
+}
+
+- (BOOL)hasResizableWidth
+{
+	return NO;
+}
+
+- (BOOL)hasResizableHeight
+{
+	return NO;
 }
 
 @end

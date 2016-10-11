@@ -39,6 +39,21 @@
 	return PPDigitalPrefID;
 }
 
+- (NSString*)identifier
+{
+	return PPBoxPrefID;
+}
+
+- (NSString*)toolbarItemLabel
+{
+	return NSLocalizedStringFromTable(@"Digital Editor", @"PreferenceNames", @"Digital Editor");
+}
+
+- (NSImage*)toolbarItemImage
+{
+	return nil;
+}
+
 - (instancetype)init
 {
 	if (self = [super initWithNibName:@"DigitalPrefs" bundle:nil]) {
@@ -190,9 +205,19 @@
 
 	if ([defaults boolForKey:PPDEDragAsPcmd]) {
 		[PPDEDragAsMatrix selectCellAtRow:0 column:0];
-	}else {
+	} else {
 		[PPDEDragAsMatrix selectCellAtRow:0 column:1];
 	}
+}
+
+- (BOOL)hasResizableWidth
+{
+	return NO;
+}
+
+- (BOOL)hasResizableHeight
+{
+	return NO;
 }
 
 @end

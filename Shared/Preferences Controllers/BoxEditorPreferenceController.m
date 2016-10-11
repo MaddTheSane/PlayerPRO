@@ -21,9 +21,19 @@
 	return [[self alloc] init];
 }
 
-- (NSString*)preferenceIdentifier
+- (NSString*)identifier
 {
 	return PPBoxPrefID;
+}
+
+- (NSString*)toolbarItemLabel
+{
+	return NSLocalizedStringFromTable(@"Box Editor", @"PreferenceNames", @"Box Editor");
+}
+
+- (NSImage*)toolbarItemImage
+{
+	return nil;
 }
 
 - (instancetype)init
@@ -52,6 +62,16 @@
 	[defaults setBool:[markersCheck state] forKey:PPBEMarkersEnabled];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPBoxEditorPreferencesDidChangeNotification object:self];
+}
+
+- (BOOL)hasResizableWidth
+{
+	return NO;
+}
+
+- (BOOL)hasResizableHeight
+{
+	return NO;
 }
 
 @end

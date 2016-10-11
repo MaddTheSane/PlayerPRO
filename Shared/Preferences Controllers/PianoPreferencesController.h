@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PPPreferences.h"
+#import <MASPreferences/MASPreferencesViewController.h>
 
-@interface PianoPreferencesController : NSViewController <PPPreferenceObject>
+@interface PianoPreferencesController : NSViewController <MASPreferencesViewController>
++ (nullable instancetype)newPreferenceView NS_RETURNS_RETAINED;
 
 @end

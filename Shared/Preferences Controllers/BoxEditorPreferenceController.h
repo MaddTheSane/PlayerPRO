@@ -7,14 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PPPreferences.h"
+#import <MASPreferences/MASPreferencesViewController.h>
 
-@interface BoxEditorPreferenceController : NSViewController <PPPreferenceObject>
+@interface BoxEditorPreferenceController : NSViewController <MASPreferencesViewController>
 @property (weak) IBOutlet NSButton *notesCheck;
 @property (weak) IBOutlet NSButton *octaveCheck;
 @property (weak) IBOutlet NSFormCell *loopField;
 @property (weak) IBOutlet NSFormCell *offsetField;
 @property (weak) IBOutlet NSButton *markersCheck;
+
++ (instancetype)newPreferenceView NS_RETURNS_RETAINED;
 
 - (IBAction)changeMarkerCheck:(id)sender;
 

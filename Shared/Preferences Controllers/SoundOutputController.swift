@@ -9,9 +9,25 @@
 import Cocoa
 import PlayerPROCore
 import PlayerPROKit
+import MASPreferences.MASPreferencesViewController
 
-final class SoundOutputController: SoundSettingsViewController, SoundSettingsViewWithDriverControllerDelegate, PPPreferenceObject {
-	let preferenceIdentifier = PPSoundSettPrefID
+final class SoundOutputController: SoundSettingsViewController, SoundSettingsViewWithDriverControllerDelegate, MASPreferencesViewController {
+	override var identifier: String? {
+		get {
+		return PPSoundSettPrefID
+		}
+		set {
+			//do nothing
+		}
+	}
+	
+	var toolbarItemLabel: String? {
+		return NSLocalizedString("Sound Output", tableName: "PreferenceNames", comment: "Sound Output")
+	}
+	
+	var toolbarItemImage: NSImage? {
+		return nil //TODO: implement
+	}
 	
 	class func newPreferenceView() -> Self? {
 		guard let ourself = self.init(nibName: "PPSoundSettingsViewController", bundle: Bundle(for: SoundSettingsViewController.self)) else {
@@ -127,5 +143,13 @@ final class SoundOutputController: SoundSettingsViewController, SoundSettingsVie
 		}
 		
 		settingsFromDriverSettings(drivSet);
+	}
+	
+	var hasResizableWidth: Bool {
+		return false
+	}
+	
+	var hasResizableHeight: Bool {
+		return false
 	}
 }
