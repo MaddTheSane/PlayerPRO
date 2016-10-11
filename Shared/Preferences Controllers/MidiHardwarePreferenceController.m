@@ -19,7 +19,7 @@
 
 - (NSString*)identifier
 {
-	return PPBoxPrefID;
+	return PPMIDIPrefID;
 }
 
 - (NSString*)toolbarItemLabel

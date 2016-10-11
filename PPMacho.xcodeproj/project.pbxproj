@@ -410,7 +410,6 @@
 		5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55323352167687A200076604 /* PPTimeFormatter.m */; };
-		5578C4C117DA4C210057D11B /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		5578C4C217DA4C430057D11B /* MusicListPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6F016619E39005BDE4B /* MusicListPrefs.xib */; };
 		5578C4CD17DA6B170057D11B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
 		5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -723,7 +722,6 @@
 		55E382ED1981694300EC330B /* MADPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* MADPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55E4D8021A2A3BCA0054675C /* PPAPPLHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */; };
 		55E4D8041A2A40EE0054675C /* ImportWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D8031A2A40EE0054675C /* ImportWindowController.swift */; };
-		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55E898B110F17C2B004EB52B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55E8998510F18165004EB52B /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
@@ -2701,7 +2699,6 @@
 		559170A719C26E1D00998D7F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5593A13A1DAC04C20040CACA /* MASPreferences.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MASPreferences.xcodeproj; path = MASPreferences/MASPreferences.xcodeproj; sourceTree = "<group>"; };
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
-		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
 		5599119D1A0ACB8C00D1D5C3 /* CommandIterator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandIterator.swift; sourceTree = "<group>"; };
 		55993EF519A340FF00C2078E /* PPRunAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPRunAlert.swift; sourceTree = "<group>"; };
 		559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPQuickView.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4114,7 +4111,6 @@
 			children = (
 				557139E51685007B00831A5A /* PPOpenPanel.xib */,
 				5521F42017FA573B002CDBA9 /* PPPlugInInfoController.xib */,
-				55981C5411EE375400656EE3 /* preferences.xib */,
 				55232AFD11FDF10C0041A4EC /* Preferences */,
 				5521F41617FA541C002CDBA9 /* Trackers.xcassets */,
 				55A9351817F28F9700493DC5 /* Shared.xcassets */,
@@ -6969,7 +6965,6 @@
 				55A6201918A6EFEA003B29B5 /* PreferenceNames.strings in Resources */,
 				5578C49417D9E8570057D11B /* MainMenu.xib in Resources */,
 				5521F41E17FA573B002CDBA9 /* PPPlugInInfoController.xib in Resources */,
-				5578C4C117DA4C210057D11B /* preferences.xib in Resources */,
 				5578C4C217DA4C430057D11B /* MusicListPrefs.xib in Resources */,
 				5521F41817FA541C002CDBA9 /* Trackers.xcassets in Resources */,
 				5578C4CD17DA6B170057D11B /* Localizable.strings in Resources */,
@@ -7252,7 +7247,6 @@
 				55CBFC7311EB7BD90028C6BB /* InfoPlist.strings in Resources */,
 				55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */,
 				5533600411EBC66400525CAF /* Localizable.strings in Resources */,
-				55E52E2512455E5100315307 /* preferences.xib in Resources */,
 				55085D781836BAAA004A152F /* MidiPrefs.xib in Resources */,
 				5504A6E216619E10005BDE4B /* ClassicPrefs.xib in Resources */,
 				55A6201818A6EFEA003B29B5 /* PreferenceNames.strings in Resources */,

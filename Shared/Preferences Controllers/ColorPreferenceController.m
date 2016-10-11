@@ -13,7 +13,7 @@
 
 @implementation ColorPreferenceController
 {
-	NSMutableArray *_colors;
+	NSMutableArray<ColorPreferenceObject*> *_colors;
 }
 
 - (NSArray*)colors

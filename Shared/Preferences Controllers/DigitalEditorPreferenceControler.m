@@ -34,14 +34,9 @@
 	return [[self alloc] init];
 }
 
-- (NSString*)preferenceIdentifier
-{
-	return PPDigitalPrefID;
-}
-
 - (NSString*)identifier
 {
-	return PPBoxPrefID;
+	return PPDigitalPrefID;
 }
 
 - (NSString*)toolbarItemLabel
