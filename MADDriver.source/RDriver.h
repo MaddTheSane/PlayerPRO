@@ -532,7 +532,7 @@ typedef struct PlugInfo {
 /********************						***********************/
 
 typedef struct MADLibrary {
-	/** Plugs Import/Export variables **/
+	/** Plugs Import/Export variables */
 	int			mytab[12];
 	/// Pointers on plugs code & infos
 	PlugInfo	*ThePlug;

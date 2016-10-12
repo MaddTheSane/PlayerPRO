@@ -455,6 +455,7 @@
 		557DE91510E08DB000177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE95810E08DB900177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE99B10E08DC100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557E8BB11DAE038A005C7C4D /* HeaderChecking.c in Sources */ = {isa = PBXBuildFile; fileRef = 557E8BB01DAE038A005C7C4D /* HeaderChecking.c */; };
 		557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */; };
 		557F296818790DDA009D4BC8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
 		557F296918790DF2009D4BC8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
@@ -2634,6 +2635,7 @@
 		557DE91B10E08DB000177B4C /* Silence.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Silence.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE95E10E08DB900177B4C /* Smooth.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Smooth.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE9A110E08DC100177B4C /* Tone Generator.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tone Generator.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		557E8BB01DAE038A005C7C4D /* HeaderChecking.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = HeaderChecking.c; sourceTree = "<group>"; };
 		557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporter.h; sourceTree = "<group>"; };
 		557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentImporter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		557EF732168BDE95001BF077 /* PPPlugInCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPlugInCommon.h; sourceTree = "<group>"; };
@@ -3622,6 +3624,7 @@
 				55080A8E1AEAAAAF009E9422 /* FortePatch.swift */,
 				551FEB2810E727B100EDF2F1 /* PAT-Info.plist */,
 				5591708419C23C0600998D7F /* InfoPlist.strings */,
+				557E8BB01DAE038A005C7C4D /* HeaderChecking.c */,
 			);
 			path = PAT;
 			sourceTree = "<group>";
@@ -7396,6 +7399,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				557E8BB11DAE038A005C7C4D /* HeaderChecking.c in Sources */,
 				55080A8F1AEAAAAF009E9422 /* FortePatch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

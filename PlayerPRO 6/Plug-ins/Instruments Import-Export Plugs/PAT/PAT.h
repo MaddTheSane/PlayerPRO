@@ -1,55 +1,77 @@
 #ifndef __PAT_H
 #define __PAT_H
 
-#pragma pack(push, 2)
+#include <CoreFoundation/CoreFoundation.h>
+
+#pragma pack(push, 1)
 
 typedef struct _PatchHeader
 {
 	char	ID[12];
 	char	GravisID[10];
-	char	Description[60];
+	char	Description[60]; ///< asciz, Whatever you want, (Gravis uses it for a copyright notice)
 	
-	Byte	InsNo;
-	Byte	VoiceNo;
-	Byte	Channels;
+	Byte	InsNo;			///< 1, number of instruments in patch. Could be > 1 but why such a thing?
+	Byte	VoiceNo;		///< 14, Playback voices, ignored.
+	Byte	Channels;		///< 0, ignored, Wav channels that can be played beside the patch.
 	
-	Byte	HiSamp;
-	Byte	LoSamp;
+	short	Samp;			///< Total number of waveforms in file
 	
-	Byte	HiVol;
-	Byte	LoVol;
+	short	Vol;			///< Master Volume, \c 00..7F
 	
-	Byte	Size1;
-	Byte	Size2;
-	Byte	Size3;
-	Byte	Size4;
+	int		Size;			///< Memory patch takes in gusram?
 	
-	char	reserved[36];
+	char	reserved[36];	///< For future extensions
 } PatchHeader;
 
 typedef struct _PatInsHeader
 {
-	short	ID;
-	char	name[16];
-	int		size;
-	Byte	layer;
-	char	reserved[40];
+	short	ID;				///< Instrument id: \c 0..FFFF
+	char	name[16];		/*!< Name of instrument
+							 Not used in patches of 2.06 disks
+							 but you SHOULD use it, This is
+							 what's seen when you choose  'Use
+							 Names from Patch files' in the Win
+							 Patch Manager, and it will become
+							 essential once we have bank-switch
+							 and not only GM-sounds
+							 */
+	int		size;			///< Number of bytes for the instrument incl. header.To skip to next instr
+	Byte	layer;			///< 1, Number of layers in instr: \c 1-4. Current drivers only support \c 1
+	char	reserved[40];	///< For future extensions
 } PatInsHeader;
 
 typedef struct _LayerHeader
 {
-	Byte	dup;
-	Byte	id;
-	int		size;
-	Byte	SampNo;
-	char	reserved[40];
+	Byte	dup;			///< If not \c 0 the wavesample to use is from the
+							///< previous layer. Waveheader is still needed
+	Byte	id;				///< 0, Layer id: \c 0..3
+	int		size;			///< Data size in bytes in the layer, excluding
+							///< the header. To skip to next layer
+	Byte	SampNo;			///< number of wavesamples
+	char	reserved[40];	///< For future extensions
 } LayerHeader;
+
+typedef CF_OPTIONS(unsigned char, PatSampFlags) {
+	PatSampIs16Bit			= 1 << 0,	///< 0=8 bit, 1=16 bit wave data.
+	PatSampIsSigned			= 1 << 1,	///< 0=Signed data, 1=Unsigned data.
+	PatSampLoops			= 1 << 2,	///< Enable looping
+	PatSampIsPingPong		= 1 << 3,	///< Enable bidirectional looping
+	PatSampLoopBackward		= 1 << 4,	///< Enable looping backward
+	PatSampSustain			= 1 << 5,	///< Enable sustain (3rd point of envelope)
+	PatSampEnvelopes		= 1 << 6,	///< Enable envelopes, must be set if you want to hear anything
+	PatSampClampedRelease	= 1 << 7,	///< Enable clamped release (6th point of envelope)
+};
 
 typedef struct _PatSampHeader
 {
-	char			name[7];
-	Byte			fractions;
-	int				size;
+	char			name[7];		///< asciz. name of the wave. 'NoName'#0 if
+									///< none, use 'C3', 'High' and such names
+	Byte			fractions;		///< Start loop point fraction in 4 bits + End
+									///< loop point fraction in the 4 other bits;
+									///< used when looppoint is between two samples
+	int				size;			///< Total size of wavesample. Limited to 64KB
+									///< now by the drivers,card can do up to 256KB
 	int				startLoop;
 	int				endLoop;
 	unsigned short	rate;
@@ -67,10 +89,11 @@ typedef struct _PatSampHeader
 	Byte			VibratoRate;
 	Byte			VibratoDepth;
 	
-	Byte			Flag;
-	short			FreqScale;
-	unsigned short	FreqScaleFactor;
-	char			reserved[36];
+	PatSampFlags	Flag;
+	short			FreqScale;			///< 60, Dunno what it is
+	unsigned short	FreqScaleFactor;	///< from 0 to 2048, 1024 is normal
+										///< freq := (freq*scale_factor) shr 10
+	char			reserved[36];		///< For future extensions
 	
 } PatSampHeader;
 

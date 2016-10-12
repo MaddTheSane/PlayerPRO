@@ -420,7 +420,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	func loadMusic(url musicToLoad: URL, autoPlay: Bool = true) throws {
 		var error: NSError? = nil
 		var fileType: String? = nil
-		var theOSErr = MADErr.noErr
 		if music != nil {
 			madDriver.stop()
 			madDriver.stopDriver()
@@ -429,29 +428,26 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		do {
 			let fileUTI = try NSWorkspace.shared().type(ofFile: musicToLoad.path)
 			if let afileType = madLib.typeFromUTI(fileUTI) {
-				theOSErr = madLib.testFile(at: musicToLoad, type: afileType)
-				if theOSErr == .noErr {
-					fileType = afileType
-				} else {
-					
-				}
+				try madLib.testFile(at: musicToLoad, as: afileType)
+				fileType = afileType
 			}
-		} catch _ {
+		} catch let err3 as NSError {
+			error = err3
 		}
 		
 		if fileType == nil {
 			do {
 				fileType = try madLib.identifyFile(at: musicToLoad)
-				theOSErr = .noErr
+				error = nil
 			} catch let err3 as NSError {
 				error = err3
 			}
 		}
 		
-		if theOSErr != .noErr || error != nil {
+		if let error = error {
 			paused = true
 			clearMusic()
-			throw error ?? theOSErr
+			throw error
 		}
 		
 		do {
@@ -710,7 +706,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				return true
 			}
 		} else if (sharedWorkspace.type(theUTI, conformsToType:PPOldMusicListUTI)) {
-			if (musicListWillChange()) {
+			if musicListWillChange() {
 				self.willChangeValue(forKey: kMusicListKVO)
 				musicList.beginLoadingOfOldMusicListAtURL(toOpen: theURL, completionHandle: { (theErr) -> Void in
 					self.selMusFromList = self.musicList.selectedMusic
@@ -724,7 +720,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		} else {
 			//TODO: check for valid extension.
 			for aUTI in trackerUTIs {
-				if (sharedWorkspace.type(theUTI, conformsToType:aUTI)) {
+				if sharedWorkspace.type(theUTI, conformsToType: aUTI) {
 					addMusicToMusicList(theURL)
 					return true;
 				}
@@ -734,12 +730,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			// Yes, it does happen.
 			do {
 				let aType = try madLib.identifyFile(at: theURL)
-				let theRet = madLib.testFile(at: theURL, type: aType)
-				if theRet == .noErr {
-					addMusicToMusicList(theURL)
-				} else {
-					throw theRet
-				}
+				try madLib.testFile(at: theURL, as: aType)
+				addMusicToMusicList(theURL)
 			} catch _ {
 				
 			}

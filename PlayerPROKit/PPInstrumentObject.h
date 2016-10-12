@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
 + (nullable instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObject *)mus;
 - (nullable instancetype)initWithMusic:(PPMusicObject *)mus instrumentIndex:(short)insIdx;
-- (nullable instancetype)init;
+- (instancetype)init;
 
 @property (nonatomic, readonly, copy) NSArray<PPEnvelopeObject*> *volumeEnvelope;
 @property (nonatomic, readonly, copy) NSArray<PPEnvelopeObject*> *panningEnvelope;

@@ -15,8 +15,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 	var PATIns: UnsafePointer<PatInsHeader>
 	var PATSamp: UnsafePointer<PatSampHeader>
 	var PATData = data.bytes.assumingMemoryBound(to: UInt8.self)
-	let scale_table: [UInt32] = {
-		var toRet: [UInt32] = [
+	let scale_table: [UInt32] = [
 		16351, 17323, 18354, 19445, 20601, 21826, 23124, 24499, 25956, 27500, 29135, 30867,
 		32703, 34647, 36708, 38890, 41203, 43653, 46249, 48999, 51913, 54999, 58270, 61735,
 		65406, 69295, 73416, 77781, 82406, 87306, 92498, 97998, 103826, 109999, 116540, 123470,
@@ -26,12 +25,6 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 		1046503, 1108731, 1174660, 1244509, 1318511, 1396914, 1479979, 1567983, 1661220, 1760002, 1864657, 1975536,
 		2093007, 2217464, 2349321, 2489019, 2637024, 2793830, 2959960, 3135968, 3322443, 3520006, 3729316, 3951073,
 		4186073, 4434930, 4698645, 4978041, 5274051, 5587663, 5919922, 6271939, 6644889, 7040015, 7458636, 7902150]
-		
-		let toRemain = [UInt32](repeating: toRet.last!, count: 200 - toRet.count)
-		toRet += toRemain
-		
-		return toRet
-	}()
 	
 	// PATCH HEADER
 	PATHeader = UnsafeRawPointer(PATData).assumingMemoryBound(to: PatchHeader.self)
@@ -39,11 +32,11 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 	
 	insHeader.resetInstrument()
 	
-	if (PATHeader.pointee.InsNo != 1) {
+	if PATHeader.pointee.InsNo != 1 {
 		return .fileNotSupportedByThisPlug;
 	}
 	
-	let sampleCount = (Int(PATHeader.pointee.LoSamp) << 8) + Int(PATHeader.pointee.HiSamp)
+	let sampleCount = Int(PATHeader.pointee.Samp.littleEndian)
 	
 	// INS HEADER -- Read only the first instrument
 	PATIns = UnsafeRawPointer(PATData).assumingMemoryBound(to: PatInsHeader.self)
@@ -54,19 +47,19 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 	insHeader.name = {
 		let insNameBytes: [Int8] = try! arrayFromObject(reflecting: PATIns.pointee.name, appendLastObject: 0)
 		let allowable = insNameBytes.map { (i) -> UInt8 in
-			return UInt8(i)
+			return UInt8(bitPattern: i)
 		}
 		return String(bytes: allowable, encoding: String.Encoding.macOSRoman) ?? ""
 		}()
 	
 	// LAYERS
 	for _ in 0..<PATIns.pointee.layer {
-		PATData += 47;
+		PATData += 47
 	}
 	
 	// SAMPLES
 	for x in 0..<sampleCount {
-		let curData = PPSampleObject();
+		let curData = PPSampleObject()
 		var signedData: Bool
 		
 		PATSamp = UnsafeRawPointer(PATData).assumingMemoryBound(to: PatSampHeader.self)
@@ -75,7 +68,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 		curData.name = {
 			let insNameBytes: [Int8] = try! arrayFromObject(reflecting: PATSamp.pointee.name, appendLastObject: 0)
 			let allowable = insNameBytes.map { (i) -> UInt8 in
-				return UInt8(i)
+				return UInt8(bitPattern: i)
 			}
 			return String(bytes: allowable, encoding: String.Encoding.macOSRoman) ?? ""
 			}()
@@ -94,24 +87,24 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: NSData) -> MADErr 
 		curData.volume = 64;
 		curData.loopType = MADLoopType.classic
 		
-		if (PATSamp.pointee.Flag & 0x01) != 0 {
+		if PATSamp.pointee.Flag.contains(.is16Bit) {
 			curData.amplitude = 16;
 		} else {
 			curData.amplitude = 8;
 		}
 		
-		if (PATSamp.pointee.Flag & 0x02) != 0 {
+		if PATSamp.pointee.Flag.contains(.isSigned) {
 			signedData = true;
 		} else {
 			signedData = false;
 		}
 		
-		if (PATSamp.pointee.Flag & 0x04) == 0 {
+		if !PATSamp.pointee.Flag.contains(.loops) {
 			curData.loopBegin = 0;
 			curData.loopSize = 0;
 		}
 		
-		if (PATSamp.pointee.Flag & 0x08) != 0 {
+		if PATSamp.pointee.Flag.contains(.isPingPong) {
 			curData.loopType = .pingPong;
 		} else {
 			curData.loopType = .classic;
@@ -193,10 +186,10 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 	public let hasUIForImport = false
 	//const char headerStr[20] = "GF1PATCH110\0\0";
 	private let headerData: Data = {
-		var headerChar: [ASCIICharacter] = [.LetterUppercaseG, .LetterUppercaseF, .NumberOne, .LetterUppercaseP, .LetterUppercaseA,
+		let headerChar: [ASCIICharacter] = [.LetterUppercaseG, .LetterUppercaseF, .NumberOne, .LetterUppercaseP, .LetterUppercaseA,
 		.LetterUppercaseT, .LetterUppercaseC, .LetterUppercaseH, .NumberOne, .NumberOne, .NumberZero, .NullCharacter]
-		var headerStr = headerChar.map({ (aChar) -> UInt8 in
-			return UInt8(aChar.rawValue)
+		let headerStr = headerChar.map({ (aChar) -> UInt8 in
+			return UInt8(bitPattern: aChar.rawValue)
 		})
 		
 		return Data(bytes: headerStr)
@@ -223,7 +216,7 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 	
 	public func importInstrument(at sampleURL: URL, instrument InsHeader: AutoreleasingUnsafeMutablePointer<PPInstrumentObject>?, driver: PPDriver) -> MADErr {
 		if let inData = try? Data(contentsOf: sampleURL) {
-			if let ourIns = PPInstrumentObject() {
+			if let ourIns = PPInstrumentObject() as PPInstrumentObject? {
 				ourIns.resetInstrument()
 				
 				let iErr = importPAT(ourIns, data: inData as NSData)
