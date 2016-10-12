@@ -418,61 +418,48 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	func loadMusic(url musicToLoad: URL, autoPlay: Bool = true) throws {
-		var error: NSError? = nil
-		var fileType: String? = nil
 		if music != nil {
 			madDriver.stop()
 			madDriver.stopDriver()
 		}
 		
 		do {
-			let fileUTI = try NSWorkspace.shared().type(ofFile: musicToLoad.path)
-			if let afileType = madLib.typeFromUTI(fileUTI) {
-				try madLib.testFile(at: musicToLoad, as: afileType)
-				fileType = afileType
-			}
-		} catch let err3 as NSError {
-			error = err3
-		}
-		
-		if fileType == nil {
+			var fileType: String? = nil
+			
 			do {
+				let fileUTI = try NSWorkspace.shared().type(ofFile: musicToLoad.path)
+				if let afileType = madLib.typeFromUTI(fileUTI) {
+					try madLib.testFile(at: musicToLoad, as: afileType)
+					fileType = afileType
+				}
+			} catch _ {}
+			
+			if fileType == nil {
 				fileType = try madLib.identifyFile(at: musicToLoad)
-				error = nil
-			} catch let err3 as NSError {
-				error = err3
 			}
-		}
-		
-		if let error = error {
-			paused = true
+			
+			self.music = try PPMusicObject(url: musicToLoad, type: fileType!, library: madLib)
+			
+			music!.attach(to: madDriver)
+			
+			if autoPlay {
+				madDriver.play()
+				
+				paused = false
+			}
+			
+			let time = madDriver.musicStatusTime!
+			songPos.maxValue = Double(time.total)
+			songPos.minValue = 0
+			setTitleForSongLabelBasedOnMusic()
+			songTotalTime.integerValue = time.total
+			
+			NotificationCenter.default.post(name: NSNotification.Name.PPMusicDidChange, object: self)
+		} catch {
+			self.paused = true
 			clearMusic()
 			throw error
 		}
-		
-		do {
-			self.music = try PPMusicObject(url: musicToLoad, type: fileType!, library: madLib)
-		} catch let err3 {
-			self.paused = true
-			clearMusic()
-			throw err3
-		}
-		
-		music!.attach(to: madDriver)
-		
-		if autoPlay {
-			madDriver.play()
-			
-			paused = false
-		}
-		
-		let time = madDriver.musicStatusTime!
-		songPos.maxValue = Double(time.total)
-		songPos.minValue = 0
-		setTitleForSongLabelBasedOnMusic()
-		songTotalTime.integerValue = time.total
-		
-		NotificationCenter.default.post(name: NSNotification.Name.PPMusicDidChange, object:self)
 	}
 	
 	private func clearMusic() {
