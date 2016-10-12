@@ -193,8 +193,8 @@ import AudioToolbox
 		}
 	}
 	
-	//override func writeToURL(url: NSURL, ofType typeName: String, forSaveOperation saveOperation: NSSaveOperationType, originalContentsURL absoluteOriginalContentsURL: NSURL?) throws {
-	//
+	//override func write(to url: URL, ofType typeName: String, for saveOperation: NSSaveOperationType, originalContentsURL absoluteOriginalContentsURL: URL?) throws {
+	//	try super.write(to: url, ofType: typeName, for: saveOperation, originalContentsURL: absoluteOriginalContentsURL)
 	//}
 	
 	override func read(from url: URL, ofType typeName: String) throws {
@@ -211,7 +211,12 @@ import AudioToolbox
 		} else {
 			let theType = try getType()
 			theMusic = try PPMusicObject(url: url, stringType: theType, driver: theDriver)
+			fileURL = nil
 		}
+	}
+	
+	override var autosavingFileType: String? {
+		return MADNativeUTI
 	}
 	
     override class func autosavesInPlace() -> Bool {
