@@ -59,14 +59,17 @@ private let kPlayerList = "Player List"
 		return musicList[index]
 	}
 
+	@nonobjc
 	func index(after: Int) -> Int {
 		return after + 1
 	}
 
+	@nonobjc
 	var startIndex: Int {
 		return 0
 	}
 
+	@nonobjc
 	var endIndex: Int {
 		return musicList.count
 	}
@@ -96,12 +99,13 @@ private let kPlayerList = "Player List"
 	}
 	
 	/// Returns `nil` if the URL couldn't be found.
-	@objc(indexesOfObjectsSimilarToURL:) func indexesOfObjectsSimilar(to theURL: URL) -> NSIndexSet? {
-		let anIDXSet = NSMutableIndexSet()
+	@objc(indexesOfObjectsSimilarToURL:)
+	func indexesOfObjectsSimilar(to theURL: URL) -> IndexSet? {
+		var anIDXSet = IndexSet()
 		
 		for (i, obj) in musicList.enumerated() {
 			if obj.pointsToFile(url: theURL) {
-				anIDXSet.add(i)
+				anIDXSet.insert(i)
 			}
 		}
 		
@@ -119,13 +123,15 @@ private let kPlayerList = "Player List"
 		self.didChange(.removal, valuesAt: theIndex, forKey: kMusicListKVO)
 	}
 	
-	@objc(sortMusicListUsingBlock:) func sortMusicList(block: (_ lhs: MusicListObject, _ rhs: MusicListObject) -> Bool) {
+	@objc(sortMusicListUsingBlock:)
+	func sortMusicList(block: (_ lhs: MusicListObject, _ rhs: MusicListObject) -> Bool) {
 		self.willChangeValue(forKey: kMusicListKVO)
 		musicList.sort(by: block)
 		self.didChangeValue(forKey: kMusicListKVO)
 	}
 	
-	@objc(sortMusicListUsingComparator:) func sortMusicList(comparator: Comparator) {
+	@objc(sortMusicListUsingComparator:)
+	func sortMusicList(comparator: Comparator) {
 		self.willChangeValue(forKey: kMusicListKVO)
 		musicList.sort(by: { (obj1, obj2) -> Bool in
 			return comparator(obj1, obj2) == .orderedAscending
@@ -142,7 +148,8 @@ private let kPlayerList = "Player List"
 		self.didChangeValue(forKey: kMusicListKVO)
 	}
 	
-	@objc(sortMusicListUsingDescriptors:) func sortMusicList(descriptors: [NSSortDescriptor]) {
+	@objc(sortMusicListUsingDescriptors:)
+	func sortMusicList(descriptors: [NSSortDescriptor]) {
 		let anArray = musicList.sorted(using: descriptors)
 		musicList = anArray
 	}
@@ -377,7 +384,8 @@ private let kPlayerList = "Player List"
 	}
 	
 	@discardableResult
-	@objc(saveMusicListToURL:) func saveMusicList(to URL: Foundation.URL) -> Bool {
+	@objc(saveMusicListToURL:)
+	func saveMusicList(to URL: Foundation.URL) -> Bool {
 		let theList = NSKeyedArchiver.archivedData(withRootObject: self)
 		do {
 			try theList.write(to: URL, options: [])
@@ -404,7 +412,8 @@ private let kPlayerList = "Player List"
 	}
 	
 	// MARK: - Key-valued Coding
-	@objc(addMusicListObject:) func add(_ object: MusicListObject) {
+	@objc(addMusicListObject:)
+	func add(_ object: MusicListObject) {
 		if !musicList.contains(object) {
 			musicList.append(object)
 		}
@@ -414,15 +423,18 @@ private let kPlayerList = "Player List"
 		return musicList.count
 	}
 	
-	@objc(replaceObjectInMusicListAtIndex:withObject:) func replaceObjectInMusicList(at index: Int, with object: MusicListObject) {
+	@objc(replaceObjectInMusicListAtIndex:withObject:)
+	func replaceObjectInMusicList(at index: Int, with object: MusicListObject) {
 		musicList[index] = object;
 	}
 	
-	@objc(objectInMusicListAtIndex:) func objectInMusicList(at index: Int) -> MusicListObject {
+	@objc(objectInMusicListAtIndex:)
+	func objectInMusicList(at index: Int) -> MusicListObject {
 		return musicList[index];
 	}
 	
-	@objc(removeMusicListAtIndexes:) func remove(at idxSet: IndexSet) {
+	@objc(removeMusicListAtIndexes:)
+	func remove(at idxSet: IndexSet) {
 		if idxSet.contains(selectedMusic) {
 			selectedMusic = -1;
 		}
@@ -430,22 +442,26 @@ private let kPlayerList = "Player List"
 		_ = musicList.remove(indexes: idxSet)
 	}
 	
-	@objc(removeObjectInMusicListAtIndex:) func remove(at atIndex: Int) {
-		musicList.remove(at: atIndex);
+	@objc(removeObjectInMusicListAtIndex:)
+	func remove(at atIndex: Int) {
+		musicList.remove(at: atIndex)
 	}
 	
-	@objc(insertObject:inMusicListAtIndex:) func insert(_ object: MusicListObject, at index: Int) {
+	@objc(insertObject:inMusicListAtIndex:)
+	func insert(_ object: MusicListObject, at index: Int) {
 		musicList.insert(object, at: index)
 	}
 	
-	@objc(arrayOfObjectsInMusicListAtIndexes:) func objectsInMusicList(at theSet : IndexSet) -> [MusicListObject] {
+	@objc(arrayOfObjectsInMusicListAtIndexes:)
+	func objectsInMusicList(at theSet : IndexSet) -> [MusicListObject] {
 		return musicList.filter({ (include) -> Bool in
 			let idx = self.musicList.index(of: include)!
 			return theSet.contains(idx)
 		})
 	}
 	
-	@objc(insertMusicLists:atIndexes:) func insertMusicLists(_ anObj: [MusicListObject], at indexes: IndexSet) {
+	@objc(insertMusicLists:atIndexes:)
+	func insertMusicLists(_ anObj: [MusicListObject], at indexes: IndexSet) {
 		
 		var idx = anObj.endIndex
 		for i in indexes.reversed() {
@@ -454,15 +470,18 @@ private let kPlayerList = "Player List"
 		}
 	}
 	
-	@objc(insertObjects:inMusicListAtIndexes:) func insert(_ objs: [MusicListObject], at indexes: IndexSet) {
+	@objc(insertObjects:inMusicListAtIndexes:)
+	func insert(_ objs: [MusicListObject], at indexes: IndexSet) {
 		insertMusicLists(objs, at: indexes)
 	}
 	
-	@objc(removeObjectsInMusicListAtIndexes:) func removeObjectsInMusicListAtIndexes(_ idxSet: IndexSet) {
+	@objc(removeObjectsInMusicListAtIndexes:)
+	func removeObjectsInMusicListAtIndexes(_ idxSet: IndexSet) {
 		remove(at: idxSet)
 	}
 	
-	@objc(insertObjects:inMusicListAtIndex:) func insert(_ anObj: [MusicListObject], at idx: Int) {
+	@objc(insertObjects:inMusicListAtIndex:)
+	func insert(_ anObj: [MusicListObject], at idx: Int) {
 		let theIndexSet = NSIndexSet(indexesIn: NSRange(location: idx, length: anObj.count)) as IndexSet
 		self.willChange(.insertion, valuesAt: theIndexSet, forKey: kMusicListKVO)
 		
@@ -475,7 +494,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	#if os(OSX)
-	func beginLoadingOfOldMusicListAtURL(toOpen: URL, completionHandle theHandle: @escaping (_ theErr: NSError?) -> Void) {
+	func beginLoadingOfOldMusicListAtURL(toOpen: URL, completionHandle theHandle: @escaping (_ theErr: Error?) -> Void) {
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
 		conn.remoteObjectInterface = NSXPCInterface(with: PPSTImporterHelper.self)
 		
@@ -486,8 +505,8 @@ private let kPlayerList = "Player List"
 				defer {
 					conn.invalidate()
 				}
-				if error != nil {
-					theHandle(error as NSError?)
+				if let error = error {
+					theHandle(error)
 				} else {
 					guard let invalidAny = bookmarkData!["lostMusicCount"] as? UInt,
 						let selectedAny = bookmarkData!["SelectedMusic"] as? Int,

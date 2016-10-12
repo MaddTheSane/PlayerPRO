@@ -140,7 +140,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "S3M ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImportExport,
-		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.med"), NULL},
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.s3m"), NULL},
 	},
 	{
 		.IOPlug = mainULT,

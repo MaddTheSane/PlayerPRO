@@ -120,8 +120,6 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 			let resolvedURL = try URL(resolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeTo: relativeURL, bookmarkDataIsStale: &unusedStale)!
 			self.init(url: resolvedURL, date: date ?? Date())
 		} catch _ {
-			self.init(url: URL(fileURLWithPath: "/dev/null"))
-
 			return nil
 		}
 	}
@@ -148,7 +146,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}
 	
 	override var hashValue: Int {
-		return musicURL.absoluteString.hashValue ^ (addedDate as NSDate).hash
+		return musicURL.absoluteString.hashValue ^ addedDate.hashValue
 	}
 
 	override var description: String {
@@ -174,7 +172,8 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 	}
 
-	@objc(pointsToFileAtURL:) func pointsToFile(url URL: URL?) -> Bool {
+	@objc(pointsToFileAtURL:)
+	func pointsToFile(url URL: URL?) -> Bool {
 		if let unwrapped = URL {
 			return URLsPointingToTheSameFile(musicURL, unwrapped)
 		} else {

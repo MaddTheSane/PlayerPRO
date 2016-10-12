@@ -33,7 +33,7 @@
 #define __LITTLE_ENDIAN__ 1
 #endif
 
-#if __STDC_VERSION__ < 199901L
+#if __STDC_VERSION__ < 199901L && __cplusplus < 199711L
 #warning C99 minimum is required!
 #endif
 

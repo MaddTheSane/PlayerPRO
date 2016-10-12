@@ -9,6 +9,9 @@
 import Foundation
 import PlayerPROCore
 import SwiftAdditions
+#if !os(OSX)
+	import MobileCoreServices
+#endif
 
 /// A plug-in that PlayerPROKit can use to import and/or export tracker files.
 public final class PPLibraryObject: NSObject {
@@ -42,6 +45,49 @@ public final class PPLibraryObject: NSObject {
 	
 	/// The version of the plug-in
 	public let plugVersion: UInt32
+	
+	/// The file extensions associated with this plug-in.
+	public var fileExtensions: [String] {
+		var theOpenables = Set<String>()
+		for anUTI in UTITypes {
+			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassFilenameExtension) else {
+				continue
+			}
+			
+			let preArr = unPreArr.takeRetainedValue() as NSArray
+			
+			guard let anArr = preArr as? [String] else {
+				continue
+			}
+			theOpenables.formIntersection(anArr)
+		}
+		return Array(theOpenables)
+	}
+	
+	#if os(OSX)
+	/// the File Type `OSType` associated with this plug-in.
+	public var fileTypeCodes: [OSType]? {
+		var theOpenables = [String]()
+		for anUTI in UTITypes {
+			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassOSType) else {
+				continue
+			}
+			
+			let preArr = unPreArr.takeRetainedValue() as NSArray
+			
+			guard let anArr = preArr as? [String] else {
+				continue
+			}
+			theOpenables += anArr
+		}
+		
+		var fileTypes = theOpenables.map { UTGetOSTypeFromString($0 as NSString) }
+		
+		fileTypes.insert(OSType(tupleType), at: 0)
+		
+		return fileTypes
+	}
+	#endif
 	
 	///The plug-in mode.
 	///
