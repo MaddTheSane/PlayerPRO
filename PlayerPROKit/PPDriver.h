@@ -118,7 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, nullable) void *oscilloscopePointer NS_RETURNS_INNER_POINTER;
 @property (readonly) size_t oscilloscopeSize;
 - (BOOL)isChannelActiveAtIndex:(NSInteger)idx;
-- (void)setChannelAtIndex:(NSInteger)idx toActive:(BOOL)enabled;
+- (void)setChannelAtIndex:(NSInteger)idx toActive:(BOOL)enabled NS_SWIFT_NAME(setChannel(at:toActive:));
 
 @end
 
