@@ -39,7 +39,7 @@ final class MusicListPreferenceController: NSViewController, MASPreferencesViewC
 	}
 	
 	var toolbarItemImage: NSImage? {
-		return nil //TODO: implement
+		return NSImage(named: "List")
 	}
 	
 	static func newPreferenceView() -> MusicListPreferenceController? {

@@ -97,7 +97,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
  *				<code>beginRunWithPcmd:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
- *				as an error.
+ *				as a failure.
  *	@sa			beginRunWithPcmd:driver:parentWindow:handler:
  */
 - (MADErr)runWithPcmd:(inout Pcmd*)aPcmd driver:(PPDriver *)driver;
@@ -144,7 +144,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
  *				<code>beginRunWithData:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
- *				as an error.
+ *				as a failure.
  *	@sa			beginRunWithData:driver:parentWindow:handler:
  */
 - (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver;
@@ -262,7 +262,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
  *				<code>beginRunWithPcmd:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
- *				as an error.
+ *				as a failure.
  *	@sa			beginExportSample:toURL:driver:parentWindow:handler:
  */
 - (MADErr)exportSample:(PPSampleObject*)sample toURL:(NSURL*)sampleURL driver:(PPDriver*)driver;
@@ -318,7 +318,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
  *				<code>beginRunWithPcmd:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
- *				as an error.
+ *				as a failure.
  *	@sa			beginImportInstrumentAtURL:driver:parentWindow:handler:
  */
 - (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject* __nonnull* __nullable)InsHeader driver:(PPDriver*)driver;
@@ -379,7 +379,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
  *				<code>beginExportInstrument:toURL:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
- *				as an error.
+ *				as a failure.
  *	@sa			beginExportInstrument:toURL:driver:parentWindow:handler:
  */
 - (MADErr)exportInstrument:(PPInstrumentObject*)InsHeader toURL:(NSURL*)sampleURL driver:(PPDriver*)driver;

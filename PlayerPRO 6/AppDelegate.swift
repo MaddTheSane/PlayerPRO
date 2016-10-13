@@ -80,7 +80,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		var tmpTrackerDict = self.trackerDict
 		
 		for obj in self.complexImport {
-			tmpTrackerDict[obj.menuName] = (obj.utiTypes) as? [String]
+			tmpTrackerDict[obj.menuName] = obj.utiTypes
 		}
 		
 		return tmpTrackerDict
@@ -106,8 +106,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 	}
 
 	@IBAction func showPlugInInfo(_ sender: AnyObject?) {
-		let tag = (sender as! NSMenuItem).tag
-		if (tag < 0 || tag >= plugInInfos.count) {
+		let tag = (sender as? NSMenuItem)?.tag ?? -1
+		if tag < 0 || tag >= plugInInfos.count {
 			return;
 		}
 		let inf = plugInInfos[tag]
@@ -171,8 +171,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			let menuNam1 = obj1.plugName
 			let menuNam2 = obj2.plugName
 			let res = menuNam1.localizedStandardCompare(menuNam2)
-			return res == ComparisonResult.orderedAscending;
-			
+			return res == ComparisonResult.orderedAscending
 		})
 		
 		aboutPlugInMenu.removeAllItems()
@@ -337,7 +336,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		tooLargeDict += defaults1
 		tooLargeDict += defaults2
 		tooLargeDict += defaults3
-		tooLargeDict += (colorDefaults as [String: AnyObject])
+		tooLargeDict += colorDefaults
 		
 		UserDefaults.standard.register(defaults: tooLargeDict)
 	}
@@ -374,7 +373,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 				})
 			}
 			return true
-		} else if (theUTI  == MADGenericUTI) {
+		} else if theUTI  == MADGenericUTI {
 			let invExt = NSLocalizedString("Invalid Extension", comment: "Invalid Extension")
 			let invExtDes = NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description")
 			let renameFile =  NSLocalizedString("Rename", comment: "rename file")
@@ -466,20 +465,27 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		
 		//TODO: check for valid extension.
 		for aUTI in trackerUTIs {
-			if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
-				let aType = madLib.typeFromUTI(theUTI)!
-				do {
-					let theWrap = try PPMusicObject(url: theURL1, stringType: aType, library: madLib)
-					let aDoc = PPDocument(music: theWrap)
-					
-					addDocument(aDoc)
-					aDoc.makeWindowControllers()
-					aDoc.showWindows()
-					aDoc.displayName = ((theURL1.lastPathComponent as NSString).deletingPathExtension)
-					return true;
-				} catch {
-					return false
+			if sharedWorkspace.type(theUTI, conformsToType: aUTI) {
+				if let _ = document(for: theURL1) {
+					return true
+				} else {
+					openDocument(withContentsOf: theURL1, display: true, completionHandler: { (_, alreadyOpen, error) -> Void in
+						
+						if alreadyOpen {
+							print("\(theURL1) is already open? How did we not catch this?")
+						}
+						
+						if let aErr = error {
+							let alertErr = NSAlert(error: aErr)
+							DispatchQueue.main.async {
+								alertErr.runModal()
+								
+								return
+							}
+						}
+					})
 				}
+				return true
 			}
 		}
 		
@@ -489,9 +495,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 					do {
 						try importInstrument(from: theURL, makeUserSelectInstrument: true)
 						return true
-					} catch let theErr as NSError {
+					} catch let theErr {
 						NSAlert(error: theErr).runModal()
-						return false;
+						return false
 					}
 				}
 			}
@@ -505,7 +511,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 						return true
 					} catch let theErr as NSError {
 						NSAlert(error: theErr).runModal()
-						return false;
+						return false
 					}
 				}
 			}

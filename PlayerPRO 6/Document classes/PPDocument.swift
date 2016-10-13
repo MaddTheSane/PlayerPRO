@@ -224,7 +224,7 @@ import AudioToolbox
     }
 
 	func importMusicObject(_ theObj: PPMusicObject) {
-		if (theMusic == nil) {
+		if theMusic == nil {
 			theMusic = theObj
 		}
 	}

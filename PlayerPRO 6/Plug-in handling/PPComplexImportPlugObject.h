@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  Not done in Swift because I don't know how to get it to behave.
  */
 @interface PPComplexImportPlugObject : PPPlugInObject
-@property (readonly, copy) NSArray *UTITypes;
+@property (readonly, copy) NSArray<NSString*> *UTITypes;
 
 - (nonnull instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (nullable instancetype)initWithBundle:(NSBundle*)ourBundle NS_DESIGNATED_INITIALIZER;
