@@ -29,8 +29,6 @@ final class DigitalPlugInObject : PPPlugInObject {
 	private var plugCode: PPDigitalPlugin!
 	override init?(bundle toInit: Bundle) {
 		guard let archs = toInit.executableArchitectures else {
-			hasUI = false
-			super.init(bundle: toInit)
 			return nil
 		}
 		
@@ -43,16 +41,12 @@ final class DigitalPlugInObject : PPPlugInObject {
 		}
 		
 		guard hasArch else {
-			hasUI = false
-			super.init(bundle: toInit)
 			return nil
 		}
 		
 		guard let rawBundClass: AnyClass = toInit.principalClass,
 			let bundClass = rawBundClass as? PPDigitalPlugin.Type,
 			let aPlugCode = bundClass.init(forPlugIn: ()) else {
-				hasUI = false
-				super.init(bundle: toInit)
 				return nil
 		}
 		

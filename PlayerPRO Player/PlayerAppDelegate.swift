@@ -491,7 +491,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			madWasReading = !madDriver.isPaused
 			madDriver.getMusicStatus(withCurrentTime: &curTime, totalTime: &fullTime)
 			
-			madDriver.stop()
+			madDriver.stopDriver()
 			//[madDriver stopDriver];
 		}
 		var theSettinit = MADDriverSettings.new();
@@ -1163,7 +1163,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		}
 		savePanel.prompt = "Export"
 		
-		switch (tag) {
+		switch tag {
 		case -1: //AIFF
 			savePanel.allowedFileTypes = [AVFileTypeAIFF]
 			savePanel.title = "Export as AIFF audio"

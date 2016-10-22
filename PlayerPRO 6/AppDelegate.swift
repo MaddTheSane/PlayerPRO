@@ -171,7 +171,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			let menuNam1 = obj1.plugName
 			let menuNam2 = obj2.plugName
 			let res = menuNam1.localizedStandardCompare(menuNam2)
-			return res == ComparisonResult.orderedAscending
+			return res == .orderedAscending
 		})
 		
 		aboutPlugInMenu.removeAllItems()
@@ -414,7 +414,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			do {
 				try importPcmd(from: theURL)
 				return true
-			} catch let error as NSError {
+			} catch let error {
 				NSAlert(error: error).runModal()
 				return false
 			}
@@ -422,14 +422,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			do {
 				try importInstrumentList(from: theURL)
 				return true
-			} catch let err as NSError {
+			} catch let err {
 				NSAlert(error: err).runModal()
 				return false
 			}
 		} //else
 		
 		for obj in complexImport {
-			for aUTI in obj.utiTypes as! [String] {
+			for aUTI in obj.utiTypes {
 				if sharedWorkspace.type(theUTI, conformsToType: aUTI) {
 					let canImport: Bool
 					do {
@@ -509,7 +509,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 					do {
 						try importSample(from: theURL, makeUserSelectSample: true)
 						return true
-					} catch let theErr as NSError {
+					} catch let theErr {
 						NSAlert(error: theErr).runModal()
 						return false
 					}
@@ -640,7 +640,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		}
 		return handleFile(URL(fileURLWithPath: filename), ofType: utiFile!)
 	}
-	
 }
 
 extension AppDelegate: ExportObjectDelegate {
@@ -652,8 +651,8 @@ extension AppDelegate: ExportObjectDelegate {
 	func exportObject(didFinish theObj: ExportObject) {
 		
 	}
+	
 	func exportObject(_ theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: String?) {
 		
 	}
-	
 }
