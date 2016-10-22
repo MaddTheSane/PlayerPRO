@@ -77,6 +77,19 @@ extension MADErr: Error {
 			return populate(error: error)
 		}
 	}
+	
+	/// Creates a `MADErr` from the provided `NSError`.
+	/// Is `nil` if the error isn't in the `PPMADErrorDomain` or
+	/// the error code isn't in `MADErr`.
+	public init?(error anErr: NSError) {
+		guard anErr.domain == PPMADErrorDomain,
+			let exact = Int16(exactly: anErr.code),
+			let errVal = MADErr(rawValue: exact) else {
+				return nil
+		}
+		
+		self = errVal
+	}
 }
 
 /// Creates an `NSError` from a `MADErr`, optionally converting the error type to an error in the Cocoa error domain.

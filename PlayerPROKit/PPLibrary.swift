@@ -202,11 +202,10 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 		let aRet = MADMusicIdentifyCFURL(theLibrary, &cType, apath as NSURL)
 		let sRet = String(cString: cType, encoding: String.Encoding.macOSRoman)
 		
-		if aRet == .noErr {
-			return sRet!
-		} else {
+		guard aRet == .noErr else {
 			throw aRet
 		}
+		return sRet!
 	}
 	
 	/// Attempts to identify the file passed to it.
@@ -237,7 +236,14 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
-		} catch _ {}
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain,
+				let exact = Int16(exactly: anErr.code),
+				let errVal = MADErr(rawValue: exact) {
+				return errVal
+			}
+		}
+		
 		return .unknownErr
 	}
 	
@@ -259,7 +265,14 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
-		} catch _ {}
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain,
+				let exact = Int16(exactly: anErr.code),
+				let errVal = MADErr(rawValue: exact) {
+				return errVal
+			}
+		}
+		
 		return .unknownErr
 	}
 	
@@ -322,7 +335,13 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
-		} catch _ {}
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain,
+				let exact = Int16(exactly: anErr.code),
+				let errVal = MADErr(rawValue: exact) {
+				return errVal
+			}
+		}
 		
 		return .unknownErr
 	}
@@ -352,7 +371,14 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
-		} catch _ {}
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain,
+				let exact = Int16(exactly: anErr.code),
+				let errVal = MADErr(rawValue: exact) {
+				return errVal
+			}
+		}
+		
 		return .unknownErr
 	}
 	
@@ -456,7 +482,14 @@ extension PPLibrary {
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
-		} catch _ {}
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain,
+				let exact = Int16(exactly: anErr.code),
+				let errVal = MADErr(rawValue: exact) {
+				return errVal
+			}
+		}
+		
 		return .unknownErr
 	}
 	
@@ -476,7 +509,14 @@ extension PPLibrary {
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
-		} catch _ {}
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain,
+				let exact = Int16(exactly: anErr.code),
+				let errVal = MADErr(rawValue: exact) {
+				return errVal
+			}
+		}
+		
 		return .unknownErr
 	}
 	
@@ -496,7 +536,13 @@ extension PPLibrary {
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
-		} catch _ {}
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain,
+				let exact = Int16(exactly: anErr.code),
+				let errVal = MADErr(rawValue: exact) {
+				return errVal
+			}
+		}
 		
 		return .unknownErr
 	}
