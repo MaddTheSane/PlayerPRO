@@ -146,11 +146,13 @@ public func octaveName(from octNote: Int16, letters isUseLetters: Bool = true) -
 extension PPSampleObject {
 
 #if os(OSX)
-	@objc(waveformImageUsingView:) final public func waveformImage(view: NSView) -> NSImage? {
+	@objc(waveformImageUsingView:)
+	final public func waveformImage(view: NSView) -> NSImage? {
 		return PPSampleObject.waveFormImage(sample: self, view: view)
 	}
 	
-	@objc(waveformImageFromSample:usingView:) final public class func waveFormImage(sample theDat: PPSampleObject, view: NSView) -> NSImage? {
+	@objc(waveformImageFromSample:usingView:)
+	final public class func waveFormImage(sample theDat: PPSampleObject, view: NSView) -> NSImage? {
 		let imageSize: NSSize = {
 			var aimageSize = view.convertToBacking(view.frame.size)
 			aimageSize.height *= 2
@@ -201,12 +203,14 @@ extension PPSampleObject {
 			return nil
 		}
 	}
-#elseif os(iOS)
-	@objc(waveformImageUsingView:) final public func waveformImage(view: UIView) -> UIImage? {
+#elseif os(iOS) || os(tvOS)
+	@objc(waveformImageUsingView:)
+	final public func waveformImage(view: UIView) -> UIImage? {
 		return PPSampleObject.waveFormImage(sample: self, view: view)
 	}
 	
-	@objc(waveformImageFromSample:usingView:) final public class func waveFormImage(sample theDat: PPSampleObject, view: UIView) -> UIImage? {
+	@objc(waveformImageFromSample:usingView:)
+	final public class func waveFormImage(sample theDat: PPSampleObject, view: UIView) -> UIImage? {
 		let scale = view.contentScaleFactor
 		let imageSize: CGSize = {
 			var viewSize = view.bounds.size
@@ -459,7 +463,7 @@ extension PPDriver {
 	public func playSoundData(data theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
 		var loopStart = iloopStart
 		var loopLen = iloopLen
-		if (loopLen == 0) {
+		if loopLen == 0 {
 			loopStart = 0
 			loopLen = 0
 		}

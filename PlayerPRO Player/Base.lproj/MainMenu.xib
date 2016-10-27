@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11198.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
@@ -439,11 +439,12 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="Music List" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="documentWindow" frameAutosaveName="musicListWindow" id="371">
+        <window title="Music List" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="documentWindow" frameAutosaveName="musicListWindow" tabbingMode="disallowed" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES" unifiedTitleAndToolbar="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="497" height="367"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="497" height="367"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -757,7 +758,7 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="74" placeholder="YES" id="eOQ-kl-IeX"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="wdN-Zx-dWN"/>
                     </constraints>
-                    <textFieldCell key="cell" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="Multiline Label" id="697">
+                    <textFieldCell key="cell" truncatesLastVisibleLine="YES" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="Multiline Label" id="697">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -778,7 +779,7 @@
                 <constraint firstItem="664" firstAttribute="leading" secondItem="663" secondAttribute="leading" id="765"/>
                 <constraint firstItem="672" firstAttribute="baseline" secondItem="664" secondAttribute="baseline" id="772"/>
                 <constraint firstItem="666" firstAttribute="leading" secondItem="665" secondAttribute="leading" id="773"/>
-                <constraint firstAttribute="bottom" secondItem="623" secondAttribute="bottom" constant="20" symbolic="YES" placeholder="YES" id="774"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="623" secondAttribute="bottom" constant="20" symbolic="YES" id="774"/>
                 <constraint firstItem="674" firstAttribute="top" secondItem="675" secondAttribute="bottom" constant="8" symbolic="YES" id="775"/>
                 <constraint firstItem="677" firstAttribute="leading" secondItem="537" secondAttribute="leading" constant="20" symbolic="YES" id="777"/>
                 <constraint firstItem="675" firstAttribute="leading" secondItem="537" secondAttribute="leading" constant="20" symbolic="YES" id="778"/>
@@ -869,14 +870,14 @@
         <window title="Tools" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="utilityWindow" frameAutosaveName="toolsPanel" id="539" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES" texturedBackground="YES"/>
             <windowPositionMask key="initialPositionMask" rightStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="1548" y="115" width="326" height="89"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
-            <view key="contentView" misplaced="YES" id="556">
-                <rect key="frame" x="0.0" y="0.0" width="326" height="89"/>
+            <rect key="contentRect" x="1548" y="115" width="326" height="88"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <view key="contentView" id="556">
+                <rect key="frame" x="0.0" y="0.0" width="326" height="88"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="559">
-                        <rect key="frame" x="0.0" y="57" width="32" height="32"/>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="559">
+                        <rect key="frame" x="0.0" y="56" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="ObX-e3-2YW"/>
                             <constraint firstAttribute="width" constant="32" id="uQO-Kw-P0T"/>
@@ -889,8 +890,8 @@
                             <action selector="prevButtonPressed:" target="494" id="861"/>
                         </connections>
                     </button>
-                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="599">
-                        <rect key="frame" x="42" y="57" width="32" height="32"/>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="599">
+                        <rect key="frame" x="42" y="56" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPReverse" imagePosition="only" alignment="center" continuous="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="601">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -899,8 +900,8 @@
                             <action selector="rewindButtonPressed:" target="494" id="862"/>
                         </connections>
                     </button>
-                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="597">
-                        <rect key="frame" x="84" y="57" width="32" height="32"/>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="597">
+                        <rect key="frame" x="84" y="56" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRefreshTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="604">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -909,8 +910,8 @@
                             <action selector="loopButtonPressed:" target="494" id="863"/>
                         </connections>
                     </button>
-                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="596">
-                        <rect key="frame" x="126" y="57" width="32" height="32"/>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="596">
+                        <rect key="frame" x="126" y="56" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPStop" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="605">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -919,8 +920,8 @@
                             <action selector="stopButtonPressed:" target="494" id="864"/>
                         </connections>
                     </button>
-                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="595">
-                        <rect key="frame" x="168" y="57" width="32" height="32"/>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="595">
+                        <rect key="frame" x="168" y="56" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPPlay" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="606">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -929,8 +930,8 @@
                             <action selector="playButtonPressed:" target="494" id="865"/>
                         </connections>
                     </button>
-                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="591">
-                        <rect key="frame" x="252" y="57" width="32" height="32"/>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="591">
+                        <rect key="frame" x="252" y="56" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPFastForward" imagePosition="only" alignment="center" continuous="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="614">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -939,8 +940,8 @@
                             <action selector="fastForwardButtonPressed:" target="494" id="867"/>
                         </connections>
                     </button>
-                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="592">
-                        <rect key="frame" x="294" y="57" width="32" height="32"/>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="592">
+                        <rect key="frame" x="294" y="56" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPNextTrack" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="613">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -959,7 +960,7 @@
                         </textFieldCell>
                     </textField>
                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="558">
-                        <rect key="frame" x="54" y="31" width="218" height="21"/>
+                        <rect key="frame" x="54" y="31" width="218" height="19"/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="618"/>
                         <connections>
                             <action selector="sliderChanged:" target="494" id="895"/>
@@ -977,8 +978,8 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="590">
-                        <rect key="frame" x="210" y="57" width="32" height="32"/>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="590">
+                        <rect key="frame" x="210" y="56" width="32" height="32"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPPause" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="615">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1057,7 +1058,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="207" width="403" height="419"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <value key="minSize" type="size" width="403" height="419"/>
             <view key="contentView" id="542">
                 <rect key="frame" x="0.0" y="0.0" width="403" height="419"/>

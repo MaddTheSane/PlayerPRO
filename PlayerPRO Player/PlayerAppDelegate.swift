@@ -743,13 +743,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				let panelURLs = panel.urls
 				for theURL in panelURLs {
 					let fileName = theURL.path
-					var err: NSError?
 					do {
 						let utiFile = try ws.type(ofFile: fileName)
 						_=self.handleFile(theURL, ofType: utiFile) //TODO: more efficient way of doing this!
 					} catch let error as NSError {
-						err = error
-						_=PPRunAlertPanel(title: "Error opening file", message: "Unable to open \((fileName as NSString).lastPathComponent): \(err!.localizedFailureReason)")
+						PPRunAlertPanel(title: "Error opening file", message: "Unable to open \((fileName as NSString).lastPathComponent): \(error.localizedFailureReason)")
 						return
 					} catch {
 						fatalError()
@@ -1104,14 +1102,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		try rawSoundData(&theSett, handler: handler)
 		
 		applyMetadata(to: audioFile)
-		audioFile = nil
 	}
 	
 	private func saveMusic(AIFFToURL theURL: URL, theSett: inout MADDriverSettings) throws {
 		var audioFile: ExtAudioFile!
 		let tmpChannels: UInt32
 		
-		switch (theSett.outPutMode) {
+		switch theSett.outPutMode {
 		case .MonoOutPut:
 			tmpChannels = 1
 			
@@ -1145,7 +1142,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		try rawSoundData(&theSett, handler: handler)
 		
 		applyMetadata(to: audioFile)
-		audioFile = nil
 	}
 	
 	private func applyMetadata(to theID: ExtAudioFile) {
@@ -1194,7 +1190,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 								}
 							}
 						} catch let thErr {
-							if (self.isQuitting) {
+							if self.isQuitting {
 								NSApplication.shared().reply(toApplicationShouldTerminate: true)
 							} else {
 								DispatchQueue.main.async() {
@@ -1223,12 +1219,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					}
 					
 					DispatchQueue.global().async() {
-						var theErr = MADErr.noErr;
+						var theErr = MADErr.noErr
 						
 						var oldURL = self.musicList.objectInMusicList(at: self.previouslyPlayingIndex.index).musicURL
 						var expErr: Error? = nil;
 						var errBlock: () -> Void = {
-							if (self.isQuitting) {
+							if self.isQuitting {
 								NSApplication.shared().reply(toApplicationShouldTerminate: true)
 							} else {
 								PPRunAlertPanel(title: "Export failed", message: "Export/coversion of the music file failed:\n\(expErr!.localizedDescription)");
@@ -1315,7 +1311,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						
 						if didFinish {
 							DispatchQueue.main.async() {
-								if (self.isQuitting) {
+								if self.isQuitting {
 									NSApplication.shared().reply(toApplicationShouldTerminate: true)
 								} else {
 									let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
@@ -1338,7 +1334,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			savePanel.allowedFileTypes = [AVFileTypeWAVE]
 			savePanel.title = "Export as Wave Audio"
 			savePanel.beginSheetModal(for: window, completionHandler: { (result) -> Void in
-				if (result != NSFileHandlingPanelOKButton) {
+				if result != NSFileHandlingPanelOKButton {
 					self.madDriver.endExport()
 					return
 				}
@@ -1361,7 +1357,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 										NSApplication.shared().reply(toApplicationShouldTerminate: true)
 									} else {
 										let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
-										if (retVal == NSAlertSecondButtonReturn) {
+										if retVal == NSAlertSecondButtonReturn {
 											NSWorkspace.shared().activateFileViewerSelecting([savePanel.url!])
 										}
 									}
@@ -1382,8 +1378,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			break;
 			
 		default:
-			if tag > madLib.pluginCount || tag < 0 {
-				NSBeep();
+			guard !(tag > madLib.pluginCount || tag < 0) else {
+				NSBeep()
 				
 				madDriver.endExport()
 				if isQuitting {
@@ -1407,11 +1403,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				do {
 					try self.music!.exportMusic(to: fileURL, format: self.madLib[tag].type, library: self.madLib)
 					self.addMusicToMusicList(fileURL, loadIfPreferencesAllow: false)
-					if (self.isQuitting) {
+					if self.isQuitting {
 						NSApplication.shared().reply(toApplicationShouldTerminate: true)
 					} else {
 						let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
-						if (retVal == NSAlertSecondButtonReturn) {
+						if retVal == NSAlertSecondButtonReturn {
 							NSWorkspace.shared().activateFileViewerSelecting([fileURL])
 						}
 					}
@@ -1451,7 +1447,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		self.currentlyPlayingIndex.index = tableView.selectedRow;
 		do {
 			try loadMusicFromCurrentlyPlayingIndex()
-		} catch let err as NSError {
+		} catch let err {
 			NSAlert(error: err).runModal()
 		}
 	}
@@ -1472,7 +1468,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			av.allowsMultipleSelectionOfTrackers = true
 			av.beginOpenPanel(self.window, completionHandler: { (result) -> Void in
 				if (result == NSFileHandlingPanelOKButton) {
-					self.addMusics(toMusicList: panel.urls )
+					self.addMusics(toMusicList: panel.urls)
 				}
 			})
 		} else {
@@ -1592,10 +1588,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				musicList.insert(selArray, at: row - minRow)
 			})
 			musicListContentsDidMove()
-			return true;
+			return true
 		} else if let tmpArray = dragPB.readObjects(forClasses: [NSURL.self], options:[NSPasteboardURLReadingFileURLsOnlyKey : true,
 			NSPasteboardURLReadingContentsConformToTypesKey : self.trackerUTIs]) {
-				if (tmpArray.count < 1) {
+				if tmpArray.count < 1 {
 					return false;
 				}
 				
@@ -1639,7 +1635,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	func tableView(_ tableView: NSTableView, toolTipFor cell: NSCell, rect: NSRectPointer, tableColumn: NSTableColumn?, row: Int, mouseLocation: NSPoint) -> String {
-		if (row >= 0 || row <= musicList.countOfMusicList) {
+		if row >= 0 || row <= musicList.countOfMusicList {
 			return ""
 		}
 		return musicList.url(at: row).path

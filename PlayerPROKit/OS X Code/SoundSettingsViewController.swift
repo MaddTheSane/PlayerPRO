@@ -9,14 +9,14 @@
 import PlayerPROCore
 import Cocoa
 
-private enum soundRate {
+private enum SoundRate {
 	case rate11Khz
 	case rate22Khz
 	case rate44Khz
 	case rate48Khz
 }
 
-private enum bitRate {
+private enum BitRate {
 	case bits8
 	case bits16
 	case bits20
@@ -34,7 +34,7 @@ internal struct TagCoupling {
 }
 
 private func stereoDelayFromTag(_ theTag: Int) -> Int32 {
-	var toSet: Int32 = 0;
+	var toSet: Int32 = 0
 
 	for i in StereoDelayCoupling {
 		if i.tag == theTag {
@@ -43,15 +43,15 @@ private func stereoDelayFromTag(_ theTag: Int) -> Int32 {
 		}
 	}
 	
-	if (toSet == 0) {
-		toSet = 30;
+	if toSet == 0 {
+		toSet = 30
 	}
 	
-	return toSet;
+	return toSet
 }
 
 private func oversamplingFromTag(_ theTag: Int) -> Int32 {
-	var toSet: Int32 = 0;
+	var toSet: Int32 = 0
 	
 	for i in OversamplingCoupling {
 		if i.tag == theTag {
@@ -60,8 +60,8 @@ private func oversamplingFromTag(_ theTag: Int) -> Int32 {
 		}
 	}
 
-	if (toSet == 0) {
-		toSet = 1;
+	if toSet == 0 {
+		toSet = 1
 	}
 	
 	return toSet;
@@ -121,100 +121,89 @@ open class SoundSettingsViewController: NSViewController {
         // Do view setup here.
     }
 	
-	private func set(bits: bitRate) {
+	private func set(bits: BitRate) {
 		switch (bits) {
 		case .bits8:
 			outputBits.selectCell(atRow: 0, column: 0)
-			break;
 			
 		case .bits20:
 			outputBits.selectCell(atRow: 0, column: 2)
-			break;
 			
 		case .bits24:
 			outputBits.selectCell(atRow: 0, column: 3)
-			break;
 			
 		default:
 			outputBits.selectCell(atRow: 0, column: 1)
-			break;
 		}
 	}
 	
-	private func set(rate currRate: soundRate) {
-		switch (currRate) {
+	private func set(rate currRate: SoundRate) {
+		switch currRate {
 		case .rate11Khz:
 			rate.selectCell(atRow: 0, column: 0)
-			break;
 			
 		case .rate22Khz:
 			rate.selectCell(atRow: 0, column: 1)
-			break;
 			
 			
 		case .rate48Khz:
 			rate.selectCell(atRow: 0, column: 3)
-			break;
 			
 		default:
 			rate.selectCell(atRow: 0, column: 2)
-			break;
 		}
 	}
 	
-	private func currentRate() -> soundRate {
+	private func currentRate() -> SoundRate {
 		let curSelected: AnyObject! = rate.selectedCell()
-		if (rate.cell(atRow: 0, column: 0) === curSelected) {
-			return .rate11Khz;
-		} else if (rate.cell(atRow: 0, column: 1) === curSelected) {
-			return .rate22Khz;
-		} else if (rate.cell(atRow: 0, column: 2) === curSelected) {
-			return .rate44Khz;
-		} else if (rate.cell(atRow: 0, column: 3) === curSelected) {
-			return .rate48Khz;
+		if rate.cell(atRow: 0, column: 0) === curSelected {
+			return .rate11Khz
+		} else if rate.cell(atRow: 0, column: 1) === curSelected {
+			return .rate22Khz
+		} else if rate.cell(atRow: 0, column: 2) === curSelected {
+			return .rate44Khz
+		} else if rate.cell(atRow: 0, column: 3) === curSelected {
+			return .rate48Khz
 		} else {
-			return .rate44Khz;
+			return .rate44Khz
 		}
 	}
 	
 	private func setCurrentSoundDriver(_ theDriver: MADSoundOutput) {
-		switch (theDriver) {
+		switch theDriver {
 		case .CoreAudioDriver:
 			soundDriver.selectCell(atRow: 0, column:0)
-			break;
 			
 		case .MIDISoundDriver:
 			soundDriver.selectCell(atRow: 2, column:0)
-			break;
 			
 		default:
 			soundDriver.selectCell(atRow: 3, column:0)
-			break;
 		}
 	}
 	
 	private func currentSoundDriver() -> MADSoundOutput {
 		let curSelected: AnyObject! = soundDriver.selectedCell()
-		if (soundDriver.cell(atRow: 0, column: 0) === curSelected) {
+		if soundDriver.cell(atRow: 0, column: 0) === curSelected {
 			return .CoreAudioDriver;
 			//} else if ([soundDriver cellAtRow:1 column:0] == curSelected) {
 			//	return NoHardwareDriver;
-		} else if (soundDriver.cell(atRow: 2, column: 0) === curSelected) {
+		} else if soundDriver.cell(atRow: 2, column: 0) === curSelected {
 			return .MIDISoundDriver;
 		} else {
 			return .NoHardwareDriver;
 		}
 	}
 	
-	private func currentBits() -> bitRate {
-		let curSelected: AnyObject! = outputBits.selectedCell();
-		if (outputBits.cell(atRow: 0, column: 0) === curSelected) {
+	private func currentBits() -> BitRate {
+		let curSelected: AnyObject! = outputBits.selectedCell()
+		if outputBits.cell(atRow: 0, column: 0) === curSelected {
 			return .bits8;
-		} else if (outputBits.cell(atRow: 0, column: 1) === curSelected) {
+		} else if outputBits.cell(atRow: 0, column: 1) === curSelected {
 			return .bits16;
-		} else if (outputBits.cell(atRow: 0, column: 2) === curSelected) {
+		} else if outputBits.cell(atRow: 0, column: 2) === curSelected {
 			return .bits20;
-		} else if (outputBits.cell(atRow: 0, column: 3) === curSelected) {
+		} else if outputBits.cell(atRow: 0, column: 3) === curSelected {
 			return .bits24;
 		} else {
 			return .bits16;
@@ -252,44 +241,36 @@ open class SoundSettingsViewController: NSViewController {
 		setCurrentSoundDriver(sett.driverMode)
 		
 		let unConvBits = sett.outPutBits
-		var ConvBits = bitRate.bits8
-		switch (unConvBits) {
+		var ConvBits = BitRate.bits8
+		switch unConvBits {
 		case 8:
 			ConvBits = .bits8;
-			break;
 			
 		case 20:
 			ConvBits = .bits20;
-			break;
 			
 		case 24:
 			ConvBits = .bits24;
-			break;
 			
 		default:
 			ConvBits = .bits16;
-			break;
 		}
 		set(bits: ConvBits)
 		
 		let unConvRate = sett.outPutRate
-		var convRate = soundRate.rate11Khz
-		switch (unConvRate) {
+		var convRate = SoundRate.rate11Khz
+		switch unConvRate {
 		case 11025:
 			convRate = .rate11Khz;
-			break;
 			
 		case 22050:
 			convRate = .rate22Khz;
-			break;
 			
 		case 48000:
 			convRate = .rate48Khz;
-			break;
 			
 		default:
 			convRate = .rate44Khz;
-			break;
 		}
 		set(rate: convRate)
 		
@@ -303,7 +284,7 @@ open class SoundSettingsViewController: NSViewController {
 		}
 		
 		if toSet == nil {
-			toSet = 4;
+			toSet = 4
 		}
 		
 		stereoDelayNum.selectItem(at: toSet! - 1)
@@ -318,7 +299,7 @@ open class SoundSettingsViewController: NSViewController {
 		}
 		
 		if toSet == nil {
-			toSet = 4;
+			toSet = 4
 		}
 		reverbNum.selectItem(at: toSet! - 1)
 		
@@ -332,7 +313,7 @@ open class SoundSettingsViewController: NSViewController {
 		}
 		
 		if toSet == nil {
-			toSet = 3;
+			toSet = 3
 		}
 		reverbPercent.selectItem(at: toSet! - 1)
 		
@@ -346,7 +327,7 @@ open class SoundSettingsViewController: NSViewController {
 		}
 		
 		if toSet == nil {
-			toSet = 1;
+			toSet = 1
 		}
 		oversamplingNum.selectItem(at: toSet! - 1)
 		
@@ -369,24 +350,20 @@ open class SoundSettingsViewController: NSViewController {
 	}
 	
 	@IBAction public func changeBits(_ sender: AnyObject!) {
-		let theBits = currentBits();
+		let theBits = currentBits()
 		var returnBits: Int16 = 0
-		switch (theBits) {
+		switch theBits {
 		case .bits8:
 			returnBits = 8;
-			break;
 			
 		case .bits20:
 			returnBits = 20;
-			break;
 			
 		case .bits24:
 			returnBits = 24;
-			break;
 			
 		default:
 			returnBits = 16;
-			break;
 		}
 		delegate?.soundView(self, bitsDidChange: returnBits)
 	}
@@ -394,22 +371,18 @@ open class SoundSettingsViewController: NSViewController {
 	@IBAction public func changeRate(_ sender: AnyObject!) {
 		let rate1 = currentRate()
 		var returnRate: UInt32 = 0
-		switch (rate1) {
+		switch rate1 {
 		case .rate11Khz:
 			returnRate = 11025;
-			break;
 			
 		case .rate22Khz:
 			returnRate = 22050;
-			break;
 			
 		case .rate48Khz:
 			returnRate = 48000;
-			break;
 			
 		default:
 			returnRate = 44100;
-			break;
 		}
 		delegate?.soundView(self, rateDidChange: returnRate)
 	}
@@ -425,38 +398,38 @@ open class SoundSettingsViewController: NSViewController {
 		reverbPercent.isEnabled = reverbState
 		stereoDelayNum.isEnabled = stereoDelayState
 		
-			if (reverbState != reverbActive) {
-				delegate?.soundView(self, reverbDidChangeActive: reverbState)
+		if reverbState != reverbActive {
+			delegate?.soundView(self, reverbDidChangeActive: reverbState)
+		}
+		if stereoDelayState != stereoDelayActive {
+			delegate?.soundView(self, stereoDelayDidChangeActive: stereoDelayState)
+			if stereoDelayState {
+				delegate?.soundView(self, stereoDelayAmountDidChange: stereoDelayFromTag(stereoDelayNum.selectedItem!.tag))
 			}
-			if (stereoDelayState != stereoDelayActive) {
-				delegate?.soundView(self, stereoDelayDidChangeActive: stereoDelayState)
-				if stereoDelayState {
-					delegate?.soundView(self, stereoDelayAmountDidChange: stereoDelayFromTag(stereoDelayNum.selectedItem!.tag))
-				}
+		}
+		if oversamplingState != oversamplingActive {
+			delegate?.soundView(self, oversamplingDidChangeActive: oversamplingState)
+			if (oversamplingState) {
+				delegate?.soundView(self, oversamplingAmountDidChange: oversamplingFromTag(oversamplingNum.selectedItem!.tag))
 			}
-			if (oversamplingState != oversamplingActive) {
-				delegate?.soundView(self, oversamplingDidChangeActive: oversamplingState)
-				if (oversamplingState) {
-					delegate?.soundView(self, oversamplingAmountDidChange: oversamplingFromTag(oversamplingNum.selectedItem!.tag))
-				}
-			}
-			if (surroundState != surroundActive) {
-				delegate?.soundView(self, surroundDidChangeActive: surroundState)
-			}
+		}
+		if surroundState != surroundActive {
+			delegate?.soundView(self, surroundDidChangeActive: surroundState)
+		}
 		self.reverbActive = reverbState;
 		self.stereoDelayActive = stereoDelayState;
 		self.oversamplingActive = oversamplingState;
 		self.surroundActive = surroundState;
 	}
 	
-	@IBAction func changeOversampling(_ sender: AnyObject!) {
-		let toSet = oversamplingFromTag((sender as! NSMenuItem).tag)
+	@IBAction func changeOversampling(_ sender: NSMenuItem!) {
+		let toSet = oversamplingFromTag(sender.tag)
 		delegate?.soundView(self, oversamplingAmountDidChange: toSet)
 	}
 	
-	@IBAction public func changeReverbAmount(_ sender: AnyObject!) {
+	@IBAction public func changeReverbAmount(_ sender: NSMenuItem!) {
 		var toSet: Int32 = 0;
-		let tag = (sender as! NSMenuItem).tag
+		let tag = sender.tag
 
 		for i in ReverbAmountCoupling {
 			if i.tag == tag {
@@ -465,16 +438,16 @@ open class SoundSettingsViewController: NSViewController {
 			}
 		}
 		
-		if (toSet == 0) {
-			toSet = 25;
+		if toSet == 0 {
+			toSet = 25
 		}
 		
 		delegate?.soundView(self, reverbSizeDidChange: toSet)
 	}
 	
-	@IBAction public func changeReverbPercent(_ sender: AnyObject!) {
+	@IBAction public func changeReverbPercent(_ sender: NSMenuItem!) {
 		var toSet: Int32 = 0
-		let tag = (sender as! NSMenuItem).tag
+		let tag = sender.tag
 		
 		for i in ReverbPercentCoupling {
 			if i.tag == tag {
@@ -483,14 +456,14 @@ open class SoundSettingsViewController: NSViewController {
 			}
 		}
 
-		if (toSet == 0) {
-			toSet = 30;
+		if toSet == 0 {
+			toSet = 30
 		}
 		delegate?.soundView(self, reverbStrengthDidChange: toSet)
 	}
 	
-	@IBAction public func changeStereoDelay(_ sender: AnyObject!) {
-		let toSet = stereoDelayFromTag((sender as! NSMenuItem).tag)
+	@IBAction public func changeStereoDelay(_ sender: NSMenuItem!) {
+		let toSet = stereoDelayFromTag(sender.tag)
 		delegate?.soundView(self, stereoDelayAmountDidChange: toSet)
 	}
 }
