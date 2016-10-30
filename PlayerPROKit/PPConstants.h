@@ -16,26 +16,28 @@ __BEGIN_DECLS
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NSString *PPLibraryInfoKeys NS_STRING_ENUM;
+
 /// The total number of patterns. Type is <code>NSNumber</code>.
-extern NSString * const kPPTotalPatterns;
+extern PPLibraryInfoKeys const kPPTotalPatterns;
 /// The length of a partition. Type is <code>NSNumber</code>.
-extern NSString * const kPPPartitionLength;
+extern PPLibraryInfoKeys const kPPPartitionLength;
 /// The size of a file. Type is <code>NSNumber</code>.
 ///
 /// \discussion You can ignore this and just use the system's file APIs to get a more accurate number
-extern NSString * const kPPFileSize;
+extern PPLibraryInfoKeys const kPPFileSize;
 /// The tracker's signature. Type is <code>NSString</code>.
 ///
 /// \discussion The signature might not match the plug-in type. For example, the MOD tracker has many different signatures.
-extern NSString * const kPPSignature;
+extern PPLibraryInfoKeys const kPPSignature;
 /// The total number of tracks. Type is <code>NSNumber</code>.
-extern NSString * const kPPTotalTracks;
+extern PPLibraryInfoKeys const kPPTotalTracks;
 /// The total number of instruments. Type is <code>NSNumber</code>.
-extern NSString * const kPPTotalInstruments;
+extern PPLibraryInfoKeys const kPPTotalInstruments;
 /// The title of the tracker. Type is <code>NSString</code>.
-extern NSString * const kPPInternalFileName;
+extern PPLibraryInfoKeys const kPPInternalFileName;
 /// The description of the tracker. Type is <code>NSString</code>.
-extern NSString * const kPPFormatDescription;
+extern PPLibraryInfoKeys const kPPFormatDescription;
 
 NS_ASSUME_NONNULL_END
 

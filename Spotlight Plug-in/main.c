@@ -178,7 +178,7 @@ static ULONG MetadataImporterPluginRelease(void *thisInstance)
 {
 	((MDImportPlug*)thisInstance)->refCount -= 1;
 	if (((MDImportPlug*)thisInstance)->refCount == 0) {
-		DeallocMetadataImporterPluginType((MDImportPlug*)thisInstance );
+		DeallocMetadataImporterPluginType((MDImportPlug*)thisInstance);
 		return 0;
 	} else {
 		return ((MDImportPlug*)thisInstance)->refCount;

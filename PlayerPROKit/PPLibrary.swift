@@ -13,18 +13,18 @@ import SwiftAdditions
 private let kPlayerPROMADKUTI = "com.quadmation.playerpro.madk"
 private let MadIDString = OSTypeToString(MadID)!
 
-private func toDictionary(infoRec: MADInfoRec) -> NSDictionary {
+private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	let aArray: [Int8] = try! arrayFromObject(reflecting: infoRec.internalFileName, appendLastObject: 0)
 	let bArray: [Int8] = try! arrayFromObject(reflecting: infoRec.formatDescription, appendLastObject: 0)
 	
-	return [kPPTotalPatterns:	Int(infoRec.totalPatterns),
-		kPPPartitionLength:		Int(infoRec.partitionLength),
-		kPPFileSize:			Int(infoRec.fileSize),
-		kPPSignature:			OSTypeToString(infoRec.signature, useHexIfInvalid: ()),
-		kPPTotalTracks:			Int(infoRec.totalTracks),
-		kPPTotalInstruments:	Int(infoRec.totalInstruments),
-		kPPInternalFileName:	String(cString: aArray, encoding: String.Encoding.macOSRoman) ?? "",
-		kPPFormatDescription:	String(cString: bArray, encoding: String.Encoding.macOSRoman) ?? ""]
+	return [PPLibraryInfoKeys.totalPatterns:	Int(infoRec.totalPatterns),
+		PPLibraryInfoKeys.partitionLength:		Int(infoRec.partitionLength),
+		PPLibraryInfoKeys.fileSize:				Int(infoRec.fileSize),
+		PPLibraryInfoKeys.signature:			OSTypeToString(infoRec.signature, useHexIfInvalid: ()),
+		PPLibraryInfoKeys.totalTracks:			Int(infoRec.totalTracks),
+		PPLibraryInfoKeys.totalInstruments:		Int(infoRec.totalInstruments),
+		PPLibraryInfoKeys.internalFileName:		String(cString: aArray, encoding: String.Encoding.macOSRoman) ?? "",
+		PPLibraryInfoKeys.formatDescription:	String(cString: bArray, encoding: String.Encoding.macOSRoman) ?? ""]
 }
 
 /// Class that represents the additional tracker types that PlayerPRO can load via plug-ins.
@@ -74,15 +74,15 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 			formatDescription = String(cString: bArray, encoding: String.Encoding.macOSRoman) ?? ""
 		}
 		
-		private init(infoDict: NSDictionary) {
-			totalPatterns = infoDict[kPPTotalPatterns] as! Int
-			partitionLength = infoDict[kPPPartitionLength] as! Int
-			fileSize = infoDict[kPPFileSize] as! Int
-			totalTracks = infoDict[kPPTotalTracks] as! Int
-			totalInstruments = infoDict[kPPTotalInstruments] as! Int
-			internalFileName = infoDict[kPPInternalFileName] as! String
-			formatDescription = infoDict[kPPFormatDescription] as! String
-			signature = infoDict[kPPSignature] as! String
+		private init(infoDict: [PPLibraryInfoKeys: Any]) {
+			totalPatterns = infoDict[.totalPatterns] as! Int
+			partitionLength = infoDict[.partitionLength] as! Int
+			fileSize = infoDict[.fileSize] as! Int
+			totalTracks = infoDict[.totalTracks] as! Int
+			totalInstruments = infoDict[.totalInstruments] as! Int
+			internalFileName = infoDict[.internalFileName] as! String
+			formatDescription = infoDict[.formatDescription] as! String
+			signature = infoDict[.signature] as! String
 		}
 		
 		public var description: String {
@@ -196,7 +196,8 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// - parameter apath: The tracker at the file URL to identify.
 	/// - returns: The identified format of the file, represented as a string.
 	/// - throws: A `MADErr` wrapped in an `NSError`.
-	@objc(identifyFileAtURL:error:) public func identifyFile(at apath: URL) throws -> String {
+	@objc(identifyFileAtURL:error:)
+	public func identifyFile(at apath: URL) throws -> String {
 		var cType = [Int8](repeating: 0, count: 5)
 		
 		let aRet = MADMusicIdentifyCFURL(theLibrary, &cType, apath as NSURL)
@@ -213,7 +214,8 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// - parameter path: The tracker at a POSIX-style path to identify
 	/// - returns: The identified format of the file, represented as a string.
 	/// - throws: A `MADErr` wrapped in an `NSError`.
-	@objc(identifyFileAtPath:error:) public func identifyFile(at path: String) throws -> String {
+	@objc(identifyFileAtPath:error:)
+	public func identifyFile(at path: String) throws -> String {
 		let anURL = URL(fileURLWithPath: path)
 		return try identifyFile(at: anURL)
 	}
@@ -226,11 +228,8 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// - returns: An error value, or `MADNoErr` on success.
 	///
 	/// This is mainly for Objective-C code. For Swift code, use `identifyFile(at:) throws` instead.
-	@objc(identifyFileAtURL:stringType:) public func identifyFile(at apath: URL, type: AutoreleasingUnsafeMutablePointer<NSString>?) -> MADErr {
-		guard let type = type else {
-			return .parametersErr
-		}
-		
+	@objc(identifyFileAtURL:stringType:)
+	public func identifyFile(at apath: URL, type: AutoreleasingUnsafeMutablePointer<NSString?>) -> MADErr {
 		do {
 			type.pointee = try identifyFile(at: apath) as NSString
 			return .noErr
@@ -255,11 +254,8 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// - returns: An error value, or `MADNoErr` on success.
 	///
 	/// This is mainly for Objective-C code. For Swift code, use `identifyFile(at:) throws` instead.
-	@objc(identifyFileAtPath:stringType:) public func identifyFile(at apath: String, type: AutoreleasingUnsafeMutablePointer<NSString>?) -> MADErr {
-		guard let type = type else {
-			return .parametersErr
-		}
-		
+	@objc(identifyFileAtPath:stringType:)
+	public func identifyFile(at apath: String, type: AutoreleasingUnsafeMutablePointer<NSString?>) -> MADErr {
 		do {
 			type.pointee = try identifyFile(at: apath) as NSString
 			return .noErr
@@ -322,16 +318,16 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// - returns: An error value, or `MADNoErr` on success.
 	///
 	/// This is mainly for Objective-C code. For Swift code, use `information(from:type:) throws` instead.
-	@objc(getInformationFromFileAtURL:stringType:info:) public func getInformation(from path: URL, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary>?) -> MADErr {
-		guard let info = info,
-			let cStrType = type.cString(using: String.Encoding.macOSRoman) else {
+	@objc(getInformationFromFileAtURL:stringType:info:)
+	public func getInformation(from path: URL, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary?>) -> MADErr {
+		guard let cStrType = type.cString(using: String.Encoding.macOSRoman) else {
 			return .parametersErr
 		}
 		
 		do {
 			let aRet = try information(from: path, cType: cStrType)
 			let tmpDict = toDictionary(infoRec: aRet)
-			info.pointee = tmpDict
+			info.pointee = tmpDict as NSDictionary
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
@@ -354,7 +350,8 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// - returns: An error value, or `MADNoErr` on success.
 	///
 	/// This is mainly for Objective-C code. For Swift code, use `information(from:type:) throws` instead.
-	@objc(getInformationFromFileAtPath:stringType:info:) public func getInformation(from path: String, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
+	@objc(getInformationFromFileAtPath:stringType:info:)
+	public func getInformation(from path: String, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary?>) -> MADErr {
 		let anURL = URL(fileURLWithPath: path)
 		return getInformation(from: anURL, type: type, info: info)
 	}
@@ -456,17 +453,16 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 extension PPLibrary {
 	///Deprecated: Use `-getInformationFromFileAtPath:stringType:info:` (Obj-C) or `information(from:type:) throws` (Swift) instead
 	@available(*, deprecated, message: "Use -getInformationFromFileAtPath:stringType:info: (Obj-C) or information(from:type:) (Swift) instead", renamed: "information(from:type:)")
-	@objc(getInformationFromFileAtPath:type:info:) public func getInformationFromFile(path: String, type: UnsafeMutablePointer<Int8>, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
+	@objc(getInformationFromFileAtPath:type:info:)
+	public func getInformationFromFile(path: String, type: UnsafeMutablePointer<Int8>, info: AutoreleasingUnsafeMutablePointer<NSDictionary?>) -> MADErr {
 		let anURL = URL(fileURLWithPath: path)
 		return getInformationFromFile(url: anURL, type: type, info: info)
 	}
 
 	///Deprecated: Use `-getInformationFromFileAtURL:stringType:info:` (Obj-C) or `information(from:type:) throws` (Swift) instead
 	@available(*, deprecated, message: "Use -getInformationFromFileAtURL:stringType:info: (Obj-C) or information(from:type:) (Swift) instead", renamed: "information(from:type:)")
-	@objc(getInformationFromFileAtURL:type:info:) public func getInformationFromFile(url path: URL, type: UnsafeMutablePointer<Int8>, info: AutoreleasingUnsafeMutablePointer<NSDictionary>?) -> MADErr {
-		guard let info = info else {
-			return .parametersErr
-		}
+	@objc(getInformationFromFileAtURL:type:info:)
+	public func getInformationFromFile(url path: URL, type: UnsafeMutablePointer<Int8>, info: AutoreleasingUnsafeMutablePointer<NSDictionary?>) -> MADErr {
 		let sLen = strnlen(type, 4)
 		assert(sLen != 4, "Even if it's less than four chars long, the rest should be padded")
 		
@@ -478,7 +474,7 @@ extension PPLibrary {
 		do {
 			let aRet: MADInfoRec = try information(from: path, cType: cStrType)
 			let tmpDict = toDictionary(infoRec: aRet)
-			info.pointee = tmpDict
+			info.pointee = tmpDict as NSDictionary
 			return .noErr
 		} catch let anErr as MADErr {
 			return anErr
@@ -495,7 +491,8 @@ extension PPLibrary {
 	
 	/// Deprecated: Use `-identifyFileAtURL:stringType:` (Obj-C) or `identifyFile(at:) throws` (Swift) instead
 	@available(*, deprecated, message: "Use -identifyFileAtURL:stringType: (Obj-C) or 'identifyFile(at:) throws' (Swift) instead", renamed: "identifyFile(at:)" )
-	@objc(identifyFileAtURL:type:) public func identifyFile(url apath: URL, type: UnsafeMutablePointer<Int8>?) -> MADErr {
+	@objc(identifyFileAtURL:type:)
+	public func identifyFile(url apath: URL, type: UnsafeMutablePointer<Int8>?) -> MADErr {
 		if type == nil {
 			return .parametersErr
 		}
@@ -522,7 +519,8 @@ extension PPLibrary {
 	
 	///Deprecated: Use `-identifyFileAtPath:stringType:` (Obj-C) or `identifyFile(at:) throws` (Swift) instead
 	@available(*, deprecated, message: "Use -identifyFileAtPath:stringType: (Obj-C) or identifyFile(at:) (Swift) instead", renamed: "identifyFile(at:)")
-	@objc(identifyFileAtPath:type:) public func identifyFile(path apath: String, type: UnsafeMutablePointer<Int8>?) -> MADErr {
+	@objc(identifyFileAtPath:type:)
+	public func identifyFile(path apath: String, type: UnsafeMutablePointer<Int8>?) -> MADErr {
 		guard let type = type else {
 			return .parametersErr
 		}

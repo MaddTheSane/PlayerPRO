@@ -49,7 +49,7 @@ static inline BOOL StringIsEmpty(NSString *s)
 #define kPPMDFormatDescription	@"net_sourceforge_playerpro_tracker_formatdescription"
 #define kPPMDMADKInfo			@"net_sourceforge_playerpro_tracker_madkinfo"
 
-static char *typeBasedOnUTI(NSString* theUTI, MADLibrary *theLib) {
+static const char *typeBasedOnUTI(NSString* theUTI, MADLibrary *theLib) {
 	if ([theUTI isEqualToString:@"com.quadmation.playerpro.madk"]) {
 		return "MADK";
 	} else if ([theUTI isEqualToString:@"com.quadmation.playerpro.mad"]) {
@@ -112,7 +112,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			OSType info = 0;
 			
 			//first, iterate over the the library UTIs.
-			char *whutType = typeBasedOnUTI((__bridge NSString *)(contentTypeUTI), MADLib);
+			const char *whutType = typeBasedOnUTI((__bridge NSString *)(contentTypeUTI), MADLib);
 			
 			strcpy(type, whutType);
 			if (strcmp(type, "!!!!") == 0) {
@@ -242,7 +242,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 				}
 			}
 			
-			NSattribs[kPPMDInstumentsList] = InstruArray;
+			NSattribs[kPPMDInstumentsList] = [InstruArray copy];
 		}
 		
 		// Pattern names
@@ -257,7 +257,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			}
 			
 			if ([PatArray count] > 0) {
-				NSattribs[kPPMDPatternList] = PatArray;
+				NSattribs[kPPMDPatternList] = [PatArray copy];
 			}
 		}
 		

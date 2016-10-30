@@ -348,6 +348,7 @@ private let kPlayerList = "Player List"
 		}
 	}
 	
+	@discardableResult
 	func loadMusicList(from fromURL: URL) -> Bool {
 		if let unWrappedListData = try? Data(contentsOf: fromURL) {
 			return loadMusicList(from: unWrappedListData)
@@ -485,7 +486,7 @@ private let kPlayerList = "Player List"
 		let theIndexSet = IndexSet(integersIn: idx ..< anObj.count + idx)
 		self.willChange(.insertion, valuesAt: theIndexSet, forKey: kMusicListKVO)
 		
-		for (tempObj, currentIndex) in zip(anObj, theIndexSet).reversed() {
+		for (tempObj, currentIndex) in zip(anObj, theIndexSet) {
 			musicList.insert(tempObj, at: currentIndex)
 		}
 
@@ -493,7 +494,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	#if os(OSX)
-	func beginLoadingOfOldMusicListAtURL(toOpen: URL, completionHandle theHandle: @escaping (_ theErr: Error?) -> Void) {
+	func beginLoadingOfOldMusicList(at toOpen: URL, completionHandle theHandle: @escaping (_ theErr: Error?) -> Void) {
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
 		conn.remoteObjectInterface = NSXPCInterface(with: PPSTImporterHelper.self)
 		

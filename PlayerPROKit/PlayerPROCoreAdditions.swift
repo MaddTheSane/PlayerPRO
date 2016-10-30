@@ -136,10 +136,8 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 	if lhs.noArg != rhs.noArg {
 		return false
 	}
-	let lhsNameArray: [UInt8] = try! arrayFromObject(reflecting: lhs.name)
-	let rhsNameArray: [UInt8] = try! arrayFromObject(reflecting: rhs.name)
-	let lhsName = String(pascalString: lhsNameArray) ?? ""
-	let rhsName = String(pascalString: rhsNameArray) ?? ""
+	let lhsName = String(pascalString: lhs.name) ?? ""
+	let rhsName = String(pascalString: rhs.name) ?? ""
 	if lhsName != rhsName {
 		return false
 	}
@@ -255,8 +253,16 @@ public let maximumChannelVolume: MADByte = 128
 public let maximumArpeggio: Int32 = 3
 public let equalizerPacketElements = 512
 
-public func MADDebug(string text: String, line: UInt = #line, file: /*Static*/String = #file) {
-	MADDebugStr(Int16(line), (file as NSString).fileSystemRepresentation, text)
+/// PlayerPROCore's internal debugger function
+/// - parameter text: Developer text that is used to help debug the issue. **Cannot be NULL**, but may be an empty string.
+/// - parameter file: The file that has the problem.
+/// - parameter line: the line of the source file that's having a problem.
+///
+/// **Normally** it is never called, only when a FATAL error has occured. <br>
+/// This function is automatically invoked using the macros `#line` and
+/// `#file` for the line and file paramaters.
+public func MADDebug(string text: String, line: UInt = #line, file: StaticString = #file) {
+	MADDebugStr(Int16(line), (String(describing: file) as NSString).fileSystemRepresentation, text)
 }
 
 private var BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8,

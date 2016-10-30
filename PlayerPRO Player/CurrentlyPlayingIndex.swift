@@ -17,6 +17,6 @@ struct CurrentlyPlayingIndex: CustomDebugStringConvertible, CustomStringConverti
 	}
 	
 	var debugDescription: String {
-		return "Index: \(index) URL: \(playbackURL) URL Path: \(playbackURL!.path)"
+		return "Index: \(index) URL: '\(playbackURL)' URL Path: \(playbackURL!.path)"
 	}
 }
