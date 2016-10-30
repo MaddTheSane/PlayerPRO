@@ -11,7 +11,7 @@
 
 static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {
-	Size handSize = GetHandleSize(aResource);
+	const Size handSize = GetHandleSize(aResource);
 	long curSize = 2;
 	
 	if (!aResource)
@@ -92,8 +92,7 @@ static NSString *pascalStringToNSString(StringPtr aStr)
 	}
 	UseResFile(refNum);
 	aHandle = Get1Resource('STR#', 128);
-	if (aHandle == NULL)
-	{
+	if (aHandle == NULL) {
 		CloseResFile(refNum);
 		return ResError();
 	}
@@ -161,7 +160,7 @@ static NSString *pascalStringToNSString(StringPtr aStr)
 	
 	selectedMusic = (location <= [newArray count]) ? location : -1;
 	
-	*outDict = @{@"MusicPaths":		newArray,
+	*outDict = @{@"MusicPaths":		[newArray copy],
 				 @"SelectedMusic":	@(selectedMusic),
 				 @"lostMusicCount":	@(lostMusicCount)};
 	

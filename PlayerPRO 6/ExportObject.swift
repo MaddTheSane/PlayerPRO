@@ -28,30 +28,37 @@ final class ExportObject: NSObject {
 	
 	weak var delegate: ExportObjectDelegate? = nil
 	let destination: URL
-	private let exportBlock: PPExportBlock
+	private let exportBlock: PPSwiftExportBlock
 	private(set) var status = ExportStatus.NotRan
-	@objc init(destination dest: URL, exportBlock exportCode: @escaping PPExportBlock) {
-		exportBlock = exportCode
+	@objc convenience init(destination dest: URL, exportBlock exportCode: @escaping PPExportBlock) {
+		//exportBlock = exportCode
+		//destination = dest
+		
+		//super.init()
+		let tmpExportBlock: PPSwiftExportBlock = { (theURL, errStr) -> MADErr in
+			var tmpStr: NSString? = nil
+			let retErr = exportCode(dest, &tmpStr)
+			if let tmp2Str = tmpStr as String? {
+				errStr = tmp2Str
+			}
+			return retErr
+		}
+		
+		self.init(destination: dest, block: tmpExportBlock)
+
+	}
+	
+	init(destination dest: URL, block: @escaping PPSwiftExportBlock) {
+		exportBlock = block
 		destination = dest
 		
 		super.init()
 	}
 	
-	convenience init(destination dest: URL, block: @escaping PPSwiftExportBlock) {
-		let tmpExportBlock: PPExportBlock = { (theURL, errStr) -> MADErr in
-			var tmpStr: String? = nil
-			let retErr = block(dest, &tmpStr)
-			errStr?.pointee = tmpStr as NSString?
-			return retErr
-		}
-		
-		self.init(destination: dest, exportBlock: tmpExportBlock)
-	}
-	
 	func run() {
 		status = .Running
 		DispatchQueue.global().async(execute: { () -> Void in
-			var aStr: NSString? = nil
+			var aStr: String? = nil
 			let errVal = self.exportBlock(self.destination, &aStr)
 			if errVal == .noErr {
 				DispatchQueue.main.async(execute: { () -> Void in
@@ -62,7 +69,7 @@ final class ExportObject: NSObject {
 			} else {
 				if aStr == nil {
 					let tmpErr = createNSError(from: errVal)!
-					aStr = tmpErr.description as NSString
+					aStr = tmpErr.description
 				}
 				let bStr: String = (aStr ?? "Unknown error") as String
 				DispatchQueue.main.async(execute: { () -> Void in

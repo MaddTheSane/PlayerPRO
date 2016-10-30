@@ -30,7 +30,7 @@ private let kPlayerList = "Player List"
 			retURL.appendPathComponent("Player", isDirectory: true)
 			return retURL
 		} catch {
-			fatalError("Encountered error with locating Application Support directory")
+			fatalError("Encountered error with locating Application Support directory: \(error)")
 		}
 	}()
 #elseif os(iOS)
@@ -313,7 +313,7 @@ private let kPlayerList = "Player List"
 
 	func encode(with aCoder: NSCoder) {
 		aCoder.encode(selectedMusic, forKey: kMusicListLocation4)
-		aCoder.encode(musicList as NSArray, forKey: kMusicListKey4)
+		aCoder.encode(musicList, forKey: kMusicListKey4)
 		#if os(iOS)
 			aCoder.encode(name, forKey: kMusicListName4)
 		#endif
@@ -482,11 +482,10 @@ private let kPlayerList = "Player List"
 	
 	@objc(insertObjects:inMusicListAtIndex:)
 	func insert(_ anObj: [MusicListObject], at idx: Int) {
-		let theIndexSet = NSIndexSet(indexesIn: NSRange(location: idx, length: anObj.count)) as IndexSet
+		let theIndexSet = IndexSet(integersIn: idx ..< anObj.count + idx)
 		self.willChange(.insertion, valuesAt: theIndexSet, forKey: kMusicListKVO)
 		
-		for (i, currentIndex) in theIndexSet.enumerated() {
-			let tempObj = anObj[i]
+		for (tempObj, currentIndex) in zip(anObj, theIndexSet).reversed() {
 			musicList.insert(tempObj, at: currentIndex)
 		}
 
@@ -508,21 +507,20 @@ private let kPlayerList = "Player List"
 				if let error = error {
 					theHandle(error)
 				} else {
-					guard let invalidAny = bookmarkData!["lostMusicCount"] as? UInt,
-						let selectedAny = bookmarkData!["SelectedMusic"] as? Int,
-						let pathsAny = bookmarkData!["MusicPaths"] as? NSArray as? [String] else {
+					guard let invalidAny = bookmarkData?["lostMusicCount"] as? UInt,
+						let selectedAny = bookmarkData?["SelectedMusic"] as? Int,
+						let pathsAny = bookmarkData?["MusicPaths"] as? NSArray as? [String] else {
 							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: "Invalid data returned from helper"])
 							theHandle(lolwut)
 							return;
 					}
-					var pathsURL = [MusicListObject]()
 					// Have all the new MusicListObjects use the same date
 					let currentDate = Date()
-					for aPath in pathsAny {
+					let pathsURL = pathsAny.map({ (aPath) -> MusicListObject in
 						let tmpURL = URL(fileURLWithPath: aPath)
 						let tmpObj = MusicListObject(url: tmpURL, date: currentDate)
-						pathsURL.append(tmpObj)
-					}
+						return tmpObj
+					})
 					self.loadMusicList(pathsURL)
 					self.lostMusicCount = invalidAny
 					self.selectedMusic = selectedAny

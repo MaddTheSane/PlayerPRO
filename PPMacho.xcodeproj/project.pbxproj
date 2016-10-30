@@ -6473,7 +6473,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				TargetAttributes = {
 					550FFADF17CEA4570003A2F3 = {
 						LastSwiftMigration = 0800;

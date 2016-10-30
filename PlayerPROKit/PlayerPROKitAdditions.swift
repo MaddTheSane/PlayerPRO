@@ -129,7 +129,7 @@ public func octaveName(from octNote: UInt8, letters isUseLetters: Bool = true) -
 }
 
 public func octaveName(from octNote: Int16, letters isUseLetters: Bool = true) -> String? {
-	if (octNote > 95 || octNote < 0) {
+	if octNote > 95 || octNote < 0 {
 		return nil
 	}
 	
