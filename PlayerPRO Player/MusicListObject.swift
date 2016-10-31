@@ -137,7 +137,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 	}
 	
-	func checkIsReachable() throws -> Bool {
+	@nonobjc func checkIsReachable() throws -> Bool {
 		return try musicURL.checkResourceIsReachable()
 	}
 	
@@ -187,7 +187,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	///
 	///- parameter other: The other `MusicListObject` to compare to.
 	///- returns: How this object compares to the other one.
-	func localizedStandardCompareFileName(other: MusicListObject) -> ComparisonResult {
+	func localizedStandardCompareFileName(_ other: MusicListObject) -> ComparisonResult {
 		return fileName.localizedStandardCompare(other.fileName)
 	}
 	
@@ -195,7 +195,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	///
 	///- parameter other: The other `MusicListObject` to compare to.
 	///- returns: How this object compares to the other one.
-	func compareByFileSize(other: MusicListObject) -> ComparisonResult {
+	func compareByFileSize(_ other: MusicListObject) -> ComparisonResult {
 		let otherSize = other.fileSize
 		if fileSize > otherSize {
 			return .orderedAscending
@@ -211,7 +211,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	///
 	///- parameter other: The other `MusicListObject` to compare to.
 	///- returns: How this object compares to the other one.
-	func compareByAddedDate(other: MusicListObject) -> ComparisonResult {
+	func compareByAddedDate(_ other: MusicListObject) -> ComparisonResult {
 		return addedDate.compare(other.addedDate)
 	}
 	
@@ -225,7 +225,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	
 	func encode(with aCoder: NSCoder) {
 		#if os(OSX)
-		if let bookmark = try? musicURL.bookmarkData(options: [], includingResourceValuesForKeys: nil, relativeTo: homeURL) {
+		if let bookmark = try? musicURL.bookmarkData(options: [], includingResourceValuesForKeys: [.volumeURLKey, .volumeUUIDStringKey], relativeTo: homeURL) {
 			aCoder.encode(bookmark, forKey: kMusicListURLBookmark)
 		}
 		#endif

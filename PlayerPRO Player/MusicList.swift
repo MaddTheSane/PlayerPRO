@@ -155,14 +155,14 @@ private let kPlayerList = "Player List"
 	}
 	
 	enum AddMusicStatus {
-		case Failure
-		case Success
-		case SimilarURL
+		case failure
+		case success
+		case similarURL
 	}
 	
 	func addMusicURL(_ theURL: URL?, force: Bool = false) -> AddMusicStatus {
 		guard let theURL = theURL else {
-			return .Failure
+			return .failure
 		}
 		
 		let obj = MusicListObject(url: theURL)
@@ -172,7 +172,7 @@ private let kPlayerList = "Player List"
 				return obj2.pointsToFile(url: obj.musicURL)
 			})
 			if tmpArray.count > 0 {
-				return .SimilarURL
+				return .similarURL
 			}
 		}
 		
@@ -180,7 +180,7 @@ private let kPlayerList = "Player List"
 		self.willChange(.insertion, valuesAt: theIndex, forKey: kMusicListKVO)
 		musicList.append(obj)
 		self.didChange(.insertion, valuesAt: theIndex, forKey: kMusicListKVO)
-		return .Success
+		return .success
 	}
 	
 	override init() {
@@ -240,11 +240,11 @@ private let kPlayerList = "Player List"
 			#endif
 			for book in BookmarkArray {
 				if !book.checkIsReachableAndReturnError(error: nil) {
-					if (selectedMusic == -1) {
+					if selectedMusic == -1 {
 						//Do nothing
-					} else if (selectedMusic == musicList.count + 1) {
+					} else if selectedMusic == musicList.count + 1 {
 						selectedMusic = -1
-					} else if (selectedMusic > musicList.count + 1) {
+					} else if selectedMusic > musicList.count + 1 {
 						selectedMusic -= 1
 					}
 					lostMusicCount += 1
@@ -357,6 +357,7 @@ private let kPlayerList = "Player List"
 		}
 	}
 	
+	@discardableResult
 	func loadApplicationMusicList() -> Bool {
 		let manager = FileManager.default
 		#if os(OSX)
@@ -440,11 +441,16 @@ private let kPlayerList = "Player List"
 			selectedMusic = -1;
 		}
 		
-		_ = musicList.remove(indexes: idxSet)
+		musicList.remove(indexes: idxSet)
 	}
 	
 	@objc(removeObjectInMusicListAtIndex:)
 	func remove(at atIndex: Int) {
+		if atIndex == selectedMusic {
+			selectedMusic = -1
+		} else if selectedMusic > atIndex {
+			selectedMusic -= 1
+		}
 		musicList.remove(at: atIndex)
 	}
 	
@@ -464,10 +470,8 @@ private let kPlayerList = "Player List"
 	@objc(insertMusicLists:atIndexes:)
 	func insertMusicLists(_ anObj: [MusicListObject], at indexes: IndexSet) {
 		
-		var idx = anObj.endIndex
-		for i in indexes.reversed() {
-			idx -= 1
-			musicList.insert(anObj[idx], at: i)
+		for (i, idx) in zip(indexes, anObj).reversed() {
+			musicList.insert(idx, at: i)
 		}
 	}
 	

@@ -250,10 +250,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		let okayMusic = musicList.addMusicURL(theURL, force: false)
 		didChangeValue(forKey: kMusicListKVO)
 		switch okayMusic {
-		case .Failure:
+		case .failure:
 			return
 			
-		case .SimilarURL:
+		case .similarURL:
 			let similarMusicIndex = musicList.indexOfObjectSimilar(to: theURL)!
 			let similarAlert = NSAlert()
 			similarAlert.messageText = "Existing object";
@@ -306,7 +306,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				break;
 			}
 			
-		case .Success:
+		case .success:
 			if load && UserDefaults.standard.bool(forKey: PPLoadMusicAtMusicLoad) {
 				self.currentlyPlayingIndex.index = musicList.countOfMusicList - 1;
 				//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
@@ -823,9 +823,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		//self.paused = YES;
 		willChangeValue(forKey: kMusicListKVO)
 		if UserDefaults.standard.bool(forKey: PPRememberMusicList) {
-			_=musicList.loadApplicationMusicList()
+			musicList.loadApplicationMusicList()
 		}
-		let selMus = musicList.selectedMusic;
+		let selMus = musicList.selectedMusic
 		didChangeValue(forKey: kMusicListKVO)
 		
 		tableView.doubleAction = #selector(PlayerAppDelegate.doubleClickMusicList)
@@ -1186,7 +1186,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 									NSApplication.shared().reply(toApplicationShouldTerminate: true)
 								} else {
 									let retVal = PPRunInformationalAlertPanel(title: "Export complete", message: "The export of the file \"\(savePanel.url!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
-									if (retVal == NSAlertSecondButtonReturn) {
+									if retVal == NSAlertSecondButtonReturn {
 										NSWorkspace.shared().activateFileViewerSelecting([savePanel.url!])
 									}
 								}
@@ -1326,6 +1326,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 							NSLog("\(session.error)");
 							if self.isQuitting {
 								NSApplication.shared().reply(toApplicationShouldTerminate: true)
+							} else if let err = session.error {
+								DispatchQueue.main.async {
+									NSAlert(error: err).runModal()
+								}
 							}
 						}
 					}
