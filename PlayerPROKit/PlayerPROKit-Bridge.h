@@ -12,7 +12,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 #import <Foundation/Foundation.h>
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 	#import <UIKit/UIKit.h>
 #else
 	#import <Cocoa/Cocoa.h>

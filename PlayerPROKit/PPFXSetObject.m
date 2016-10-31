@@ -7,7 +7,7 @@
 //
 
 #import "PPFXSetObject.h"
-#if !TARGET_OS_IPHONE
+#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
 #import "PPPasteboardHandling.h"
 #endif
 
@@ -27,7 +27,7 @@
 @synthesize theSet;
 @synthesize name = _name;
 
-#if !TARGET_OS_IPHONE
+#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
 NSString * const kPPKFXSetPasteboardUTI = @"net.sourceforge.playerpro.FXSet";
 
 static NSArray *UTIArray;
@@ -191,7 +191,7 @@ static const dispatch_block_t initUTIArray = ^{
 	[self didChange:NSKeyValueChangeReplacement valuesAtIndexes:tmpIdx forKey:@"sets"];
 }
 
-- (void)setSets:(NSMutableArray *)sets
+- (void)setSets:(NSMutableArray<NSNumber*> *)sets
 {
 	_sets = sets;
 	dispatch_apply(100, dispatch_get_global_queue(0, 0), ^(size_t i) {

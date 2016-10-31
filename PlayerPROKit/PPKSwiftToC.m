@@ -13,7 +13,7 @@
 
 static NSString* OSTypeToNSString(OSType theOSType)
 {
-#if !TARGET_OS_IPHONE
+#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
 	NSString *checkForValid = CFBridgingRelease(UTCreateStringForOSType(theOSType));
 #else
 	char ourOSType[5] = {0};

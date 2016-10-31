@@ -216,7 +216,7 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 		commandBlock(&myCmd[Int((length * track) + row)])
 	}
 	
-	public mutating func addCmd(command: Cmd = Cmd.blankCmd()) {
+	public mutating func add(command: Cmd = Cmd.blankCmd()) {
 		myCmd.append(command)
 	}
 	

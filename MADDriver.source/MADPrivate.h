@@ -168,7 +168,7 @@ void ConvertInstrumentIn16(short *tempPtr, size_t sSize);
 
 __private_extern uint32_t getfrequency(uint32_t period);
 
-#if defined _MAC_H && !TARGET_OS_IPHONE
+#if defined _MAC_H && !(TARGET_OS_IPHONE || TARGET_OS_TV)
 __private_extern void SetOSType(CFURLRef, OSType);
 #endif
 

@@ -7,7 +7,7 @@
 //
 
 #import "UserDefaultKeys.h"
-#if !TARGET_OS_IPHONE
+#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
 #import "NSColor+PPPreferences.h"
 #endif
 
@@ -74,7 +74,7 @@ NSString * const PPDEMusicTraceOn = @"Digital Editor Trace On?";
 NSString * const PPDEPatternWrappingPartition = @"Digital Editor Pattern Wrapping Partition?";
 NSString * const PPDEDragAsPcmd = @"Digital Editor Drag as Pcmd?";
 
-#if !TARGET_OS_IPHONE
+#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
 //#define PPCOLOR(num) NSString * const PPCColor##num = @"PPColor " @#num
 //PPCOLORPOPULATE();
 //#undef PPCOLOR

@@ -10,7 +10,7 @@
 #define PPMacho_RDriverCarbon_h
 #include "RDriver.h"
 
-#if defined(_MAC_H) && !TARGET_OS_IPHONE
+#if defined(_MAC_H) && !(TARGET_OS_IPHONE || TARGET_OS_TV)
 
 #include <CoreServices/CoreServices.h>
 

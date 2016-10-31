@@ -88,7 +88,7 @@ MADErr initCoreAudio(MADDriverRec *inMADDriver)
 	callback.inputProcRefCon = inMADDriver;
 	
 	theDes.componentType = kAudioUnitType_Output;
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 	theDes.componentSubType = kAudioUnitSubType_GenericOutput;
 #else
 	theDes.componentSubType = kAudioUnitSubType_DefaultOutput;

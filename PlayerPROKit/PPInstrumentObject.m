@@ -13,7 +13,7 @@
 #import "PPMusicObject.h"
 #import "PPMusicObject_PPKPrivate.h"
 #include <PlayerPROCore/RDriverInt.h>
-#if !TARGET_OS_IPHONE
+#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
 #import "PPPasteboardHandling.h"
 #endif
 
@@ -88,7 +88,7 @@
 	return [NSSet setWithObjects:@"position", @"envelopeValue", nil];
 }
 
-#if !TARGET_OS_IPHONE
+#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
 NSString * const kPPKEnvelopePasteboardUTI = @"net.sourceforge.playerpro.envelope";
 NSString * const kPPKInstrumentPasteboardUTI = @"net.sourceforge.playerpro.instrument";
 
@@ -310,7 +310,7 @@ static const dispatch_block_t initUTIArray = ^{
 	return samples[index];
 }
 
-#if !TARGET_OS_IPHONE
+#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
 	dispatch_once(&initUTIOnceToken, initUTIArray);

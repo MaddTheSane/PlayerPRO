@@ -16,6 +16,9 @@
 #ifndef TARGET_OS_IPHONE
 #define TARGET_OS_IPHONE 0
 #endif
+#ifndef TARGET_OS_TV
+#define TARGET_OS_TV 0
+#endif
 #include <MacTypes.h>
 #include <CoreFoundation/CFAvailability.h>
 #endif

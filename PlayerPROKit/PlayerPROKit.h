@@ -27,7 +27,7 @@ FOUNDATION_EXPORT const unsigned char PlayerPROKit_VersionString[];
 #import <PlayerPROKit/PPFXBusObject.h>
 #import <PlayerPROKit/PPFXSetObject.h>
 #import <PlayerPROKit/PPPatternObject_PcmdHandling.h>
-#if !TARGET_OS_IPHONE
+#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
 #import <PlayerPROKit/PPSampleWaveformView.h>
 #import <PlayerPROKit/PPPasteboardHandling.h>
 #import <PlayerPROKit/PPPlugIns.h>

@@ -44,8 +44,10 @@ public func ==(lhs: IntPcmd, rhs: IntPcmd) -> Bool {
 	} else if lhs.cmdCount != rhs.cmdCount {
 		return false
 	} else {
-		for i in 0..<Int(lhs.cmdCount) {
-			if lhs.myCmd[i] != rhs.myCmd[i] {
+		let lhsCmds = UnsafeMutableBufferPointer(start: lhs.myCmd, count: Int(lhs.cmdCount))
+		let rhsCmds = UnsafeMutableBufferPointer(start: rhs.myCmd, count: Int(rhs.cmdCount))
+		for (lhsCmd, rhsCmd) in zip(lhsCmds, rhsCmds) {
+			if lhsCmd != rhsCmd {
 				return false
 			}
 		}
@@ -260,7 +262,7 @@ public let equalizerPacketElements = 512
 ///
 /// **Normally** it is never called, only when a FATAL error has occured. <br>
 /// This function is automatically invoked using the macros `#line` and
-/// `#file` for the line and file paramaters.
+/// `#file` for the `line` and `file` paramaters.
 public func MADDebug(string text: String, line: UInt = #line, file: StaticString = #file) {
 	MADDebugStr(Int16(line), (String(describing: file) as NSString).fileSystemRepresentation, text)
 }
@@ -352,7 +354,7 @@ extension EnvRec: Hashable {
 		var aHi = UInt(pos)
 		aHi |= UInt(val) << 4
 		
-		return Int(aHi)
+		return Int(bitPattern: aHi)
 	}
 }
 

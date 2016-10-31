@@ -12,10 +12,10 @@
 #import <Foundation/Foundation.h>
 
 __BEGIN_DECLS
-#pragma mark PPLibrary info keys
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark PPLibrary info keys
 typedef NSString *PPLibraryInfoKeys NS_STRING_ENUM;
 
 /// The total number of patterns. Type is <code>NSNumber</code>.

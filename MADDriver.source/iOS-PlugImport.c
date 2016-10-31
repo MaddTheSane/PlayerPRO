@@ -59,7 +59,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.dmf"), NULL},
 	},
 	//Disabled on iOS because it isn't playing correctly
-#if !TARGET_OS_IPHONE
+#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
 	{
 		.IOPlug = mainIT,
 		.MenuName = CFSTR("ImpulseTracker Files"),
