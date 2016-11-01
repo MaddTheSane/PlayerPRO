@@ -89,7 +89,6 @@
 			self.is32Bit = YES;
 		}
 		[self generateConnection];
-		[_connectionToService resume];
 		__block BOOL toRet = NO;
 		
 		dispatch_semaphore_t ourSemaphore = dispatch_semaphore_create(0);
@@ -127,12 +126,14 @@
 		 }];
 	});
 	dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC));
+	[_connectionToService suspend];
 
 	return toRet;
 }
 
 - (void)dealloc
 {
+	[_connectionToService suspend];
 	self.connectionToService.invalidationHandler = nil;
 	self.connectionToService.interruptionHandler = nil;
 	[_connectionToService invalidate];
@@ -154,7 +155,6 @@
 			handler(error, nil);
 		}
 	}];
-
 }
 
 - (void)beginExportInstrument:(PPInstrumentObject *)anIns toURL:(NSURL *)sampURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(PPPlugErrorBlock)handler

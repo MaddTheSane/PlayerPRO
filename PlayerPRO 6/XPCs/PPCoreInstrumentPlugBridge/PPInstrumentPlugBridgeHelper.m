@@ -318,7 +318,7 @@ NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData)
 	return [ourEncData copy];
 #else
 	NSData *toRet = [ourEncData copy];
-	RELEASEOBJ(ourEncData);
+	[ourEncData release];
 	return toRet;
 #endif
 }
@@ -327,7 +327,7 @@ InstrData *MADDataToInstrument(NSData *ourData, sData ***sampleData)
 {
 	InstrData *toRet = calloc(sizeof(InstrData), 1);
 	*sampleData = calloc(sizeof(sData*), MAXSAMPLE);
-	 NSKeyedUnarchiver *ourUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:ourData];
+	NSKeyedUnarchiver *ourUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:ourData];
 	toRet->MIDI = [ourUnarchiver decodeInt32ForKey:PPMIDI];
 	toRet->MIDIType = [ourUnarchiver decodeInt32ForKey:PPMIDIType];
 	NSUInteger whatLen = 0;

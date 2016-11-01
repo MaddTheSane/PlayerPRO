@@ -58,7 +58,7 @@ class PlayerPROKit_Tests: XCTestCase {
 	}
 	
 	func testObjcMADKInformation() {
-		var dict: NSDictionary = [:]
+		var dict: NSDictionary? = [:]
 		let musicPath = ourBundle!.url(forResource: "TestMADK", withExtension: "madk")!
 		let err = ourLib!.getInformation(from: musicPath, type: "MADK", info: &dict)
 		XCTAssertEqual(err, MADErr.noErr)

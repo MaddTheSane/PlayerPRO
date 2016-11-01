@@ -64,7 +64,7 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 		return plugIns.makeIterator()
 	}
 	
-	@objc subscript (index: Int) -> PPSamplePlugObject {
+	subscript (index: Int) -> PPSamplePlugObject {
 		return plugIns[index]
 	}
 	
@@ -102,14 +102,18 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 		}
 	}
 	
-	func testSampleFile(_ toTest: URL, type theType: OSType) -> MADErr {
+	func testSampleFile(_ toTest: URL, type theType: OSType) throws {
 		for plug in plugIns {
 			if plug.type == theType {
-				return plug.canImportFile(at: toTest) ? .noErr : .fileNotSupportedByThisPlug
+				if plug.canImportFile(at: toTest) {
+					return
+				} else {
+					throw MADErr.fileNotSupportedByThisPlug
+				}
 			}
 		}
 
-		return .cannotFindPlug
+		throw MADErr.cannotFindPlug
 	}
 	
 	func isPlugAvailable(_ kind: OSType) -> Bool {
@@ -121,14 +125,14 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 		return false
 	}
 	
-	func identifySampleFile(_ ref: URL) -> (error: MADErr, type: OSType) {
+	func identifySampleFile(_ ref: URL) throws -> OSType {
 		for plug in plugIns {
 			if plug.canImportFile(at: ref) {
-				return (.noErr, plug.type)
+				return plug.type
 			}
 		}
 		
-		return (.cannotFindPlug, "!!!!")
+		throw MADErr.cannotFindPlug
 	}
 	
 	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
