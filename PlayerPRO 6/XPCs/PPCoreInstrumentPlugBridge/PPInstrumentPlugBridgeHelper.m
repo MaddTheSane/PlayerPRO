@@ -428,7 +428,7 @@ NSData *MADSampleToData(sData *sampObj)
 	return [ourEncData copy];
 #else
 	NSData *toRet = [ourEncData copy];
-	RELEASEOBJ(ourEncData);
+	[ourEncData release];
 	return toRet;
 #endif
 }

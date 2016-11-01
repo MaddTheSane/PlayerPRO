@@ -89,6 +89,7 @@
 			self.is32Bit = YES;
 		}
 		[self generateConnection];
+		[_connectionToService resume];
 		__block BOOL toRet = NO;
 		
 		dispatch_semaphore_t ourSemaphore = dispatch_semaphore_create(0);
@@ -112,6 +113,8 @@
 
 - (BOOL)canImportFileAtURL:(NSURL *)fileURL
 {
+	//Force generation of resumed connection proxy if one's not available.
+	[self remoteConnectionProxy];
 	[_connectionToService resume];
 	__block BOOL toRet = NO;
 	

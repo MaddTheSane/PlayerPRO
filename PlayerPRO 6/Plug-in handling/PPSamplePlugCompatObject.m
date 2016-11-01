@@ -105,7 +105,9 @@
 
 - (void)dealloc
 {
+	[_connectionToService suspend];
 	self.connectionToService.invalidationHandler = nil;
+	self.connectionToService.interruptionHandler = nil;
 	[_connectionToService invalidate];
 }
 
@@ -116,7 +118,6 @@
 
 -(void)beginImportSampleAtURL:(NSURL *)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(void (^)(MADErr, PPSampleObject *))handler
 {
-	//NSData *aDat =  PPInstrumentToData(InsHeader);
 	NSData *aDat = PPSampleToData([PPSampleObject new]);
 	[[self remoteConnectionProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL sampleData:aDat instrumentNumber:0 sampleNumber: -1 reply:^(MADErr error, NSData *outSampData, BOOL isNewSample) {
 		if (error == MADNoErr) {
@@ -130,6 +131,29 @@
 - (void)beginExportSample:(PPSampleObject *)aSamp toURL:(NSURL *)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(PPPlugErrorBlock)handler
 {
 	handler(MADOrderNotImplemented);
+}
+
+- (BOOL)canImportFileAtURL:(NSURL *)fileURL;
+{
+	//Force generation of resumed connection proxy if one's not available.
+	[self remoteConnectionProxy];
+	[_connectionToService resume];
+	__block BOOL toRet = NO;
+	
+	dispatch_semaphore_t ourSemaphore = dispatch_semaphore_create(0);
+	dispatch_async(dispatch_get_global_queue(0, 0), ^{
+		[[self remoteConnectionProxy]
+		 canImportFileAtURL:fileURL bundleURL:self.file.bundleURL
+		 withReply:^(BOOL ourReply) {
+			 toRet = ourReply;
+			 usleep(5);
+			 dispatch_semaphore_signal(ourSemaphore);
+		 }];
+	});
+	dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC));
+	[_connectionToService suspend];
+	
+	return toRet;
 }
 
 @end
