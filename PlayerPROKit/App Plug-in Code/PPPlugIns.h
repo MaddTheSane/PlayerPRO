@@ -206,7 +206,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *				as an error.
  *	@sa			beginImportSampleAtURL:driver:parentWindow:handler:
  */
-- (MADErr)importSampleAtURL:(NSURL*)sampleURL sample:(out PPSampleObject* __nonnull* __nullable)sample driver:(PPDriver*)driver;
+- (MADErr)importSampleAtURL:(NSURL*)sampleURL sample:(out PPSampleObject* __nullable* __nonnull)sample driver:(PPDriver*)driver;
 
 @optional
 /**
@@ -321,7 +321,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *				as a failure.
  *	@sa			beginImportInstrumentAtURL:driver:parentWindow:handler:
  */
-- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject* __nonnull* __nullable)InsHeader driver:(PPDriver*)driver;
+- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject* __nullable* __nonnull)InsHeader driver:(PPDriver*)driver;
 
 @optional
 

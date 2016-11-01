@@ -30,23 +30,30 @@ public final class ClassicSound: NSObject, PPSampleImportPlugin {
 			let data = fileRef.readData(ofLength: 128)
 			return canOpenData(data)
 		} catch _ {
+			return false
 		}
 		
 		return false
 	}
 	
-	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject>?, driver: PPDriver) -> MADErr {
-		let aSamp = PPSampleObject()
-		var iErr = MADErr.noErr
+	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
+		var iErr = MADErr.readingErr
 		if let data = try? Data(contentsOf: sampleURL), let tmpURL = assetForSND(data, error: &iErr), iErr == .noErr {
-			iErr = AIFFAtURL(tmpURL, toSample: aSamp)
-			if iErr == .noErr {
-				sample?.pointee = aSamp
+			defer {
 				do {
-				try FileManager.default.removeItem(at: tmpURL)
-				} catch {
-					
+					try FileManager.default.removeItem(at: tmpURL)
+				} catch _ {
 				}
+			}
+			do {
+				let aSamp = try readAIFF(at: tmpURL)
+				aSamp.name = (sampleURL.lastPathComponent as NSString).deletingPathExtension
+				sample.pointee = aSamp
+				return .noErr
+			} catch let error as MADErr {
+				return error
+			} catch {
+				return .unknownErr
 			}
 		}
 		

@@ -9,7 +9,11 @@
 //TODO: re-write this to use the AudioToolbox OS X framework: it can natively handle wave audio.
 
 #ifndef __LP64__
-#include <QuickTime/QuickTime.h>
+//#include <QuickTime/QuickTime.h>
+#include <ApplicationServices/ApplicationServices.h>
+
+typedef struct MovieType**              Movie;
+typedef struct TrackType**              Track;
 #endif
 
 
@@ -209,6 +213,15 @@ Ptr ConvertWAV(FSSpec *fileSpec, int *loopStart, int *loopEnd, short *sampleSize
 
 OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 {
+#ifndef __MOVIES__
+	extern OSErr EnterMovies(void);
+	extern OSErr OpenMovieFile(const FSSpec*, short*, SInt8);
+	extern void ExitMovies(void);
+	extern OSErr NewMovieFromFile(Movie*, short, short *, StringPtr, short, Boolean*);
+	extern OSErr ConvertMovieToFile(Movie, Track, FSSpec *, OSType, OSType, ScriptCode, short *, long, ComponentInstance);
+	extern void DisposeMovie(Movie theMovie);
+	extern OSErr CloseMovieFile(short);
+#endif
 	OSErr		iErr = noErr;
 	Boolean		canceled = false;
 	Movie 		theMovie = NULL;

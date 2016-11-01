@@ -15,15 +15,16 @@ import SwiftAudioAdditions
 
 private let kSrcBufSize: UInt32 = 32768;
 
-
+@available(*, unavailable)
 internal func AIFFAtURL(_ url: URL, toSample sample: PPSampleObject) -> MADErr {
+	fatalError("Deprecated function called!")
+}
+
+internal func readAIFF(at url: URL) throws -> PPSampleObject {
 	var fileRef1: ExtAudioFileRef? = nil
 	var iErr = ExtAudioFileOpenURL(url as CFURL, &fileRef1)
-	if iErr != noErr {
-		return .readingErr
-	}
-	guard let fileRef = fileRef1 else {
-		return .readingErr
+	guard iErr == noErr, let fileRef = fileRef1 else {
+		throw MADErr.readingErr
 	}
 	defer {
 		ExtAudioFileDispose(fileRef)
@@ -34,7 +35,7 @@ internal func AIFFAtURL(_ url: URL, toSample sample: PPSampleObject) -> MADErr {
 		var asbdSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
 		iErr = ExtAudioFileGetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
 		if iErr != noErr {
-			return .unknownErr
+			throw NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)
 		}
 		
 		//Constrain the audio conversion to values supported by PlayerPRO
@@ -62,10 +63,10 @@ internal func AIFFAtURL(_ url: URL, toSample sample: PPSampleObject) -> MADErr {
 		
 		iErr = ExtAudioFileSetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: MemoryLayout<AudioStreamBasicDescription>.size, data: &realFormat)
 		if iErr != noErr {
-			return .unknownErr
+			throw NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)
 		}
 		
-		while true {
+		readLoop: while true {
 			if let tmpMutDat = NSMutableData(length: Int(kSrcBufSize)) {
 				let fillBufList = AudioBufferList.allocate(maximumBuffers: 1)
 				defer {
@@ -84,20 +85,22 @@ internal func AIFFAtURL(_ url: URL, toSample sample: PPSampleObject) -> MADErr {
 				
 				err = ExtAudioFileRead(fileRef, &numFrames, fillBufList.unsafeMutablePointer);
 				if err != noErr {
-					return .unknownErr
+					throw NSError(domain: NSOSStatusErrorDomain, code: Int(err), userInfo: nil)
 				}
 				//XThrowIfError (err, "ExtAudioFileRead");
 				if numFrames == 0 {
 					// this is our termination condition
-					break;
+					break readLoop
 				}
 				
 				tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
 				mutableData.append(tmpMutDat as Data)
 			} else {
-				return .needMemory
+				throw MADErr.needMemory
 			}
 		}
+		
+		let sample = PPSampleObject()
 		
 		sample.volume = 64
 		sample.c2spd = UInt16(realFormat.mSampleRate)
@@ -107,8 +110,8 @@ internal func AIFFAtURL(_ url: URL, toSample sample: PPSampleObject) -> MADErr {
 		sample.isStereo = realFormat.mChannelsPerFrame == 2
 		sample.data = mutableData as Data
 		
-		return .noErr
+		return sample
 	} else {
-		return .needMemory
+		throw MADErr.needMemory
 	}
 }

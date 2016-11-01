@@ -42,7 +42,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		return myErr == .noErr
 	}
 	
-	public func importSample(at url: URL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject>?, driver: PPDriver) -> MADErr {
+	public func importSample(at url: URL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
 		let newSample = PPSampleObject()
 		var fileRef1: ExtAudioFileRef? = nil
 		var iErr = ExtAudioFileOpenURL(url as NSURL, &fileRef1)
@@ -93,7 +93,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 				return .unknownErr
 			}
 
-			while true {
+			readLoop: while true {
 				if let tmpMutDat = NSMutableData(length: Int(kSrcBufSize)) {
 					let fillBufList = AudioBufferList.allocate(maximumBuffers: 1)
 					defer {
@@ -106,7 +106,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 					
 					// client format is always linear PCM - so here we determine how many frames of lpcm
 					// we can read/write given our buffer size
-					var numFrames = (kSrcBufSize / realFormat.mBytesPerFrame);
+					var numFrames: UInt32 = (kSrcBufSize / realFormat.mBytesPerFrame);
 					
 					// printf("test %d\n", numFrames);
 					
@@ -116,7 +116,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 					}
 					if numFrames == 0 {
 						// this is our termination condition
-						break;
+						break readLoop
 					}
 					
 					tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
@@ -134,7 +134,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			newSample.isStereo = realFormat.mChannelsPerFrame == 2
 			newSample.data = mutableData as Data
 			
-			asample?.pointee = newSample
+			asample.pointee = newSample
 			
 			return .noErr
 		} else {

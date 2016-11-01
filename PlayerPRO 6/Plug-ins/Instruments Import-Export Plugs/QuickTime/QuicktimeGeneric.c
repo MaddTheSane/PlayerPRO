@@ -4,7 +4,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/MADPlug.h>
 #include <Carbon/Carbon.h>
-#include <QuickTime/QuickTime.h>
+//#include <QuickTime/QuickTime.h>
 #include "WAV.h"
 
 
@@ -106,6 +106,15 @@ static OSErr mainQTInst(void					*unused,
 						CFURLRef				AlienFileURLRef,	// IN/OUT file
 						PPInfoPlug				*thePPInfoPlug)
 {
+	extern OSErr
+	CanQuickTimeOpenFile(
+						 FSSpecPtr   fileSpec,
+						 OSType      fileType,
+						 OSType      fileNameExtension,
+						 Boolean *   outCanOpenWithGraphicsImporter,
+						 Boolean *   outCanOpenAsMovie,
+						 Boolean *   outPreferGraphicsImporter,
+						 UInt32      inFlags);
 	MADErr		myErr = MADNoErr;
 	FSIORefNum	iFileRefI = -1;
 	ByteCount	inOutBytes;

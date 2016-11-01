@@ -122,6 +122,7 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	func errmsg( _ message: @autoclosure @escaping  () -> String) {
 		print("Sys7 import: \(message())")
 	}
+	error = .noErr
 	
 	let reader = FVDataReader(data)
 	
@@ -138,9 +139,9 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 		if !reader.readInt16(endian: .big, &numModifiers) ||
 			!reader.readUInt16(endian: .big, &modifierPart.modNumber) ||
 			!reader.readInt32(endian: .big, &modifierPart.modInit) {
-				error = .fileNotSupportedByThisPlug
-				errmsg("Missing header")
-				return nil
+			error = .fileNotSupportedByThisPlug
+			errmsg("Missing header")
+			return nil
 		}
 		if numModifiers != 1 {
 			error = .fileNotSupportedByThisPlug
@@ -193,9 +194,9 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 		if !reader.readUInt16(endian: .big, &commandPart.cmd) ||
 			!reader.readInt16(endian: .big, &commandPart.param1) ||
 			!reader.readInt32(endian: .big, &commandPart.param2) {
-				error = .fileNotSupportedByThisPlug
-				errmsg("Missing command")
-				return nil
+			error = .fileNotSupportedByThisPlug
+			errmsg("Missing command")
+			return nil
 		}
 		// "If soundCmd is contained within an 'snd ' resource, the high bit of the command must be set."
 		// Apple docs says this for bufferCmd as well, so we clear the bit.
@@ -226,9 +227,9 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 		!reader.readUInt32(endian: .big, &header.loopEnd) ||
 		!reader.readUInt8(&header.encode) ||
 		!reader.readUInt8(&header.baseFrequency) {
-			error = .fileNotSupportedByThisPlug
-			errmsg("Missing header data")
-			return nil
+		error = .fileNotSupportedByThisPlug
+		errmsg("Missing header data")
+		return nil
 	}
 	let sampleData = reader.read(Int(header.length))
 	if sampleData == nil {
@@ -255,42 +256,42 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	
 	// Create a temporary file for storage
 	let url = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent("\(arc4random())-\(Date.timeIntervalSinceReferenceDate).aif"))
-		var audioFile: ExtAudioFileRef? = nil
-		let createStatus = ExtAudioFileCreate(URL: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
-		if createStatus != noErr {
-			error = .writingErr
-			errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")
-			return nil
-		}
-		
-		// Configure the AudioBufferList
-		let srcData = ((sampleData! as NSData).bytes).assumingMemoryBound(to: UInt8.self)
-		var audioBuffer = AudioBuffer()
-		audioBuffer.mNumberChannels = 1
-		audioBuffer.mDataByteSize = header.length
+	var audioFile: ExtAudioFileRef? = nil
+	let createStatus = ExtAudioFileCreate(URL: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
+	if createStatus != noErr {
+		error = .writingErr
+		errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")
+		return nil
+	}
+	
+	// Configure the AudioBufferList
+	let srcData = ((sampleData! as NSData).bytes).assumingMemoryBound(to: UInt8.self)
+	var audioBuffer = AudioBuffer()
+	audioBuffer.mNumberChannels = 1
+	audioBuffer.mDataByteSize = header.length
 	audioBuffer.mData = UnsafeMutableRawPointer(mutating: srcData)
-		let audioBufferData = audioBuffer.mData?.assumingMemoryBound(to: UInt8.self)
-		for i in 0 ..< Int(header.length) {
-			audioBufferData?[i] ^= 0x80
-		}
-		var bufferList = AudioBufferList(mNumberBuffers: 1, mBuffers: audioBuffer)
-		
-		// Write the data to the file
-		let writeStatus = ExtAudioFileWrite(audioFile!, header.length, &bufferList)
-		if writeStatus != noErr {
-			error = .writingErr
-			errmsg("ExtAudioFileWrite failed with status \(writeStatus)")
-			return nil
-		}
-		
-		// Finish up
-		let disposeStatus = ExtAudioFileDispose(audioFile!)
-		if disposeStatus != noErr {
-			error = .writingErr
-			errmsg("ExtAudioFileDispose failed with status \(disposeStatus)")
-			return nil
-		}
-		
-		// Generate an AVAsset
-		return url
+	let audioBufferData = audioBuffer.mData?.assumingMemoryBound(to: UInt8.self)
+	for i in 0 ..< Int(header.length) {
+		audioBufferData?[i] ^= 0x80
+	}
+	var bufferList = AudioBufferList(mNumberBuffers: 1, mBuffers: audioBuffer)
+	
+	// Write the data to the file
+	let writeStatus = ExtAudioFileWrite(audioFile!, header.length, &bufferList)
+	if writeStatus != noErr {
+		error = .writingErr
+		errmsg("ExtAudioFileWrite failed with status \(writeStatus)")
+		return nil
+	}
+	
+	// Finish up
+	let disposeStatus = ExtAudioFileDispose(audioFile!)
+	if disposeStatus != noErr {
+		error = .writingErr
+		errmsg("ExtAudioFileDispose failed with status \(disposeStatus)")
+		return nil
+	}
+	
+	// Generate an AVAsset
+	return url
 }

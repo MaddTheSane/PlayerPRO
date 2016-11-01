@@ -214,14 +214,14 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 		}
 	}
 	
-	public func importInstrument(at sampleURL: URL, instrument InsHeader: AutoreleasingUnsafeMutablePointer<PPInstrumentObject>?, driver: PPDriver) -> MADErr {
+	public func importInstrument(at sampleURL: URL, instrument InsHeader: AutoreleasingUnsafeMutablePointer<PPInstrumentObject?>, driver: PPDriver) -> MADErr {
 		if let inData = try? Data(contentsOf: sampleURL) {
 			if let ourIns = PPInstrumentObject() as PPInstrumentObject? {
 				ourIns.resetInstrument()
 				
 				let iErr = importPAT(ourIns, data: inData as NSData)
 				if iErr == .noErr {
-					InsHeader?.pointee = ourIns
+					InsHeader.pointee = ourIns
 				}
 				return iErr
 			} else {

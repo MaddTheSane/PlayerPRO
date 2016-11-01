@@ -105,14 +105,16 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		return myErr == .noErr
 	}
 	
-	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject>?, driver: PPDriver) -> MADErr {
-		let aSamp = PPSampleObject()
-		let iErr = AIFFAtURL(sampleURL, toSample: aSamp)
-		if iErr == .noErr {
+	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
+		do {
+			let aSamp = try readAIFF(at: sampleURL)
 			aSamp.name = (sampleURL.lastPathComponent as NSString).deletingPathExtension
-			sample!.pointee = aSamp
+			sample.pointee = aSamp
+			return .noErr
+		} catch let error as MADErr {
+			return error
+		} catch {
+			return .unknownErr
 		}
-		
-		return iErr
 	}
 }
