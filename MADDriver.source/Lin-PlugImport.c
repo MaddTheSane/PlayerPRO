@@ -19,6 +19,10 @@ MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 	long		fileSize;
 	UNFILE		fileID;
 	
+	if (CheckMADFile(AlienFile) != MADNoErr) {
+		return MADFileNotSupportedByThisPlug;
+	}
+	
 	theMAD = (MADSpec*)malloc(sizeof(MADSpec) + 200);
 	
 	fileID = iFileOpenRead(AlienFile);
