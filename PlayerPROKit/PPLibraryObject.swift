@@ -29,7 +29,7 @@ public final class PPLibraryObject: NSObject {
 	/// Historically, this was the file type that the Classic Mac OS would use to identify the file.
 	public let tupleType: (Int8, Int8, Int8, Int8, Int8)
 	
-	/// An `NSString` of the plug-in identifier.
+	/// A `String` of the plug-in identifier.
 	///
 	/// Historically, this was the file type that the Classic Mac OS would use to identify the file.
 	public let type: String
@@ -104,11 +104,11 @@ public final class PPLibraryObject: NSObject {
 	}
 	
 	public override var description: String {
-		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle.bundlePath), type: \(type)"
+		return "Name: '\(menuName)'; Author: \(authorString); plug-in file: \(bundle.bundlePath), type: '\(type)'"
 	}
 	
 	public override var debugDescription: String {
-		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle), type: \(type); version: \(plugVersion)"
+		return "Name: '\(menuName)'; Author: \(authorString); plug-in file: \(bundle), type: '\(type)'; version: \(plugVersion)"
 	}
 	
 	internal init(plugInfo unwrapped: PlugInfo) {

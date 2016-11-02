@@ -8,8 +8,8 @@
 
 import Foundation
 import XCTest
-import PlayerPROCore
-import PlayerPROKit
+@testable import PlayerPROCore
+@testable import PlayerPROKit
 import CoreAudio
 #if os(iOS)
 	import CoreImage
@@ -57,11 +57,42 @@ class PlayerPROKit_Tests: XCTestCase {
 		}
 	}
 	
+	func testS3MInformation() {
+		let musicPath = ourBundle!.url(forResource: "TestS3M", withExtension: "s3m")!
+		do {
+			let info = try ourLib!.information(from: musicPath, type: "S3M ")
+			print(info)
+			XCTAssertEqual("S3M ", info.signature)
+			XCTAssertEqual(info.totalPatterns, 19)
+			XCTAssertEqual(info.partitionLength, 22)
+			XCTAssertEqual(info.fileSize, 14189)
+			//XCTAssertEqual(info.totalTracks, 0)
+			XCTAssertEqual(info.internalFileName, "\"A.M. A.L. Funk\" by E-Keet")
+			XCTAssertEqual(info.formatDescription, "S3M Plug")
+		} catch let err as NSError {
+			XCTFail("Failed to get info, \(err)")
+		}
+	}
+
+	func testInvalidMADKInfo() {
+		let musicPath = ourBundle!.url(forResource: "TestS3M", withExtension: "s3m")!
+		do {
+			_ = try ourLib!.information(from: musicPath, type: "MADK")
+			XCTFail()
+		} catch MADErr.fileNotSupportedByThisPlug {
+			XCTAssert(true)
+		} catch {
+			XCTFail("unknown error, \(error)")
+		}
+	}
+	
 	func testObjcMADKInformation() {
 		var dict: NSDictionary? = [:]
 		let musicPath = ourBundle!.url(forResource: "TestMADK", withExtension: "madk")!
-		let err = ourLib!.getInformation(from: musicPath, type: "MADK", info: &dict)
+		var err = ourLib!.getInformation(from: musicPath, type: "MADK", info: &dict)
 		XCTAssertEqual(err, MADErr.noErr)
+		err = ourLib!.getInformation(from: musicPath, type: "S3M ", info: &dict)
+		XCTAssertEqual(err, MADErr.fileNotSupportedByThisPlug)
 	}
 	
 	func testLoadingUnloadingMusicFromDriver() {

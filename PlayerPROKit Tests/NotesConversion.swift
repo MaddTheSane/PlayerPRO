@@ -8,7 +8,7 @@
 
 import Foundation
 import XCTest
-import PlayerPROKit
+@testable import PlayerPROKit
 
 class NotesConversion: XCTestCase {
 	
@@ -26,8 +26,8 @@ class NotesConversion: XCTestCase {
 
 	func getNotesWithLetters(useLetters: Bool) -> [String] {
 		var noteNames = [String]()
-		for i in 0..<96 {
-			if let aNote = octaveName(from: Int16(i), letters: useLetters) {
+		for i in Int16(0)..<96 {
+			if let aNote = octaveName(from: i, letters: useLetters) {
 				noteNames.append(aNote)
 			}
 		}

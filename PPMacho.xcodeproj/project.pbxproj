@@ -251,6 +251,8 @@
 		553ED2581A50AE99005222E3 /* ColorPreferenceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553ED2571A50AE99005222E3 /* ColorPreferenceObject.swift */; };
 		55413C491991B947001414D0 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		55413C4B1992AFAB001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
+		554460F31DCA758500D638C2 /* TestS3M.s3m in Resources */ = {isa = PBXBuildFile; fileRef = 554460F21DCA758500D638C2 /* TestS3M.s3m */; };
+		554460F41DCA758500D638C2 /* TestS3M.s3m in Resources */ = {isa = PBXBuildFile; fileRef = 554460F21DCA758500D638C2 /* TestS3M.s3m */; };
 		5546217B163A20D00005F491 /* Classic App.ppextimp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* Classic App.ppextimp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5547DA5619A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
 		5547DA5719A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
@@ -2478,6 +2480,7 @@
 		553B8B7019B3CD85007C2C64 /* xm-ipad-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ipad-large.png"; sourceTree = "<group>"; };
 		553B8B7119B3CD85007C2C64 /* xm-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ipad.png"; sourceTree = "<group>"; };
 		553ED2571A50AE99005222E3 /* ColorPreferenceObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPreferenceObject.swift; sourceTree = "<group>"; };
+		554460F21DCA758500D638C2 /* TestS3M.s3m */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestS3M.s3m; sourceTree = "<group>"; };
 		5546217D163A345F0005F491 /* PlugExports-Mac.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; path = "PlugExports-Mac.exp"; sourceTree = "<group>"; };
 		55469C2516BF34D200175A1F /* PatternHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternHandler.h; sourceTree = "<group>"; };
 		55469C2616BF34D200175A1F /* PatternHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PatternHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -4698,8 +4701,9 @@
 				555272541A0001CE008B8616 /* PPKPcmd_Tests.swift */,
 				559EA1571C288A0700969B41 /* MADErrs_Tests.swift */,
 				5522FB031AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift */,
-				55C563CF1AB659DD00F7E4FA /* TestMADK.madk */,
 				5579D7DF1A648F3300401D75 /* CppIncludeTest.mm */,
+				55C563CF1AB659DD00F7E4FA /* TestMADK.madk */,
+				554460F21DCA758500D638C2 /* TestS3M.s3m */,
 				55ADD23C19B4F858005588B5 /* Supporting Files */,
 			);
 			path = "PlayerPROKit Tests";
@@ -6901,6 +6905,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55C563D11AB659DD00F7E4FA /* TestMADK.madk in Resources */,
+				554460F41DCA758500D638C2 /* TestS3M.s3m in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7215,6 +7220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55C563D01AB659DD00F7E4FA /* TestMADK.madk in Resources */,
+				554460F31DCA758500D638C2 /* TestS3M.s3m in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

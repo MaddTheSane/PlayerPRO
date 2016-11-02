@@ -30,7 +30,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 /// Class that represents the additional tracker types that PlayerPRO can load via plug-ins.
 public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	public let trackerLibraries: [PPLibraryObject]
-	private(set) internal var theLibrary: UnsafeMutablePointer<MADLibrary>? = nil
+	internal let theLibrary: UnsafeMutablePointer<MADLibrary>
 	/// Comparable to `MADInfoRec`, but more Swift-friendly.
 	public struct MusicFileInfo: CustomStringConvertible {
 		///The total amount of patterns
@@ -148,14 +148,26 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	#endif
 	
 	private init(plugInCPath cPath: UnsafePointer<Int8>?) throws {
-		let errVal = MADInitLibrary(cPath, &theLibrary)
-		if errVal != .noErr {
-			throw errVal
-		}
+		theLibrary = try {
+			var theLib: UnsafeMutablePointer<MADLibrary>? = nil
+			let errVal = MADInitLibrary(cPath, &theLib)
+			if errVal != .noErr {
+				if theLib != nil {
+					MADDisposeLibrary(theLib)
+				}
+				
+				throw errVal
+			}
+			if let theLib = theLib {
+				return theLib
+			} else {
+				throw MADErr.libraryNotInitialized
+			}
+		}()
 		var tmpArray = [PPLibraryObject]()
 
-		for i in 0 ..< Int(theLibrary!.pointee.TotalPlug) {
-			let tmp = PPLibraryObject(plugInfo: theLibrary!.pointee.ThePlug[i])
+		for plug in UnsafeMutableBufferPointer(start: theLibrary.pointee.ThePlug, count: Int(theLibrary.pointee.TotalPlug)) {
+			let tmp = PPLibraryObject(plugInfo: plug)
 			tmpArray.append(tmp)
 		}
 		
@@ -165,9 +177,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	}
 	
 	deinit {
-		if theLibrary != nil {
-			MADDisposeLibrary(theLibrary)
-		}
+		MADDisposeLibrary(theLibrary)
 	}
 
 	/// Init a `PPLibrary` object, including plug-ins from `plugInPath`.

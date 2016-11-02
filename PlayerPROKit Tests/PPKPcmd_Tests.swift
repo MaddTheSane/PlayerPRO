@@ -8,7 +8,7 @@
 
 import Foundation
 import XCTest
-import PlayerPROKit
+@testable import PlayerPROKit
 
 class PPKPcmd_Tests: XCTestCase {
 	

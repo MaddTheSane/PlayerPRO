@@ -8,8 +8,8 @@
 
 import Foundation
 import XCTest
-import PlayerPROCore
-import PlayerPROKit
+@testable import PlayerPROCore
+@testable import PlayerPROKit
 
 private func GlobalDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
 	let manager = FileManager.default
