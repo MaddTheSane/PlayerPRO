@@ -183,6 +183,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.s3m</string>
+				<string>org.videolan.s3m</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -488,6 +489,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.it</string>
+				<string>org.videolan.it</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -540,6 +542,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.s3m</string>
+				<string>org.videolan.s3m</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>

@@ -28,6 +28,8 @@
 				<string>net.sourceforge.playerpro.it</string>
 				<string>net.sourceforge.playerpro.mtm</string>
 				<string>net.sourceforge.playerpro.amf</string>
+				<string>org.videolan.s3m</string>
+				<string>org.videolan.it</string>
 			</array>
 		</dict>
 	</array>
