@@ -630,6 +630,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		}
 	}
 	
+	override func documentClass(forType typeName: String) -> AnyClass? {
+		let utiArray = trackerDict.values.flatMap({ $0 })
+		if utiArray.contains(typeName) {
+			return PPDocument.self
+		}
+		return nil
+	}
+	
 	func application(_ theApplication: NSApplication, openFile filename: String) -> Bool {
 		let utiFile: String?
 		do {
