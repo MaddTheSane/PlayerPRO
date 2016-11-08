@@ -35,6 +35,11 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 				}
 			}
 			
+			guard aRet.count > 0 else {
+				handler(nil, .fileNotSupportedByThisPlug)
+				return
+			}
+			
 			let controller = ImportWindowController(windowNibName: "PPAPPLImporter")
 			controller.currentBlock = handler
 			controller.resourceFile = resFile
