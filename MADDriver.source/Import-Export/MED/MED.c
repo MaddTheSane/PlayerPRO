@@ -36,49 +36,69 @@
 #include <dispatch/dispatch.h>
 #endif
 
-#ifndef WIN32
-//Windows Defines
-typedef int16_t		WORD;
-typedef uint16_t	UWORD;
-#if !defined(__COREFOUNDATION_CFPLUGINCOM__)
-typedef int32_t		HRESULT;
-typedef uint32_t	ULONG;
-#endif
-typedef void*		LPVOID;
-typedef int32_t		LONG;
-
-typedef uint16_t	UINT;
-#ifndef __OBJC__
-typedef bool		BOOL;
-#endif
-typedef uint32_t	DWORD;
-typedef uint16_t	USHORT;
-typedef int16_t		SHORT;
-typedef MADFourChar	FOURCC;
-typedef int8_t		BYTE;
-#endif
-
-typedef uint8_t		UBYTE;
-
 #include "MED.h"
 
 struct MEDInfo {
 	MMD0 		*mh;
 	MMD0song 	*ms;
-	ULONG 		*ba;
+	uint32_t 	*ba;
 	
 	MMD0NOTE 	*mmd0pat;
 	MMD1NOTE 	*mmd1pat;
 	char		*theMEDRead;
 };
 
+static void byteSwapMMD0(MMD0 *toSwap) {
+	MADBE32(&toSwap->id);
+	MADBE32(&toSwap->modlen);
+	MADBE32(&toSwap->MMD0songP);
+	MADBE16(&toSwap->psecnum);
+	MADBE16(&toSwap->pseq);
+	MADBE32(&toSwap->MMD0BlockPP);
+	MADBE32(&toSwap->reserved1);
+	MADBE32(&toSwap->InstrHdrPP);
+	MADBE32(&toSwap->reserved2);
+	MADBE32(&toSwap->MMD0expP);
+	MADBE32(&toSwap->reserved3);
+	MADBE16(&toSwap->pstate);
+	MADBE16(&toSwap->pblock);
+	MADBE16(&toSwap->pline);
+	MADBE16(&toSwap->pseqnum);
+	MADBE16(&toSwap->actplayline);
+}
 
-#define d0note(row,col) medInfo->mmd0pat[(row*(UWORD) theMAD->header->numChn)+col]
-#define d1note(row,col) medInfo->mmd1pat[(row*(UWORD) theMAD->header->numChn)+col]
+static void byteSwapMMD0sample(MMD0sample *toSwap) {
+	MADBE16(&toSwap->rep);
+	MADBE16(&toSwap->replen);
+}
+
+static void byteSwapMMD0song(MMD0song *toSwap) {
+#ifdef __BLOCKS__
+	dispatch_apply(63, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		byteSwapMMD0sample(&toSwap->sample[i]);
+	});
+#else
+	int i;
+	for (i = 0; i < 63; i++) {
+		byteSwapMMD0sample(&toSwap->sample[i]);
+	}
+#endif
+	MADBE16(&toSwap->numblocks);
+	MADBE16(&toSwap->songlen);
+	MADBE16(&toSwap->deftempo);
+}
+
+static void byteSwapInstrHdr(InstrHdr *toSwap) {
+	MADBE32(&toSwap->length);
+	MADBE16(&toSwap->type);
+}
+
+#define d0note(row,col) medInfo->mmd0pat[(row*(uint16_t) theMAD->header->numChn)+col]
+#define d1note(row,col) medInfo->mmd1pat[(row*(uint16_t) theMAD->header->numChn)+col]
 
 #define READMEDFILE(dst, size)	{memcpy(dst, medInfo->theMEDRead, size);	medInfo->theMEDRead += (long) size;}
 
-static BOOL MED_Init(MADDriverSettings *init, struct MEDInfo *medInfo)
+static bool MED_Init(MADDriverSettings *init, struct MEDInfo *medInfo)
 {
 	medInfo->mh = NULL;
 	medInfo->ms = NULL;
@@ -118,7 +138,7 @@ static void MED_Cleanup(struct MEDInfo *medInfo)
 	}
 }
 
-static void EffectCvt(UBYTE eff, UBYTE dat, Cmd *aCmd)
+static void EffectCvt(uint8_t eff, uint8_t dat, Cmd *aCmd)
 {
 	switch(eff){
 			
@@ -188,7 +208,7 @@ static void EffectCvt(UBYTE eff, UBYTE dat, Cmd *aCmd)
 static void MED_Convert1(short col, short patID, MADMusic *theMAD, struct MEDInfo *medInfo)
 {
 	int t;
-	UBYTE a,b,c,d,inst,note,eff,dat;
+	uint8_t a,b,c,d,inst,note,eff,dat;
 	MMD1NOTE *n;
 	Cmd	*aCmd;
 	
@@ -228,7 +248,7 @@ static void MED_Convert1(short col, short patID, MADMusic *theMAD, struct MEDInf
 static void MED_Convert0(short patID, MADMusic *theMAD, struct MEDInfo *medInfo)
 {
 	int 		t, zz;
-	UBYTE 		a,b,c,inst,note,eff,dat/*, temp*/;
+	uint8_t 	a,b,c,inst,note,eff,dat/*, temp*/;
 	MMD0NOTE 	*n;
 	Cmd			*aCmd;
 	
@@ -272,10 +292,10 @@ static void MED_Convert0(short patID, MADMusic *theMAD, struct MEDInfo *medInfo)
 
 static MADErr LoadMMD0Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings *init, struct MEDInfo *medInfo)
 {
-	int		t, row /*,col*/;
-	UWORD	numtracks, numlines, maxlines=0;
-	char	tC;
-	int		x;
+	int			t, row /*,col*/;
+	uint16_t	numtracks, numlines, maxlines=0;
+	char		tC;
+	int			x;
 	
 	// first, scan patterns to see how many channels are used
 	
@@ -296,8 +316,7 @@ static MADErr LoadMMD0Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings
 	/* second read: no more mr. nice guy,
 	 really read and convert patterns */
 	
-	for (t = 0 ; t < theMAD->header->numPat; t++)
-	{
+	for (t = 0 ; t < theMAD->header->numPat; t++) {
 		medInfo->theMEDRead = theMED + medInfo->ba[t];
 		READMEDFILE(&tC, sizeof(char));	numtracks = tC;
 		READMEDFILE(&tC, sizeof(char));	numlines = tC;
@@ -335,9 +354,9 @@ static MADErr LoadMMD0Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings
 
 static MADErr LoadMMD1Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings *init, struct MEDInfo *medInfo)
 {
-	int		t,row,col;
-	UWORD	numtracks,numlines,maxlines=0,track=0;
-	int		x;
+	int			t,row,col;
+	uint16_t	numtracks,numlines,maxlines=0,track=0;
+	int			x;
 	
 	// first, scan patterns to see how many channels are used
 	
@@ -346,14 +365,15 @@ static MADErr LoadMMD1Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings
 		medInfo->theMEDRead = theMED + medInfo->ba[t];
 		READMEDFILE(&numtracks, sizeof(short));
 		READMEDFILE(&numlines, sizeof(short));
+		MADBE16(&numtracks);
+		MADBE16(&numlines);
 		
 		if (numtracks > theMAD->header->numChn) theMAD->header->numChn = numtracks;
 		if (numlines  > maxlines) maxlines = numlines;
 		
-		if (numlines > 999)
-		{
-			//DebugStr("\pCan't load patterns > 999 rows");
-			return -1;
+		if (numlines > 999) {
+			printf("Can't load patterns > 999 rows");
+			return MADFileNotSupportedByThisPlug;
 		}
 	}
 	
@@ -369,7 +389,9 @@ static MADErr LoadMMD1Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings
 		medInfo->theMEDRead = theMED + medInfo->ba[t];
 		READMEDFILE(&numtracks, sizeof(short));
 		READMEDFILE(&numlines, sizeof(short));
-		
+		MADBE16(&numtracks);
+		MADBE16(&numlines);
+
 		medInfo->theMEDRead += 4L;
 		
 		numlines++;
@@ -409,9 +431,10 @@ static MADErr LoadMMD1Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings
 static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSettings *init, struct MEDInfo *medInfo)
 {
 	int			t, i;
-	ULONG		sa[64];
+	uint32_t	sa[64];
 	InstrHdr	s;
 	int			inOutCount;
+	MADErr		iErr = noErr;
 	
 	medInfo->theMEDRead = theMED;
 	
@@ -420,6 +443,7 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	/*********************/
 	
 	READMEDFILE(medInfo->mh, sizeof(MMD0));
+	byteSwapMMD0(medInfo->mh);
 	
 	/**************************/
 	/** READ MMD0song struct **/
@@ -430,23 +454,30 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 		return MADIncompatibleFile;
 	}
 	READMEDFILE(medInfo->ms, sizeof(MMD0song));
+	byteSwapMMD0song(medInfo->ms);
 	
 	/***************************/
 	/** READ SamplePtr struct **/
 	/***************************/
 	
 	medInfo->theMEDRead = theMED + medInfo->mh->InstrHdrPP;
-	READMEDFILE(sa, sizeof(ULONG)*medInfo->ms->numsamples);
+	READMEDFILE(sa, sizeof(uint32_t)*medInfo->ms->numsamples);
+	for (i = 0; i < medInfo->ms->numsamples; i++) {
+		MADBE32(&sa[i]);
+	}
 	
 	/***************************/
 	/**    BLOCK PTR ARRAY    **/
 	/***************************/
 	
-	medInfo->ba = (ULONG*) calloc(medInfo->ms->numblocks * sizeof(ULONG), 1);
+	medInfo->ba = (uint32_t*) calloc(medInfo->ms->numblocks * sizeof(uint32_t), 1);
 	if (medInfo->ba == NULL) return MADNeedMemory;
 	
 	medInfo->theMEDRead = theMED + medInfo->mh->MMD0BlockPP;
-	READMEDFILE(medInfo->ba, sizeof(ULONG)*medInfo->ms->numblocks);
+	READMEDFILE(medInfo->ba, sizeof(uint32_t)*medInfo->ms->numblocks);
+	for (i = 0; i < medInfo->ms->numblocks; i++) {
+		MADBE32(&medInfo->ba[i]);
+	}
 	
 	
 	/********************/
@@ -510,6 +541,7 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	{
 		medInfo->theMEDRead = theMED + sa[t];
 		READMEDFILE(&s, sizeof(InstrHdr));
+		byteSwapInstrHdr(&s);
 		
 		theMAD->fid[t].type = 0;
 		
@@ -525,8 +557,7 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 			curData->size		= s.length;
 			curData->loopBeg 	= medInfo->ms->sample[t].rep<<1;
 			curData->loopSize 	= curData->loopBeg + (medInfo->ms->sample[t].replen<<1);
-			if (curData->loopBeg + curData->loopSize > curData->size)
-			{
+			if (curData->loopBeg + curData->loopSize > curData->size) {
 				curData->loopSize = curData->size - curData->loopBeg;
 			}
 			curData->vol		= 64;
@@ -537,7 +568,8 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 			curData->relNote	= 0;
 			
 			curData->data 		= (char*)malloc(curData->size);
-			if (curData->data == NULL) return MADNeedMemory;
+			if (curData->data == NULL)
+				return MADNeedMemory;
 			
 			READMEDFILE(curData->data, curData->size);
 		}
@@ -548,20 +580,17 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	/**       PATTERNS        **/
 	/***************************/
 	
-	switch(medInfo->mh->id)
-	{
+	switch (medInfo->mh->id) {
 		case 'MMD0':
-			if (LoadMMD0Patterns(theMAD, theMED, init, medInfo) != MADNoErr)
-				return MADUnknownErr;
+			iErr = LoadMMD0Patterns(theMAD, theMED, init, medInfo);
 			break;
 			
 		case 'MMD1':
-			if (LoadMMD1Patterns(theMAD, theMED, init, medInfo) != MADNoErr)
-				return MADUnknownErr;
+			iErr = LoadMMD1Patterns(theMAD, theMED, init, medInfo);
 			break;
 	}
 	
-	return MADNoErr;
+	return iErr;
 }
 
 static MADErr TestMEDFile(char* AlienFile)
@@ -583,6 +612,7 @@ static MADErr ExtractMEDInfo(MADInfoRec *info, char* theMED, struct MEDInfo *med
 	medInfo->theMEDRead = theMED;
 	
 	READMEDFILE(medInfo->mh, sizeof(MMD0));
+	byteSwapMMD0(medInfo->mh);
 	
 	medInfo->theMEDRead = theMED + medInfo->mh->MMD0songP;
 	READMEDFILE(medInfo->ms, sizeof(MMD0song));
