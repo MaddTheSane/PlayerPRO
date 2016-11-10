@@ -246,6 +246,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	func addMusicToMusicList(_ theURL: URL, loadIfPreferencesAllow load: Bool = true) {
+		tableView.sortDescriptors = []
 		willChangeValue(forKey: kMusicListKVO)
 		let okayMusic = musicList.addMusicURL(theURL, force: false)
 		didChangeValue(forKey: kMusicListKVO)
@@ -1106,7 +1107,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	private func saveMusic(AIFFToURL theURL: URL, theSett: inout MADDriverSettings) throws {
-		var audioFile: ExtAudioFile!
 		let tmpChannels: UInt32
 		
 		switch theSett.outPutMode {
@@ -1123,7 +1123,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
-		audioFile = try ExtAudioFile(createURL: theURL, fileType: .AIFF, streamDescription: &asbd, flags: .eraseFile)
+		let audioFile = try ExtAudioFile(createURL: theURL, fileType: .AIFF, streamDescription: &asbd, flags: .eraseFile)
 		
 		audioFile.clientDataFormat = realFormat
 		
