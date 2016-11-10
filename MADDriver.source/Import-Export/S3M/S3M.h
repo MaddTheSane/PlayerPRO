@@ -50,7 +50,7 @@ typedef struct s3mform {
 } s3mform;
 
 typedef struct s3mPatform {
-	MADByte	note;		// hi = oct, lo = note
+	MADByte	note;		///< hi = oct, lo = note
 	MADByte	intru;
 	MADByte	vol;
 	MADByte	SpecialCom;

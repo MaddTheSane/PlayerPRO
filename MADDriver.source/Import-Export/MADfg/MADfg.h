@@ -27,18 +27,18 @@
 #pragma pack(push, 2)
 
 struct oldPatHeader {
-	int			PatternSize;		// Length of pattern: standard = 64
-	MADFourChar	CompressionMode;	// Compression mode, none = 'NONE'
+	int			PatternSize;		///< Length of pattern: standard = 64
+	MADFourChar	CompressionMode;	///< Compression mode, none = 'NONE'
 	char		PatternName[20];
-	int			PatBytes;			// Pattern Size in Bytes
+	int			PatBytes;			///< Pattern Size in Bytes
 	int			unused2;
 };
 
 struct Command {
-	MADByte InstrumentNo;	// Instrument no
-	MADByte AmigaPeriod;	// Note, see table
-	MADByte EffectCmd;		// Effect cmd
-	MADByte EffectArg;		// Effect arg
+	MADByte InstrumentNo;	///< Instrument no
+	MADByte AmigaPeriod;	///< Note, see table
+	MADByte EffectCmd;		///< Effect cmd
+	MADByte EffectArg;		///< Effect arg
 };
 
 // Pattern = 64 notes to play
@@ -48,25 +48,25 @@ struct MusicPattern {
 };
 
 struct FileInstrData {
-	char	Filename[32];	// Instrument's filename
-	int		insSize;		// Sample length
+	char	Filename[32];	///< Instrument's filename
+	int		insSize;		///< Sample length
 	MADByte	fineTune;
-	MADByte	volume;			// Base volume
-	short	CompCode;		// Compression Code, 0 = nothing, M3 = MAC3, M6 = MAC6
-	short	freq;			// Base frequence, simple, double, quadruple
-	MADByte	amplitude;		// 8 or 16 bits
-	int		loopStart;		// LoopStart
-	int		loopLenght;		// LoopLength
+	MADByte	volume;			///< Base volume
+	short	CompCode;		///< Compression Code, 0 = nothing, M3 = MAC3, M6 = MAC6
+	short	freq;			///< Base frequence, simple, double, quadruple
+	MADByte	amplitude;		///< 8 or 16 bits
+	int		loopStart;		///< LoopStart
+	int		loopLenght;		///< LoopLength
 };
 
 typedef struct oldMADSpec {
-	MADFourChar	MADIdentification;		// Mad Identification: MADG in version 2.0
-	char		NameSignature[32];		// Music's name
-	struct		FileInstrData fid[64];	// 64 instruments descriptor
+	MADFourChar	MADIdentification;		///< Mad Identification: MADG in version 2.0
+	char		NameSignature[32];		///< Music's name
+	struct		FileInstrData fid[64];	///< 64 instruments descriptor
 	MADByte		PatMax;
-	MADByte		numPointers;	// Patterns number
-	MADByte		oPointers[128];	// Patterns list
-	MADByte		Tracks;			// Tracks number
+	MADByte		numPointers;	///< Patterns number
+	MADByte		oPointers[128];	///< Patterns list
+	MADByte		Tracks;			///< Tracks number
 } oldMADSpec;
 
 #pragma pack(pop)

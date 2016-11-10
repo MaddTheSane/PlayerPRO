@@ -290,76 +290,76 @@
 #pragma pack(push, 2)
 
 typedef struct XMHEADER{
-	char  id[17];					// ID text: 'Extended module: '
-	char  songname[21];				// Module name, padded with zeroes and 0x1a at the end
-	char  trackername[20];			// Tracker name
-	UWORD version;					// (word) Version number, hi-byte major and low-byte minor
-	ULONG headersize;				// Header size
-	UWORD songlength;				// (word) Song length (in patten order table)
-	UWORD restart;					// (word) Restart position
-	UWORD numchn;					// (word) Number of channels (2,4,6,8,10,...,32)
-	UWORD numpat;					// (word) Number of patterns (max 256)
-	UWORD numins;					// (word) Number of instruments (max 128)
-	UWORD flags;					// (word) Flags: bit 0: 0 = Amiga frequency table (see below) 1 = Linear frequency table
-	UWORD tempo;					// (word) Default tempo
-	UWORD bpm;						// (word) Default BPM
-	UBYTE orders[256];				// (byte) Pattern order table
+	char  id[17];					///< ID text: 'Extended module: '
+	char  songname[21];				///< Module name, padded with zeroes and 0x1a at the end
+	char  trackername[20];			///< Tracker name
+	UWORD version;					///< (word) Version number, hi-byte major and low-byte minor
+	ULONG headersize;				///< Header size
+	UWORD songlength;				///< (word) Song length (in patten order table)
+	UWORD restart;					///< (word) Restart position
+	UWORD numchn;					///< (word) Number of channels (2,4,6,8,10,...,32)
+	UWORD numpat;					///< (word) Number of patterns (max 256)
+	UWORD numins;					///< (word) Number of instruments (max 128)
+	UWORD flags;					///< (word) Flags: bit 0: 0 = Amiga frequency table (see below) 1 = Linear frequency table
+	UWORD tempo;					///< (word) Default tempo
+	UWORD bpm;						///< (word) Default BPM
+	UBYTE orders[256];				///< (byte) Pattern order table
 } XMHEADER;
 
 
 typedef struct XMINSTHEADER{
-	ULONG size;						// (dword) Instrument size
-	char  name[22];					// (char) Instrument name
-	UBYTE type;						// (byte) Instrument type (always 0)
-	UWORD numsmp;					// (word) Number of samples in instrument
+	ULONG size;						///< (dword) Instrument size
+	char  name[22];					///< (char) Instrument name
+	UBYTE type;						///< (byte) Instrument type (always 0)
+	UWORD numsmp;					///< (word) Number of samples in instrument
 	ULONG ssize;					//
 } XMINSTHEADER;
 
 
 typedef struct XMPATCHHEADER{
-	UBYTE what[96];			// (byte) Sample number for all notes
-	UWORD volenv[24];		// (byte) Points for volume envelope
-	UBYTE panenv[48];		// (byte) Points for panning envelope
-	UBYTE volpts;			// (byte) Number of volume points
-	UBYTE panpts;			// (byte) Number of panning points
-	UBYTE volsus;			// (byte) Volume sustain point
-	UBYTE volbeg;			// (byte) Volume loop start point
-	UBYTE volend;			// (byte) Volume loop end point
-	UBYTE pansus;			// (byte) Panning sustain point
-	UBYTE panbeg;			// (byte) Panning loop start point
-	UBYTE panend;			// (byte) Panning loop end point
-	UBYTE volflg;			// (byte) Volume type: bit 0: On; 1: Sustain; 2: Loop
-	UBYTE panflg;			// (byte) Panning type: bit 0: On; 1: Sustain; 2: Loop
-	UBYTE vibflg;			// (byte) Vibrato type
-	UBYTE vibsweep;			// (byte) Vibrato sweep
-	UBYTE vibdepth;			// (byte) Vibrato depth
-	UBYTE vibrate;			// (byte) Vibrato rate
-	UWORD volfade;			// (word) Volume fadeout
-	UWORD reserved[11];		// (word) Reserved
+	UBYTE what[96];			///< (byte) Sample number for all notes
+	UWORD volenv[24];		///< (byte) Points for volume envelope
+	UBYTE panenv[48];		///< (byte) Points for panning envelope
+	UBYTE volpts;			///< (byte) Number of volume points
+	UBYTE panpts;			///< (byte) Number of panning points
+	UBYTE volsus;			///< (byte) Volume sustain point
+	UBYTE volbeg;			///< (byte) Volume loop start point
+	UBYTE volend;			///< (byte) Volume loop end point
+	UBYTE pansus;			///< (byte) Panning sustain point
+	UBYTE panbeg;			///< (byte) Panning loop start point
+	UBYTE panend;			///< (byte) Panning loop end point
+	UBYTE volflg;			///< (byte) Volume type: bit 0: On; 1: Sustain; 2: Loop
+	UBYTE panflg;			///< (byte) Panning type: bit 0: On; 1: Sustain; 2: Loop
+	UBYTE vibflg;			///< (byte) Vibrato type
+	UBYTE vibsweep;			///< (byte) Vibrato sweep
+	UBYTE vibdepth;			///< (byte) Vibrato depth
+	UBYTE vibrate;			///< (byte) Vibrato rate
+	UWORD volfade;			///< (word) Volume fadeout
+	UWORD reserved[11];		///< (word) Reserved
 } XMPATCHHEADER;
 
 
 typedef struct XMWAVHEADER{
-	ULONG length;			// (dword) Sample length
-	ULONG loopstart;		// (dword) Sample loop start
-	ULONG looplength;		// (dword) Sample loop length
-	UBYTE volume;			// (byte) Volume
-	BYTE finetune;			// (byte) Finetune (signed byte -128..+127)
-	UBYTE type;                     // (byte) Type: Bit 0-1: 0 = No loop, 1 = Forward loop,
-									// 2 = Ping-pong loop;
-									// 4: 16-bit sampledata
-	UBYTE panning;			// (byte) Panning (0-255)
-	BYTE  relnote;			// (byte) Relative note number (signed byte)
-	UBYTE reserved;			// (byte) Reserved
-	char  samplename[22];	// (char) Sample name
+	ULONG length;			///< (dword) Sample length
+	ULONG loopstart;		///< (dword) Sample loop start
+	ULONG looplength;		///< (dword) Sample loop length
+	UBYTE volume;			///< (byte) Volume
+	BYTE finetune;			///< (byte) Finetune (signed byte -128..+127)
+	UBYTE type;                     ///< (byte) Type: Bit 0-1: 0 = No loop, 1 = Forward loop,
+									///< 2 = Ping-pong loop;
+									///< 4: 16-bit sampledata
+	UBYTE panning;			///< (byte) Panning (0-255)
+	BYTE  relnote;			///< (byte) Relative note number (signed byte)
+	UBYTE reserved;			///< (byte) Reserved
+	char  samplename[22];	///< (char) Sample name
 } XMWAVHEADER;
 
 
 typedef struct XMPATHEADER{
-	ULONG size;						// (dword) Pattern header length
-	UBYTE packing;					// (byte) Packing type (always 0)
-	UWORD numrows;					// (word) Number of rows in pattern (1..256)
-	UWORD packsize;					// (word) Packed patterndata size
+	ULONG size;						///< (dword) Pattern header length
+	UBYTE packing;					///< (byte) Packing type (always 0)
+	UWORD numrows;					///< (word) Number of rows in pattern (1..256)
+	UWORD packsize;					///< (word) Packed patterndata size
 } XMPATHEADER;
 
 typedef struct MTMNOTE{

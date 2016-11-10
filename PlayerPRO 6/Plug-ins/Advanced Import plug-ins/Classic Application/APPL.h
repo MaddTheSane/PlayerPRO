@@ -9,6 +9,7 @@
 #ifndef PPMacho_APPL_h
 #define PPMacho_APPL_h
 
+#include <CoreFoundation/CFBase.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
 #define __private_extern __attribute__((visibility("hidden")))

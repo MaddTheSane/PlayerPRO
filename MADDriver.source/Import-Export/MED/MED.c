@@ -430,6 +430,7 @@ static MADErr LoadMMD1Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings
 
 static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSettings *init, struct MEDInfo *medInfo)
 {
+	//TODO: get file name and instrument name
 	int			t, i;
 	uint32_t	sa[64];
 	InstrHdr	s;
