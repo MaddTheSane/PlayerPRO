@@ -25,60 +25,37 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 	}
 		
 	public func exportSample(_ sample: PPSampleObject, to sampleURL: URL, driver: PPDriver) -> MADErr {
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [AudioFormatFlag.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.isStereo ? 2 : 1)
-		
-		let datLen = sample.data.count
-		var audioFile: AudioFileID? = nil
-		
-		var res = AudioFileCreate(URL: sampleURL, fileType: .AIFF, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
-		
-		if res != noErr {
-			return .writingErr
-		} else {
-			guard let audioFile = audioFile else {
-				return .writingErr
-			}
-			defer {
-				AudioFileClose(audioFile)
-			}
-			var numBytes = UInt32(datLen)
+		func applyMetadata(to audFile: ExtAudioFile) {
 			
-			return sample.data.withUnsafeBytes({ (aData: UnsafePointer<Int8>) -> MADErr in
-				var myErr = MADErr.noErr
-				if sample.amplitude == 16 {
-					if ByteOrder.isBig {
-						//sample.data.
-						res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, aData);
-					} else {
-						let maxWriteBytes = 16
-						var remaining = datLen
-						var location = 0
-						var toWriteSize = 16
-						var toWriteBytes = [Int16](repeating: 0, count: 8)
-						let tmpData = UnsafeRawPointer(aData).assumingMemoryBound(to: Int16.self)
-						repeat {
-							for i in 0..<(toWriteSize / 2) {
-								toWriteBytes[i] = tmpData[location / 2 + i].bigEndian
-							}
-							remaining -= toWriteSize
-							var tmpToWrite = UInt32(toWriteSize)
-							res = AudioFileWriteBytes(audioFile, true, Int64(location), &tmpToWrite, toWriteBytes)
-							location += toWriteSize
-							toWriteSize = min(remaining, maxWriteBytes)
-						} while toWriteSize != 0 && res == noErr
-						if res != noErr {
-							return .writingErr
-						}
-					}
-				} else {
-					res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, aData);
-				}
-				if (res != noErr) {
-					myErr = .writingErr;
-				}
-				return myErr
-			})
 		}
+		let numChannels: UInt32 = sample.isStereo ? 2 : 1
+		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [AudioFormatFlag.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
+		let realFormat = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [AudioFormatFlag.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
+
+		do {
+			let audOut = try ExtAudioFile(createURL: sampleURL, fileType: .AIFF, streamDescription: &asbd)
+			audOut.clientDataFormat = realFormat
+
+			try sample.data.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
+				let toWriteSize = sample.data.count
+				
+				var audBufList = AudioBufferList()
+				audBufList.mNumberBuffers = 1
+				audBufList.mBuffers.mNumberChannels = numChannels
+				audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
+				audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
+				
+				try audOut.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
+			}
+			
+			applyMetadata(to: audOut)
+		} catch let error as MADErr {
+			return error
+		} catch {
+			return .writingErr
+		}
+		
+		return .noErr
 	}
 	
 	//MARK: import
