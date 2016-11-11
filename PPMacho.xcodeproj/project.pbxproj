@@ -160,6 +160,8 @@
 		551FEAD410E727B100EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		552097B2187AB8B9004FD220 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
 		552097BC187B11BF004FD220 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55211BE71DD6457300ED9EE5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55211BE91DD6457300ED9EE5 /* Localizable.strings */; };
+		55211BEC1DD6476300ED9EE5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55211BEE1DD6476300ED9EE5 /* Localizable.strings */; };
 		5521F41717FA541C002CDBA9 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41617FA541C002CDBA9 /* Trackers.xcassets */; };
 		5521F41817FA541C002CDBA9 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41617FA541C002CDBA9 /* Trackers.xcassets */; };
 		5521F41917FA541C002CDBA9 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41617FA541C002CDBA9 /* Trackers.xcassets */; };
@@ -2348,6 +2350,8 @@
 		552097B3187B0917004FD220 /* Be-DriverClass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = "Be-DriverClass.cpp"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		552097B4187B0917004FD220 /* Be-DriverClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "Be-DriverClass.h"; sourceTree = "<group>"; };
 		552097B5187B0917004FD220 /* Be-PlugImport.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "Be-PlugImport.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		55211BE81DD6457300ED9EE5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		55211BED1DD6476300ED9EE5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5521F41617FA541C002CDBA9 /* Trackers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Trackers.xcassets; sourceTree = "<group>"; };
 		5521F41B17FA54B8002CDBA9 /* Player-only.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Player-only.xcassets"; sourceTree = "<group>"; };
 		5522FB031AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPROCoreSwiftTests.swift; sourceTree = "<group>"; };
@@ -2750,8 +2754,8 @@
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADDebugStr.m; sourceTree = "<group>"; };
 		55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPKPcmd.swift; sourceTree = "<group>"; };
-		55BE998717978BB100D6DECC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
-		55BE998917978BB100D6DECC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/schema.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		55BE998717978BB100D6DECC /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		55BE998917978BB100D6DECC /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/schema.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		55BE998A17978BB100D6DECC /* GetMetadataForFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = GetMetadataForFile.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55BE998B17978BB100D6DECC /* GetMetadataForFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetMetadataForFile.h; sourceTree = "<group>"; };
 		55BE998D17978BB100D6DECC /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
@@ -2775,7 +2779,7 @@
 		55CAB9D01A9C5ADB0047F1D6 /* PPLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPLibrary.swift; sourceTree = "<group>"; };
 		55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO 6.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Cocoa-Info.plist"; path = "../../Cocoa-Info.plist"; sourceTree = "<group>"; };
-		55CBFC7011EB7BC90028C6BB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		55CBFC7011EB7BC90028C6BB /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		55CDD02B1976F6F400E3DDE1 /* iOS Player-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOS Player-Bridging-Header.h"; sourceTree = "<group>"; };
 		55D1BD58120FBAC0004FD083 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		55D2626A1A9E809600A68CCE /* MusicNoteFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicNoteFormatter.swift; sourceTree = "<group>"; };
@@ -4413,6 +4417,7 @@
 				55CDD02B1976F6F400E3DDE1 /* iOS Player-Bridging-Header.h */,
 				555776A717EBF8FE0019D008 /* iOS PlayerPRO Player-Info.plist */,
 				555776A817EBF8FE0019D008 /* InfoPlist.strings */,
+				55211BEE1DD6476300ED9EE5 /* Localizable.strings */,
 				555776AD17EBF8FE0019D008 /* iOS PlayerPRO Player-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -4604,6 +4609,7 @@
 				5578C48517D9E8560057D11B /* PlayerPRO Player-Info.plist */,
 				55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */,
 				5578C48617D9E8560057D11B /* InfoPlist.strings */,
+				55211BE91DD6457300ED9EE5 /* Localizable.strings */,
 				5578C48B17D9E8560057D11B /* PlayerPRO Player-Prefix.pch */,
 				5578C48C17D9E8560057D11B /* Credits.rtf */,
 			);
@@ -6596,16 +6602,14 @@
 			};
 			buildConfigurationList = 88E0C3A90C2F21DD00D6C081 /* Build configuration list for PBXProject "PPMacho" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
 				en,
-				Base,
+				ja,
 				fr,
+				de,
+				Base,
 			);
 			mainGroup = 88E0C3A60C2F21DD00D6C081;
 			productRefGroup = 88E0C3B60C2F21DD00D6C081 /* Products */;
@@ -6918,6 +6922,7 @@
 				553B8B7519B3CD85007C2C64 /* xm-ipad.png in Resources */,
 				555776BE17EBF8FF0019D008 /* Images.xcassets in Resources */,
 				5521F41917FA541C002CDBA9 /* Trackers.xcassets in Resources */,
+				55211BEC1DD6476300ED9EE5 /* Localizable.strings in Resources */,
 				553B8B7419B3CD85007C2C64 /* xm-ipad-large.png in Resources */,
 				553B8B7319B3CD85007C2C64 /* xm-ios@2x.png in Resources */,
 				553B8B7219B3CD85007C2C64 /* xm-ios.png in Resources */,
@@ -6980,6 +6985,7 @@
 				5578C4EF17DA97020057D11B /* InstrumentWindow.xib in Resources */,
 				55A9351A17F28F9700493DC5 /* Shared.xcassets in Resources */,
 				5578C4DA17DA95C20057D11B /* MiscPrefs.xib in Resources */,
+				55211BE71DD6457300ED9EE5 /* Localizable.strings in Resources */,
 				5521F41C17FA54B8002CDBA9 /* Player-only.xcassets in Resources */,
 				5573AF0917DF8FD500B68127 /* README.rtf in Resources */,
 			);
@@ -9034,6 +9040,22 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		55211BE91DD6457300ED9EE5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55211BE81DD6457300ED9EE5 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		55211BEE1DD6476300ED9EE5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55211BED1DD6476300ED9EE5 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		5521F42017FA573B002CDBA9 /* PPPlugInInfoController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -9265,7 +9287,7 @@
 		55BE998617978BB100D6DECC /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55BE998717978BB100D6DECC /* English */,
+				55BE998717978BB100D6DECC /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -9273,7 +9295,7 @@
 		55BE998817978BB100D6DECC /* schema.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55BE998917978BB100D6DECC /* English */,
+				55BE998917978BB100D6DECC /* en */,
 			);
 			name = schema.strings;
 			sourceTree = "<group>";
@@ -9291,7 +9313,7 @@
 		55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55CBFC7011EB7BC90028C6BB /* English */,
+				55CBFC7011EB7BC90028C6BB /* en */,
 				55085D7E1836DD85004A152F /* fr */,
 			);
 			name = InfoPlist.strings;

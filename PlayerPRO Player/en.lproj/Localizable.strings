@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  PPMacho
+
+  Created by C.W. Betts on 11/11/16.
+
+*/
+
+"Invalid data returned from helper" = "Invalid data returned from helper";

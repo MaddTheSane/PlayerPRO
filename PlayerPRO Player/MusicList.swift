@@ -515,7 +515,7 @@ private let kPlayerList = "Player List"
 					guard let invalidAny = bookmarkData?["lostMusicCount"] as? UInt,
 						let selectedAny = bookmarkData?["SelectedMusic"] as? Int,
 						let pathsAny = bookmarkData?["MusicPaths"] as? NSArray as? [String] else {
-							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: "Invalid data returned from helper"])
+							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Invalid data returned from helper", comment: "Invalid data returned from helper")])
 							theHandle(lolwut)
 							return;
 					}

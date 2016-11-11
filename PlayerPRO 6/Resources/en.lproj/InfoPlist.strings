@@ -6,24 +6,55 @@
    Copyright 2009 __MyCompanyName__. All rights reserved.
  */
 
-"PPMTMFile" = "MultiTracker Audio";
-"PPS3MFile" = "ScreamTracker Audio";
-"PPMODFile" = "ProTracker Audio";
-"PPXMFile" = "FastTracker Audio";
-"PPITFile" = "ImpulseTracker Audio";
-"PPAMFFile" = "AMF Tracker Audio";
-"PP669File" = "669 Tracker Audio";
+CFBundleName = "PlayerPRO 6";
 
-"PPXIFile" = "FastTracker Instrument";
-"PPMINsFile" = "PlayerPRO Instruments";
-"PPPATFile" = "PlayerPRO Patterns";
-
-"PPMADFile" = "PlayerPRO MAD Tracker";
-"PPMADFGFile" = "PlayerPRO MADfg Tracker";
-"PPMADIFile" = "PlayerPRO MADI Tracker";
-"PPMADKFile" = "PlayerPRO MADK Tracker";
-"PPMADHFile" = "PlayerPRO MADH Tracker";
-
+"Music Tracker" = "Music Tracker";
 "MIDI File" = "MIDI File";
-"PPImpExpBundle" = "PlayerPRO Import/Export PlugIn";
 
+PPMTMFile = "MultiTracker Audio";
+PPS3MFile = "ScreamTracker Audio";
+PPMODFile = "ProTracker Audio";
+PPXMFile = "FastTracker Audio";
+PPITFile = "ImpulseTracker Audio";
+PPAMFFile = "AMF Tracker Audio";
+PP669File = "669 Tracker Audio";
+PPOKTAFile = "OKTAmed Tracker Audio";
+
+PPXIFile = "FastTracker Instrument";
+PPMINsFile = "PlayerPRO Instrument";
+PPPATFile = "PlayerPRO Patterns";
+
+PPMADFile = "PlayerPRO MAD Tracker";
+PPMADFGFile = "PlayerPRO MADfg Tracker";
+PPMADIFile = "PlayerPRO MADI Tracker";
+PPMADKFile = "PlayerPRO MADK Tracker";
+PPMADHFile = "PlayerPRO MADH Tracker";
+
+PPImpExpBundle = "PlayerPRO Import/Export Plug-in";
+PPExtImpBundle = "PlayerPRO 6 Complex Import Plug-in";
+
+// UTIs
+"net.sourceforge.playerpro.mtm" = "MultiTracker Audio";
+"net.sourceforge.playerpro.s3m" = "ScreamTracker Audio";
+"net.sourceforge.playerpro.mod" = "ProTracker Audio";
+"net.sourceforge.playerpro.xm" = "FastTracker Audio";
+"net.sourceforge.playerpro.it" = "ImpulseTracker Audio";
+"net.sourceforge.playerpro.amf" = "AMF Tracker Audio";
+"net.sourceforge.playerpro.669" = "669 Tracker Audio";
+"net.sourceforge.playerpro.okta" = "OKTAmed Tracker Audio";
+
+"com.quadmation.playerpro.mad" = "PlayerPRO MAD Tracker";
+"com.quadmation.playerpro.madfg" = "PlayerPRO MAD-fg Tracker";
+"com.quadmation.playerpro.madh" = "PlayerPRO MADH Tracker";
+"com.quadmation.playerpro.madi" = "PlayerPRO MADI Tracker";
+"com.quadmation.playerpro.madk" = "PlayerPRO MADK Tracker";
+"net.sourceforge.playerpro.tracker" = "Music Tracker";
+
+"net.sourceforge.playerpro.xi" = "FastTracker Instrument";
+"com.quadmation.playerpro.list" = "PlayerPRO Instrument List";
+"com.quadmation.playerpro.pattern" = "PlayerPRO Patterns";
+
+"com.quadmation.playerpro.pcmd" = "PlayerPRO Pcmd File";
+
+"net.sourceforge.playerpro.ppimpexp" = "PlayerPRO Import/Export PlugIn";
+"net.sourceforge.playerpro.ppextimp" = "PlayerPRO 6 Complex Import Plug-in";
