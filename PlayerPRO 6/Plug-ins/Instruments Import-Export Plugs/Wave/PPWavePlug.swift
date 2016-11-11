@@ -32,7 +32,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		var audioFile: AudioFileID? = nil
 		var res: OSStatus = noErr
 		
-		res = AudioFileOpen(URL: sampleURL as NSURL, permissions: .readPermission, fileTypeHint: .WAVE, audioFile: &audioFile);
+		res = AudioFileOpen(url: sampleURL as NSURL, permissions: .readPermission, fileTypeHint: .WAVE, audioFile: &audioFile);
 		if (res != noErr) {
 			myErr = .fileNotSupportedByThisPlug;
 		} else {
@@ -150,7 +150,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		var res: OSStatus = 0
 		let data: Data
 		if ByteOrder.isBig {
-			if (sample.amplitude == 16) {
+			if sample.amplitude == 16 {
 				let mutData = NSMutableData(data: sample.data)
 				let mutShortBytes = mutData.mutableBytes.assumingMemoryBound(to: UInt16.self)
 				DispatchQueue.concurrentPerform(iterations: sample.data.count / 2, execute: { (i) -> Void in

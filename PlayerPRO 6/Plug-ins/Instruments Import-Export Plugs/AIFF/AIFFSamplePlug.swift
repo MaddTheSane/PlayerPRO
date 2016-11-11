@@ -33,7 +33,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		let realFormat = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [AudioFormatFlag.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
 
 		do {
-			let audOut = try ExtAudioFile(createURL: sampleURL, fileType: .AIFF, streamDescription: &asbd)
+			let audOut = try ExtAudioFile(createURL: sampleURL, fileType: .AIFF, streamDescription: &asbd, flags: [.eraseFile])
 			audOut.clientDataFormat = realFormat
 
 			try sample.data.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
@@ -67,10 +67,10 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		var audioFile: AudioFileID? = nil
 		var res: OSStatus = noErr
 		
-		res = AudioFileOpen(URL: AlienFileURL as NSURL, permissions: .readPermission, fileTypeHint: .AIFF, audioFile: &audioFile);
-		if (res != noErr) {
-			res = AudioFileOpen(URL: AlienFileURL as NSURL, permissions: .readPermission, fileTypeHint: .AIFC, audioFile: &audioFile);
-			if (res != noErr) {
+		res = AudioFileOpen(url: AlienFileURL as NSURL, permissions: .readPermission, fileTypeHint: .AIFF, audioFile: &audioFile);
+		if res != noErr {
+			res = AudioFileOpen(url: AlienFileURL as NSURL, permissions: .readPermission, fileTypeHint: .AIFC, audioFile: &audioFile);
+			if res != noErr {
 				myErr = .fileNotSupportedByThisPlug;
 			} else {
 				AudioFileClose(audioFile!);

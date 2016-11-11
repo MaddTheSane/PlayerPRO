@@ -470,7 +470,7 @@ private let kPlayerList = "Player List"
 	@objc(insertMusicLists:atIndexes:)
 	func insertMusicLists(_ anObj: [MusicListObject], at indexes: IndexSet) {
 		
-		for (i, idx) in zip(indexes, anObj).reversed() {
+		for (i, idx) in zip(indexes, anObj) {
 			musicList.insert(idx, at: i)
 		}
 	}
@@ -490,10 +490,8 @@ private let kPlayerList = "Player List"
 		let theIndexSet = IndexSet(integersIn: idx ..< anObj.count + idx)
 		self.willChange(.insertion, valuesAt: theIndexSet, forKey: kMusicListKVO)
 		
-		for (tempObj, currentIndex) in zip(anObj, theIndexSet) {
-			musicList.insert(tempObj, at: currentIndex)
-		}
-
+		insertMusicLists(anObj, at: theIndexSet)
+		
 		self.didChange(.insertion, valuesAt: theIndexSet, forKey: kMusicListKVO)
 	}
 	
@@ -511,6 +509,7 @@ private let kPlayerList = "Player List"
 				}
 				if let error = error {
 					theHandle(error)
+					return
 				} else {
 					guard let invalidAny = bookmarkData?["lostMusicCount"] as? UInt,
 						let selectedAny = bookmarkData?["SelectedMusic"] as? Int,
