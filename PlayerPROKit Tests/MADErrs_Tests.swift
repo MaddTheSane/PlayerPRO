@@ -42,7 +42,7 @@ class MADErrs_Tests: XCTestCase {
 			throw MADErr.needMemory
 		} catch let error as NSError {
 			guard let anErr = PPCreateErrorFromMADErrorType(.needMemory) else {
-				XCTAssert(false, "huh!?")
+				XCTFail("huh!?")
 				return
 			}
 			XCTAssertEqual(error.domain, anErr._domain)

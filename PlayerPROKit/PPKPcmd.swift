@@ -161,10 +161,10 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 	public mutating func addRow() {
 		#if false
 			length += 1
-			for i in 0 ..< tracks {
+			for _ in 0 ..< tracks {
 			myCmd.append(Cmd())
 			}
-			#else
+		#else
 			// Brute forcing our way, because I can't get it to work the other way yet.
 			var anewPcmd = PPKPcmd(tracks: self.tracks, startTrack: self.trackStart, rows: length + 1, startPosition: positionStart)
 			
@@ -180,12 +180,11 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 	/// Adds a track to the struct.
 	public mutating func addTrack() {
 		#if false
-			for var i = length; i > 0; i-- {
-			let acmd = Cmd()
-			myCmd.insert(Cmd(), atIndex: Int(i * tracks))
+			for i in (0..<length).reversed() {
+			myCmd.insert(Cmd.new(), at: Int(i * tracks))
 			}
 			tracks += 1
-			#else
+		#else
 			// Brute forcing our way, because I can't get it to work the other way yet.
 			var anewPcmd = PPKPcmd(tracks: self.tracks + 1, startTrack: self.trackStart, rows: length, startPosition: positionStart)
 			
