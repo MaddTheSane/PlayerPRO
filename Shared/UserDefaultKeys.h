@@ -213,7 +213,6 @@ extern NSString * const PPCETrackHeight;
 #pragma mark Misc./other
 extern NSString * const PPDoubleDash;
 extern NSString * const kMusicListKVO;
-#define PPEscapeValue	@"\e"
 
 NS_ASSUME_NONNULL_END
 

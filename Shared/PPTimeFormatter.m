@@ -6,9 +6,9 @@
 //
 //
 
+#include <stdio.h>
 #import "PPTimeFormatter.h"
 #import <Foundation/Foundation.h>
-#import <stdio.h>
 
 @implementation PPTimeFormatter
 
@@ -16,13 +16,15 @@
 {
 	if ([obj isKindOfClass:[NSNumber class]] ) {
 		NSInteger theVal = [obj integerValue];
-		int seconds = (theVal/60) % 60;
-		int minutes = (theVal/(60 * 60)) % 60;
-		if (theVal / (60*60*60) > 0) {
-			int hours = (int)(theVal/(60 * 60 * 60));
-			return [NSString stringWithFormat:@"%d:%02d:%02d", hours, minutes, seconds];
+		NSInteger fullVal = labs(theVal);
+		BOOL isNeg = theVal < 0;
+		int seconds = (fullVal/60) % 60;
+		int minutes = (fullVal/(60 * 60)) % 60;
+		if (fullVal / (60*60*60) > 0) {
+			int hours = (int)(fullVal/(60 * 60 * 60));
+			return [NSString stringWithFormat:@"%s%d:%02d:%02d", isNeg ? "-": "", hours, minutes, seconds];
 		} else {
-			return [NSString stringWithFormat:@"%d:%02d", minutes, seconds];
+			return [NSString stringWithFormat:@"%s%d:%02d", isNeg ? "-": "", minutes, seconds];
 		}
 	} else return nil;
 }

@@ -246,6 +246,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	func addMusicToMusicList(_ theURL: URL, loadIfPreferencesAllow load: Bool = true) {
+		// clear sort descriptors, so added files don't get sorted incorrectly.
 		tableView.sortDescriptors = []
 		willChangeValue(forKey: kMusicListKVO)
 		let okayMusic = musicList.addMusicURL(theURL, force: false)
@@ -261,8 +262,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			similarAlert.informativeText = "There is already a tracker file that points to the added file. Do you still wish to add it?";
 			similarAlert.addButton(withTitle: "Add")
 			
-			let cancelButton = similarAlert.addButton(withTitle: "Cancel")
-			cancelButton.keyEquivalent = PPEscapeValue;
+			do {
+				let cancelButton = similarAlert.addButton(withTitle: "Cancel")
+				cancelButton.keyEquivalent = "\u{1b}" //escape
+			}
 			
 			similarAlert.addButton(withTitle: "Load Existing")
 			
