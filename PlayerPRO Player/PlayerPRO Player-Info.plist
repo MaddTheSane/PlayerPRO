@@ -863,25 +863,6 @@
 				</array>
 			</dict>
 		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>net.sourceforge.playerpro.tracker</string>
-			</array>
-			<key>UTTypeIdentifier</key>
-			<string>com.medsoundstudio.OctaMED</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>com.apple.ostype</key>
-				<array>
-					<string>MED </string>
-				</array>
-				<key>public.filename-extension</key>
-				<array>
-					<string>med</string>
-				</array>
-			</dict>
-		</dict>
 	</array>
 </dict>
 </plist>
