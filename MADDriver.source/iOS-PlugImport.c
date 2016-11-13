@@ -99,12 +99,12 @@ static const iPlugInfo iOSPlugInfo[] = {
 	},
 	{
 		.IOPlug = mainMED,
-		.MenuName = CFSTR("MED Files"),
+		.MenuName = CFSTR("OctaMED Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "MED ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.med"), NULL},
+		.UTITypes = (CFStringRef[]){CFSTR("com.medsoundstudio.OctaMED"), NULL},
 	},
 	{
 		.IOPlug = mainMOD,
@@ -126,7 +126,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 	},
 	{
 		.IOPlug = mainOkta,
-		.MenuName = CFSTR("OktaMed Files"),
+		.MenuName = CFSTR("Oktalyzer Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "Okta",
 		.version = PLUGVERS(2, 0, 0, 0),

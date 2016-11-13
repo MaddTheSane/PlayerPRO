@@ -440,7 +440,7 @@ EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFil
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strncpy(p->type, 		"OKTA", sizeof(p->type));
-	strncpy(p->MenuName, 	"OKTAmed Files", sizeof(p->MenuName));
+	strncpy(p->MenuName, 	"Oktalyzer Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	

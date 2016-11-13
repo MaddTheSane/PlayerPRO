@@ -27,12 +27,12 @@
 	<key>MADPlugAuthorName</key>
 	<string>Antoine ROSSET</string>
 	<key>MADPlugMenuName</key>
-	<string>MED</string>
+	<string>OctaMED</string>
 	<key>MADPlugType</key>
 	<string>MED </string>
 	<key>MADPlugUTITypes</key>
 	<array>
-		<string>net.sourceforge.playerpro.med</string>
+		<string>com.medsoundstudio.OctaMED</string>
 	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Written by A.ROSSET © 1995</string>

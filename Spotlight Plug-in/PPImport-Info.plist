@@ -28,7 +28,7 @@
 				<string>net.sourceforge.playerpro.it</string>
 				<string>net.sourceforge.playerpro.mtm</string>
 				<string>net.sourceforge.playerpro.amf</string>
-				<string>net.sourceforge.playerpro.med</string>
+				<string>com.medsoundstudio.OctaMED</string>
 				<string>org.videolan.s3m</string>
 				<string>org.videolan.it</string>
 				<string>org.videolan.mod</string>
@@ -332,7 +332,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>OKTAmed Tracker</string>
+			<string>Oktalyzer Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.okta</string>
 			<key>UTTypeTagSpecification</key>
@@ -420,7 +420,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.med</string>
+			<string>com.medsoundstudio.OctaMED</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>

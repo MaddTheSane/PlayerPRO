@@ -340,7 +340,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>OKTAmed Tracker</string>
+			<string>Oktalyzer Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.okta</string>
 			<key>UTTypeTagSpecification</key>

@@ -384,7 +384,7 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>net.sourceforge.playerpro.med</string>
+				<string>com.medsoundstudio.OctaMED</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -422,7 +422,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.med</string>
+			<string>com.medsoundstudio.OctaMED</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -773,7 +773,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>OKTAmed Tracker</string>
+			<string>Oktalyzer Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>OKTA</string>
 			<key>UTTypeIdentifier</key>
@@ -869,7 +869,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.med</string>
+			<string>com.medsoundstudio.OctaMED</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>
