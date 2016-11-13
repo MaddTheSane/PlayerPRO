@@ -13,6 +13,7 @@ PPITFile = "ImpulseTracker Audio";
 PPAMFFile = "AMF Tracker Audio";
 PP669File = "669 Tracker Audio";
 PPOKTAFile = "OKTAmed Tracker Audio";
+PPMEDFile = "MED Tracker Audio";
 
 PPMADFile = "PlayerPRO MAD Tracker";
 PPMADFGFile = "PlayerPRO MADfg Tracker";
@@ -34,6 +35,7 @@ PPImpExpBundle = "PlayerPRO Import/Export PlugIn";
 "net.sourceforge.playerpro.amf" = "AMF Tracker Audio";
 "net.sourceforge.playerpro.669" = "669 Tracker Audio";
 "net.sourceforge.playerpro.okta" = "OKTAmed Tracker Audio";
+"net.sourceforge.playerpro.med" = "MED Tracker Audio";
 
 "com.quadmation.playerpro.mad" = "PlayerPRO MAD Tracker";
 "com.quadmation.playerpro.madfg" = "PlayerPRO MAD-fg Tracker";

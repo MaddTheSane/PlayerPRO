@@ -1,8 +1,8 @@
 ﻿/* Localized versions of Info.plist keys */
 
-CFBundleShortVersionString = "1.6.1";
-CFBundleGetInfoString = "PlayerPRO Importer version 1.6.1, Copyright © 2013-2015 SourceForge.";
-NSHumanReadableCopyright = "Copyright © 2013-2015 SourceForge.";
+CFBundleShortVersionString = "1.6.2";
+CFBundleGetInfoString = "PlayerPRO Importer version 1.6.2, Copyright © 2013-2016 SourceForge.";
+NSHumanReadableCopyright = "Copyright © 2013-2016 SourceForge.";
 
 "PPMTMFile" = "MultiTracker Audio";
 "PPS3MFile" = "ScreamTracker Audio";
@@ -30,6 +30,7 @@ NSHumanReadableCopyright = "Copyright © 2013-2015 SourceForge.";
 "net.sourceforge.playerpro.amf" = "AMF Tracker Audio";
 "net.sourceforge.playerpro.669" = "669 Tracker Audio";
 "net.sourceforge.playerpro.okta" = "OKTAmed Tracker Audio";
+"net.sourceforge.playerpro.med" = "MED Tracker Audio";
 
 "com.quadmation.playerpro.mad" = "PlayerPRO MAD Tracker";
 "com.quadmation.playerpro.madfg" = "PlayerPRO MAD-fg Tracker";

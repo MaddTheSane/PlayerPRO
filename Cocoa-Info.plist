@@ -1152,6 +1152,10 @@
 			<string>net.sourceforge.playerpro.med</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>MED </string>
+				</array>
 				<key>public.filename-extension</key>
 				<array>
 					<string>med</string>

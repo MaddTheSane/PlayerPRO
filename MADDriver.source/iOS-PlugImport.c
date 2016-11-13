@@ -67,7 +67,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "IT  ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.it"), NULL},
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.it"), CFSTR("org.videolan.it"), NULL},
 	},
 #endif
 	{
@@ -140,7 +140,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "S3M ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImportExport,
-		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.s3m"), NULL},
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.s3m"), CFSTR("org.videolan.s3m"), NULL},
 	},
 	{
 		.IOPlug = mainULT,
@@ -170,7 +170,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "XM  ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImportExport,
-		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.xm"), NULL},
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.xm"), CFSTR("org.videolan.xm"), NULL},
 	}
 };
 

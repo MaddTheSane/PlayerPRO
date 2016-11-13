@@ -92,5 +92,81 @@
             </displayattrs>
         </type>
 
+		<!-- VLC UTIs, because VLC is a dumb-dumb -->
+		<type name="org.videolan.s3m">
+			<allattrs>
+				kMDItemTitle
+				kMDItemDurationSeconds
+				kMDItemCodecs
+				net_sourceforge_playerpro_tracker_instumentlist
+				net_sourceforge_playerpro_tracker_patternlist
+				net_sourceforge_playerpro_tracker_totalpatterns
+				net_sourceforge_playerpro_tracker_partitionlength
+				net_sourceforge_playerpro_tracker_totalinstruments
+				net_sourceforge_playerpro_tracker_totaltracks
+				net_sourceforge_playerpro_tracker_formatdescription
+			</allattrs>
+			<displayattrs>
+				kMDItemTitle
+				kMDItemDurationSeconds
+				kMDItemCodecs
+				net_sourceforge_playerpro_tracker_partitionlength
+				net_sourceforge_playerpro_tracker_totalpatterns
+				net_sourceforge_playerpro_tracker_totalinstruments
+				net_sourceforge_playerpro_tracker_totaltracks
+				net_sourceforge_playerpro_tracker_formatdescription
+			</displayattrs>
+		</type>
+
+		<type name="org.videolan.it">
+			<allattrs>
+				kMDItemTitle
+				kMDItemDurationSeconds
+				kMDItemCodecs
+				net_sourceforge_playerpro_tracker_instumentlist
+				net_sourceforge_playerpro_tracker_patternlist
+				net_sourceforge_playerpro_tracker_totalpatterns
+				net_sourceforge_playerpro_tracker_partitionlength
+				net_sourceforge_playerpro_tracker_totalinstruments
+				net_sourceforge_playerpro_tracker_totaltracks
+				net_sourceforge_playerpro_tracker_formatdescription
+			</allattrs>
+			<displayattrs>
+				kMDItemTitle
+				kMDItemDurationSeconds
+				kMDItemCodecs
+				net_sourceforge_playerpro_tracker_partitionlength
+				net_sourceforge_playerpro_tracker_totalpatterns
+				net_sourceforge_playerpro_tracker_totalinstruments
+				net_sourceforge_playerpro_tracker_totaltracks
+				net_sourceforge_playerpro_tracker_formatdescription
+			</displayattrs>
+		</type>
+
+		<type name="org.videolan.mod">
+			<allattrs>
+				kMDItemTitle
+				kMDItemDurationSeconds
+				kMDItemCodecs
+				net_sourceforge_playerpro_tracker_instumentlist
+				net_sourceforge_playerpro_tracker_patternlist
+				net_sourceforge_playerpro_tracker_totalpatterns
+				net_sourceforge_playerpro_tracker_partitionlength
+				net_sourceforge_playerpro_tracker_totalinstruments
+				net_sourceforge_playerpro_tracker_totaltracks
+				net_sourceforge_playerpro_tracker_formatdescription
+			</allattrs>
+			<displayattrs>
+				kMDItemTitle
+				kMDItemDurationSeconds
+				kMDItemCodecs
+				net_sourceforge_playerpro_tracker_partitionlength
+				net_sourceforge_playerpro_tracker_totalpatterns
+				net_sourceforge_playerpro_tracker_totalinstruments
+				net_sourceforge_playerpro_tracker_totaltracks
+				net_sourceforge_playerpro_tracker_formatdescription
+			</displayattrs>
+		</type>
+
     </types>
 </schema>

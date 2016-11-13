@@ -9,18 +9,18 @@
 import Cocoa
 
 func ==(lhs: PlugInInfo, rhs: PlugInInfo) -> Bool {
-	if (lhs === rhs) {
-		return true;
+	if lhs === rhs {
+		return true
 	}
 	
-	if (lhs.plugName != rhs.plugName) {
-		return false;
-	} else if (lhs.authorName != rhs.authorName) {
-		return false;
-	} else if (lhs.plugType != rhs.plugType) {
-		return false;
+	if lhs.plugName != rhs.plugName {
+		return false
+	} else if lhs.authorName != rhs.authorName {
+		return false
+	} else if lhs.plugType != rhs.plugType {
+		return false
 	} else {
-		return true;
+		return true
 	}
 }
 
@@ -65,13 +65,13 @@ final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 		}
 		
 		if (object === self) {
-			return true;
+			return true
 		}
 		
 		if let unwrapped = object as? PlugInInfo {
 			return self == unwrapped
 		} else {
-			return false;
+			return false
 		}
 	}
 }
