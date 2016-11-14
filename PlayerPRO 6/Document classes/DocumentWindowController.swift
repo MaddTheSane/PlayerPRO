@@ -125,106 +125,64 @@ class DocumentWindowController: NSWindowController {
 		infoWindow.close()
 	}
 	
-	func rawSoundData(_ settings: inout MADDriverSettings, handler: (NSData) -> MADErr, callback: (NSError?) -> Void) {
+	func rawSoundData(_ settings: inout MADDriverSettings, handler: (Data) throws -> Void) throws {
 		var settings = settings
-		var err: NSError? = nil
-		do {
-			let theRec =  try PPDriver(library: globalMadLib, settings: &settings)
-			theRec.cleanDriver()
-			theRec.currentMusic = currentDocument.theMusic
-			theRec.play()
-			
-			while let newData = theRec.directSave() {
-				let anErr = handler(newData as NSData)
-				if anErr != .noErr {
-					callback(createNSError(from: anErr))
-					return
-				}
-			}
-		} catch let iErr as NSError {
-			err = iErr
+		let theRec =  try PPDriver(library: globalMadLib, settings: &settings)
+		theRec.cleanDriver()
+		theRec.currentMusic = currentDocument.theMusic
+		theRec.play()
+		
+		while let newData = theRec.directSave() {
+			try handler(newData)
 		}
-		callback(err)
 	}
 	
-	private func applyMetadataToFileID(_ theID: AudioFileID) {
+	private func applyMetadata(to theID: ExtAudioFile) {
 		//TODO: implement, but how?
 	}
 	
 	private func saveMusic(waveToURL theURL: URL, theSett: inout MADDriverSettings) -> MADErr {
-		var iErr: NSError? = nil
-		
-		var audioFile: AudioFileID? = nil;
-		var tmpChannels: UInt32
-		
-		switch (theSett.outPutMode) {
-		case .MonoOutPut:
-			tmpChannels = 1
+		do {
+			var audioFile: ExtAudioFile!
+			let tmpChannels: UInt32
 			
-		case .PolyPhonic:
-			tmpChannels = 4
+			switch theSett.outPutMode {
+			case .MonoOutPut:
+				tmpChannels = 1
+				
+			case .PolyPhonic:
+				tmpChannels = 4
+				
+			default:
+				tmpChannels = 2
+			}
 			
-		default:
-			tmpChannels = 2
-		}
-		
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
-		
-		var res = AudioFileCreate(URL: theURL, fileType: .WAVE, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
-		if (res != noErr) {
-			if (audioFile != nil) {
-				AudioFileClose(audioFile!)
-			}
-			return .writingErr
-		}
-		defer {
-			if let audioFile = audioFile {
-				AudioFileClose(audioFile)
-			}
-		}
-		
-		
-		var location = 0
-		
-		func handler(_ data: NSData) -> MADErr {
-			let toWriteSize = data.length
-			if let mutData = NSMutableData(length: data.length) {
-				let tmpData = data.bytes.assumingMemoryBound(to: Int16.self)
-				let toWriteBytes = mutData.mutableBytes.assumingMemoryBound(to: Int16.self)
-				
-				for i in 0..<(toWriteSize / 2) {
-					toWriteBytes[i] = tmpData[i].littleEndian
+			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+			var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+			
+			audioFile = try ExtAudioFile(createURL: theURL, fileType: .WAVE, streamDescription: &asbd, flags: .eraseFile)
+			
+			audioFile.clientDataFormat = realFormat
+			
+			func handler(data data1: Data) throws {
+				try data1.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
+					let toWriteSize = data1.count
+					
+					var audBufList = AudioBufferList()
+					audBufList.mNumberBuffers = 1
+					audBufList.mBuffers.mNumberChannels = tmpChannels
+					audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
+					audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
+					
+					try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 				}
-				var tmpToWrite = UInt32(toWriteSize)
-				let res = AudioFileWriteBytes(audioFile!, true, Int64(location), &tmpToWrite, toWriteBytes)
-				location += toWriteSize
-				
-				if res != noErr {
-					return .writingErr
-				}
-				
-				return .noErr
-			} else {
-				return .needMemory
 			}
-		}
-		
-		rawSoundData(&theSett, handler: handler, callback: { (anErr) -> Void in
-			iErr = anErr
-		})
-		
-		if let iErr = iErr {
-			if iErr.domain == PPMADErrorDomain {
-				return MADErr(rawValue: OSErr(iErr.code)) ?? .unknownErr
-			} else {
-				return .unknownErr
-			}
-		}
-		
-		applyMetadataToFileID(audioFile!)
-		res = AudioFileClose(audioFile!)
-		audioFile = nil
-		if (res != noErr) {
+			
+			try rawSoundData(&theSett, handler: handler)
+			applyMetadata(to: audioFile)
+		} catch let error as MADErr {
+			return error
+		} catch {
 			return MADErr.writingErr
 		}
 		
@@ -232,78 +190,46 @@ class DocumentWindowController: NSWindowController {
 	}
 	
 	private func saveMusic(AIFFToURL theURL: URL, theSett: inout MADDriverSettings) -> MADErr {
-		var iErr: NSError? = nil
-		
-		var audioFile: AudioFileID? = nil;
-		var tmpChannels: UInt32
-		
-		switch (theSett.outPutMode) {
-		case .MonoOutPut:
-			tmpChannels = 1
+		do {
+			let tmpChannels: UInt32
 			
-		case .PolyPhonic:
-			tmpChannels = 4
+			switch theSett.outPutMode {
+			case .MonoOutPut:
+				tmpChannels = 1
+				
+			case .PolyPhonic:
+				tmpChannels = 4
+				
+			default:
+				tmpChannels = 2
+			}
 			
-		default:
-			tmpChannels = 2
-		}
-		
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
-		
-		var res = AudioFileCreate(URL: theURL, fileType: .AIFF, format: &asbd, flags: .eraseFile, audioFile: &audioFile)
-		if (res != noErr) {
-			if (audioFile != nil) {
-				AudioFileClose(audioFile!)
-			}
-			return .writingErr
-		}
-		defer {
-			if let audioFile = audioFile {
-				AudioFileClose(audioFile)
-			}
-		}
-		
-		var location = 0
-		
-		func handler(_ data: NSData) -> MADErr {
-			let toWriteSize = data.length
-			if let mutData = NSMutableData(length: data.length) {
-				let tmpData = data.bytes.assumingMemoryBound(to: Int16.self)
-				let toWriteBytes = mutData.mutableBytes.assumingMemoryBound(to: Int16.self)
-				
-				for i in 0..<(toWriteSize / 2) {
-					toWriteBytes[i] = tmpData[i].bigEndian
+			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+			var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+			
+			let audioFile = try ExtAudioFile(createURL: theURL, fileType: .AIFF, streamDescription: &asbd, flags: .eraseFile)
+			
+			audioFile.clientDataFormat = realFormat
+			
+			func handler(data data1: Data) throws {
+				try data1.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
+					let toWriteSize = data1.count
+					
+					var audBufList = AudioBufferList()
+					audBufList.mNumberBuffers = 1
+					audBufList.mBuffers.mNumberChannels = tmpChannels
+					audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
+					audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
+					
+					try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 				}
-				var tmpToWrite = UInt32(toWriteSize)
-				let res = AudioFileWriteBytes(audioFile!, true, Int64(location), &tmpToWrite, toWriteBytes)
-				location += toWriteSize
-				
-				if res != noErr {
-					return .writingErr
-				}
-				
-				return .noErr
-			} else {
-				return .needMemory
 			}
-		}
-		
-		rawSoundData(&theSett, handler: handler, callback: { (anErr) -> Void in
-			iErr = anErr
-		})
-		
-		if let iErr = iErr {
-			if iErr.domain == PPMADErrorDomain {
-				return MADErr(rawValue: OSErr(iErr.code)) ?? .unknownErr
-			} else {
-				return .unknownErr
-			}
-		}
-		
-		applyMetadataToFileID(audioFile!)
-		res = AudioFileClose(audioFile!)
-		audioFile = nil
-		if (res != noErr) {
+			
+			try rawSoundData(&theSett, handler: handler)
+			applyMetadata(to: audioFile)
+		} catch let error as MADErr {
+			return error
+		} catch {
 			return MADErr.writingErr
 		}
 		
