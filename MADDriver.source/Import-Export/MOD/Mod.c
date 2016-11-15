@@ -40,7 +40,7 @@
 static short FoundNote(short Period)
 {
 	short	note = 0xFF;
-	short	MODTuning[70] = {
+	static const short	MODTuning[70] = {
 		// -> Tuning 0
 		1712,1616,1524,1440,1356,1280,1208,1140,1076,1016,960,906,
 		856,808,762,720,678,640,604,570,538,508,480,453,

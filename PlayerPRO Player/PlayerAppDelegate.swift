@@ -123,12 +123,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		}()
 	
 	private(set) lazy var trackerUTIs: [String] = {
-		let arrayOfUTIs = self.trackerDict.values
-		var toAddUTI = [String]()
-		for anArray in arrayOfUTIs {
-			toAddUTI += anArray
-		}
-		return toAddUTI
+		let anArray = self.trackerDict.values.flatMap({$0})
+		return Array(anArray)
 		}()
 	
 	
@@ -148,16 +144,16 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
-			} catch let err as NSError {
+			} catch let err {
 				NSAlert(error: err).runModal()
 			}
 		} else if selMusFromList != -1 {
 			selectMusic(atIndex: selMusFromList)
 		}
-		let lostCount = musicList.lostMusicCount;
+		let lostCount = musicList.lostMusicCount
 		if lostCount != 0 {
 			let uresolvedStr = String(format: kUnresolvableFileDescription, lostCount)
-			_ = PPRunAlertPanel(title: kUnresolvableFile, message: uresolvedStr)
+			PPRunAlertPanel(title: kUnresolvableFile, message: uresolvedStr)
 		}
 	}
 	
@@ -168,7 +164,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	private func musicListContentsDidMove() {
-		if (currentlyPlayingIndex.index != -1) {
+		if currentlyPlayingIndex.index != -1 {
 			for i in 0..<musicList.countOfMusicList {
 				if (currentlyPlayingIndex.playbackURL == musicList[i].musicURL) {
 					currentlyPlayingIndex.index = i;
@@ -176,7 +172,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				}
 			}
 		}
-		if (previouslyPlayingIndex.index != -1) {
+		if previouslyPlayingIndex.index != -1 {
 			for i in 0..<musicList.countOfMusicList {
 				if (previouslyPlayingIndex.playbackURL == musicList[i].musicURL) {
 					previouslyPlayingIndex.index = i;
@@ -297,7 +293,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					selectCurrentlyPlayingMusic()
 					do {
 						try loadMusicFromCurrentlyPlayingIndex()
-					} catch let err as NSError {
+					} catch let err {
 						NSAlert(error: err).runModal()
 					}
 				} else {
@@ -341,7 +337,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				selectCurrentlyPlayingMusic()
 				do {
 					try loadMusicFromCurrentlyPlayingIndex()
-				} catch let err as NSError {
+				} catch let err {
 					NSAlert(error: err).runModal()
 				}
 			} else {
@@ -350,7 +346,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					selectCurrentlyPlayingMusic()
 					do {
 						try loadMusicFromCurrentlyPlayingIndex()
-					} catch let err as NSError {
+					} catch let err {
 						NSAlert(error: err).runModal()
 					}
 				} else {
@@ -368,7 +364,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
-			} catch let err as NSError {
+			} catch let err {
 				NSAlert(error: err).runModal()
 			}
 			
@@ -379,7 +375,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		default:
 			madDriver.stop()
 			madDriver.cleanDriver()
-			if (userDefaults.bool(forKey: PPGotoStartupAfterPlaying)) {
+			if userDefaults.bool(forKey: PPGotoStartupAfterPlaying) {
 				madDriver.musicPosition = 0;
 			}
 			self.paused = true
@@ -393,7 +389,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		currentlyPlayingIndex.playbackURL = musicList.url(at: currentlyPlayingIndex.index)
 		let isGood: Bool
 		do {
-			try loadMusic(url: currentlyPlayingIndex.playbackURL!)
+			try loadMusic(at: currentlyPlayingIndex.playbackURL!)
 			isGood = true
 			previouslyPlayingIndex = currentlyPlayingIndex
 		} catch let error {
@@ -410,8 +406,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		self.currentlyPlayingIndex.index = tableView.selectedRow;
 		do {
 			try loadMusicFromCurrentlyPlayingIndex()
-		} catch let err {
-			NSAlert(error: err).runModal()
+		} catch {
+			NSAlert(error: error).runModal()
 		}
 	}
 	
@@ -422,7 +418,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		addMusicToMusicList(theMusList.last!, loadIfPreferencesAllow: true)
 	}
 	
-	func loadMusic(url musicToLoad: URL, autoPlay: Bool = true) throws {
+	func loadMusic(at musicToLoad: URL, autoPlay: Bool = true) throws {
 		if music != nil {
 			madDriver.stop()
 			madDriver.stopDriver()
@@ -443,7 +439,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				fileType = try madLib.identifyFile(at: musicToLoad)
 			}
 			
-			self.music = try PPMusicObject(url: musicToLoad, type: fileType!, library: madLib)
+			self.music = try PPMusicObject(url: musicToLoad, stringType: fileType!, library: madLib)
 			
 			music!.attach(to: madDriver)
 			
@@ -498,28 +494,32 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			madDriver.stopDriver()
 			//[madDriver stopDriver];
 		}
-		var theSettinit = MADDriverSettings.new();
+		var theSettinit = MADDriverSettings.new()
 		let defaults = UserDefaults.standard
 		
 		//TODO: Sanity Checking
-		theSettinit.surround = defaults.bool(forKey: PPSurroundToggle)
+		theSettinit.surround = defaults[PPSurroundToggle] ?? false
 		theSettinit.outPutRate = UInt32(defaults.integer(forKey: PPSoundOutRate))
 		theSettinit.outPutBits = Int16(defaults.integer(forKey: PPSoundOutBits))
-		if defaults.bool(forKey: PPOversamplingToggle) {
+		if defaults[PPOversamplingToggle] ?? false {
 			theSettinit.oversampling = Int32(defaults.integer(forKey: PPOversamplingAmount))
 		} else {
 			theSettinit.oversampling = 1
 		}
-		theSettinit.Reverb = defaults.bool(forKey: PPReverbToggle)
+		theSettinit.Reverb = defaults[PPReverbToggle] ?? false
 		theSettinit.ReverbSize = Int32(defaults.integer(forKey: PPReverbAmount))
 		theSettinit.ReverbStrength = Int32(defaults.integer(forKey: PPReverbStrength))
-		if defaults.bool(forKey: PPStereoDelayToggle) {
+		if defaults[PPStereoDelayToggle] ?? false {
 			theSettinit.MicroDelaySize = Int32(defaults.integer(forKey: PPStereoDelayAmount))
 		} else {
 			theSettinit.MicroDelaySize = 0
 		}
 		
-		theSettinit.driverMode = MADSoundOutput(rawValue: Int16(defaults.integer(forKey: PPSoundDriver))) ?? .CoreAudioDriver
+		if let i16 = Int16(exactly: defaults.integer(forKey: PPSoundDriver)), let driver = MADSoundOutput(rawValue: i16) {
+			theSettinit.driverMode = driver
+		} else {
+			theSettinit.driverMode = .CoreAudioDriver
+		}
 		theSettinit.repeatMusic = false
 		
 		//OSErr returnerr = MADCreateDriver(&init, madLib, &madDriver);
@@ -546,7 +546,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		} else {
 			do {
 				try madDriver.changeDriverSettings(to: &theSettinit)
-			} catch let error as NSError {
+			} catch {
 				NotificationCenter.default.post(name: .PPDriverDidChange, object: self)
 				NSAlert(error: error).runModal()
 				return;
@@ -565,6 +565,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	private func updatePlugInInfoMenu() {
 		let trackerPlugName = NSLocalizedString("TrackerPlugName", comment: "Tracker plug-in name")
+		plugInInfos.removeAll(keepingCapacity: true)
 		
 		for obj in madLib {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: trackerPlugName, plugURL: obj.bundle.bundleURL)
@@ -619,16 +620,16 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			
 			let returnVal = PPRunAlertPanel(title: NSLocalizedString("Clear list", comment: "Clear Music List"), message: clearMusicListStr, defaultButton: NSLocalizedString("No", comment: "No"), alternateButton: NSLocalizedString("Yes", comment: "Yes"));
 			
-			if (returnVal == NSAlertSecondButtonReturn) {
+			if returnVal == NSAlertSecondButtonReturn {
 				changeValueForMusicListKey( {
 					self.musicList.clearMusicList()
 				})
-				if (self.currentlyPlayingIndex.index != -1) {
+				if self.currentlyPlayingIndex.index != -1 {
 					clearMusic()
 				}
 			}
 		} else {
-			NSBeep();
+			NSBeep()
 		}
 	}
 	
@@ -793,7 +794,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	@IBAction func saveMusic(_ sender: AnyObject) {
 		madDriver.beginExport()
 		
-		if (previouslyPlayingIndex.index == -1) {
+		if previouslyPlayingIndex.index == -1 {
 			// saveMusicAs: will end the exporting when it is done.
 			saveMusicAs(sender)
 		} else {
@@ -861,13 +862,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		
 		if lostCount != 0 {
 			let unresolvable = String(format: kUnresolvableFileDescription, lostCount)
-			PPRunAlertPanel(title: kUnresolvableFile, message: unresolvable);
+			PPRunAlertPanel(title: kUnresolvableFile, message: unresolvable)
 		}
 		
 		if selMus != -1 {
 			selectMusic(atIndex: selMus)
 			do {
-				try loadMusic(url: musicList.url(at: selMus), autoPlay: false)
+				try loadMusic(at: musicList.url(at: selMus), autoPlay: false)
 				currentlyPlayingIndex.index = selMus
 				currentlyPlayingIndex.playbackURL = musicList.url(at: selMus)
 				previouslyPlayingIndex = currentlyPlayingIndex
@@ -956,7 +957,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	@IBAction func nextButtonPressed(_ sender: AnyObject!) {
 		if self.currentlyPlayingIndex.index + 1 < musicList.countOfMusicList {
-			currentlyPlayingIndex.index += 1;
+			currentlyPlayingIndex.index += 1
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
@@ -988,7 +989,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			madDriver.stop()
 			madDriver.cleanDriver()
 			madDriver.setMusicStatusWithCurrentTime(0, maximumTime: 100, minimumTime: 0)
-			paused = true;
+			paused = true
 		}
 	}
 	
@@ -1004,8 +1005,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	@IBAction func prevButtonPressed(_ sender: AnyObject!) {
-		if (currentlyPlayingIndex.index > 0) {
-			currentlyPlayingIndex.index -= 1;
+		if currentlyPlayingIndex.index > 0 {
+			currentlyPlayingIndex.index -= 1
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
@@ -1013,7 +1014,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				NSAlert(error: err).runModal()
 			}
 		} else {
-			NSBeep();
+			NSBeep()
 		}
 	}
 	

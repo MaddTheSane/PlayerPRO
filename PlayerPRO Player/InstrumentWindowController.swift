@@ -40,7 +40,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
         super.windowDidLoad()
     
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-		instrumentView?.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection:false)
+		instrumentView?.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
     }
 
 	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -82,9 +82,18 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		} else {
 			let sampleObj = object as! PPSampleObject
 			
+			if sampleObj.data.count == 0 {
+				instrumentSize.stringValue = ""
+			} else {
 			instrumentSize!.integerValue = sampleObj.data.count
+			}
+			if sampleObj.loopSize == 0 {
+				instrumentLoopSize.stringValue = ""
+				instrumentLoopStart.stringValue = ""
+			} else {
 			instrumentLoopStart!.integerValue = Int(sampleObj.loopBegin)
 			instrumentLoopSize!.integerValue = Int(sampleObj.loopSize)
+			}
 			instrumentVolume!.integerValue = Int(sampleObj.volume)
 			instrumentRate!.stringValue = "\(sampleObj.c2spd) Hz"
 			instrumentNote!.stringValue = octaveName(from: UInt8(bitPattern: sampleObj.relativeNote)) ?? "None"

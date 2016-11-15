@@ -173,8 +173,8 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}
 
 	@objc(pointsToFileAtURL:)
-	func pointsToFile(url URL: URL?) -> Bool {
-		if let unwrapped = URL {
+	func pointsToFile(at url: URL?) -> Bool {
+		if let unwrapped = url {
 			return URLsPointingToTheSameFile(musicURL, unwrapped)
 		} else {
 			return false

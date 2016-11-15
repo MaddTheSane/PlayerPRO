@@ -90,7 +90,7 @@ private let kPlayerList = "Player List"
 	/// This cannot be represented in Objective C.
 	func indexOfObjectSimilar(to theURL: URL) -> Int? {
 		for (i, obj) in musicList.enumerated() {
-			if obj.pointsToFile(url: theURL) {
+			if obj.pointsToFile(at: theURL) {
 				return i
 			}
 		}
@@ -104,7 +104,7 @@ private let kPlayerList = "Player List"
 		var anIDXSet = IndexSet()
 		
 		for (i, obj) in musicList.enumerated() {
-			if obj.pointsToFile(url: theURL) {
+			if obj.pointsToFile(at: theURL) {
 				anIDXSet.insert(i)
 			}
 		}
@@ -169,7 +169,7 @@ private let kPlayerList = "Player List"
 		
 		if !force {
 			let tmpArray = musicList.filter({ (obj2) -> Bool in
-				return obj2.pointsToFile(url: obj.musicURL)
+				return obj2.pointsToFile(at: obj.musicURL)
 			})
 			if tmpArray.count > 0 {
 				return .similarURL

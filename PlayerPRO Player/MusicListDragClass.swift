@@ -27,9 +27,9 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	
 	class func readingOptions(forType type: String, pasteboard: NSPasteboard) -> NSPasteboardReadingOptions {
 		if type == PPMLDCUTI {
-			return .asKeyedArchive;
+			return .asKeyedArchive
 		} else {
-			return [];
+			return []
 		}
 	}
 	
@@ -62,7 +62,7 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	static let supportsSecureCoding: Bool = true
 	
 	func encode(with aCoder: NSCoder) {
-		aCoder.encode(theIndexSet as NSIndexSet, forKey: PPMLDCUTI)
+		aCoder.encode(theIndexSet, forKey: PPMLDCUTI)
 	}
 	
 	convenience required init?(coder aDecoder: NSCoder) {
