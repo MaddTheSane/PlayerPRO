@@ -52,8 +52,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSData*)directSave;
 @property (readonly) NSInteger audioDataLength;
 
-- (MADErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime;
-- (MADErr)setMusicStatusWithCurrentTime:(long)curTime maximumTime:(long)maxV minimumTime:(long)minV;
+- (MADErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime NS_SWIFT_NAME(getMusicStatusTime(current:total:));
+- (MADErr)setMusicStatusToCurrentTime:(long)curTime maximumTime:(long)maxV minimumTime:(long)minV NS_SWIFT_NAME(setMusicStatusTime(current:maximum:minimum:));
 
 //This is the main one that gets called
 - (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen;

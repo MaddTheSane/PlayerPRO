@@ -449,11 +449,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				paused = false
 			}
 			
-			let time = madDriver.musicStatusTime!
-			songPos.maxValue = Double(time.total)
+			let (_, timeTotal) = madDriver.musicStatusTime!
+			songPos.maxValue = Double(timeTotal)
 			songPos.minValue = 0
 			setTitleForSongLabelBasedOnMusic()
-			songTotalTime.integerValue = time.total
+			songTotalTime.integerValue = timeTotal
 			
 			NotificationCenter.default.post(name: NSNotification.Name.PPMusicDidChange, object: self)
 		} catch {
@@ -489,7 +489,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		var fullTime = 0, curTime = 0;
 		if madDriver != nil {
 			madWasReading = !madDriver.isPaused
-			madDriver.getMusicStatus(withCurrentTime: &curTime, totalTime: &fullTime)
+			madDriver.getMusicStatusTime(current: &curTime, total: &fullTime)
 			
 			madDriver.stopDriver()
 			//[madDriver stopDriver];
@@ -557,7 +557,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		if self.music != nil {
 			//MADAttachDriverToMusic(madDriver, music, NULL);
 			if madWasReading {
-				madDriver.setMusicStatusWithCurrentTime(curTime, maximumTime: fullTime, minimumTime: 0)
+				madDriver.setMusicStatusTime(current: curTime, maximum: fullTime, minimum: 0)
 				madDriver.play()
 			}
 		}
@@ -715,7 +715,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			for aUTI in trackerUTIs {
 				if sharedWorkspace.type(theUTI, conformsToType: aUTI) {
 					addMusicToMusicList(theURL)
-					return true;
+					return true
 				}
 			}
 			
@@ -725,6 +725,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				let aType = try madLib.identifyFile(at: theURL)
 				try madLib.testFile(at: theURL, as: aType)
 				addMusicToMusicList(theURL)
+				return true
 			} catch _ {
 				
 			}
@@ -735,7 +736,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	@IBAction func openFile(_ sender: AnyObject?) {
 		let panel = NSOpenPanel()
 		let playlistDict = ["PlayerPRO Music List" : [PPMusicListUTI],
-			"PlayerPRO Old Music List" : [PPOldMusicListUTI]];
+			"PlayerPRO Old Music List" : [PPOldMusicListUTI]]
 		
 		if let av = OpenPanelViewController(openPanel: panel, trackerDictionary: trackerDict, playlistDictionary: playlistDict) {
 			av.setupDefaults()
@@ -988,7 +989,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		if self.music != nil {
 			madDriver.stop()
 			madDriver.cleanDriver()
-			madDriver.setMusicStatusWithCurrentTime(0, maximumTime: 100, minimumTime: 0)
+			madDriver.setMusicStatusTime(current: 0, maximum: 100, minimum: 0)
 			paused = true
 		}
 	}
@@ -1028,7 +1029,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	@IBAction func sliderChanged(_ sender: AnyObject!) {
 		if (self.music != nil) {
-			madDriver.setMusicStatusWithCurrentTime(Int(songPos.doubleValue), maximumTime: Int(songPos.maxValue), minimumTime: 0)
+			madDriver.setMusicStatusTime(current: Int(songPos.doubleValue), maximum: Int(songPos.maxValue), minimum: 0)
 		}
 	}
 	

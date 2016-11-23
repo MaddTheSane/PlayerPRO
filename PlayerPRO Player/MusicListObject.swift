@@ -150,11 +150,11 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}
 
 	override var description: String {
-		return "\(musicURL.path): \(fileName)"
+		return "\(musicURL.path): '\(fileName)'"
 	}
 	
 	override var debugDescription: String {
-		return "\(musicURL.description) \(musicURL.path): \(fileName) size: \(fileSize), added: \(addedDate)"
+		return "\(musicURL.description) \(musicURL.path): '\(fileName)' size: \(fileSize), added: \(addedDate)"
 	}
 
 	override func isEqual(_ object: Any?) -> Bool {

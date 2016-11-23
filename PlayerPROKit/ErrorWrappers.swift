@@ -42,7 +42,7 @@ extension MADErr: Error {
 	/// - parameter convertToCocoa: Converts `self` into a comparable error in Cocoa's error types. Default is `true`.
 	/// - returns: An `NSError` value, or `nil` if `self` is `.NoErr`
 	public func toNSError(customUserDictionary cud: [AnyHashable: Any]? = nil, convertToCocoa: Bool = true) -> NSError? {
-		if self == .noErr {
+		guard self != .noErr else {
 			return nil
 		}
 		
@@ -71,11 +71,7 @@ extension MADErr: Error {
 			return populate(error: cocoaErr as NSError)
 		}
 		
-		do {
-			throw self
-		} catch let error as NSError {
-			return populate(error: error)
-		}
+		return populate(error: self as NSError)
 	}
 	
 	/// Creates a `MADErr` from the provided `NSError`.

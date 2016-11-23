@@ -6,13 +6,13 @@
 //
 //
 
+#include <PlayerPROCore/RDriverInt.h>
 #import <PlayerPROKit/PlayerPROKit-Swift.h>
 #import "PPDriver.h"
 #import "PPLibrary_PPKPrivate.h"
 #import "PPDriver_Private.h"
 #import "PPMusicObject.h"
 #import "PPMusicObject_PPKPrivate.h"
-#include <PlayerPROCore/RDriverInt.h>
 #import "PPErrors.h"
 
 @implementation PPDriver
@@ -187,7 +187,7 @@
 		MADEndExport(theRec);
 }
 
-- (MADErr)setMusicStatusWithCurrentTime:(long)curTime maximumTime:(long)maxV minimumTime:(long)minV
+- (MADErr)setMusicStatusToCurrentTime:(long)curTime maximumTime:(long)maxV minimumTime:(long)minV
 {
 	return MADSetMusicStatus(theRec, minV, maxV, curTime);
 }

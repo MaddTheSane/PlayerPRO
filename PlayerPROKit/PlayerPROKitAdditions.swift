@@ -478,12 +478,12 @@ extension PPDriver {
 		return playSoundData(data: theSnd, channel: theChan, amplitude: amp, bitRate: rate, stereo: stereo, note: theNote, loopInRange: NSRange(loopRange))
 	}
 	
-	///Returns nil on error.
 	///The time values are in 1/60th of a second.
+	///Returns `nil` on error.
 	public var musicStatusTime: (current: Int, total: Int)? {
 		var cT = 0
 		var tT = 0
-		let anErr = getMusicStatus(withCurrentTime: &cT, totalTime: &tT)
+		let anErr = getMusicStatusTime(current: &cT, total: &tT)
 		if anErr == .noErr {
 			return (cT, tT)
 		} else {
