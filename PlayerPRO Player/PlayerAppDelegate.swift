@@ -103,8 +103,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	let preferences = Preferences.newPreferenceController()
 	var plugInInfos = [PlugInInfo]()
 	
-	private var currentlyPlayingIndex	= CurrentlyPlayingIndex()
-	private var previouslyPlayingIndex	= CurrentlyPlayingIndex()
+	private var selectedIndex	= CurrentlyPlayingIndex()
+	private var playingIndex	= CurrentlyPlayingIndex()
 	
 	private dynamic var musicName = ""
 	private dynamic var musicInfo = ""
@@ -135,12 +135,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	func musicListDidChange() {
-		if currentlyPlayingIndex.index != -1 {
+		if selectedIndex.index != -1 {
 			madDriver.stop()
 			madDriver.cleanDriver()
 		}
 		if UserDefaults.standard.bool(forKey: PPLoadMusicAtListLoad) && musicList.countOfMusicList > 0 {
-			currentlyPlayingIndex.index = selMusFromList != -1 ? selMusFromList : 0;
+			selectedIndex.index = selMusFromList != -1 ? selMusFromList : 0;
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
@@ -164,18 +164,18 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	private func musicListContentsDidMove() {
-		if currentlyPlayingIndex.index != -1 {
+		if selectedIndex.index != -1 {
 			for i in 0..<musicList.countOfMusicList {
-				if (currentlyPlayingIndex.playbackURL == musicList[i].musicURL) {
-					currentlyPlayingIndex.index = i;
+				if (selectedIndex.playbackURL == musicList[i].musicURL) {
+					selectedIndex.index = i;
 					break;
 				}
 			}
 		}
-		if previouslyPlayingIndex.index != -1 {
+		if playingIndex.index != -1 {
 			for i in 0..<musicList.countOfMusicList {
-				if (previouslyPlayingIndex.playbackURL == musicList[i].musicURL) {
-					previouslyPlayingIndex.index = i;
+				if (playingIndex.playbackURL == musicList[i].musicURL) {
+					playingIndex.index = i;
 					break;
 				}
 			}
@@ -218,7 +218,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			PPMNoLoadMixerFromFiles: false,
 			PPMOscilloscopeDrawLines: true]
 		
-		UserDefaults.standard.register(defaults: ourDefaults);
+		UserDefaults.standard.register(defaults: ourDefaults)
 		super.init()
 	}
 	
@@ -235,9 +235,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	private func selectCurrentlyPlayingMusic() {
-		if (self.currentlyPlayingIndex.index >= 0) {
+		if (self.selectedIndex.index >= 0) {
 			//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
-			selectMusic(atIndex: currentlyPlayingIndex.index)
+			selectMusic(atIndex: selectedIndex.index)
 		}
 	}
 	
@@ -271,7 +271,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			case NSAlertFirstButtonReturn:
 				_ = musicList.addMusicURL(theURL, force: true)
 				if load && UserDefaults.standard.bool(forKey: PPLoadMusicAtMusicLoad) {
-					self.currentlyPlayingIndex.index = musicList.countOfMusicList - 1;
+					self.selectedIndex.index = musicList.countOfMusicList - 1;
 					//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
 					selectCurrentlyPlayingMusic()
 					do {
@@ -289,7 +289,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				
 			case NSAlertThirdButtonReturn:
 				if load && UserDefaults.standard.bool(forKey: PPLoadMusicAtMusicLoad) {
-					self.currentlyPlayingIndex.index = similarMusicIndex;
+					self.selectedIndex.index = similarMusicIndex;
 					selectCurrentlyPlayingMusic()
 					do {
 						try loadMusicFromCurrentlyPlayingIndex()
@@ -308,7 +308,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			
 		case .success:
 			if load && UserDefaults.standard.bool(forKey: PPLoadMusicAtMusicLoad) {
-				self.currentlyPlayingIndex.index = musicList.countOfMusicList - 1;
+				self.selectedIndex.index = musicList.countOfMusicList - 1;
 				//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
 				selectCurrentlyPlayingMusic()
 				do {
@@ -332,8 +332,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			break;
 			
 		case .LoadNext:
-			self.currentlyPlayingIndex.index += 1
-			if musicList.countOfMusicList > self.currentlyPlayingIndex.index {
+			self.selectedIndex.index += 1
+			if musicList.countOfMusicList > self.selectedIndex.index {
 				selectCurrentlyPlayingMusic()
 				do {
 					try loadMusicFromCurrentlyPlayingIndex()
@@ -342,7 +342,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				}
 			} else {
 				if (userDefaults.bool(forKey: PPLoopMusicWhenDone)) {
-					currentlyPlayingIndex.index = 0;
+					selectedIndex.index = 0;
 					selectCurrentlyPlayingMusic()
 					do {
 						try loadMusicFromCurrentlyPlayingIndex()
@@ -360,7 +360,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			break;
 			
 		case .LoadRandom:
-			self.currentlyPlayingIndex.index = Int(arc4random_uniform(UInt32(musicList.countOfMusicList)))
+			self.selectedIndex.index = Int(arc4random_uniform(UInt32(musicList.countOfMusicList)))
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
@@ -386,12 +386,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	@objc(loadMusicFromCurrentlyPlayingIndexAndReturnError:)
 	func loadMusicFromCurrentlyPlayingIndex() throws {
 		var theErr: Error! = NSError(domain: "Migrator", code: 0, userInfo: nil)
-		currentlyPlayingIndex.playbackURL = musicList.url(at: currentlyPlayingIndex.index)
+		selectedIndex.playbackURL = musicList.url(at: selectedIndex.index)
 		let isGood: Bool
 		do {
-			try loadMusic(at: currentlyPlayingIndex.playbackURL!)
+			try loadMusic(at: selectedIndex.playbackURL!)
 			isGood = true
-			previouslyPlayingIndex = currentlyPlayingIndex
+			playingIndex = selectedIndex
 		} catch let error {
 			theErr = error
 			isGood = false
@@ -403,7 +403,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	@objc private func doubleClickMusicList() {
-		self.currentlyPlayingIndex.index = tableView.selectedRow;
+		self.selectedIndex.index = tableView.selectedRow;
 		do {
 			try loadMusicFromCurrentlyPlayingIndex()
 		} catch {
@@ -470,9 +470,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		}
 		
 		self.paused = true;
-		currentlyPlayingIndex.index = -1
-		currentlyPlayingIndex.playbackURL = nil
-		previouslyPlayingIndex = currentlyPlayingIndex
+		selectedIndex.index = -1
+		selectedIndex.playbackURL = nil
+		playingIndex = selectedIndex
 		self.music = PPMusicObject()
 		setTitleForSongLabelBasedOnMusic()
 		NotificationCenter.default.post(name: NSNotification.Name.PPMusicDidChange, object:self)
@@ -536,7 +536,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 
 				let alert = NSAlert()
 				alert.messageText = "Sound Driver failure"
-				alert.informativeText = "Unable to create the PlayerPRO sound driver due to error type \(error.code). Sound preferences will be reset.\n\nPlayerPRO will now close."
+				alert.informativeText = String(format: NSLocalizedString("Unable to create the PlayerPRO sound driver due to error type %ld. Sound preferences will be reset.\n\nPlayerPRO will now close.", comment: "Fatal sound driver error"), error.code)
 				alert.alertStyle = .critical
 				alert.runModal()
 				
@@ -624,7 +624,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				changeValueForMusicListKey( {
 					self.musicList.clearMusicList()
 				})
-				if self.currentlyPlayingIndex.index != -1 {
+				if self.selectedIndex.index != -1 {
 					clearMusic()
 				}
 			}
@@ -795,11 +795,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	@IBAction func saveMusic(_ sender: AnyObject) {
 		madDriver.beginExport()
 		
-		if previouslyPlayingIndex.index == -1 {
+		if playingIndex.index == -1 {
 			// saveMusicAs: will end the exporting when it is done.
 			saveMusicAs(sender)
 		} else {
-			let fileURL = previouslyPlayingIndex.playbackURL!
+			let fileURL = playingIndex.playbackURL!
 			let filename = fileURL.path
 			let sharedWorkspace = NSWorkspace.shared()
 			let utiFile = try! sharedWorkspace.type(ofFile: filename)
@@ -870,9 +870,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			selectMusic(atIndex: selMus)
 			do {
 				try loadMusic(at: musicList.url(at: selMus), autoPlay: false)
-				currentlyPlayingIndex.index = selMus
-				currentlyPlayingIndex.playbackURL = musicList.url(at: selMus)
-				previouslyPlayingIndex = currentlyPlayingIndex
+				selectedIndex.index = selMus
+				selectedIndex.playbackURL = musicList.url(at: selMus)
+				playingIndex = selectedIndex
 			} catch let error1 {
 				NSAlert(error: error1).runModal()
 			}
@@ -919,7 +919,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		timeChecker.invalidate()
 		
 		madDriver.stopDriver()
-		musicList.selectedMusic = currentlyPlayingIndex.index
+		musicList.selectedMusic = selectedIndex.index
 		if UserDefaults.standard.bool(forKey: PPRememberMusicList) {
 			musicList.saveApplicationMusicList()
 		}
@@ -957,8 +957,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	@IBAction func nextButtonPressed(_ sender: AnyObject!) {
-		if self.currentlyPlayingIndex.index + 1 < musicList.countOfMusicList {
-			currentlyPlayingIndex.index += 1
+		if self.selectedIndex.index + 1 < musicList.countOfMusicList {
+			selectedIndex.index += 1
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
@@ -966,7 +966,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				NSAlert(error: err).runModal()
 			}
 		} else if UserDefaults.standard.bool(forKey: PPLoopMusicWhenDone) {
-			currentlyPlayingIndex.index = 0;
+			selectedIndex.index = 0;
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
@@ -1006,8 +1006,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	@IBAction func prevButtonPressed(_ sender: AnyObject!) {
-		if currentlyPlayingIndex.index > 0 {
-			currentlyPlayingIndex.index -= 1
+		if selectedIndex.index > 0 {
+			selectedIndex.index -= 1
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
@@ -1213,9 +1213,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			savePanel.allowedFileTypes = [AVFileTypeAppleM4A];
 			savePanel.title = "Export as MPEG-4 Audio"
 			savePanel.beginSheetModal(for: self.window, completionHandler: {(result) -> Void in
-				if (result != NSFileHandlingPanelOKButton) {
+				if result != NSFileHandlingPanelOKButton {
 					self.madDriver.endExport()
-					return;
+					return
 				}
 				
 				self.beginExportSettings(with: { (result) -> Void in
@@ -1228,7 +1228,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					DispatchQueue.global().async() {
 						var theErr = MADErr.noErr
 						
-						var oldURL = self.musicList.objectInMusicList(at: self.previouslyPlayingIndex.index).musicURL
+						var oldURL = self.musicList.objectInMusicList(at: self.playingIndex.index).musicURL
 						var expErr: Error? = nil;
 						var errBlock: () -> Void = {
 							if self.isQuitting {
@@ -1236,10 +1236,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 							} else {
 								PPRunAlertPanel(title: "Export failed", message: "Export/coversion of the music file failed:\n\(expErr!.localizedDescription)");
 							}
-						};
+						}
 						let oldMusicName = self.musicName
 						let oldMusicInfo = self.musicInfo
 						let metadataInfo: [AVMetadataItem] = {
+							var toRet = [AVMetadataItem]()
+							
 							let titleName = AVMutableMetadataItem()
 							titleName.keySpace = AVMetadataKeySpaceCommon
 							titleName.key = AVMetadataCommonKeyTitle as NSString
@@ -1251,7 +1253,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 							dataInfo.value = "PlayerPRO Player" as NSString
 							dataInfo.locale = Locale(identifier: "en")
 							
-							let musicInfoQTUser = AVMutableMetadataItem();
+							let musicInfoQTUser = AVMutableMetadataItem()
 							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
 							musicInfoQTUser.key = AVMetadataQuickTimeUserDataKeyInformation as NSString
 							musicInfoQTUser.value = oldMusicInfo as NSString
@@ -1268,13 +1270,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 							musicInfoiTunes.key = AVMetadataiTunesMetadataKeyUserComment as NSString
 							musicInfoiTunes.value = oldMusicInfo as NSString
 							
-							let musicInfoQTMeta = AVMutableMetadataItem();
+							let musicInfoQTMeta = AVMutableMetadataItem()
 							musicInfoQTMeta.keySpace = AVMetadataKeySpaceQuickTimeMetadata
 							musicInfoQTMeta.key = AVMetadataQuickTimeMetadataKeyInformation as NSString
 							musicInfoQTMeta.value = oldMusicInfo as NSString
 							musicInfoQTMeta.locale = Locale.current
 							
-							return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser];
+							return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser]
 						}()
 						
 						let tmpName = oldMusicName != "" ? oldMusicName : "untitled"
@@ -1309,7 +1311,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						session.metadata = metadataInfo
 						let sessionWaitSemaphore = DispatchSemaphore(value: 0)
 						session.exportAsynchronously(completionHandler: { () -> Void in
-							_ = sessionWaitSemaphore.signal()
+							_=sessionWaitSemaphore.signal()
 						})
 						_=sessionWaitSemaphore.wait(timeout: DispatchTime.distantFuture)
 						
@@ -1455,7 +1457,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	@IBAction func playSelectedMusic(_ sender: AnyObject?) {
-		self.currentlyPlayingIndex.index = tableView.selectedRow;
+		self.selectedIndex.index = tableView.selectedRow;
 		do {
 			try loadMusicFromCurrentlyPlayingIndex()
 		} catch let err {

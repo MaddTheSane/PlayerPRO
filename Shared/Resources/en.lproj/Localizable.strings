@@ -92,3 +92,6 @@
 
 /* Yes */
 "Yes" = "Yes";
+
+/* Fatal sound driver error */
+"Unable to create the PlayerPRO sound driver due to error type %ld. Sound preferences will be reset.\n\nPlayerPRO will now close." = "Unable to create the PlayerPRO sound driver due to error type %ld. Sound preferences will be reset.\n\nPlayerPRO will now close.";

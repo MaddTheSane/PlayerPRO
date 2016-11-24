@@ -11,7 +11,9 @@ import PlayerPROCore
 import SwiftAdditions
 
 private let kPlayerPROMADKUTI = "com.quadmation.playerpro.madk"
-private let MadIDString = OSTypeToString(MadID)!
+private var MadIDString: String {
+	return OSTypeToString(MadID)!
+}
 
 private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	let aArray: [Int8] = try! arrayFromObject(reflecting: infoRec.internalFileName, appendLastObject: 0)
@@ -86,7 +88,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 		}
 		
 		public var description: String {
-			return "patterns: \(totalPatterns), partition length: \(partitionLength), size: \(fileSize), tracks: \(totalTracks), instruments \(totalInstruments), title: \(internalFileName), format description: \(formatDescription), signature: \(signature)"
+			return "patterns: \(totalPatterns), partition length: \(partitionLength), size: \(fileSize), tracks: \(totalTracks), instruments \(totalInstruments), title: '\(internalFileName)', format description: \(formatDescription), signature: '\(signature)'"
 		}
 	}
 
