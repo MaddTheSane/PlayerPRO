@@ -89,9 +89,10 @@ MADErr PPMADInfoFile(char *AlienFile, MADInfoRec *InfoRec)
 	MADSpec	*theMAD;
 	long	fileSize;
 	UNFILE	fileID;
+	MADErr	MADCheck;
 	
-	if (CheckMADFile(AlienFile) != MADNoErr) {
-		return MADFileNotSupportedByThisPlug;
+	if ((MADCheck = CheckMADFile(AlienFile)) != MADNoErr) {
+		return MADCheck;
 	}
 	
 	theMAD = (MADSpec*)malloc(sizeof(MADSpec) + 200);

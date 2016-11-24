@@ -1116,6 +1116,7 @@ MADErr MADDisposeDriver(MADDriverRec* MDriver)
 	MADDisposeDriverBuffer(MDriver);
 	MADDisposeVolumeTable(MDriver);
 	MADDisposeReverb(MDriver);
+	MADCloseEqualizer(MDriver);
 	
 	free(MDriver);
 	
