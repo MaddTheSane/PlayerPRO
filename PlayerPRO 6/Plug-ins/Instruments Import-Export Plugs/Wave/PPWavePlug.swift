@@ -57,7 +57,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			var realFormat = AudioStreamBasicDescription()
 			
 			var asbdSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
-			iErr = ExtAudioFileGetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
+			iErr = ExtAudioFileGetProperty(fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
 			if iErr != noErr {
 				return .unknownErr
 			}
@@ -85,7 +85,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 				realFormat.mChannelsPerFrame = 2
 			}
 			
-			iErr = ExtAudioFileSetProperty(inExtAudioFile: fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: MemoryLayout<AudioStreamBasicDescription>.size, data: &realFormat)
+			iErr = ExtAudioFileSetProperty(fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: MemoryLayout<AudioStreamBasicDescription>.size, data: &realFormat)
 			if iErr != noErr {
 				return .unknownErr
 			}

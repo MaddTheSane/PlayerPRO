@@ -257,7 +257,7 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	// Create a temporary file for storage
 	let url = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent("\(arc4random())-\(Date.timeIntervalSinceReferenceDate).aif"))
 	var audioFile: ExtAudioFileRef? = nil
-	let createStatus = ExtAudioFileCreate(URL: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
+	let createStatus = ExtAudioFileCreate(url: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
 	if createStatus != noErr {
 		error = .writingErr
 		errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")
