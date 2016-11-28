@@ -510,13 +510,21 @@ void RegisterCFDefaults()
 		NSAutoreleasePool *windowPool = [NSAutoreleasePool new];
 		NSMutableArray *winPosArr = [NSMutableArray arrayWithCapacity:MAXWINDOWS]; 
 		NSMutableArray *winIDArr = [NSMutableArray arrayWithCapacity:MAXWINDOWS];
-		
+		NSMutableArray *winLargArr = [NSMutableArray arrayWithCapacity:MAXWINDOWS];
+		NSMutableArray *winEtatArr;
+		NSMutableArray *winHiArr;
+
 		NSString *zeroStringPoint = NSStringFromPoint(NSZeroPoint);
 		NSNumber *neg1WinID = [NSNumber numberWithLong:-1];
+		NSNumber *zeroWin = [NSNumber numberWithShort:0];
 		for (int i = 0; i < MAXWINDOWS; i++) {
 			[winPosArr addObject:zeroStringPoint];
 			[winIDArr addObject:neg1WinID];
+			[winLargArr addObject:zeroWin];
 		}
+		winEtatArr = [winLargArr mutableCopy];
+		winHiArr = [winLargArr mutableCopy];
+		
 		[winPosArr replaceObjectAtIndex:1 withObject:NSStringFromPoint(NSMakePoint(59, 222))];
 		[winPosArr replaceObjectAtIndex:2 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
 		[winPosArr replaceObjectAtIndex:5 withObject:NSStringFromPoint(NSMakePoint(58, 429))];
@@ -542,15 +550,72 @@ void RegisterCFDefaults()
 		[winIDArr replaceObjectAtIndex:5 withObject:[NSNumber numberWithLong:10]];
 		[winIDArr replaceObjectAtIndex:6 withObject:[NSNumber numberWithLong:1]];
 		
+		[winEtatArr replaceObjectAtIndex:1 withObject:[NSNumber numberWithShort:1]];
+		[winEtatArr replaceObjectAtIndex:6 withObject:[NSNumber numberWithShort:1]];
+		[winEtatArr replaceObjectAtIndex:7 withObject:[NSNumber numberWithShort:1]];
+		[winEtatArr replaceObjectAtIndex:8 withObject:[NSNumber numberWithShort:1]];
+		[winEtatArr replaceObjectAtIndex:10 withObject:[NSNumber numberWithShort:1]];
+		[winEtatArr replaceObjectAtIndex:12 withObject:[NSNumber numberWithShort:1]];
+		[winEtatArr replaceObjectAtIndex:25 withObject:[NSNumber numberWithShort:1]];
+		
+		[winHiArr replaceObjectAtIndex:1 withObject:[NSNumber numberWithShort:343]];
+		[winHiArr replaceObjectAtIndex:2 withObject:[NSNumber numberWithShort:418]];
+		[winHiArr replaceObjectAtIndex:5 withObject:[NSNumber numberWithShort:418]];
+		[winHiArr replaceObjectAtIndex:6 withObject:[NSNumber numberWithShort:198]];
+		[winHiArr replaceObjectAtIndex:7 withObject:[NSNumber numberWithShort:344]];
+		[winHiArr replaceObjectAtIndex:10 withObject:[NSNumber numberWithShort:44]];
+		[winHiArr replaceObjectAtIndex:11 withObject:[NSNumber numberWithShort:140]];
+		[winHiArr replaceObjectAtIndex:12 withObject:[NSNumber numberWithShort:171]];
+		[winHiArr replaceObjectAtIndex:13 withObject:[NSNumber numberWithShort:418]];
+		[winHiArr replaceObjectAtIndex:14 withObject:[NSNumber numberWithShort:69]];
+		[winHiArr replaceObjectAtIndex:15 withObject:[NSNumber numberWithShort:264]];
+		[winHiArr replaceObjectAtIndex:19 withObject:[NSNumber numberWithShort:90]];
+		[winHiArr replaceObjectAtIndex:20 withObject:[NSNumber numberWithShort:311]];
+		[winHiArr replaceObjectAtIndex:21 withObject:[NSNumber numberWithShort:418]];
+		[winHiArr replaceObjectAtIndex:24 withObject:[NSNumber numberWithShort:428]];
+		[winHiArr replaceObjectAtIndex:25 withObject:[NSNumber numberWithShort:16]];
+		[winHiArr replaceObjectAtIndex:26 withObject:[NSNumber numberWithShort:373]];
+		[winHiArr replaceObjectAtIndex:27 withObject:[NSNumber numberWithShort:418]];
+		
+		[winLargArr replaceObjectAtIndex:1 withObject:[NSNumber numberWithShort:200]];
+		[winLargArr replaceObjectAtIndex:2 withObject:[NSNumber numberWithShort:420]];
+		[winLargArr replaceObjectAtIndex:5 withObject:[NSNumber numberWithShort:200]];
+		[winLargArr replaceObjectAtIndex:6 withObject:[NSNumber numberWithShort:274]];
+		[winLargArr replaceObjectAtIndex:7 withObject:[NSNumber numberWithShort:200]];
+		[winLargArr replaceObjectAtIndex:8 withObject:[NSNumber numberWithShort:180]];
+		[winLargArr replaceObjectAtIndex:10 withObject:[NSNumber numberWithShort:632]];
+		[winLargArr replaceObjectAtIndex:11 withObject:[NSNumber numberWithShort:257]];
+		[winLargArr replaceObjectAtIndex:12 withObject:[NSNumber numberWithShort:468]];
+		[winLargArr replaceObjectAtIndex:13 withObject:[NSNumber numberWithShort:632]];
+		[winLargArr replaceObjectAtIndex:14 withObject:[NSNumber numberWithShort:212]];
+		[winLargArr replaceObjectAtIndex:15 withObject:[NSNumber numberWithShort:381]];
+		[winLargArr replaceObjectAtIndex:19 withObject:[NSNumber numberWithShort:304]];
+		[winLargArr replaceObjectAtIndex:20 withObject:[NSNumber numberWithShort:527]];
+		[winLargArr replaceObjectAtIndex:21 withObject:[NSNumber numberWithShort:94]];
+		[winLargArr replaceObjectAtIndex:24 withObject:[NSNumber numberWithShort:471]];
+		[winLargArr replaceObjectAtIndex:25 withObject:[NSNumber numberWithShort:1024]];
+		[winLargArr replaceObjectAtIndex:26 withObject:[NSNumber numberWithShort:540]];
+		[winLargArr replaceObjectAtIndex:27 withObject:[NSNumber numberWithShort:632]];
+		
 		// Register Window defaults
 		[[NSUserDefaults standardUserDefaults]
 		 registerDefaults:
 		 [NSDictionary dictionaryWithObjectsAndKeys:
 		  winPosArr, PPWindowPositions,
 		  winIDArr, PPWindowIdentifiers,
+		  winEtatArr, PPWindowEtatKey,
+		  winHiArr, PPWindowHiKey,
+		  winLargArr, PPWindowLargKey,
 		  nil]];
 		
+		[winEtatArr release];
+		[winHiArr release];
 		[windowPool drain];
+	}
+	
+	{
+		NSAutoreleasePool *winPool = [NSAutoreleasePool new];
+		[winPool drain];
 	}
 #pragma mark -
 	
@@ -660,12 +725,26 @@ void ReadCFPreferences()
 
 	NSArray *winArray = [defaults objectForKey:PPWindowPositions];
 	NSArray *winIDArray = [defaults objectForKey:PPWindowIdentifiers];
+	NSArray *winEtatArray = [defaults objectForKey:PPWindowEtatKey];
+	NSArray *winHiArray = [defaults objectForKey:PPWindowHiKey];
+	NSArray *winLargArray = [defaults objectForKey:PPWindowLargKey];
 	for (int i = 0; i < MAXWINDOWS; i++) {
 		NSPoint ourPoint = NSPointFromString([winArray objectAtIndex:i]);
 		thePrefs.WinPos[i].v = ourPoint.x;
 		thePrefs.WinPos[i].h = ourPoint.y;
 		thePrefs.WinID[i] = [[winIDArray objectAtIndex:i] longValue];
+		thePrefs.WinEtat[i] = [[winEtatArray objectAtIndex:i] shortValue];
+		thePrefs.WinHi[i] = [[winHiArray objectAtIndex:i] shortValue];
+		thePrefs.WinLarg[i] = [[winLargArray objectAtIndex:i] shortValue];
 	}
+	
+	/*
+	 Point			WinPosO[3][MAXWINDOWS];
+	 short			WinEtatO[3][MAXWINDOWS];
+	 short			WinLargO[3][MAXWINDOWS];
+	 short			WinHiO[3][MAXWINDOWS];
+	 long			WinIDO[3][MAXWINDOWS];
+*/	 
 	
 #pragma mark -
 	[pool drain];
@@ -765,6 +844,30 @@ void WriteCFPreferences()
 		[tmpMutable addObject:[NSNumber numberWithLong:thePrefs.WinID[i]]];
 	}
 	[defaults setObject:tmpMutable forKey:PPWindowIdentifiers];
+	
+	[tmpMutable release]; tmpMutable = nil;
+	
+	tmpMutable = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+	for (int i = 0; i < MAXWINDOWS; i++) {
+		[tmpMutable addObject:[NSNumber numberWithShort:thePrefs.WinEtat[i]]];
+	}
+	[defaults setObject:tmpMutable forKey:PPWindowEtatKey];
+	
+	[tmpMutable release]; tmpMutable = nil;
+
+	tmpMutable = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+	for (int i = 0; i < MAXWINDOWS; i++) {
+		[tmpMutable addObject:[NSNumber numberWithShort:thePrefs.WinHi[i]]];
+	}
+	[defaults setObject:tmpMutable forKey:PPWindowHiKey];
+	
+	[tmpMutable release]; tmpMutable = nil;
+
+	tmpMutable = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+	for (int i = 0; i < MAXWINDOWS; i++) {
+		[tmpMutable addObject:[NSNumber numberWithShort:thePrefs.WinLarg[i]]];
+	}
+	[defaults setObject:tmpMutable forKey:PPWindowLargKey];
 	
 	[tmpMutable release]; tmpMutable = nil;
 	

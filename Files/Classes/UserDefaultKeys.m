@@ -103,3 +103,6 @@
 
 #define PPWindowPositions @"WinPos"
 #define PPWindowIdentifiers @"WinID"
+#define PPWindowEtatKey @"winEtat"
+#define PPWindowHiKey @"WinHi"
+#define PPWindowLargKey @"WinLarg"
