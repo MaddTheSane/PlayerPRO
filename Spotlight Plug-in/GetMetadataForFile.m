@@ -79,23 +79,22 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 						  CFStringRef contentTypeUTI, CFURLRef urlForFile)
 {
 	@autoreleasepool {
-		MADDriverRec		*MADDriver = NULL;
-		MADMusic			*MADMusic1 = NULL;
-		MADLibrary			*MADLib = NULL;
-		MADDriverSettings	init = {0};
-		NSMutableDictionary *NSattribs = (__bridge NSMutableDictionary*)attributes;
-		
 		// Before we do anything else, check to make sure it's not the Windows file winoldap.mod
 		// This file seems to crash the metadata importer, even though
 		// the proper PlayerPRO plug-in (MOD) should say that it can't open it.
 		{
-			NSURL		*NSFileURL = (__bridge NSURL*)urlForFile;
-			NSString	*lastPathName = [NSFileURL lastPathComponent];
+			NSString *lastPathName = CFBridgingRelease(CFURLCopyLastPathComponent(urlForFile));
 			NSComparisonResult result = [lastPathName compare:@"winoldap.mod" options:NSCaseInsensitiveSearch | NSWidthInsensitiveSearch];
 			if (result == NSOrderedSame) {
 				return FALSE;
 			}
 		}
+		
+		MADDriverRec		*MADDriver = NULL;
+		MADMusic			*MADMusic1 = NULL;
+		MADLibrary			*MADLib = NULL;
+		MADDriverSettings	init = {0};
+		NSMutableDictionary *NSattribs = (__bridge NSMutableDictionary*)attributes;
 		
 		MADGetBestDriver(&init);
 		init.driverMode = NoHardwareDriver;
