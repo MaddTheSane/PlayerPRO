@@ -106,3 +106,9 @@
 #define PPWindowEtatKey @"winEtat"
 #define PPWindowHiKey @"WinHi"
 #define PPWindowLargKey @"WinLarg"
+
+#define PPWindowPosO @"WinPosO"
+#define PPWindowEtatO @"WinEtatO"
+#define PPWindowLargO @"WinLargO"
+#define PPWindowHiO @"WinHiO"
+#define PPWindowIDO @"WinIDO"

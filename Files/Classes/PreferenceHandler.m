@@ -615,6 +615,175 @@ void RegisterCFDefaults()
 	
 	{
 		NSAutoreleasePool *winPool = [NSAutoreleasePool new];
+		NSString *zeroPos = NSStringFromPoint(NSMakePoint(0, 0));
+		NSMutableArray *blankArr = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+		for (int i = 0; i < MAXWINDOWS; i++) {
+			[blankArr addObject:zeroPos];
+		}
+		NSArray *winPosOArr = [NSArray arrayWithObjects:blankArr, [[blankArr mutableCopy] autorelease], [[blankArr mutableCopy] autorelease], nil];
+		[blankArr release];
+		{
+			//Array 1
+			[blankArr replaceObjectAtIndex:1 withObject:NSStringFromPoint(NSMakePoint(59, 222))];
+			[blankArr replaceObjectAtIndex:2 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:5 withObject:NSStringFromPoint(NSMakePoint(58, 429))];
+			[blankArr replaceObjectAtIndex:6 withObject:NSStringFromPoint(NSMakePoint(60, 357))];
+			[blankArr replaceObjectAtIndex:7 withObject:NSStringFromPoint(NSMakePoint(57, 8))];
+			[blankArr replaceObjectAtIndex:8 withObject:NSStringFromPoint(NSMakePoint(356, 0))];
+			[blankArr replaceObjectAtIndex:10 withObject:NSStringFromPoint(NSMakePoint(432, 4))];
+			[blankArr replaceObjectAtIndex:12 withObject:NSStringFromPoint(NSMakePoint(193, 156))];
+			[blankArr replaceObjectAtIndex:13 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:14 withObject:NSStringFromPoint(NSMakePoint(93, 34))];
+			[blankArr replaceObjectAtIndex:19 withObject:NSStringFromPoint(NSMakePoint(74, 150))];
+			[blankArr replaceObjectAtIndex:20 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:21 withObject:NSStringFromPoint(NSMakePoint(58, 94))];
+			[blankArr replaceObjectAtIndex:25 withObject:NSStringFromPoint(NSMakePoint(20, 0))];
+			[blankArr replaceObjectAtIndex:26 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:27 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+		}
+		{
+			//Array 2
+			blankArr = [winPosOArr objectAtIndex:1];
+			
+			[blankArr replaceObjectAtIndex:1 withObject:NSStringFromPoint(NSMakePoint(59, 222))];
+			[blankArr replaceObjectAtIndex:2 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:5 withObject:NSStringFromPoint(NSMakePoint(58, 429))];
+			[blankArr replaceObjectAtIndex:6 withObject:NSStringFromPoint(NSMakePoint(60, 357))];
+			[blankArr replaceObjectAtIndex:7 withObject:NSStringFromPoint(NSMakePoint(57, 8))];
+			[blankArr replaceObjectAtIndex:8 withObject:NSStringFromPoint(NSMakePoint(356, 0))];
+			[blankArr replaceObjectAtIndex:10 withObject:NSStringFromPoint(NSMakePoint(432, 4))];
+			[blankArr replaceObjectAtIndex:12 withObject:NSStringFromPoint(NSMakePoint(193, 156))];
+			[blankArr replaceObjectAtIndex:13 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:14 withObject:NSStringFromPoint(NSMakePoint(93, 34))];
+			[blankArr replaceObjectAtIndex:19 withObject:NSStringFromPoint(NSMakePoint(74, 150))];
+			[blankArr replaceObjectAtIndex:20 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:21 withObject:NSStringFromPoint(NSMakePoint(58, 94))];
+			[blankArr replaceObjectAtIndex:25 withObject:NSStringFromPoint(NSMakePoint(20, 0))];
+			[blankArr replaceObjectAtIndex:26 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:27 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+		}
+		{
+			//Array 3
+			blankArr = [winPosOArr objectAtIndex:2];
+			
+			[blankArr replaceObjectAtIndex:1 withObject:NSStringFromPoint(NSMakePoint(59, 222))];
+			[blankArr replaceObjectAtIndex:2 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:5 withObject:NSStringFromPoint(NSMakePoint(58, 429))];
+			[blankArr replaceObjectAtIndex:6 withObject:NSStringFromPoint(NSMakePoint(60, 357))];
+			[blankArr replaceObjectAtIndex:7 withObject:NSStringFromPoint(NSMakePoint(57, 8))];
+			[blankArr replaceObjectAtIndex:8 withObject:NSStringFromPoint(NSMakePoint(356, 0))];
+			[blankArr replaceObjectAtIndex:10 withObject:NSStringFromPoint(NSMakePoint(432, 4))];
+			[blankArr replaceObjectAtIndex:12 withObject:NSStringFromPoint(NSMakePoint(193, 156))];
+			[blankArr replaceObjectAtIndex:13 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:14 withObject:NSStringFromPoint(NSMakePoint(93, 34))];
+			[blankArr replaceObjectAtIndex:19 withObject:NSStringFromPoint(NSMakePoint(74, 150))];
+			[blankArr replaceObjectAtIndex:20 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:21 withObject:NSStringFromPoint(NSMakePoint(58, 94))];
+			[blankArr replaceObjectAtIndex:25 withObject:NSStringFromPoint(NSMakePoint(20, 0))];
+			[blankArr replaceObjectAtIndex:26 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+			[blankArr replaceObjectAtIndex:27 withObject:NSStringFromPoint(NSMakePoint(58, 4))];
+		}
+		blankArr = nil;
+		blankArr = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+		for (int i = 0; i < MAXWINDOWS; i++) {
+			[blankArr addObject:[NSNumber numberWithInt:0]];
+		}
+		{
+			NSNumber *oneNum = [[NSNumber alloc] initWithInt:1];
+			[blankArr replaceObjectAtIndex:1 withObject:oneNum];
+			[blankArr replaceObjectAtIndex:6 withObject:oneNum];
+			[blankArr replaceObjectAtIndex:7 withObject:oneNum];
+			[blankArr replaceObjectAtIndex:8 withObject:oneNum];
+			[blankArr replaceObjectAtIndex:10 withObject:oneNum];
+			[blankArr replaceObjectAtIndex:12 withObject:oneNum];
+			[blankArr replaceObjectAtIndex:25 withObject:oneNum];
+			[oneNum release];
+		}
+		NSArray *winEtatOArr = [NSArray arrayWithObjects:blankArr, blankArr, blankArr, nil];
+		[blankArr release];
+		blankArr = nil;
+		blankArr = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+		for (int i = 0; i < MAXWINDOWS; i++) {
+			[blankArr addObject:[NSNumber numberWithInt:0]];
+		}
+		{
+			[blankArr replaceObjectAtIndex:1 withObject:[NSNumber numberWithShort:200]];
+			[blankArr replaceObjectAtIndex:2 withObject:[NSNumber numberWithShort:420]];
+			[blankArr replaceObjectAtIndex:5 withObject:[NSNumber numberWithShort:200]];
+			[blankArr replaceObjectAtIndex:6 withObject:[NSNumber numberWithShort:274]];
+			[blankArr replaceObjectAtIndex:7 withObject:[NSNumber numberWithShort:200]];
+			[blankArr replaceObjectAtIndex:8 withObject:[NSNumber numberWithShort:180]];
+			[blankArr replaceObjectAtIndex:10 withObject:[NSNumber numberWithShort:632]];
+			[blankArr replaceObjectAtIndex:11 withObject:[NSNumber numberWithShort:257]];
+			[blankArr replaceObjectAtIndex:12 withObject:[NSNumber numberWithShort:468]];
+			[blankArr replaceObjectAtIndex:13 withObject:[NSNumber numberWithShort:632]];
+			[blankArr replaceObjectAtIndex:14 withObject:[NSNumber numberWithShort:212]];
+			[blankArr replaceObjectAtIndex:15 withObject:[NSNumber numberWithShort:381]];
+			[blankArr replaceObjectAtIndex:19 withObject:[NSNumber numberWithShort:304]];
+			[blankArr replaceObjectAtIndex:20 withObject:[NSNumber numberWithShort:527]];
+			[blankArr replaceObjectAtIndex:21 withObject:[NSNumber numberWithShort:94]];
+			[blankArr replaceObjectAtIndex:24 withObject:[NSNumber numberWithShort:471]];
+			[blankArr replaceObjectAtIndex:25 withObject:[NSNumber numberWithShort:1024]];
+			[blankArr replaceObjectAtIndex:26 withObject:[NSNumber numberWithShort:540]];
+			[blankArr replaceObjectAtIndex:27 withObject:[NSNumber numberWithShort:632]];
+		}
+		NSArray *winLargOArr = [NSArray arrayWithObjects:blankArr, blankArr, blankArr, nil];
+		[blankArr release];
+		blankArr = nil;
+		blankArr = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+		for (int i = 0; i < MAXWINDOWS; i++) {
+			[blankArr addObject:[NSNumber numberWithInt:0]];
+		}
+		{
+			[blankArr replaceObjectAtIndex:1 withObject:[NSNumber numberWithShort:343]];
+			[blankArr replaceObjectAtIndex:2 withObject:[NSNumber numberWithShort:418]];
+			[blankArr replaceObjectAtIndex:5 withObject:[NSNumber numberWithShort:418]];
+			[blankArr replaceObjectAtIndex:6 withObject:[NSNumber numberWithShort:198]];
+			[blankArr replaceObjectAtIndex:7 withObject:[NSNumber numberWithShort:344]];
+			[blankArr replaceObjectAtIndex:10 withObject:[NSNumber numberWithShort:44]];
+			[blankArr replaceObjectAtIndex:11 withObject:[NSNumber numberWithShort:140]];
+			[blankArr replaceObjectAtIndex:12 withObject:[NSNumber numberWithShort:171]];
+			[blankArr replaceObjectAtIndex:13 withObject:[NSNumber numberWithShort:418]];
+			[blankArr replaceObjectAtIndex:14 withObject:[NSNumber numberWithShort:69]];
+			[blankArr replaceObjectAtIndex:15 withObject:[NSNumber numberWithShort:264]];
+			[blankArr replaceObjectAtIndex:19 withObject:[NSNumber numberWithShort:90]];
+			[blankArr replaceObjectAtIndex:20 withObject:[NSNumber numberWithShort:311]];
+			[blankArr replaceObjectAtIndex:21 withObject:[NSNumber numberWithShort:418]];
+			[blankArr replaceObjectAtIndex:24 withObject:[NSNumber numberWithShort:426]];
+			[blankArr replaceObjectAtIndex:25 withObject:[NSNumber numberWithShort:16]];
+			[blankArr replaceObjectAtIndex:26 withObject:[NSNumber numberWithShort:373]];
+			[blankArr replaceObjectAtIndex:27 withObject:[NSNumber numberWithShort:418]];			
+		}
+		NSArray *winHiOArr = [NSArray arrayWithObjects:blankArr, blankArr, blankArr, nil];
+		[blankArr release];
+		blankArr = nil;
+		blankArr = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+		for (int i = 0; i < MAXWINDOWS; i++) {
+			[blankArr addObject:[NSNumber numberWithInt:-1]];
+		}
+		{
+			[blankArr replaceObjectAtIndex:0 withObject:[NSNumber numberWithInt:8]];
+			[blankArr replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:7]];
+			[blankArr replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:25]];
+			[blankArr replaceObjectAtIndex:3 withObject:[NSNumber numberWithInt:12]];
+			[blankArr replaceObjectAtIndex:4 withObject:[NSNumber numberWithInt:6]];
+			[blankArr replaceObjectAtIndex:5 withObject:[NSNumber numberWithInt:10]];
+			[blankArr replaceObjectAtIndex:6 withObject:[NSNumber numberWithInt:1]];
+		}
+		NSArray *winIDOArr = [NSArray arrayWithObjects:blankArr, blankArr, blankArr, nil];
+		[blankArr release];
+		blankArr = nil;
+		
+		[[NSUserDefaults standardUserDefaults]
+		 registerDefaults:
+		 [NSDictionary dictionaryWithObjectsAndKeys:
+		  winPosOArr, PPWindowPosO,
+		  winEtatOArr, PPWindowEtatO,
+		  winLargOArr, PPWindowLargO,
+		  winHiOArr, PPWindowHiO,
+		  winIDOArr, PPWindowIDO,
+		  nil]];
+		 
 		[winPool drain];
 	}
 #pragma mark -
@@ -738,13 +907,33 @@ void ReadCFPreferences()
 		thePrefs.WinLarg[i] = [[winLargArray objectAtIndex:i] shortValue];
 	}
 	
-	/*
-	 Point			WinPosO[3][MAXWINDOWS];
-	 short			WinEtatO[3][MAXWINDOWS];
-	 short			WinLargO[3][MAXWINDOWS];
-	 short			WinHiO[3][MAXWINDOWS];
-	 long			WinIDO[3][MAXWINDOWS];
-*/	 
+	{
+		NSArray *posO = [defaults objectForKey:PPWindowPosO];
+		NSArray *etatO = [defaults objectForKey:PPWindowEtatO];
+		NSArray *largO = [defaults objectForKey:PPWindowLargO];
+		NSArray *hiO = [defaults objectForKey:PPWindowHiO];
+		NSArray *idO = [defaults objectForKey:PPWindowIDO];
+		for (int i = 0; i < 3; i++) {
+			NSArray *posOSub = [posO objectAtIndex:i];
+			NSArray *largOSub = [largO objectAtIndex:i];
+			NSArray *etatOSub = [etatO objectAtIndex:i];
+			NSArray *hiOSub = [hiO objectAtIndex:i];
+			NSArray *idOSub = [idO objectAtIndex:i];
+			for (int j = 0; j < MAXWINDOWS; j++) {
+				NSString *posOStr = [posOSub objectAtIndex:j];
+				NSNumber *etatONum = [etatOSub objectAtIndex:j];
+				NSNumber *largONum = [largOSub objectAtIndex:j];
+				NSNumber *HiONum = [hiOSub objectAtIndex:j];
+				NSNumber *idONum = [idOSub objectAtIndex:j];
+				NSPoint posOPoint = NSPointFromString(posOStr);
+				thePrefs.WinPosO[i][j] = (Point){posOPoint.x, posOPoint.y};
+				thePrefs.WinEtatO[i][j] = [etatONum shortValue];
+				thePrefs.WinLargO[i][j] = [largONum shortValue];
+				thePrefs.WinHiO[i][j] = [HiONum shortValue];
+				thePrefs.WinIDO[i][j] = [idONum longValue];
+			}
+		}
+	}
 	
 #pragma mark -
 	[pool drain];
@@ -870,7 +1059,47 @@ void WriteCFPreferences()
 	[defaults setObject:tmpMutable forKey:PPWindowLargKey];
 	
 	[tmpMutable release]; tmpMutable = nil;
-	
+	{
+		NSMutableArray *posO = [[NSMutableArray alloc] init];
+		NSMutableArray *etatO = [[NSMutableArray alloc] init];
+		NSMutableArray *largO = [[NSMutableArray alloc] init];
+		NSMutableArray *hiO = [[NSMutableArray alloc] init];
+		NSMutableArray *idO = [[NSMutableArray alloc] init];
+		for (int i = 0; i < 3; i++) {
+			NSMutableArray *posOSub = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+			[posO addObject:posOSub];
+			NSMutableArray *largOSub = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+			[largO addObject:largOSub];
+			NSMutableArray *etatOSub = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+			[etatO addObject:etatOSub];
+			NSMutableArray *hiOSub = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+			[hiO addObject:hiOSub];
+			NSMutableArray *idOSub = [[NSMutableArray alloc] initWithCapacity:MAXWINDOWS];
+			[idO addObject:idOSub];
+			for (int j = 0; j < MAXWINDOWS; j++) {
+				[posOSub addObject:NSStringFromPoint(NSMakePoint(thePrefs.WinPosO[i][j].v, thePrefs.WinPosO[i][j].h))];
+				[etatOSub addObject:[NSNumber numberWithShort:thePrefs.WinEtatO[i][j]]];
+				[largOSub addObject:[NSNumber numberWithShort:thePrefs.WinLargO[i][j]]];
+				[hiOSub addObject:[NSNumber numberWithShort:thePrefs.WinHiO[i][j]]];
+				[idOSub addObject:[NSNumber numberWithLong:thePrefs.WinIDO[i][j]]];
+			}
+			[posOSub release];
+			[largOSub release];
+			[etatOSub release];
+			[hiOSub release];
+			[idOSub release];
+		}
+		[defaults setObject:posO forKey:PPWindowPosO];
+		[defaults setObject:etatO forKey:PPWindowEtatO];
+		[defaults setObject:largO forKey:PPWindowLargO];
+		[defaults setObject:hiO forKey:PPWindowHiO];
+		[defaults setObject:idO forKey:PPWindowIDO];
+		[posO release];
+		[etatO release];
+		[largO release];
+		[hiO release];
+		[idO release];
+	}
 #pragma mark -
 	
 	[defaults synchronize];
