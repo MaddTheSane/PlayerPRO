@@ -19,10 +19,10 @@ static inline OSErr CallPlug(short item)
 
 typedef struct MIDISettings
 {
-	bool		MIDIVelocity;
+	char		MIDIVelocity;
 	long		Factor;
-	bool		MIDIChannel;
-	bool		MIDINoteOff;
+	char		MIDIChannel;
+	char		MIDINoteOff;
 } MIDISettings;
 
 enum
@@ -46,9 +46,9 @@ struct OLDMADSpec
 	Byte		MultiChan;					// MultiChannel per tracks?
 	long		EPitch;						// New Pitch
 	long		ESpeed;						// New Speed
-	bool		XMLinear;					// Linear picth table?
-	bool		MODMode;					// Limit pitch to MOD pitch table
-	bool		showCopyright;				// Show infos at startup? true or false
+	Boolean		XMLinear;					// Linear picth table?
+	Boolean		MODMode;					// Limit pitch to MOD pitch table
+	Boolean		showCopyright;				// Show infos at startup? true or false
 	Byte		generalPitch;				// General Pitch
 	Byte		generalSpeed;				// General Speed
 	Byte		generalVol;					// Software general volume

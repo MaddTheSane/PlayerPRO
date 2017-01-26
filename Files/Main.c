@@ -5143,14 +5143,14 @@ static void LoadOldFilePrefs(FSIORefNum fRefNum)
 	} oldPrefs;
 #pragma pack(pop)
 	OSErr theErr;
-	SInt64	inOutBytes;
+	SInt64	inOutBytes = sizeof(oldPrefs);
 	
 	theErr = FSGetForkSize(fRefNum, &inOutBytes);
 	if (inOutBytes == 0) {
 		theErr = FSCloseFork(fRefNum);
 		return;
 	}
-	theErr = FSReadFork(fRefNum, fsAtMark, 0, inOutBytes, &oldPrefs, NULL);
+	theErr = FSReadFork(fRefNum, fsAtMark, 0, sizeof(oldPrefs), &oldPrefs, NULL);
 	theErr = FSCloseFork(fRefNum);
 #ifdef __LITTLE_ENDIAN__
 	{
