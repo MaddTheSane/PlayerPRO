@@ -161,7 +161,7 @@ typedef struct sData {
 	/// Sample name
 	char 			name[32];
 	/// Is the sample stereo?
-	bool			stereo;
+	MADBool			stereo;
 	/** 
 	 *	The pointer to the sound data.
 	 *	@discussion See \c sData32 for more information.
@@ -189,7 +189,7 @@ typedef struct sData32 {
 	MADByte			amp;
 	char			relNote;
 	char 			name[32];
-	bool			stereo;
+	MADBool			stereo;
 	/// an unsigned 32-bit integer to keep reading/writing sample datas safe.
 	uint32_t		data;
 } sData32;
@@ -294,9 +294,9 @@ typedef struct InstrData {
 #define INFOSSIZE 239
 
 typedef struct FXBus {
-	bool	ByPass;
+	MADBool	ByPass;
 	short	copyId;
-	bool	Active;
+	MADBool	Active;
 } FXBus;
 
 /*!
@@ -321,11 +321,11 @@ typedef struct MADSpec {
 	/// New Speed
 	int			ESpeed;
 	/// Linear pitch table?
-	bool		XMLinear;
+	MADBool		XMLinear;
 	/// Limit pitch to MOD pitch table
-	bool		MODMode;
+	MADBool		MODMode;
 	/// Show \c infos at startup? true or false
-	bool		showCopyright;
+	MADBool		showCopyright;
 	/// General pitch
 	MADByte		generalPitch;
 	/// General speed
@@ -356,7 +356,7 @@ typedef struct MADSpec {
 	/// Global Effects IDs
 	int			globalEffect[10];
 	/// Global Effects active?
-	bool		globalFXActive;
+	MADBool		globalFXActive;
 	
 	/// Channel Effect IDs
 	int			chanEffect[MAXTRACK][4];

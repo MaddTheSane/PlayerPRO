@@ -232,4 +232,11 @@ typedef uint32_t		MADFourChar;
 typedef OSType	MADFourChar;
 #endif
 
+/// We're using our own boolean type because some archs (specifically ppc-32)
+/// have the size of the bool being greater than 1.
+typedef MADENUM(unsigned char, MADBool) {
+	MADFalse = 0,
+	MADTrue = 1,
+};
+
 #endif

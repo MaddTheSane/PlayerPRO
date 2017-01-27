@@ -361,8 +361,8 @@ extension EnvRec: Hashable {
 extension FXBus: Hashable {
 	public var hashValue: Int {
 		var aVar = Int(copyId)
-		aVar |= Active ? 1 << 4 : 0
-		aVar |= ByPass ? 1 << 5 : 0
+		aVar |= Active.boolValue ? 1 << 4 : 0
+		aVar |= ByPass.boolValue ? 1 << 5 : 0
 		
 		return aVar
 	}
@@ -488,6 +488,43 @@ extension MADChannel {
 		return (viboffset, vibdepth, vibrate, vibtype)
 	}
 }
+
+extension MADBool: ExpressibleByBooleanLiteral {
+	public init(booleanLiteral value: Bool) {
+		if value {
+			self = .true
+		} else {
+			self = .false
+		}
+	}
+
+	public init(_ value: Bool) {
+		self.init(booleanLiteral: value)
+	}
+
+	public var boolValue: Bool {
+		if rawValue == 0 {
+			return false
+		} else {
+			return true
+		}
+	}
+}
+
+extension MADBool: CustomPlaygroundQuickLookable, CustomReflectable, Equatable {
+	public var customPlaygroundQuickLook: PlaygroundQuickLook {
+		return .bool(self.boolValue)
+	}
+	
+	public var customMirror: Mirror {
+		return Mirror(reflecting: boolValue)
+	}
+}
+
+public func ==(lhs: MADBool, rhs: MADBool) -> Bool {
+	return lhs.boolValue == rhs.boolValue
+}
+
 
 // MARK: MADFourChar
 // TODO: find out how Apple does this with CGFloat...
