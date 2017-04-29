@@ -7,3 +7,6 @@
 */
 
 "Invalid data returned from helper" = "Invalid data returned from helper";
+
+/* Tracker plug-in name */
+"TrackerPlugName" = "Tracker Plug-in";

@@ -753,7 +753,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						let utiFile = try ws.type(ofFile: fileName)
 						_=self.handleFile(theURL, ofType: utiFile) //TODO: more efficient way of doing this!
 					} catch let error as NSError {
-						PPRunAlertPanel(title: "Error opening file", message: "Unable to open \((fileName as NSString).lastPathComponent): \(error.localizedFailureReason)")
+						PPRunAlertPanel(title: "Error opening file", message: "Unable to open \((fileName as NSString).lastPathComponent): \(error.localizedFailureReason ?? "Unknown error")")
 						return
 					} catch {
 						fatalError()
@@ -935,7 +935,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			let tmpAlert = NSAlert()
 			tmpAlert.alertStyle = .warning
 			tmpAlert.messageText = "Error opening file"
-			tmpAlert.informativeText = "Unable to identify \((filename as NSString).lastPathComponent): \(err.localizedFailureReason)"
+			tmpAlert.informativeText = "Unable to identify \((filename as NSString).lastPathComponent): \(err.localizedFailureReason ?? "Unknown Error")"
 			tmpAlert.runModal()
 			return false;
 		}
@@ -1330,7 +1330,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 								}
 							}
 						} else {
-							NSLog("\(session.error)");
+							var errStr = "Unknown Error"
+							if let err = session.error {
+								errStr = String(describing: err)
+							}
+							NSLog(errStr)
 							if self.isQuitting {
 								NSApplication.shared().reply(toApplicationShouldTerminate: true)
 							} else if let err = session.error {
