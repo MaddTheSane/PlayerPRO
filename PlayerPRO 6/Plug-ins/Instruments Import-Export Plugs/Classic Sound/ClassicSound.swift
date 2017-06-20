@@ -32,8 +32,6 @@ public final class ClassicSound: NSObject, PPSampleImportPlugin {
 		} catch _ {
 			return false
 		}
-		
-		return false
 	}
 	
 	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
