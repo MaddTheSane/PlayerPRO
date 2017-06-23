@@ -50,18 +50,14 @@ public final class PPLibraryObject: NSObject {
 	public var fileExtensions: [String] {
 		var theOpenables = Set<String>()
 		for anUTI in UTITypes {
-			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassFilenameExtension) else {
-				continue
+			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassFilenameExtension)?.takeRetainedValue() as NSArray?,
+				let anArr = unPreArr as? [String] else {
+					continue
 			}
 			
-			let preArr = unPreArr.takeRetainedValue() as NSArray
-			
-			guard let anArr = preArr as? [String] else {
-				continue
-			}
 			theOpenables.formIntersection(anArr)
 		}
-		return Array(theOpenables)
+		return Array(theOpenables).sorted()
 	}
 	
 	#if os(OSX)
@@ -69,15 +65,11 @@ public final class PPLibraryObject: NSObject {
 	public var fileTypeCodes: [OSType]? {
 		var theOpenables = [String]()
 		for anUTI in UTITypes {
-			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassOSType) else {
-				continue
+			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassOSType)?.takeRetainedValue() as NSArray?,
+				let anArr = unPreArr as? [String] else {
+					continue
 			}
 			
-			let preArr = unPreArr.takeRetainedValue() as NSArray
-			
-			guard let anArr = preArr as? [String] else {
-				continue
-			}
 			theOpenables += anArr
 		}
 		

@@ -33,6 +33,11 @@
 {
 	int seconds = 0, minutes = 0, hours = 0;
 	NSInteger returnValue = 0;
+	BOOL isNeg = NO;
+	if ([string hasPrefix:@"-"]) {
+		isNeg = YES;
+		string = [string substringFromIndex:1];
+	}
 	if (sscanf([string UTF8String], "%d:%d:%d", &hours, &minutes, &seconds) != 3) {
 		hours = 0;
 		if (sscanf([string UTF8String], "%d:%d", &minutes, &seconds) != 2) {
@@ -42,7 +47,7 @@
 			return NO;
 		}
 	}
-	returnValue = (((hours * 60 + minutes) * 60) + seconds) * 60;
+	returnValue = (((hours * 60 + minutes) * 60) + seconds) * 60 * (isNeg ? -1 : 1);
 	*obj = @(returnValue);
 	return YES;
 }
