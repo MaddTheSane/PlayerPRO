@@ -10,6 +10,7 @@ import Cocoa
 import PlayerPROKit
 
 final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
+	typealias Index = Int
 	private(set) var plugIns = [PPSamplePlugObject]()
 	
 	override init() {
@@ -135,7 +136,7 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 		throw MADErr.cannotFindPlug
 	}
 	
-	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
+	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (plugIns as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }

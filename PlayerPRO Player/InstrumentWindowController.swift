@@ -29,9 +29,9 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	}
 	
 	class func newInstrumentWindow() -> Self {
-		let ourself = self.init(windowNibName:"InstrumentWindow")
+		let ourself = self.init(windowNibName: NSNib.Name(rawValue: "InstrumentWindow"))
 		
-		(NSApplication.shared().delegate as! PlayerAppDelegate).addObserver(ourself, forKeyPath: "music", options: .new, context: nil)
+		(NSApplication.shared.delegate as! PlayerAppDelegate).addObserver(ourself, forKeyPath: "music", options: .new, context: nil)
 		
 		return ourself
 	}
@@ -106,7 +106,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		if (item == nil) {
-			return (NSApplication.shared().delegate as! PlayerAppDelegate).music!.instruments.count
+			return (NSApplication.shared.delegate as! PlayerAppDelegate).music!.instruments.count
 		}
 		if let item = item as? PPInstrumentObject {
 			return item.countOfSamples
@@ -116,7 +116,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		if (item == nil) {
-			return (NSApplication.shared().delegate as! PlayerAppDelegate).music!.instruments[index];
+			return (NSApplication.shared.delegate as! PlayerAppDelegate).music!.instruments[index];
 		}
 		if let item = item as? PPInstrumentObject {
 			return (item).samplesObject(at: index)
@@ -143,6 +143,6 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	
 	deinit {
 		NotificationCenter.default.removeObserver(self)
-		(NSApplication.shared().delegate as! PlayerAppDelegate).removeObserver(self, forKeyPath: "music")
+		(NSApplication.shared.delegate as! PlayerAppDelegate).removeObserver(self, forKeyPath: "music")
 	}
 }

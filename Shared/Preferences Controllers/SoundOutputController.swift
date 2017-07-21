@@ -12,9 +12,9 @@ import PlayerPROKit
 import MASPreferences.MASPreferencesViewController
 
 final class SoundOutputController: SoundSettingsViewController, SoundSettingsViewWithDriverControllerDelegate, MASPreferencesViewController {
-	override var identifier: String? {
+	override var identifier: NSUserInterfaceItemIdentifier? {
 		get {
-		return PPSoundSettPrefID
+			return NSUserInterfaceItemIdentifier(rawValue: PPSoundSettPrefID)
 		}
 		set {
 			//do nothing
@@ -30,9 +30,7 @@ final class SoundOutputController: SoundSettingsViewController, SoundSettingsVie
 	}
 	
 	class func newPreferenceView() -> Self? {
-		guard let ourself = self.init(nibName: "PPSoundSettingsViewController", bundle: Bundle(for: SoundSettingsViewController.self)) else {
-			return nil
-		}
+		 let ourself = self.init(nibName: NSNib.Name(rawValue: "PPSoundSettingsViewController"), bundle: Bundle(for: SoundSettingsViewController.self))
 		ourself.delegate = (ourself as SoundOutputController)
 		let aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
 		ourself.title = aTitle
@@ -41,9 +39,7 @@ final class SoundOutputController: SoundSettingsViewController, SoundSettingsVie
 	}
 	
 	override class func newSoundSettingWindow() -> Self? {
-		guard let ourself = self.init(nibName: "PPSoundSettingsViewController", bundle: Bundle(for: SoundSettingsViewController.self)) else {
-			return nil
-		}
+		 let ourself = self.init(nibName: NSNib.Name(rawValue: "PPSoundSettingsViewController"), bundle: Bundle(for: SoundSettingsViewController.self)) 
 		ourself.delegate = (ourself as SoundOutputController)
 		let aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
 		ourself.title = aTitle

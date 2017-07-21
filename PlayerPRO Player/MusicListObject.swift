@@ -66,7 +66,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 
 	#if os(OSX)
 	@objc private(set) lazy var fileIcon: NSImage = {
-		let image = NSWorkspace.shared().icon(forFile: self.musicURL.path)
+		let image = NSWorkspace.shared.icon(forFile: self.musicURL.path)
 		image.size = NSSize(width: 16, height: 16)
 		return image
 		}()

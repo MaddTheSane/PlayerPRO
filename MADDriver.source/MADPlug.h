@@ -95,7 +95,7 @@ PPEXPORT OSErr MADAddSoundToMAD(void			*theSound,
 								sData			**sample,				// Ptr on samples data
 								short			*sampleID);
 
-PPEXPORT sData *MADCreateSampleRaw();
+PPEXPORT sData *MADCreateSampleRaw(void);
 PPEXPORT void MADConvertInstrument(Byte *tempPtr, size_t sSize);
 PPEXPORT void MADConvertInstrument16(short *tempPtr, size_t sSize);
 PPEXPORT Cmd* MADGetCmd(short row, short track, Pcmd* myPcmd);

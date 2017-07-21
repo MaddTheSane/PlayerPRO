@@ -17,7 +17,7 @@ final class PlugInInfoController: NSWindowController {
 	private var info:						PlugInInfo!
 
 	class func windowController(from plugInfo: PlugInInfo) -> Self {
-		let toRet = self.init(windowNibName:"PPPlugInInfoController")
+		let toRet = self.init(windowNibName:NSNib.Name(rawValue: "PPPlugInInfoController"))
 		toRet.info = plugInfo
 		
 		return toRet
@@ -33,13 +33,13 @@ final class PlugInInfoController: NSWindowController {
 		authorField.stringValue = info.authorName
 		typeField.stringValue = info.plugType
 		theCopyrightField.stringValue = info.plugCopyright
-		let plugImage = NSWorkspace.shared().icon(forFile: info.plugURL.path)
+		let plugImage = NSWorkspace.shared.icon(forFile: info.plugURL.path)
 		plugImage.size = plugImSize
 		pluginImage.image = plugImage
     }
 	
 	@IBAction func closeWindow(_ sender: AnyObject?) {
-		NSApplication.shared().stopModal()
+		NSApplication.shared.stopModal()
 		window?.close()
 	}
 }

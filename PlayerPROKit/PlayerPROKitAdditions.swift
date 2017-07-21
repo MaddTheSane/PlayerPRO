@@ -74,13 +74,13 @@ public func note(from myTT: String) -> Int16? {
 		let maybeStr = myTT[myTT.startIndex ..< idx2]
 		switch maybeSign {
 		case "#", "♯"/*Unicode sharp sign, just in case*/:
-			return (maybeStr, true)
+			return (String(maybeStr), true)
 			
 		case " ", "-":
-			return (maybeStr, false)
+			return (String(maybeStr), false)
 			
 		default:
-			return (theRest, false)
+			return (String(theRest), false)
 		}
 	}()
 	

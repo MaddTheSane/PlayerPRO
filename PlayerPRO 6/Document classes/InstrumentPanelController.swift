@@ -97,8 +97,8 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		let openPanel = NSOpenPanel()
 		if let vc = OpenPanelViewController(openPanel: openPanel, instrumentDictionary:fileDict) {
 			vc.setupDefaults()
-			vc.beginOpenPanel(currentDocument.windowForSheet!, completionHandler: { (panelHandle: Int) -> Void in
-					if panelHandle == NSFileHandlingPanelOKButton {
+			vc.beginOpenPanel(currentDocument.windowForSheet!, completionHandler: { (panelHandle: NSApplication.ModalResponse) -> Void in
+					if panelHandle.rawValue == NSFileHandlingPanelOKButton {
 						do {
 							try self.importSampleFromURL(openPanel.url!)
 						} catch let err as NSError {
@@ -229,7 +229,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		if tableColumn == nil {
 			return nil
 		}
-		let theView = outlineView.make(withIdentifier: tableColumn!.identifier, owner: nil) as! PPInstrumentCellView
+		let theView = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: nil) as! PPInstrumentCellView
 		theView.controller = self
 		if let obj = item as? PPInstrumentObject {
 			theView.isSample = false
@@ -250,7 +250,8 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return theView
 	}
 	
-	func replaceObjectInInstrumentsAtIndex(_ index: Int, withObject object: PPInstrumentObject!) {
+	@objc(replaceObjectInInstrumentsAtIndex:withObject:)
+	func replaceObjectInInstruments(at index: Int, withObject object: PPInstrumentObject!) {
 		currentDocument.theMusic.replaceInInstruments(at: index, with: object)
 	}
 	

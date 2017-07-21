@@ -25,9 +25,9 @@ final class MusicListPreferenceController: NSViewController, MASPreferencesViewC
 	@IBOutlet weak var rememberMusicList: NSButtonCell!
 	@IBOutlet weak var loopMusic: NSButtonCell!
 	
-	override var identifier: String? {
+	override var identifier: NSUserInterfaceItemIdentifier? {
 		get {
-			return PPMusicListPrefID
+			return NSUserInterfaceItemIdentifier(rawValue: PPMusicListPrefID)
 		}
 		set {
 			// do nothing
@@ -39,12 +39,12 @@ final class MusicListPreferenceController: NSViewController, MASPreferencesViewC
 	}
 	
 	var toolbarItemImage: NSImage? {
-		return NSImage(named: "List")
+		return NSImage(named: NSImage.Name(rawValue: "List"))
 	}
 	
 	static func newPreferenceView() -> MusicListPreferenceController? {
-		let aCont = MusicListPreferenceController(nibName:"MusicListPrefs", bundle:nil)
-		aCont?.title = NSLocalizedString("Music List", tableName: "PreferenceNames", comment: "Music List")
+		let aCont = MusicListPreferenceController(nibName:NSNib.Name(rawValue: "MusicListPrefs"), bundle:nil)
+		aCont.title = NSLocalizedString("Music List", tableName: "PreferenceNames", comment: "Music List")
 		return aCont
 	}
 	
@@ -53,12 +53,12 @@ final class MusicListPreferenceController: NSViewController, MASPreferencesViewC
 		
 		let defaults = UserDefaults.standard
 		
-		rememberMusicList.state = defaults.bool(forKey: PPRememberMusicList) ? NSOnState : NSOffState
-		loadFirstMusic.state = defaults.bool(forKey: PPLoadMusicAtListLoad) ? NSOnState : NSOffState
-		goToStartupPos.state = defaults.bool(forKey: PPGotoStartupAfterPlaying) ? NSOnState : NSOffState
-		askToSave.state = defaults.bool(forKey: PPSaveModList) ? NSOnState : NSOffState
-		autoPlay.state = defaults.bool(forKey: PPLoadMusicAtMusicLoad) ? NSOnState : NSOffState
-		loopMusic.state = defaults.bool(forKey: PPLoopMusicWhenDone) ? NSOnState : NSOffState
+		rememberMusicList.state = defaults.bool(forKey: PPRememberMusicList) ? NSControl.StateValue.onState : NSControl.StateValue.offState
+		loadFirstMusic.state = defaults.bool(forKey: PPLoadMusicAtListLoad) ? NSControl.StateValue.onState : .offState
+		goToStartupPos.state = defaults.bool(forKey: PPGotoStartupAfterPlaying) ? NSControl.StateValue.onState : .offState
+		askToSave.state = defaults.bool(forKey: PPSaveModList) ? NSControl.StateValue.onState : .offState
+		autoPlay.state = defaults.bool(forKey: PPLoadMusicAtMusicLoad) ? NSControl.StateValue.onState : .offState
+		loopMusic.state = defaults.bool(forKey: PPLoopMusicWhenDone) ? NSControl.StateValue.onState : .offState
 		playedMusic = PlaylistMode(rawValue: defaults.integer(forKey: PPAfterPlayingMusic)) ?? .StopPlaying
 	}
 	
@@ -73,12 +73,12 @@ final class MusicListPreferenceController: NSViewController, MASPreferencesViewC
 	@IBAction func toggleButton(_ sender: AnyObject?) {
 		let defaults = UserDefaults.standard
 		
-		defaults.set(rememberMusicList.state == NSOnState, forKey: PPRememberMusicList)
-		defaults.set(loadFirstMusic.state == NSOnState, forKey: PPLoadMusicAtListLoad)
-		defaults.set(autoPlay.state == NSOnState, forKey: PPLoadMusicAtMusicLoad)
-		defaults.set(goToStartupPos.state == NSOnState, forKey: PPGotoStartupAfterPlaying)
-		defaults.set(loopMusic.state == NSOnState, forKey: PPLoopMusicWhenDone)
-		defaults.set(goToStartupPos.state == NSOnState, forKey: PPGotoStartupAfterPlaying)
+		defaults.set(rememberMusicList.state == NSControl.StateValue.onState, forKey: PPRememberMusicList)
+		defaults.set(loadFirstMusic.state == NSControl.StateValue.onState, forKey: PPLoadMusicAtListLoad)
+		defaults.set(autoPlay.state == NSControl.StateValue.onState, forKey: PPLoadMusicAtMusicLoad)
+		defaults.set(goToStartupPos.state == NSControl.StateValue.onState, forKey: PPGotoStartupAfterPlaying)
+		defaults.set(loopMusic.state == NSControl.StateValue.onState, forKey: PPLoopMusicWhenDone)
+		defaults.set(goToStartupPos.state == NSControl.StateValue.onState, forKey: PPGotoStartupAfterPlaying)
 		
 		NotificationCenter.default.post(name: .PPListPreferencesDidChange, object: self)
 	}

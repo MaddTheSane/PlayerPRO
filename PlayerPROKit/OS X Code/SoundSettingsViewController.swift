@@ -210,12 +210,12 @@ open class SoundSettingsViewController: NSViewController {
 		}
 	}
 	
-	required override public init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+	required override public init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
 	
 	open class func newSoundSettingWindow() -> Self? {
-		return self.init(nibName: "PPSoundSettingsViewController", bundle: Bundle(for: SoundSettingsViewController.self))
+		return self.init(nibName: NSNib.Name(rawValue: "PPSoundSettingsViewController"), bundle: Bundle(for: SoundSettingsViewController.self))
 	}
 
 	public func settingsFromDriverSettings(_ sett: MADDriverSettings) {
@@ -228,10 +228,10 @@ open class SoundSettingsViewController: NSViewController {
 		self.stereoDelayActive = stereoDelayState;
 		self.surroundActive = sett.surround;
 		
-		oversampling.state = oversamplingState ? NSOnState : NSOffState
-		reverb.state = reverbState ? NSOnState : NSOffState
-		stereoDelay.state = stereoDelayState ? NSOnState : NSOffState
-		surround.state = sett.surround ? NSOnState : NSOffState
+		oversampling.state = oversamplingState ? NSControl.StateValue.onState : NSControl.StateValue.offState
+		reverb.state = reverbState ? NSControl.StateValue.onState : NSControl.StateValue.offState
+		stereoDelay.state = stereoDelayState ? NSControl.StateValue.onState : NSControl.StateValue.offState
+		surround.state = sett.surround ? NSControl.StateValue.onState : NSControl.StateValue.offState
 		
 		oversamplingNum.isEnabled = oversamplingState
 		reverbNum.isEnabled = reverbState
@@ -388,10 +388,10 @@ open class SoundSettingsViewController: NSViewController {
 	}
 	
 	@IBAction public func changeChecked(_ sender: AnyObject!) {
-		let reverbState = reverb.state == 0 ? false : true;
-		let stereoDelayState = stereoDelay.state == 0 ? false : true
-		let oversamplingState = oversampling.state == 0 ? false : true
-		let surroundState = surround.state == 0 ? false : true
+		let reverbState = reverb.state == .offState ? false : true;
+		let stereoDelayState = stereoDelay.state == .offState ? false : true
+		let oversamplingState = oversampling.state == .offState ? false : true
+		let surroundState = surround.state == .offState ? false : true
 		
 		oversamplingNum.isEnabled = oversamplingState
 		reverbNum.isEnabled = reverbState
@@ -467,3 +467,4 @@ open class SoundSettingsViewController: NSViewController {
 		delegate?.soundView(self, stereoDelayAmountDidChange: toSet)
 	}
 }
+

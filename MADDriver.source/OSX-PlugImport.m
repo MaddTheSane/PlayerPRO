@@ -279,8 +279,8 @@ badplug:
  * Framework PlugIns
  */
 
-static CFMutableArrayRef CreateDefaultPluginFolderLocations() CF_RETURNS_RETAINED;
-CFMutableArrayRef CreateDefaultPluginFolderLocations()
+static CFMutableArrayRef CreateDefaultPluginFolderLocations(void) CF_RETURNS_RETAINED;
+CFMutableArrayRef CreateDefaultPluginFolderLocations(void)
 {
 	@autoreleasepool {
 		NSFileManager *fm = [NSFileManager defaultManager];

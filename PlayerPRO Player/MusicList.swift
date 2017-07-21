@@ -39,15 +39,15 @@ private let kPlayerList = "Player List"
 #endif
 
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, Collection {
-	private(set)	dynamic var musicList = [MusicListObject]()
+	@objc private(set)	dynamic var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount: UInt
-	dynamic var		selectedMusic: Int
+	@objc dynamic var		selectedMusic: Int
 	#if os(iOS)
 	dynamic var		name = "New Music List"
 	private(set)	var fileUUID = UUID()
 	#endif
 	
-	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
+	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 	

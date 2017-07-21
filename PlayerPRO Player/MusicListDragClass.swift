@@ -9,6 +9,8 @@
 import Cocoa
 
 final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
+	
+	
 	let theIndexSet: IndexSet
 	
 	@objc init(indexSet: IndexSet) {
@@ -17,16 +19,16 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 		super.init()
 	}
 	
-	class func readableTypes(for pasteboard: NSPasteboard) -> [String] {
-		return [PPMLDCUTI]
+	class func readableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
+		return [NSPasteboard.PasteboardType(rawValue: PPMLDCUTI)]
 	}
 	
-	func writableTypes(for pasteboard: NSPasteboard) -> [String] {
-		return [PPMLDCUTI]
+	func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
+		return [NSPasteboard.PasteboardType(rawValue: PPMLDCUTI)]
 	}
-	
-	class func readingOptions(forType type: String, pasteboard: NSPasteboard) -> NSPasteboardReadingOptions {
-		if type == PPMLDCUTI {
+
+	class func readingOptions(forType type: NSPasteboard.PasteboardType, pasteboard: NSPasteboard) -> NSPasteboard.ReadingOptions {
+		if type.rawValue == PPMLDCUTI {
 			return .asKeyedArchive
 		} else {
 			return []
@@ -39,8 +41,8 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 		super.init()
 	}
 	
-	convenience required init?(pasteboardPropertyList propertyList: Any, ofType type: String) {
-		if type == PPMLDCUTI {
+	convenience required init?(pasteboardPropertyList propertyList: Any, ofType type: NSPasteboard.PasteboardType) {
+		if type.rawValue == PPMLDCUTI {
 			if let plistData = propertyList as? Data, let unArchive = NSKeyedUnarchiver(forReadingWith: plistData).decodeObject(forKey: PPMLDCUTI) as? IndexSet {
 				self.init(indexSet: unArchive)
 				return
@@ -50,8 +52,8 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 		return nil
 	}
 	
-	@objc func pasteboardPropertyList(forType type: String) -> Any? {
-		if type == PPMLDCUTI {
+	func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
+		if type.rawValue == PPMLDCUTI {
 			return NSKeyedArchiver.archivedData(withRootObject: self);
 		} else {
 			return nil;
