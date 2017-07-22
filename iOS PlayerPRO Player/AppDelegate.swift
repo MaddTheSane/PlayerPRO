@@ -23,14 +23,14 @@ let PPPCurrentlySelectedList = "Currently selected list UUID"
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
 	var window: UIWindow?
-	let madLib = PPLibrary()!
+	let madLib = try! PPLibrary()
 	var madDriver: PPDriver!
 	var musicLists = [MusicList]()
 	var musicFiles = [MusicListObject]()
 	weak var currentMusicList: MusicList!
 
 	override init() {
-		let tmpDict: [String: NSObject] = [PPRememberMusicList: true,
+		let tmpDict: [String: Any] = [PPRememberMusicList: true,
 		PPLoadMusicAtListLoad: false,
 		PPAfterPlayingMusic: PlaylistMode.StopPlaying.rawValue,
 		PPGotoStartupAfterPlaying: true,
@@ -64,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 		super.init()
 	}
 
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]?) -> Bool {
 		let defaults = UserDefaults.standard
 		// Override point for customization after application launch.
 		let splitViewController = self.window!.rootViewController as! UISplitViewController

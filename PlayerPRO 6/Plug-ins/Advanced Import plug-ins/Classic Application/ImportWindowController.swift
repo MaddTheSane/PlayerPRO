@@ -11,6 +11,7 @@ import PlayerPROKit
 import SwiftAdditions
 import ResourceFork
 
+@objc
 class ImportWindowController: NSWindowController {
 	@IBOutlet weak var resourceNamesTable: NSTableView!
 	@IBOutlet weak var resourceIDsTable: NSTableView!
@@ -19,7 +20,7 @@ class ImportWindowController: NSWindowController {
 	
 	var currentBlock: PPComplexImportHandler!
 	var resourceFile: FVResourceFile!
-	dynamic var resourceArray = [FVResource]()
+	@objc dynamic var resourceArray = [FVResource]()
 	var resourceDictionary = [String: [FVResource]]()
 	private var modalSession: NSModalSession!
 	

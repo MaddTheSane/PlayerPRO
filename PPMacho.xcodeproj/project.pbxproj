@@ -649,6 +649,8 @@
 		55B7E667161D1DE1000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E668161D1DEB000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E669161D1DF3000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55B843311F23EC5000B5CCE6 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; };
+		55B843321F23EC5C00B5CCE6 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; };
 		55B8E1B71A3BB5790010CE33 /* MADDebugStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */; };
 		55B8E1B81A3BB57A0010CE33 /* MADDebugStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */; };
 		55BD5AF519ADBBF500D63F54 /* PPKPcmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */; };
@@ -3512,6 +3514,7 @@
 			files = (
 				551E3B661AAB8D4200D3A530 /* CoreFoundation.framework in Frameworks */,
 				551E3B651AAB8D0000D3A530 /* AudioToolbox.framework in Frameworks */,
+				55B843311F23EC5000B5CCE6 /* SwiftAdditions.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3519,6 +3522,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B843321F23EC5C00B5CCE6 /* SwiftAdditions.framework in Frameworks */,
 				551E3B671AAB8D4300D3A530 /* CoreFoundation.framework in Frameworks */,
 				551E3B641AAB8CD000D3A530 /* Foundation.framework in Frameworks */,
 				55F1BE041975CD2E00AD2C03 /* PlayerPROCore.framework in Frameworks */,
@@ -9443,8 +9447,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REEXPORTED_FRAMEWORK_NAMES = PlayerPROCore;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
@@ -9471,8 +9473,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REEXPORTED_FRAMEWORK_NAMES = PlayerPROCore;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
@@ -9961,7 +9961,6 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos iphonesimulator iphoneos";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -9986,7 +9985,6 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos iphonesimulator iphoneos";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -10039,7 +10037,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "iOS PlayerPRO Player/iOS Player-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -10258,7 +10255,8 @@
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 				WARNING_CFLAGS = "-Wno-gnu-variable-sized-type-not-at-end";
 			};
 			name = Release;
@@ -10377,8 +10375,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO Player/PlayerPRO Player-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -10401,8 +10397,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO Player/PlayerPRO Player-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -11330,7 +11324,8 @@
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 				WARNING_CFLAGS = "-Wno-gnu-variable-sized-type-not-at-end";
 			};
 			name = Debug;
@@ -11445,8 +11440,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -11468,8 +11461,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -11489,7 +11480,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO Player.app/Contents/MacOS/PlayerPRO Player";
 			};
 			name = Release;
@@ -11511,7 +11501,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO Player.app/Contents/MacOS/PlayerPRO Player";
 			};
 			name = Debug;
@@ -11531,7 +11520,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 			};
 			name = Release;
@@ -11552,7 +11540,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 			};
 			name = Debug;
@@ -11638,7 +11625,6 @@
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Release;
@@ -11663,7 +11649,6 @@
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Debug;
@@ -11857,7 +11842,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos iphonesimulator iphoneos";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -11897,7 +11881,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos iphonesimulator iphoneos";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
@@ -11930,7 +11913,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos iphonesimulator iphoneos";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -11965,7 +11947,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos iphonesimulator iphoneos";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";

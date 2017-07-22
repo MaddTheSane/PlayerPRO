@@ -10,7 +10,7 @@ import Cocoa
 import PlayerPROKit
 
 class DepthController: NSWindowController {
-	dynamic var depthAmmount: Int32 = 0
+	@objc dynamic var depthAmmount: Int32 = 0
 	var selectionRange = NSRange(location: 0, length: 1)
 	var stereoMode = false
 	var currentBlock: PPPlugErrorBlock!

@@ -19,6 +19,10 @@ private let kMusicListDateAddedKey	= "DateAdded"
 internal var homeURL: URL {
 	return URL(fileURLWithPath: NSHomeDirectory())
 }
+#else
+	internal var homeURL: URL? {
+		return nil
+	}
 #endif
 
 private func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {

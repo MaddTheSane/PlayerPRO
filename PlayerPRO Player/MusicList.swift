@@ -43,7 +43,7 @@ private let kPlayerList = "Player List"
 	private(set)	var lostMusicCount: UInt
 	@objc dynamic var		selectedMusic: Int
 	#if os(iOS)
-	dynamic var		name = "New Music List"
+	@objc dynamic var		name = "New Music List"
 	private(set)	var fileUUID = UUID()
 	#endif
 	

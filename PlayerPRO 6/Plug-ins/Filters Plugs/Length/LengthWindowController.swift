@@ -16,7 +16,7 @@ class LengthWindowController: NSWindowController {
 	@IBOutlet weak var theNewBox: NSBox!
 	@IBOutlet weak var lengthCompensationMatrix: NSMatrix!
 	
-	dynamic var changeRate = false
+	@objc dynamic var changeRate = false
 	
 	var parentWindow: NSWindow?
 	
