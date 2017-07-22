@@ -207,7 +207,7 @@ MADErr CheckMADFile(const char* name)
 			charl[3] == 'K')
 			err = MADNoErr;
 		else
-			err = MADIncompatibleFile;
+			err = MADFileNotSupportedByThisPlug;
 		
 		iClose(refNum);
 	}
