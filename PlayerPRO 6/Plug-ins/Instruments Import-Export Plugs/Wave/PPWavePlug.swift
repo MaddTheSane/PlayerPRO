@@ -53,7 +53,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			ExtAudioFileDispose(fileRef)
 		}
 
-		if let mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) {
+		if var mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) as NSData? as Data? {
 			var realFormat = AudioStreamBasicDescription()
 			
 			var asbdSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
@@ -64,7 +64,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			
 			//Constrain the audio conversion to values supported by PlayerPRO
 			realFormat.mSampleRate = ceil(realFormat.mSampleRate)
-			realFormat.mSampleRate = clamp(value: realFormat.mSampleRate, minimum: 5000, maximum: 44100)
+			realFormat.mSampleRate = clamp(realFormat.mSampleRate, minimum: 5000, maximum: 44100)
 			realFormat.formatFlags = [.nativeEndian, .packed, .signedInteger]
 			switch realFormat.mBitsPerChannel {
 			case 8, 16:
@@ -129,7 +129,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			newSample.relativeNote = 0
 			newSample.amplitude = MADByte(realFormat.mBitsPerChannel)
 			newSample.isStereo = realFormat.mChannelsPerFrame == 2
-			newSample.data = mutableData as Data
+			newSample.data = mutableData
 			
 			asample.pointee = newSample
 			
@@ -141,7 +141,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 	
 	public func exportSample(_ sample: PPSampleObject, to sampleURL: URL, driver: PPDriver) -> MADErr {
 		func applyMetadata(to audFile: ExtAudioFile) {
-			
+			// TODO: implement!
 		}
 		let numChannels: UInt32 = sample.isStereo ? 2 : 1
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [.signedInteger, .packed], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)

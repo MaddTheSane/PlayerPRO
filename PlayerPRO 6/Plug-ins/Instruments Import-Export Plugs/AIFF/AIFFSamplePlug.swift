@@ -26,7 +26,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		
 	public func exportSample(_ sample: PPSampleObject, to sampleURL: URL, driver: PPDriver) -> MADErr {
 		func applyMetadata(to audFile: ExtAudioFile) {
-			
+			// TODO: implement!
 		}
 		let numChannels: UInt32 = sample.isStereo ? 2 : 1
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [AudioFormatFlag.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
