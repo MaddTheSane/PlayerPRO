@@ -218,7 +218,7 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 		}
 	}
 	
-	public func importInstrument(at sampleURL: URL, instrument InsHeader: AutoreleasingUnsafeMutablePointer<PPInstrumentObject?>, driver: PPDriver) -> MADErr {
+	public func importInstrument(at sampleURL: URL, instrument InsHeader: AutoreleasingUnsafeMutablePointer<PPInstrumentObject?>, driver: PPDriver) throws {
 		if let inData = try? Data(contentsOf: sampleURL) {
 			if let ourIns = PPInstrumentObject() as PPInstrumentObject? {
 				ourIns.resetInstrument()
@@ -227,12 +227,12 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 				if iErr == .noErr {
 					InsHeader.pointee = ourIns
 				}
-				return iErr
+				throw iErr
 			} else {
-				return .needMemory
+				throw MADErr.needMemory
 			}
 		} else {
-			return .readingErr
+			throw MADErr.readingErr
 		}
 	}
 }

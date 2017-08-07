@@ -48,7 +48,7 @@ class ImportWindowController: NSWindowController {
 				
 			default:
 				NSApplication.shared().endModalSession(modalSession)
-				currentBlock(nil, .parametersErr)
+				currentBlock(nil, MADErr.parametersErr)
 				
 				return
 			}
@@ -83,16 +83,16 @@ class ImportWindowController: NSWindowController {
 				let ppMusic = PPMusicObject(musicStruct: madMusic, copy: false)
 				
 				NSApplication.shared().endModalSession(modalSession)
-				currentBlock(ppMusic, .noErr)
+				currentBlock(ppMusic, nil)
 			} else {
 				NSApplication.shared().endModalSession(modalSession)
-				currentBlock(nil, .readingErr)
+				currentBlock(nil, MADErr.readingErr)
 
 				return
 			}
 		} else {
 			NSApplication.shared().endModalSession(modalSession)
-			currentBlock(nil, .unknownErr)
+			currentBlock(nil, MADErr.unknownErr)
 			
 			return
 		}
@@ -100,7 +100,7 @@ class ImportWindowController: NSWindowController {
 	
 	@IBAction func cancelImport(_ sender: AnyObject?) {
 		NSApplication.shared().endModalSession(modalSession)
-		currentBlock(nil, .userCanceledErr)
+		currentBlock(nil, MADErr.userCanceledErr)
 	}
 
 	func addResourceDictionary(_ theDict: [String: [FVResource]]) {

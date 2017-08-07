@@ -83,19 +83,19 @@ class DepthController: NSWindowController {
 		default:
 			NSBeep()
 			parentWindow.endSheet(window!)
-			currentBlock(.parametersErr)
+			currentBlock(MADErr.parametersErr)
 			return
 			
 		}
 
 		theData.data = ourData as Data
 		parentWindow.endSheet(window!)
-		currentBlock(.noErr);
+		currentBlock(nil);
 	}
 	
 	@IBAction func cancel(_ sender: AnyObject!) {
 		parentWindow.endSheet(window!)
-		currentBlock(.userCanceledErr);
+		currentBlock(MADErr.userCanceledErr);
 	}
 
 }

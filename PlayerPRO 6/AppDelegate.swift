@@ -440,20 +440,21 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 					}
 					if canImport {
 						obj.beginImport(of: theURL1, withHandler: { (ourObject, anErr) -> Void in
-							if anErr == .noErr {
-								let aPPDoc = PPDocument(music: ourObject!)
+							if let anErr = anErr {
+								if PPErrorIsUserCancelled(anErr) == false {
+									NSAlert(error: anErr).runModal()
+								} else {
+									__NSBeep()
+								}
+							} else if let ourObject = ourObject {
+								let aPPDoc = PPDocument(music: ourObject)
 								
 								self.addDocument(aPPDoc)
 								aPPDoc.makeWindowControllers()
 								aPPDoc.showWindows()
 								aPPDoc.displayName = ((theURL1.lastPathComponent as NSString).deletingPathExtension)
 							} else {
-								let nsErr = createNSError(from: anErr)!
-								if PPErrorIsUserCancelled(nsErr) == false {
-									NSAlert(error: nsErr).runModal()
-								} else {
-									__NSBeep()
-								}
+								fatalError("Either ourObject or anErr should be nil, not both!")
 							}
 						})
 						return true

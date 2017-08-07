@@ -82,11 +82,11 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 		if let plug = aPlug {
 			plug.beginExportSample(sample, to: url, driver: driver, parentDocument: document, handler: handler)
 		} else {
-			handler(.cannotFindPlug)
+			handler(MADErr.cannotFindPlug)
 		}
 	}
 	
-	func beginImportingSample(type: OSType, URL url: URL, driver: PPDriver, parentDocument document: PPDocument, handler: @escaping (_ errorCode: MADErr, _ createdIns: PPSampleObject?) -> Void) {
+	func beginImportingSample(type: OSType, URL url: URL, driver: PPDriver, parentDocument document: PPDocument, handler: @escaping (_ errorCode: Error, _ createdIns: PPSampleObject?) -> Void) {
 		var aPlug: PPSamplePlugObject? = nil
 		
 		for plug in plugIns {
@@ -99,7 +99,7 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 		if let plug = aPlug {
 			plug.beginImportSample(at: url, driver: driver, parentDocument: document, handler: handler)
 		} else {
-			handler(.cannotFindPlug, nil)
+			handler(MADErr.cannotFindPlug, nil)
 		}
 	}
 	

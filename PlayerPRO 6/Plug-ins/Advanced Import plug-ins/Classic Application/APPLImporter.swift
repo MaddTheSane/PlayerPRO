@@ -36,7 +36,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			}
 			
 			guard aRet.count > 0 else {
-				handler(nil, .fileNotSupportedByThisPlug)
+				handler(nil, MADErr.fileNotSupportedByThisPlug)
 				return
 			}
 			
@@ -46,7 +46,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			controller.addResourceDictionary(aRet)
 			controller.beginImportModalSession()
 		} catch _ {
-			handler(nil, .readingErr)
+			handler(nil, MADErr.readingErr)
 		}
 	}
 	

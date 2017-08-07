@@ -24,38 +24,30 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		self.init()
 	}
 		
-	public func exportSample(_ sample: PPSampleObject, to sampleURL: URL, driver: PPDriver) -> MADErr {
+	public func exportSample(_ sample: PPSampleObject, to sampleURL: URL, driver: PPDriver) throws {
 		func applyMetadata(to audFile: ExtAudioFile) {
 			// TODO: implement!
 		}
 		let numChannels: UInt32 = sample.isStereo ? 2 : 1
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [AudioFormatFlag.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
 		let realFormat = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [AudioFormatFlag.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
-
-		do {
-			let audOut = try ExtAudioFile(createURL: sampleURL, fileType: .AIFF, streamDescription: &asbd, flags: [.eraseFile])
-			audOut.clientDataFormat = realFormat
-
-			try sample.data.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
-				let toWriteSize = sample.data.count
-				
-				var audBufList = AudioBufferList()
-				audBufList.mNumberBuffers = 1
-				audBufList.mBuffers.mNumberChannels = numChannels
-				audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
-				audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
-				
-				try audOut.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
-			}
+		
+		let audOut = try ExtAudioFile(createURL: sampleURL, fileType: .AIFF, streamDescription: &asbd, flags: [.eraseFile])
+		audOut.clientDataFormat = realFormat
+		
+		try sample.data.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
+			let toWriteSize = sample.data.count
 			
-			applyMetadata(to: audOut)
-		} catch let error as MADErr {
-			return error
-		} catch {
-			return .writingErr
+			var audBufList = AudioBufferList()
+			audBufList.mNumberBuffers = 1
+			audBufList.mBuffers.mNumberChannels = numChannels
+			audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
+			audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
+			
+			try audOut.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 		}
 		
-		return .noErr
+		applyMetadata(to: audOut)
 	}
 	
 	//MARK: import
@@ -82,16 +74,9 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		return myErr == .noErr
 	}
 	
-	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
-		do {
-			let aSamp = try readAIFF(at: sampleURL)
-			aSamp.name = (sampleURL.lastPathComponent as NSString).deletingPathExtension
-			sample.pointee = aSamp
-			return .noErr
-		} catch let error as MADErr {
-			return error
-		} catch {
-			return .unknownErr
-		}
+	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) throws {
+		let aSamp = try readAIFF(at: sampleURL)
+		aSamp.name = (sampleURL.lastPathComponent as NSString).deletingPathExtension
+		sample.pointee = aSamp
 	}
 }

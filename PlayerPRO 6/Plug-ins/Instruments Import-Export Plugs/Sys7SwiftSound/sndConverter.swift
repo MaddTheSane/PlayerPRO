@@ -118,20 +118,30 @@ internal func canOpenData(_ data: Data) -> Bool {
 	#endif
 }
 
-internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
+enum SndAssetErrors: Error {
+	case missingHeader
+	case badHeader
+	case unknownModNumber(modNum: UInt16)
+	case unsupportedConfiguration
+	case duplicateCommands
+	case missingCommand
+	case unknownCommand(cmd: UInt16)
+	case unknownEncoding(enc: UInt8)
+	case missingSamples
+}
+
+internal func assetForSND(_ data: Data) throws -> URL {
 	func errmsg( _ message: @autoclosure @escaping  () -> String) {
 		print("Sys7 import: \(message())")
 	}
-	error = .noErr
 	
 	let reader = FVDataReader(data)
 	
 	// Read the SndListResource or Snd2ListResource
 	var format = Int16()
 	if !reader.readInt16(endian: .big, &format) {
-		error = .fileNotSupportedByThisPlug
 		errmsg("Missing header")
-		return nil
+		throw MADErr.fileNotSupportedByThisPlug
 	}
 	if format == firstSoundFormat {
 		var numModifiers = Int16()
@@ -139,41 +149,34 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 		if !reader.readInt16(endian: .big, &numModifiers) ||
 			!reader.readUInt16(endian: .big, &modifierPart.modNumber) ||
 			!reader.readInt32(endian: .big, &modifierPart.modInit) {
-			error = .fileNotSupportedByThisPlug
 			errmsg("Missing header")
-			return nil
+			throw MADErr.fileNotSupportedByThisPlug
 		}
 		if numModifiers != 1 {
-			error = .fileNotSupportedByThisPlug
 			errmsg("Bad header")
-			return nil
+			throw MADErr.fileNotSupportedByThisPlug
 		}
 		if modifierPart.modNumber != 5  {
-			error = .fileNotSupportedByThisPlug
 			errmsg("Unknown modNumber value \(modifierPart.modNumber)")
-			return nil
+			throw MADErr.fileNotSupportedByThisPlug
 		}
 		if modifierPart.modInit & initStereo == 1 {
-			error = .fileNotSupportedByThisPlug
 			errmsg("Only mono channel supported")
-			return nil
+			throw MADErr.fileNotSupportedByThisPlug
 		}
 		if (modifierPart.modInit & initMACE3) == initMACE3 || (modifierPart.modInit & initMACE6) == initMACE6 {
-			error = .fileNotSupportedByThisPlug
 			errmsg("Compression not supported")
-			return nil
+			throw MADErr.fileNotSupportedByThisPlug
 		}
 	} else if format == secondSoundFormat {
 		var refCount = Int16()
 		if !reader.readInt16(endian: .big, &refCount) {
-			error = .fileNotSupportedByThisPlug
 			errmsg("Missing header")
-			return nil
+			throw MADErr.fileNotSupportedByThisPlug
 		}
 	} else {
-		error = .fileNotSupportedByThisPlug
 		errmsg("Unknown format \(format)")
-		return nil
+		throw MADErr.fileNotSupportedByThisPlug
 	}
 	
 	// Read SndCommands
@@ -181,22 +184,19 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	var numCommands = Int16()
 	var commandPart = SndCommand()
 	if !reader.readInt16(endian: .big, &numCommands) {
-		error = .fileNotSupportedByThisPlug
 		errmsg("Missing header")
-		return nil
+		throw MADErr.fileNotSupportedByThisPlug
 	}
 	if numCommands == 0 {
-		error = .fileNotSupportedByThisPlug
 		errmsg("Bad header")
-		return nil
+		throw MADErr.fileNotSupportedByThisPlug
 	}
 	for _ in Int16(0) ..< numCommands {
 		if !reader.readUInt16(endian: .big, &commandPart.cmd) ||
 			!reader.readInt16(endian: .big, &commandPart.param1) ||
 			!reader.readInt32(endian: .big, &commandPart.param2) {
-			error = .fileNotSupportedByThisPlug
 			errmsg("Missing command")
-			return nil
+			throw MADErr.fileNotSupportedByThisPlug
 		}
 		// "If soundCmd is contained within an 'snd ' resource, the high bit of the command must be set."
 		// Apple docs says this for bufferCmd as well, so we clear the bit.
@@ -204,17 +204,15 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 		switch commandPart.cmd {
 		case soundCmd, bufferCmd:
 			if header_offset != 0 {
-				error = .fileNotSupportedByThisPlug
 				errmsg("Duplicate commands")
-				return nil
+				throw MADErr.fileNotSupportedByThisPlug
 			}
 			header_offset = Int(commandPart.param2)
 		case nullCmd:
 			break
 		default:
-			error = .fileNotSupportedByThisPlug
 			errmsg("Unknown command \(commandPart.cmd)")
-			return nil
+			throw MADErr.fileNotSupportedByThisPlug
 		}
 	}
 	
@@ -227,28 +225,23 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 		!reader.readUInt32(endian: .big, &header.loopEnd) ||
 		!reader.readUInt8(&header.encode) ||
 		!reader.readUInt8(&header.baseFrequency) {
-		error = .fileNotSupportedByThisPlug
 		errmsg("Missing header data")
-		return nil
+		throw MADErr.fileNotSupportedByThisPlug
 	}
 	let sampleData = reader.read(Int(header.length))
 	if sampleData == nil {
-		error = .fileNotSupportedByThisPlug
 		errmsg("Missing samples")
-		return nil
+		throw MADErr.fileNotSupportedByThisPlug
 	}
 	if header.encode != stdSH {
 		if header.encode == extSH {
-			error = .fileNotSupportedByThisPlug
 			errmsg("Extended encoding not supported")
 		} else if header.encode == cmpSH {
-			error = .fileNotSupportedByThisPlug
 			errmsg("Compression not supported")
 		} else {
-			error = .fileNotSupportedByThisPlug
 			errmsg(String(format: "Unknown encoding 0x%02X", header.encode))
 		}
-		return nil
+		throw MADErr.fileNotSupportedByThisPlug
 	}
 	
 	// Generate an AudioStreamBasicDescription for conversion
@@ -259,9 +252,8 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	var audioFile: ExtAudioFileRef? = nil
 	let createStatus = ExtAudioFileCreate(url: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
 	if createStatus != noErr {
-		error = .writingErr
 		errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")
-		return nil
+		throw MADErr.writingErr
 	}
 	
 	// Configure the AudioBufferList
@@ -279,17 +271,15 @@ internal func assetForSND(_ data: Data, error: inout MADErr) -> URL? {
 	// Write the data to the file
 	let writeStatus = ExtAudioFileWrite(audioFile!, header.length, &bufferList)
 	if writeStatus != noErr {
-		error = .writingErr
 		errmsg("ExtAudioFileWrite failed with status \(writeStatus)")
-		return nil
+		throw MADErr.writingErr
 	}
 	
 	// Finish up
 	let disposeStatus = ExtAudioFileDispose(audioFile!)
 	if disposeStatus != noErr {
-		error = .writingErr
 		errmsg("ExtAudioFileDispose failed with status \(disposeStatus)")
-		return nil
+		throw MADErr.writingErr
 	}
 	
 	// Generate an AVAsset

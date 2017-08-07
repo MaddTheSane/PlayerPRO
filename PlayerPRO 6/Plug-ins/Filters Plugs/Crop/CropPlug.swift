@@ -20,12 +20,11 @@ public final class Crop: NSObject, PPFilterPlugin {
 		super.init()
 	}
 	
-	public func run(withData theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver) -> MADErr {
+	public func run(withData theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver) throws {
 		guard var ourData = theData.data, let selSwiftRange = selRange.toRange() else {
-			return .parametersErr
+			throw MADErr.parametersErr
 		}
 		ourData.replaceSubrange(selSwiftRange, with: Data())
 		theData.data = ourData
-		return .noErr
 	}
 }

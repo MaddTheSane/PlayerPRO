@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addPlugInFromBundle:(NSBundle *)theBund;
 
 - (void)beginExportingInstrument:(PPInstrumentObject*)theIns ofType:(OSType)aType toURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler;
-- (void)beginImportingInstrumentOfType:(OSType)aType fromURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(MADErr errorCode, PPInstrumentObject *createdIns))handler;
+- (void)beginImportingInstrumentOfType:(OSType)aType fromURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(NSError *__nullable errorCode, PPInstrumentObject *createdIns))handler;
 - (MADErr)testInstrumentFile:(NSURL *)toTest type:(OSType)theType;
 - (BOOL)isPlugAvailable:(OSType)kind;
 - (MADErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType;

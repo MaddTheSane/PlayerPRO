@@ -185,20 +185,21 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 	}
 }
 
-- (void)beginImportInstrumentAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(MADErr err, PPInstrumentObject* instrument))handler
+- (void)beginImportInstrumentAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(NSError *err, PPInstrumentObject* instrument))handler
 {
 	if (![plugCode conformsToProtocol:@protocol(PPInstrumentImportPlugin)]) {
-		handler(MADOrderNotImplemented, nil);
+		handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil], nil);
 		return;
 	}
 
 	PPInstrumentObject *outIns;
-	MADErr ourErr = [plugCode importInstrumentAtURL:sampleURL instrument:&outIns driver:driver ];
+	NSError *ourErr;
+	BOOL success = [plugCode importInstrumentAtURL:sampleURL instrument:&outIns driver:driver error:&ourErr];
 
-	if (ourErr == MADOrderNotImplemented && [plugCode respondsToSelector:@selector(beginImportInstrumentAtURL:driver:parentWindow:handler:)]) {
+	if (isOrderNotImplemented(ourErr) && [plugCode respondsToSelector:@selector(beginImportInstrumentAtURL:driver:parentWindow:handler:)]) {
 		[plugCode beginImportInstrumentAtURL:sampleURL driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
-		handler(ourErr, outIns);
+		handler(success ? nil : ourErr, outIns);
 	}
 
 }
@@ -206,15 +207,16 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 - (void)beginExportInstrument:(PPInstrumentObject*)anIns toURL:(NSURL*)sampURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
 {
 	if (![plugCode conformsToProtocol:@protocol(PPInstrumentExportPlugin)]) {
-		handler(MADOrderNotImplemented);
+		handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil]);
 		return;
 	}
 	
-	MADErr ourErr = [plugCode exportInstrument:anIns toURL:sampURL driver:driver];
-	if (ourErr == MADOrderNotImplemented && [plugCode respondsToSelector:@selector(beginExportInstrument:toURL:driver:parentWindow:handler:)]) {
+	NSError *ourErr;
+	BOOL success = [plugCode exportInstrument:anIns toURL:sampURL driver:driver error:&ourErr];
+	if (isOrderNotImplemented(ourErr) && [plugCode respondsToSelector:@selector(beginExportInstrument:toURL:driver:parentWindow:handler:)]) {
 		[plugCode beginExportInstrument:anIns toURL:sampURL driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
-		handler(ourErr);
+		handler(success ? nil : ourErr);
 	}
 }
 

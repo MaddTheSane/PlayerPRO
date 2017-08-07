@@ -154,13 +154,13 @@
 	}
 	
 	if (aPlug == nil) {
-		handler(MADCannotFindPlug);
+		handler([NSError errorWithDomain:PPMADErrorDomain code:MADCannotFindPlug userInfo:nil]);
 	} else {
 		[aPlug beginExportInstrument:theIns toURL:aURL driver:driver parentDocument:document handler:handler];
 	}
 }
 
-- (void)beginImportingInstrumentOfType:(OSType)aType fromURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(MADErr errorCode, PPInstrumentObject *createdIns))handler
+- (void)beginImportingInstrumentOfType:(OSType)aType fromURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(NSError *errorCode, PPInstrumentObject *createdIns))handler
 {
 	PPInstrumentImporterObject *aPlug;
 	for (PPInstrumentImporterObject *plug in instrumentIEArray) {
@@ -171,7 +171,7 @@
 	}
 	
 	if (aPlug == nil) {
-		handler(MADCannotFindPlug, nil);
+		handler([NSError errorWithDomain:PPMADErrorDomain code:MADCannotFindPlug userInfo:nil], nil);
 	} else {
 		[aPlug beginImportInstrumentAtURL:aURL driver:driver parentDocument:document handler:handler];
 	}

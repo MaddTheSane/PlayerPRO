@@ -179,47 +179,61 @@ PPSamplePlugCompatObject *tryOldAPI(NSBundle *theBundle)
 	return MADOrderNotImplemented;
 }
 
-- (void)beginImportSampleAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(MADErr theErr, PPSampleObject *aSample))handler
+BOOL isOrderNotImplemented(NSError *err) {
+	return ([err.domain isEqualToString:PPMADErrorDomain] && err.code == MADOrderNotImplemented);
+}
+
+- (void)beginImportSampleAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(NSError *theErr, PPSampleObject *aSample))handler
 {
 	if (![_plugCode conformsToProtocol:@protocol(PPSampleImportPlugin)]) {
-		handler(MADOrderNotImplemented, nil);
+		handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil], nil);
 		return;
 	}
 	
 	if ([_plugCode hasUIForImport]) {
 		PPSampleObject *aSampObj;
-		MADErr iErr = [_plugCode importSampleAtURL:sampleURL sample:&aSampObj driver:driver];
-		if (iErr != MADOrderNotImplemented) {
-			handler(iErr, aSampObj);
+		NSError *err;
+		if (![_plugCode importSampleAtURL:sampleURL sample:&aSampObj driver:driver error:&err]) {
+			if (!isOrderNotImplemented(err)) {
+				handler(err, aSampObj);
+				return;
+			}
+		} else {
+			handler(nil, aSampObj);
 			return;
 		}
 	}
 	if ([_plugCode respondsToSelector:@selector(beginImportSampleAtURL:driver:parentWindow:handler:)]) {
 		[_plugCode beginImportSampleAtURL:sampleURL driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
-		handler(MADOrderNotImplemented, nil);
+		handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil], nil);
 	}
 }
 
 - (void)beginExportSample:(PPSampleObject*)aSamp toURL:(NSURL*)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(PPPlugErrorBlock)handler
 {
 	if (![_plugCode conformsToProtocol:@protocol(PPSampleExportPlugin)]) {
-		handler(MADOrderNotImplemented);
+		handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil]);
 		return;
 	}
 	
 	if ([_plugCode hasUIForExport]) {
 		PPSampleObject *aSampObj;
-		MADErr iErr = [_plugCode exportSample:aSampObj toURL:sampleURL driver:driver];
-		if (iErr != MADOrderNotImplemented) {
-			handler(iErr);
+		NSError *err;
+		if (![_plugCode exportSample:aSampObj toURL:sampleURL driver:driver error:&err]) {
+			if (!isOrderNotImplemented(err)) {
+				handler(err);
+				return;
+			}
+		} else {
+			handler(nil);
 			return;
 		}
 	}
 	if ([_plugCode respondsToSelector:@selector(beginExportSample:toURL:driver:parentWindow:handler:)]) {
 		[_plugCode beginExportSample:aSamp toURL:sampleURL driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
-		handler(MADOrderNotImplemented);
+		handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil]);
 	}
 }
 

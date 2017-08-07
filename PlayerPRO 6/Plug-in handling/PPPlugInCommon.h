@@ -11,6 +11,7 @@
 
 #import <Foundation/NSArray.h>
 
-NSArray<NSURL*> * __nonnull DefaultPlugInLocations(void);
+extern NSArray<NSURL*> * __nonnull DefaultPlugInLocations(void);
+extern BOOL isOrderNotImplemented(NSError *__nonnull err);
 
 #endif
