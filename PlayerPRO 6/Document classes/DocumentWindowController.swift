@@ -407,7 +407,7 @@ class DocumentWindowController: NSWindowController {
 		default:
 			
 			if (tag > Int(globalMadLib.pluginCount) || tag < 0) {
-				__NSBeep();
+				NSSound.beep();
 				self.currentDocument.theDriver.endExport()
 				
 				return;

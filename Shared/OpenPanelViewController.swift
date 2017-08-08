@@ -162,7 +162,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 	
 	@IBAction func selectUTI(_ sender: AnyObject?) {
 		guard let menuIte = sender as? NSMenuItem else {
-			__NSBeep()
+			NSSound.beep()
 			return
 		}
 			let tag = menuIte.tag;

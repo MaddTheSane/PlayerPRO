@@ -606,7 +606,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	private func selectMusic(atIndex anIdx: Int) {
 		guard anIdx >= 0 && anIdx < musicList.countOfMusicList else {
-			__NSBeep()
+			NSSound.beep()
 			return
 		}
 		let idx = IndexSet(integer: anIdx)
@@ -629,7 +629,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				}
 			}
 		} else {
-			__NSBeep()
+			NSSound.beep()
 		}
 	}
 	
@@ -975,7 +975,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				NSAlert(error: err).runModal()
 			}
 		} else {
-			__NSBeep();
+			NSSound.beep()
 		}
 	}
 	
@@ -1016,7 +1016,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				NSAlert(error: err).runModal()
 			}
 		} else {
-			__NSBeep()
+			NSSound.beep()
 		}
 	}
 	
@@ -1397,7 +1397,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			
 		default:
 			guard !(tag > madLib.pluginCount || tag < 0) else {
-				__NSBeep()
+				NSSound.beep()
 				
 				madDriver.endExport()
 				if isQuitting {
@@ -1490,7 +1490,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				}
 			})
 		} else {
-			__NSBeep()
+			NSSound.beep()
 		}
 	}
 	

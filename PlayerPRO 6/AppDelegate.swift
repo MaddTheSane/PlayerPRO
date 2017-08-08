@@ -444,7 +444,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 								if PPErrorIsUserCancelled(anErr) == false {
 									NSAlert(error: anErr).runModal()
 								} else {
-									__NSBeep()
+									NSSound.beep()
 								}
 							} else if let ourObject = ourObject {
 								let aPPDoc = PPDocument(music: ourObject)
