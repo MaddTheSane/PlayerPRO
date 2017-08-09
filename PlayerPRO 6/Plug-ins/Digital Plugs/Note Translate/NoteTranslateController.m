@@ -55,7 +55,7 @@
 		}
 	}
 	[_parentWindow endSheet:self.window];
-	_currentBlock(MADNoErr);
+	_currentBlock(nil);
 }
 
 @end

@@ -21,7 +21,7 @@
 	return self = [self init];
 }
 
-- (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver
+- (BOOL)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver error:(NSError * _Nullable __autoreleasing * _Nullable)error
 {
 	long	i;
 	NSMutableData *ourOwnData = [theData.data mutableCopy];
@@ -31,7 +31,7 @@
 	NSUInteger SelectionEnd = NSMaxRange(selRange);
 	
 	if (ourOwnData == NULL || theData.data.length == 0) {
-		return MADNoErr;
+		return YES;
 	}
 	
 	switch (theData.amplitude) {
@@ -68,7 +68,7 @@
 	
 	theData.data = ourOwnData;
 	
-	return MADNoErr;
+	return YES;
 }
 
 @end

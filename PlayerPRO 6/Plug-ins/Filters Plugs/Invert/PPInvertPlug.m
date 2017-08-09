@@ -21,7 +21,7 @@
 	return self = [self init];
 }
 
-- (MADErr)runWithData:(inout PPSampleObject *)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver *)driver
+- (BOOL)runWithData:(inout PPSampleObject *)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nullable)error
 {
 	int i, temp;
 	NSMutableData *ourData = [theData.data mutableCopy];
@@ -62,7 +62,7 @@
 	}
 	theData.data = ourData;
 	
-	return MADNoErr;
+	return YES;
 }
 
 @end

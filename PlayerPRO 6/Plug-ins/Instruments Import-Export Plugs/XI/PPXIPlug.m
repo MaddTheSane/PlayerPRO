@@ -67,7 +67,7 @@ static const int finetune[16] = {
 	return [testData isEqualToData:headerData];
 }
 
-- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject**)outHeader driver:(PPDriver*)driver
+- (BOOL)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject**)outHeader driver:(PPDriver*)driver error:(NSError * _Nullable __autoreleasing * _Nullable)error
 {
 	XMPATCHHEADER	*pth;
 	XMWAVHEADER		*wh = NULL;
@@ -80,9 +80,13 @@ static const int finetune[16] = {
 		Ptr theXI = xiData.mutableBytes;
 		
 		//theXI = malloc(inOutCount);
-		if (theXI == NULL)
-			return MADNeedMemory;
-		else {
+		if (theXI == NULL) {
+			if (error) {
+				*error = [NSError errorWithDomain:PPMADErrorDomain code:MADNeedMemory userInfo:nil];
+			}
+			
+			return NO;
+		} else {
 			
 			InsHeader.name = [[sampleURL lastPathComponent] stringByDeletingPathExtension];
 			
@@ -234,9 +238,13 @@ static const int finetune[16] = {
 			*outHeader = InsHeader;
 		}
 	} else {
-		return MADReadingErr;
+		if (error) {
+			*error = [NSError errorWithDomain:PPMADErrorDomain code:MADReadingErr userInfo:nil];
+		}
+		
+		return NO;
 	}
-	return MADNoErr;
+	return YES;
 }
 
 static NSData *startData()
@@ -251,10 +259,9 @@ static NSData *startData()
 	return currentData;
 }
 
-- (MADErr)exportInstrument:(PPInstrumentObject *)InsHeader toURL:(NSURL *)sampleURL driver:(PPDriver *)driver
+- (BOOL)exportInstrument:(PPInstrumentObject *)InsHeader toURL:(NSURL *)sampleURL driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nullable)error
 {
 	NSFileHandle *iFileRefI = [NSFileHandle fileHandleForWritingToURL:sampleURL error:NULL];
-	MADErr myErr = MADNoErr;
 	if (iFileRefI != NULL) {
 		// Write instrument header
 		
@@ -416,14 +423,23 @@ static NSData *startData()
 				}
 				
 				[iFileRefI writeData:tempDat];
-			} else
-				myErr = MADNeedMemory;
+			} else {
+				if (error) {
+					*error = [NSError errorWithDomain:PPMADErrorDomain code:MADNeedMemory userInfo:nil];
+				}
+				
+				return NO;
+			}
 		}
 	} else {
-		myErr = MADWritingErr;
+		if (error) {
+			*error = [NSError errorWithDomain:PPMADErrorDomain code:MADWritingErr userInfo:nil];
+		}
+		
+		return NO;
 	}
 	
-	return myErr;
+	return YES;
 }
 
 @end

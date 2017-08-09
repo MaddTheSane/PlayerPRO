@@ -359,7 +359,7 @@
 	
 	theData.data = resultData;
 	[_parentWindow endSheet:self.window];
-	_currentBlock(MADNoErr);
+	_currentBlock(nil);
 }
 
 - (void)windowDidLoad

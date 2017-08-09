@@ -9,6 +9,7 @@
 #import "PPToneGeneratorPlug.h"
 #import "PPToneGeneratorController.h"
 #import <PlayerPROKit/PPSampleObject.h>
+#import <PlayerPROKit/PPErrors.h>
 
 @implementation PPToneGeneratorPlug
 
@@ -22,9 +23,13 @@
 	return self = [self init];
 }
 
-- (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver;
+- (BOOL)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver error:(NSError * _Nullable __autoreleasing * _Nullable)error
 {
-	return MADOrderNotImplemented;
+	if (error) {
+		*error = [NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil];
+	}
+	
+	return NO;
 }
 
 - (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentWindow:(NSWindow*)document handler:(PPPlugErrorBlock)handle;
