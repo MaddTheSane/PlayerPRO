@@ -20,15 +20,15 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	}
 	
 	class func readableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
-		return [NSPasteboard.PasteboardType(rawValue: PPMLDCUTI)]
+		return [.PPMLDCUTI]
 	}
 	
 	func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
-		return [NSPasteboard.PasteboardType(rawValue: PPMLDCUTI)]
+		return [.PPMLDCUTI]
 	}
 
 	class func readingOptions(forType type: NSPasteboard.PasteboardType, pasteboard: NSPasteboard) -> NSPasteboard.ReadingOptions {
-		if type.rawValue == PPMLDCUTI {
+		if type == .PPMLDCUTI {
 			return .asKeyedArchive
 		} else {
 			return []
@@ -42,8 +42,8 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	}
 	
 	convenience required init?(pasteboardPropertyList propertyList: Any, ofType type: NSPasteboard.PasteboardType) {
-		if type.rawValue == PPMLDCUTI {
-			if let plistData = propertyList as? Data, let unArchive = NSKeyedUnarchiver(forReadingWith: plistData).decodeObject(forKey: PPMLDCUTI) as? IndexSet {
+		if type == .PPMLDCUTI {
+			if let plistData = propertyList as? Data, let unArchive = NSKeyedUnarchiver(forReadingWith: plistData).decodeObject(forKey: NSPasteboard.PasteboardType.PPMLDCUTI.rawValue) as? IndexSet {
 				self.init(indexSet: unArchive)
 				return
 			}
@@ -53,7 +53,7 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	}
 	
 	func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
-		if type.rawValue == PPMLDCUTI {
+		if type == .PPMLDCUTI {
 			return NSKeyedArchiver.archivedData(withRootObject: self);
 		} else {
 			return nil;
@@ -64,11 +64,11 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	static let supportsSecureCoding: Bool = true
 	
 	func encode(with aCoder: NSCoder) {
-		aCoder.encode(theIndexSet, forKey: PPMLDCUTI)
+		aCoder.encode(theIndexSet, forKey: NSPasteboard.PasteboardType.PPMLDCUTI.rawValue)
 	}
 	
 	convenience required init?(coder aDecoder: NSCoder) {
-		guard let decoded = aDecoder.decodeObject(forKey: PPMLDCUTI) as? IndexSet else {
+		guard let decoded = aDecoder.decodeObject(forKey: NSPasteboard.PasteboardType.PPMLDCUTI.rawValue) as? IndexSet else {
 			return nil
 		}
 		self.init(indexSet: decoded)

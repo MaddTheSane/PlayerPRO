@@ -118,14 +118,10 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		super.init()
 	}
 	
-	convenience init?(bookmarkData: Data, resolutionOptions: NSURL.BookmarkResolutionOptions = [], relativeURL: URL? = nil, date: Date? = Date()) {
-		do {
-			var unusedStale = false
-			let resolvedURL = try URL(resolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeTo: relativeURL, bookmarkDataIsStale: &unusedStale)!
-			self.init(url: resolvedURL, date: date ?? Date())
-		} catch _ {
-			return nil
-		}
+	convenience init(bookmarkData: Data, resolutionOptions: NSURL.BookmarkResolutionOptions = [], relativeURL: URL? = nil, date: Date? = Date()) throws {
+		var unusedStale = false
+		let resolvedURL = try URL(resolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeTo: relativeURL, bookmarkDataIsStale: &unusedStale)!
+		self.init(url: resolvedURL, date: date ?? Date())
 	}
 	
 	func checkIsReachableAndReturnError(error: NSErrorPointer) -> Bool {

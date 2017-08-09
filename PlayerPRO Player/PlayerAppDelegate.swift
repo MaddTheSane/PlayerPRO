@@ -825,7 +825,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		songTotalTime.integerValue = 0
 		songCurTime.integerValue = 0
 		
-		tableView.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: PPMLDCUTI), NSPasteboard.PasteboardType(rawValue: kUTTypeFileURL as String)])
+		tableView.registerForDraggedTypes([.PPMLDCUTI, NSPasteboard.PasteboardType(rawValue: kUTTypeFileURL as String)])
 		//tableView.register(forDraggedTypes: [PPMLDCUTI, kUTTypeFileURL as String]);
 		//self.paused = YES;
 		willChangeValue(forKey: kMusicListKVO)

@@ -280,9 +280,10 @@ private let kPlayerList = "Player List"
 			// Have all the new MusicListObjects use the same date
 			let currentDate = Date()
 			for bookData in bookmarkArray {
-				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .withoutUI, relativeURL: homeURL, date: currentDate) {
+				do {
+					let fullURL = try MusicListObject(bookmarkData: bookData, resolutionOptions: .withoutUI, relativeURL: homeURL, date: currentDate)
 					musicList.append(fullURL)
-				} else {
+				} catch {
 					if (selectedMusic == -1) {
 						//Do nothing
 					} else if (selectedMusic == musicList.count + 1) {
@@ -297,9 +298,10 @@ private let kPlayerList = "Player List"
 			// Have all the new MusicListObjects use the same date
 			let currentDate = Date()
 			for bookData in bookmarkArray {
-				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .withoutUI, date: currentDate) {
+				do {
+					let fullURL = try MusicListObject(bookmarkData: bookData, resolutionOptions: .withoutUI, date: currentDate)
 					musicList.append(fullURL)
-				} else {
+				} catch {
 					lostMusicCount += 1
 				}
 			}
