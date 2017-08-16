@@ -141,7 +141,7 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	var format = Int16()
 	if !reader.readInt16(endian: .big, &format) {
 		errmsg("Missing header")
-		throw MADErr.fileNotSupportedByThisPlug
+		throw SndAssetErrors.missingHeader
 	}
 	if format == firstSoundFormat {
 		var numModifiers = Int16()
@@ -154,25 +154,25 @@ internal func assetForSND(_ data: Data) throws -> URL {
 		}
 		if numModifiers != 1 {
 			errmsg("Bad header")
-			throw MADErr.fileNotSupportedByThisPlug
+			throw SndAssetErrors.badHeader
 		}
 		if modifierPart.modNumber != 5  {
 			errmsg("Unknown modNumber value \(modifierPart.modNumber)")
-			throw MADErr.fileNotSupportedByThisPlug
+			throw SndAssetErrors.unknownModNumber(modNum: modifierPart.modNumber)
 		}
 		if modifierPart.modInit & initStereo == 1 {
 			errmsg("Only mono channel supported")
-			throw MADErr.fileNotSupportedByThisPlug
+			throw SndAssetErrors.unsupportedConfiguration
 		}
 		if (modifierPart.modInit & initMACE3) == initMACE3 || (modifierPart.modInit & initMACE6) == initMACE6 {
 			errmsg("Compression not supported")
-			throw MADErr.fileNotSupportedByThisPlug
+			throw SndAssetErrors.unsupportedConfiguration
 		}
 	} else if format == secondSoundFormat {
 		var refCount = Int16()
 		if !reader.readInt16(endian: .big, &refCount) {
 			errmsg("Missing header")
-			throw MADErr.fileNotSupportedByThisPlug
+			throw SndAssetErrors.missingHeader
 		}
 	} else {
 		errmsg("Unknown format \(format)")
@@ -185,18 +185,17 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	var commandPart = SndCommand()
 	if !reader.readInt16(endian: .big, &numCommands) {
 		errmsg("Missing header")
-		throw MADErr.fileNotSupportedByThisPlug
+		throw SndAssetErrors.missingHeader
 	}
 	if numCommands == 0 {
 		errmsg("Bad header")
-		throw MADErr.fileNotSupportedByThisPlug
+		throw SndAssetErrors.badHeader
 	}
 	for _ in Int16(0) ..< numCommands {
 		if !reader.readUInt16(endian: .big, &commandPart.cmd) ||
 			!reader.readInt16(endian: .big, &commandPart.param1) ||
 			!reader.readInt32(endian: .big, &commandPart.param2) {
-			errmsg("Missing command")
-			throw MADErr.fileNotSupportedByThisPlug
+			throw SndAssetErrors.missingCommand
 		}
 		// "If soundCmd is contained within an 'snd ' resource, the high bit of the command must be set."
 		// Apple docs says this for bufferCmd as well, so we clear the bit.
@@ -205,14 +204,14 @@ internal func assetForSND(_ data: Data) throws -> URL {
 		case soundCmd, bufferCmd:
 			if header_offset != 0 {
 				errmsg("Duplicate commands")
-				throw MADErr.fileNotSupportedByThisPlug
+				throw SndAssetErrors.duplicateCommands
 			}
 			header_offset = Int(commandPart.param2)
 		case nullCmd:
 			break
 		default:
 			errmsg("Unknown command \(commandPart.cmd)")
-			throw MADErr.fileNotSupportedByThisPlug
+			throw SndAssetErrors.unknownCommand(cmd: commandPart.cmd)
 		}
 	}
 	
@@ -226,12 +225,12 @@ internal func assetForSND(_ data: Data) throws -> URL {
 		!reader.readUInt8(&header.encode) ||
 		!reader.readUInt8(&header.baseFrequency) {
 		errmsg("Missing header data")
-		throw MADErr.fileNotSupportedByThisPlug
+		throw SndAssetErrors.missingHeader
 	}
 	let sampleData = reader.read(Int(header.length))
 	if sampleData == nil {
 		errmsg("Missing samples")
-		throw MADErr.fileNotSupportedByThisPlug
+		throw SndAssetErrors.missingSamples
 	}
 	if header.encode != stdSH {
 		if header.encode == extSH {
@@ -240,6 +239,7 @@ internal func assetForSND(_ data: Data) throws -> URL {
 			errmsg("Compression not supported")
 		} else {
 			errmsg(String(format: "Unknown encoding 0x%02X", header.encode))
+			throw SndAssetErrors.unknownEncoding(enc: header.encode)
 		}
 		throw MADErr.fileNotSupportedByThisPlug
 	}
@@ -253,7 +253,7 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	let createStatus = ExtAudioFileCreate(url: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
 	if createStatus != noErr {
 		errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")
-		throw MADErr.writingErr
+		throw MADErr.writingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(createStatus), userInfo: nil)], convertToCocoa: false)!
 	}
 	
 	// Configure the AudioBufferList
@@ -272,14 +272,14 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	let writeStatus = ExtAudioFileWrite(audioFile!, header.length, &bufferList)
 	if writeStatus != noErr {
 		errmsg("ExtAudioFileWrite failed with status \(writeStatus)")
-		throw MADErr.writingErr
+		throw MADErr.writingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(writeStatus), userInfo: nil)], convertToCocoa: false)!
 	}
 	
 	// Finish up
 	let disposeStatus = ExtAudioFileDispose(audioFile!)
 	if disposeStatus != noErr {
 		errmsg("ExtAudioFileDispose failed with status \(disposeStatus)")
-		throw MADErr.writingErr
+		throw MADErr.writingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(disposeStatus), userInfo: nil)], convertToCocoa: false)!
 	}
 	
 	// Generate an AVAsset

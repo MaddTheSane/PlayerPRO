@@ -10130,7 +10130,7 @@
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10150,7 +10150,7 @@
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -11170,7 +11170,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Bridging-Header.h";
 				WRAPPER_EXTENSION = ppextimp;
@@ -11186,7 +11185,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Bridging-Header.h";
 				WRAPPER_EXTENSION = ppextimp;
@@ -11671,7 +11669,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -11694,7 +11692,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -11774,7 +11772,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks @executable_path/../../../../../../../Frameworks @loader_path/../../../../../../../Frameworks";
 				MACH_O_TYPE = mh_execute;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME}";
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
@@ -11802,7 +11799,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks @executable_path/../../../../../../../Frameworks @loader_path/../../../../../../../Frameworks";
 				MACH_O_TYPE = mh_execute;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME}";
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";

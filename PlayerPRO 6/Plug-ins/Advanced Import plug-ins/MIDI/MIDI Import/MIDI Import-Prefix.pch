@@ -14,7 +14,7 @@
 #endif
 
 #include <Carbon/Carbon.h>
-#include <QuickTime/QuickTime.h>
+//#include <QuickTime/QuickTime.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <tgmath.h>
 

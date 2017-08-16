@@ -222,10 +222,6 @@ import AudioToolbox
 	override class var autosavesInPlace: Bool {
 		return true
 	}
-	/*
-    override class func autosavesInPlace() -> Bool {
-        return true
-    }*/
 
 	func importMusicObject(_ theObj: PPMusicObject) {
 		if theMusic == nil {
