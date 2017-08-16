@@ -33,12 +33,9 @@ private func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 	do {
 		let vals = try urlA.resourceValues(forKeys: [.fileResourceIdentifierKey])
 		dat1 = vals.fileResourceIdentifier
-	} catch _ {
-		bothAreValid = false;
-	}
-	do {
-		let vals = try urlB.resourceValues(forKeys: [.fileResourceIdentifierKey])
-		dat2 = vals.fileResourceIdentifier
+		
+		let vals2 = try urlB.resourceValues(forKeys: [.fileResourceIdentifierKey])
+		dat2 = vals2.fileResourceIdentifier
 	} catch _ {
 		bothAreValid = false;
 	}
@@ -73,39 +70,43 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		let image = NSWorkspace.shared.icon(forFile: self.musicURL.path)
 		image.size = NSSize(width: 16, height: 16)
 		return image
-		}()
+	}()
 	#endif
 	
 	@objc private(set) lazy var fileName: String = {
 		do {
 			var values = try self.musicURL.resourceValues(forKeys: [URLResourceKey.localizedNameKey])
-			let retStr = values.localizedName!
+			guard let retStr = values.localizedName else {
+				throw NSError(domain: NSCocoaErrorDomain, code: -1, userInfo: nil)
+			}
 			return retStr
-		} catch {
+		} catch _ {
 			return self.musicURL.lastPathComponent
 		}
-		}()
+	}()
 	
 	@objc private(set) lazy var fileSize: UInt64 = {
 		var val: AnyObject? = nil;
 		do {
 			var values = try self.musicURL.resourceValues(forKeys: [URLResourceKey.totalFileSizeKey])
+			guard let val = values.totalFileSize else {
+				throw NSError(domain: NSCocoaErrorDomain, code: -1, userInfo: nil)
+			}
 			return UInt64(values.totalFileSize!)
 		} catch {
-			let manager = FileManager.default;
+			let manager = FileManager.default
 			do {
 				let theparam = try manager.attributesOfItem(atPath: self.musicURL.path)
-				if let tmpfilesize: Any = theparam[FileAttributeKey.size] {
-					let aFileSize = tmpfilesize as! NSNumber
-					return aFileSize.uint64Value
-				} else {
-					return 0
+				guard let tmpfilesize: Any = theparam[FileAttributeKey.size],
+					let aFileSize = tmpfilesize as? NSNumber else {
+						throw NSError(domain: NSCocoaErrorDomain, code: -1, userInfo: nil)
 				}
+				return aFileSize.uint64Value
 			} catch _ {
 				return 0
 			}
 		}
-		}()
+	}()
 	
 	init(url: URL, date: Date = Date()) {
 		if (url as NSURL).isFileReferenceURL() {
