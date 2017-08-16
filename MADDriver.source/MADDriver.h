@@ -9,7 +9,7 @@
 #ifndef PPMacho_MADDriver_h
 #define PPMacho_MADDriver_h
 
-#include "RDriver.h"
+#include <PlayerPROCore/RDriver.h>
 
 #ifdef WIN32
 #ifndef __DSOUND_INCLUDED__

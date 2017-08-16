@@ -47,7 +47,7 @@ OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, 
 /*****************************/
 
 #ifdef QD_HEADERS_ARE_PRIVATE
-extern void InitCursor();
+extern void InitCursor(void);
 #endif
 
 int main( int argc, char* argv[])
