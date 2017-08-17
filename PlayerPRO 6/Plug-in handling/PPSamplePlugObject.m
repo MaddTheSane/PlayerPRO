@@ -190,7 +190,7 @@ BOOL isOrderNotImplemented(NSError *err) {
 		return;
 	}
 	
-	if ([_plugCode hasUIForImport]) {
+	if (![_plugCode hasUIForImport]) {
 		PPSampleObject *aSampObj;
 		NSError *err;
 		if (![_plugCode importSampleAtURL:sampleURL sample:&aSampObj driver:driver error:&err]) {

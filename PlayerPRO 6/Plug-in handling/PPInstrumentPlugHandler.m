@@ -127,20 +127,23 @@
 	return MADCannotFindPlug;
 }
 
-- (MADErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType
+- (BOOL)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType error:(NSError**)error;
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if ([obj canImportFileAtURL:ref] == true) {
 			if (outType) {
 				*outType = obj.type;
 			}
-			return MADNoErr;
+			return YES;
 		}
 	}
 	if (outType) {
 		*outType = '!!!!';
 	}
-	return MADCannotFindPlug;
+	if (error) {
+		*error = [NSError errorWithDomain:PPMADErrorDomain code:MADCannotFindPlug userInfo:@{NSURLErrorKey: ref}];
+	}
+	return NO;
 }
 
 - (void)beginExportingInstrument:(PPInstrumentObject*)theIns ofType:(OSType)aType toURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler

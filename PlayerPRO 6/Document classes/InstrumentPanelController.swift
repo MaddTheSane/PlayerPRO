@@ -23,7 +23,8 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	@IBOutlet weak var instrumentOutline:	NSOutlineView!
 	
 	@IBOutlet weak var currentDocument: PPDocument!
-	weak var importer: PPInstrumentPlugHandler!
+	weak var instrumentImporter: PPInstrumentPlugHandler!
+	weak var sampleImporter: SamplePlugHandler!
 	weak var filterHandler: FilterPlugHandler!
 	weak var theDriver: PPDriver!
 	
@@ -46,40 +47,41 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		}
 	}
 	
-	func importSampleFromURL(_ sampURL: URL, makeUserSelectInstrument selIns: Bool = false) throws {
-		var theErr: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
+	func importSample(from sampURL: URL, makeUserSelectInstrument selIns: Bool = false) throws {
 		//TODO: handle selIns
-		var plugType: MADFourChar = 0;
-		var theOSErr = importer.identifyInstrumentFile(sampURL, type: &plugType)
-		if theOSErr != .noErr {
-			throw theOSErr
-		};
+		let plugType: MADFourChar = try sampleImporter.identifySampleFile(sampURL)
 		var theSamp: Int16 = 0;
 		var theIns: Int16  = 0;
 		
-		/*
-		InstrData *tmpInstr = &[currentDocument.wrapper internalMadMusicStruct]->fid[theIns];
-		sData **tmpsData = &[currentDocument.wrapper internalMadMusicStruct]->sample[theIns];
-		theOSErr = [importer importInstrumentOfType:plugType instrumentReference:tmpInstr sampleReference:tmpsData sample:&theSamp URL:sampURL plugInfo:NULL];
-		if (theOSErr != MADNoErr) {
-		if (theErr)
-		*theErr = PPCreateErrorFromMADErrorType(theOSErr);
-		
-		return NO;
-		} else {
-		if (theErr)
-		*theErr = nil;
-		
-		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:currentDocument.wrapper instrumentIndex:theIns];
-		[self replaceObjectInInstrumentsAtIndex:theIns withObject:insObj];
-		[instrumentView reloadData];
-		//(*curMusic)->hasChanged = TRUE;
-		return YES;
+		sampleImporter.beginImportingSample(type: plugType, URL: sampURL, driver: theDriver, parentDocument: currentDocument) { (err, obj) in
+			if let err = err {
+				self.currentDocument.presentError(err)
+			} else if let obj = obj {
+				self.currentDocument.theMusic.instruments.first?.add(obj)
+			} else {
+				
+			}
+
 		}
-		*/
-		throw theErr
 	}
 	
+	func importInstrument(from sampURL: URL, makeUserSelectInstrument selIns: Bool = false) throws {
+		//TODO: handle selIns
+		let plugType: MADFourChar = try instrumentImporter.identifyInstrumentFile(sampURL)
+		var theSamp: Int16 = 0;
+		var theIns: Int16  = 0;
+		
+		instrumentImporter.beginImportingInstrument(ofType: plugType, from: sampURL, driver: currentDocument.theDriver, parentDocument: currentDocument) { (err, obj) in
+			if let err = err {
+				self.currentDocument.presentError(err)
+			} else if let obj = obj {
+				self.replaceObjectInInstruments(at: Int(theIns), withObject: obj)
+				self.instrumentOutline.reloadData()
+			} else {
+				
+			}
+		}
+	}
 	
 	func exportInstrumentList(to outURL: URL) -> MADErr {
 		return currentDocument.theMusic.exportInstrumentList(to: outURL)
@@ -91,23 +93,35 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	
 	@IBAction func importInstrument(_ sender: AnyObject!) {
 		var fileDict = [String: [String]]()
-		for obj in importer {
+		for obj in instrumentImporter {
 			fileDict[obj.menuName] = obj.utiTypes
 		}
+		for obj in sampleImporter {
+			fileDict[obj.menuName] = obj.utiTypes
+		}
+
 		let openPanel = NSOpenPanel()
 		if let vc = OpenPanelViewController(openPanel: openPanel, instrumentDictionary:fileDict) {
 			vc.setupDefaults()
 			vc.beginOpenPanel(currentDocument.windowForSheet!, completionHandler: { (panelHandle: NSApplication.ModalResponse) -> Void in
-					if panelHandle.rawValue == NSFileHandlingPanelOKButton {
-						do {
-							try self.importSampleFromURL(openPanel.url!)
-						} catch let err as NSError {
-							NSAlert(error: err).beginSheetModal(for: self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
-								//do nothing
-								return
-							})
+				if panelHandle.rawValue == NSFileHandlingPanelOKButton {
+					do {
+						_ = try self.instrumentImporter.identifyInstrumentFile(openPanel.url!)
+						try self.importInstrument(from: openPanel.url!)
+					} catch let error as NSError {
+						if error.domain == PPMADErrorDomain && error.code == Int(MADErr.cannotFindPlug.rawValue) {
+							// Try sample importing
+							do {
+								try self.importSample(from: openPanel.url!)
+							} catch {
+								self.currentDocument.presentError(error)
+							}
+						} else {
+							//present error
+							self.currentDocument.presentError(error)
 						}
 					}
+				}
 			})
 		}
 	}
@@ -120,7 +134,10 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		super.awakeFromNib()
 		// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 		//instrumentOutline.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
-		theDriver = currentDocument.theDriver;
+		theDriver = currentDocument.theDriver
+		sampleImporter = (AppDelegate.shared as! AppDelegate).samplesHandler
+		instrumentImporter = (AppDelegate.shared as! AppDelegate).instrumentPlugHandler
+		filterHandler = (AppDelegate.shared as! AppDelegate).filterHandler
 	}
 	
 	
