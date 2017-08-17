@@ -22,7 +22,7 @@ class ImportWindowController: NSWindowController {
 	var resourceFile: FVResourceFile!
 	@objc dynamic var resourceArray = [FVResource]()
 	var resourceDictionary = [String: [FVResource]]()
-	private var modalSession: NSModalSession!
+	private var modalSession: NSApplication.ModalSession!
 	
 	@IBAction func importMusicObject(_ sender: AnyObject?) {
 		if let anObject = arrayCont.selectedObjects[0] as? FVResource {
@@ -47,7 +47,7 @@ class ImportWindowController: NSWindowController {
 				madLoad = LoadMADK
 				
 			default:
-				NSApplication.shared().endModalSession(modalSession)
+				NSApplication.shared.endModalSession(modalSession)
 				currentBlock(nil, MADErr.parametersErr)
 				
 				return
@@ -59,7 +59,7 @@ class ImportWindowController: NSWindowController {
 				})
 				
 				if errVal != .noErr {
-					NSApplication.shared().endModalSession(modalSession)
+					NSApplication.shared.endModalSession(modalSession)
 					currentBlock(nil, errVal)
 					
 					return
@@ -74,7 +74,7 @@ class ImportWindowController: NSWindowController {
 				guard errVal == .noErr else {
 					// The importers *should* have cleaned up after themselves...
 					madMusic.deallocate(capacity: 1)
-					NSApplication.shared().endModalSession(modalSession)
+					NSApplication.shared.endModalSession(modalSession)
 					currentBlock(nil, errVal)
 					
 					return
@@ -82,16 +82,16 @@ class ImportWindowController: NSWindowController {
 				
 				let ppMusic = PPMusicObject(musicStruct: madMusic, copy: false)
 				
-				NSApplication.shared().endModalSession(modalSession)
+				NSApplication.shared.endModalSession(modalSession)
 				currentBlock(ppMusic, nil)
 			} else {
-				NSApplication.shared().endModalSession(modalSession)
+				NSApplication.shared.endModalSession(modalSession)
 				currentBlock(nil, MADErr.readingErr)
 
 				return
 			}
 		} else {
-			NSApplication.shared().endModalSession(modalSession)
+			NSApplication.shared.endModalSession(modalSession)
 			currentBlock(nil, MADErr.unknownErr)
 			
 			return
@@ -99,7 +99,7 @@ class ImportWindowController: NSWindowController {
 	}
 	
 	@IBAction func cancelImport(_ sender: AnyObject?) {
-		NSApplication.shared().endModalSession(modalSession)
+		NSApplication.shared.endModalSession(modalSession)
 		currentBlock(nil, MADErr.userCanceledErr)
 	}
 
@@ -110,14 +110,14 @@ class ImportWindowController: NSWindowController {
 	func beginImportModalSession() {
 		
 		
-		modalSession = NSApplication.shared().beginModalSession(for: window!)
+		modalSession = NSApplication.shared.beginModalSession(for: window!)
 	}
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
 		// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-		dictionaryCont.bind(NSContentDictionaryBinding, to: self, withKeyPath: "resourceDictionary", options: nil)
+		dictionaryCont.bind(NSBindingName.contentDictionary, to: self, withKeyPath: "resourceDictionary", options: nil)
 		dictionaryCont.addObserver(self, forKeyPath: "selectionIndexes", options: .new, context: nil)
 		
 		dictionaryCont.setSelectionIndex(0)
@@ -144,7 +144,7 @@ class ImportWindowController: NSWindowController {
 					self.resourceArray = aValue
 				}
 
-				arrayCont.bind(NSContentArrayBinding, to: self, withKeyPath: "resourceArray", options: nil)
+				arrayCont.bind(NSBindingName.contentArray, to: self, withKeyPath: "resourceArray", options: nil)
 			}
 		} else {
 			super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)

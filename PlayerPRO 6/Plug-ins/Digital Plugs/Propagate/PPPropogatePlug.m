@@ -20,7 +20,7 @@
 	return self = [self init];
 }
 
-- (MADErr)runWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nullable)error
+- (BOOL)runWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nullable)error
 {
 	for (short track = 0; track < myPcmd->tracks; track ++) {
 		for (short row = 0; row < myPcmd->length; row ++) {
