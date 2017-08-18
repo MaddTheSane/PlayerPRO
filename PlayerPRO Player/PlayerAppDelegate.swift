@@ -1333,14 +1333,14 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						} else {
 							var errStr = "Unknown Error"
 							if let err = session.error {
-								errStr = String(describing: err)
+								errStr = err.localizedDescription
 							}
 							NSLog(errStr)
 							if self.isQuitting {
 								NSApplication.shared.reply(toApplicationShouldTerminate: true)
 							} else if let err = session.error {
 								DispatchQueue.main.async {
-									NSAlert(error: err).runModal()
+									NSApp.presentError(err)
 								}
 							}
 						}
