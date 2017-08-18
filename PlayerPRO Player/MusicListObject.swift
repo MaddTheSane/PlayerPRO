@@ -89,10 +89,10 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		var val: AnyObject? = nil;
 		do {
 			var values = try self.musicURL.resourceValues(forKeys: [URLResourceKey.totalFileSizeKey])
-			guard let val = values.totalFileSize else {
+			guard let val1 = values.totalFileSize else {
 				throw NSError(domain: NSCocoaErrorDomain, code: -1, userInfo: nil)
 			}
-			return UInt64(values.totalFileSize!)
+			return UInt64(val1)
 		} catch {
 			let manager = FileManager.default
 			do {

@@ -52,18 +52,13 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	return shared;
 }
 
-static NSString *pascalStringToNSString(StringPtr aStr)
+static NSString *pascalStringToNSString(StringPtr aStr, CFStringEncoding encoding)
 {
-	NSString *CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman));
+	// First try the passed-in encoding
+	NSString *CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, encoding));
 	if (CFaStr == nil) {
-		// Perhaps the string is in another encoding. Try using the system's encoding to test this theory.
-		CFStringEncoding MacCompatible = CFStringGetMostCompatibleMacStringEncoding(CFStringGetSystemEncoding());
-		CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, MacCompatible));
-		if (CFaStr == nil) {
-			// Maybe GetApplicationTextEncoding can get the right format?
-			MacCompatible = GetApplicationTextEncoding();
-			CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, MacCompatible));
-		}
+		// Perhaps the string is in another encoding. Try just using MacRoman.
+		CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman));
 	}
 	
 	// Final check to make sure we do have a string value.
@@ -120,6 +115,7 @@ static NSString *pascalStringToNSString(StringPtr aStr)
 	locHand = NULL;
 	
 	NSMutableArray<NSString*> *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
+	CFStringEncoding MacCompatible = CFStringGetMostCompatibleMacStringEncoding(CFStringGetSystemEncoding());
 	
 	for (int i = 0; i < theNo * 2; i += 2) {
 		StringPtr aStr, aStr2;
@@ -129,11 +125,16 @@ static NSString *pascalStringToNSString(StringPtr aStr)
 			break;
 		}
 		
-		NSString *CFaStr = pascalStringToNSString(aStr);
-		NSString *CFaStr2 = pascalStringToNSString(aStr2);
+		NSString *CFaStr = pascalStringToNSString(aStr, MacCompatible);
+		NSString *CFaStr2 = pascalStringToNSString(aStr2, MacCompatible);
 		NSURL *fullPath;
 		
 		NSURL *tmpPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)CFaStr, kCFURLHFSPathStyle, true));
+		if (![tmpPath checkResourceIsReachableAndReturnError:NULL]) {
+			CFaStr = pascalStringToNSString(aStr, kCFStringEncodingMacRoman);
+			CFaStr2 = pascalStringToNSString(aStr2, kCFStringEncodingMacRoman);
+			tmpPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)CFaStr, kCFURLHFSPathStyle, true));
+		}
 		fullPath = [tmpPath URLByAppendingPathComponent:CFaStr2];
 		if (![fullPath checkResourceIsReachableAndReturnError:NULL]) {
 			fullPath = nil;

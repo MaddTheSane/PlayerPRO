@@ -499,12 +499,21 @@ private let kPlayerList = "Player List"
 	
 	#if os(OSX)
 	func beginLoadingOfOldMusicList(at toOpen: URL, completionHandle theHandle: @escaping (_ theErr: Error?) -> Void) {
+		let modDate: Date? = {
+			do {
+				var values = try toOpen.resourceValues(forKeys: [.contentModificationDateKey])
+				return values.contentModificationDate
+			} catch _ {
+				return nil
+			}
+		}()
+		
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
 		conn.remoteObjectInterface = NSXPCInterface(with: PPSTImporterHelper.self)
 		
 		conn.resume()
 		
-		(conn.remoteObjectProxy as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData:[String : Any]?, error: Error?) -> Void in
+		(conn.remoteObjectProxy as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData: [String : Any]?, error: Error?) -> Void in
 			OperationQueue.main.addOperation({
 				defer {
 					conn.invalidate()
@@ -518,10 +527,10 @@ private let kPlayerList = "Player List"
 						let pathsAny = bookmarkData?["MusicPaths"] as? NSArray as? [String] else {
 							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Invalid data returned from helper", comment: "Invalid data returned from helper")])
 							theHandle(lolwut)
-							return;
+							return
 					}
 					// Have all the new MusicListObjects use the same date
-					let currentDate = Date()
+					let currentDate = modDate ?? Date()
 					let pathsURL = pathsAny.map({ (aPath) -> MusicListObject in
 						let tmpURL = URL(fileURLWithPath: aPath)
 						let tmpObj = MusicListObject(url: tmpURL, date: currentDate)
