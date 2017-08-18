@@ -26,9 +26,6 @@
 #else
 #include "RDriver.h"
 #include "MADFileUtils.h"
-#ifdef __BLOCKS__
-#include <dispatch/dispatch.h>
-#endif
 #endif
 #include "MTM.h"
 
@@ -126,31 +123,13 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 	theMAD->header->speed		= 6;
 	theMAD->header->numPat		= MTMFile->patNo + 1;
 	theMAD->header->numPointers	= MTMFile->positionNo;
-#ifdef __BLOCKS__
-	dispatch_apply(128, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		theMAD->header->oPointers[i] = positionPtr[i];
-	});
-#else
 	for (i = 0; i < 128; i++) {
 		theMAD->header->oPointers[i] = positionPtr[i];
 	}
-#endif
 	theMAD->header->numChn = MTMFile->trackback;
 	
 	theMAD->sets = (FXSets*)calloc(sizeof(FXSets), MAXTRACK);
 	
-#ifdef __BLOCKS__
-	dispatch_apply(MAXTRACK, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		theMAD->header->chanBus[i].copyId = i;
-		
-		if (i % 2 == 0)
-			theMAD->header->chanPan[i] = MAX_PANNING / 4;
-		else
-			theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING / 4;
-		
-		theMAD->header->chanVol[i] = MAX_VOLUME;
-	});
-#else
 	for (i = 0; i < MAXTRACK; i++) {
 		theMAD->header->chanBus[i].copyId = i;
 		
@@ -161,7 +140,6 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 		
 		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
-#endif
 	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
@@ -178,13 +156,7 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 	if (!theMAD->sample)
 		return MADNeedMemory;
 	
-#ifdef __BLOCKS__
-	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		theMAD->fid[i].firstSample = i * MAXSAMPLE;
-	});
-#else
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
-#endif
 	
 	for (i = 0; i < MTMFile->NOS; i++) {
 		for (x = 0; x < 22; x++) theMAD->fid[i].name[x] = instru[i]->name[x];
@@ -278,17 +250,11 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 
 static MADErr ExtractInfo(MADInfoRec *info, MTMDef *myFile)
 {
-#ifndef __BLOCKS__
 	short	i;
 	
 	for (i = 0; i < sizeof(myFile->songname); i++) {
 		info->internalFileName[i] = myFile->songname[i];
 	}
-#else
-	dispatch_apply(sizeof(myFile->songname), dispatch_get_global_queue(0, 0), ^(size_t i) {
-		info->internalFileName[i] = myFile->songname[i];
-	});
-#endif
 	info->internalFileName[21] = 0;
 	
 	strncpy(info->formatDescription, "MTM Plug", sizeof(info->formatDescription));

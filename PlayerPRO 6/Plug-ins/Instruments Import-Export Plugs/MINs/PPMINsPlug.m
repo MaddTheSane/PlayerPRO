@@ -38,14 +38,14 @@ static inline void ByteswapInstrument(InstrData *toswap)
 	MADBE16(&toswap->numSamples);
 	MADBE16(&toswap->volFade);
 	
-	dispatch_apply(12, dispatch_get_global_queue(0, 0), ^(size_t i) {
+	for (int i = 0; i < 12; i++) {
 		MADBE16(&toswap->pannEnv[i].pos);
 		MADBE16(&toswap->pannEnv[i].val);
 		MADBE16(&toswap->pitchEnv[i].pos);
 		MADBE16(&toswap->pitchEnv[i].val);
 		MADBE16(&toswap->volEnv[i].pos);
 		MADBE16(&toswap->volEnv[i].val);
-	});
+	}
 }
 
 static inline OSErr TestMINS(const InstrData *CC)
@@ -224,9 +224,9 @@ static inline OSErr TestMINS(const InstrData *CC)
 		NSMutableData *sDataData = [samp.data mutableCopy];
 		if (samp.amplitude == 16) {
 			short	*shortPtr = (short*)sDataData.mutableBytes;
-			dispatch_apply(sDataData.length / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
-				MADBE16(&shortPtr[ll]);
-			});
+			for (NSInteger i = 0; i < sDataData.length / 2; i++) {
+				MADBE16(&shortPtr[i]);
+			}
 		}
 		[fileHand writeData:sDataData];
 	}

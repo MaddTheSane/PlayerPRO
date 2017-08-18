@@ -30,9 +30,6 @@
 #ifdef _MAC_H
 #include <CoreFoundation/CoreFoundation.h>
 #else
-#ifdef __BLOCKS__
-#include <dispatch/dispatch.h>
-#endif
 typedef void *CFReadStreamRef;
 #endif
 
@@ -1618,9 +1615,9 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 			memcpy(dataCopy, curData.data, inOutCount);
 			if (curData.amp == 16) {
 				short *shortPtr = (short*)dataCopy;
-				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t ll) {
+				for (size_t ll = 0; ll < inOutCount / 2; ll++) {
 					MADBE16(&shortPtr[ll]);
-				});
+				}
 			}
 			CFWriteStreamWrite(curFile, (const UInt8*)dataCopy, inOutCount);
 			free(dataCopy);
@@ -1906,45 +1903,25 @@ static inline void ByteSwapsData(sData *toSwap)
 
 static inline void SwapFXSets(FXSets *set)
 {
-#ifndef __BLOCKS__
 	int y;
-#endif
 	MADBE16(&set->id);
 	MADBE16(&set->noArg);
 	MADBE16(&set->track);
 	MADBE32(&set->FXID);
-#ifdef __BLOCKS__
-	dispatch_apply(100, dispatch_get_global_queue(0, 0), ^(size_t y) {
-		MADBE32(&set->values[y]);
-	});
-#else
 	for (y = 0; y < 100; y++) {
 		MADBE32(&set->values[y]);
 	}
-#endif
 }
 
 static inline void ByteSwapInstrData(InstrData *toSwap)
 {
-#ifndef __BLOCKS__
 	int x;
-#endif
 	MADBE16(&toSwap->numSamples);
 	MADBE16(&toSwap->firstSample);
 	MADBE16(&toSwap->volFade);
 	
 	MADBE16(&toSwap->MIDI);
 	MADBE16(&toSwap->MIDIType);
-#ifdef __BLOCKS__
-	dispatch_apply(12, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
-		MADBE16(&toSwap->volEnv[x].pos);
-		MADBE16(&toSwap->volEnv[x].val);
-		MADBE16(&toSwap->pannEnv[x].pos);
-		MADBE16(&toSwap->pannEnv[x].val);
-		MADBE16(&toSwap->pitchEnv[x].pos);
-		MADBE16(&toSwap->pitchEnv[x].val);
-	});
-#else
 	for (x = 0; x < 12; x++) {
 		MADBE16(&toSwap->volEnv[x].pos);
 		MADBE16(&toSwap->volEnv[x].val);
@@ -1953,33 +1930,17 @@ static inline void ByteSwapInstrData(InstrData *toSwap)
 		MADBE16(&toSwap->pitchEnv[x].pos);
 		MADBE16(&toSwap->pitchEnv[x].val);
 	}
-#endif
 }
 
 static inline void ByteSwapMADSpec(MADSpec *toSwap)
 {
-#ifndef __BLOCKS__
 	int i;
-#endif
 	MADBE32(&toSwap->MAD);
 	MADBE16(&toSwap->speed);
 	MADBE16(&toSwap->tempo);
 	MADBE32(&toSwap->EPitch);
 	MADBE32(&toSwap->ESpeed);
 	
-#ifdef __BLOCKS__
-	dispatch_apply(10, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		MADBE32(&toSwap->globalEffect[i]);
-	});
-	
-	dispatch_apply(MAXTRACK * 4, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		MADBE32(&toSwap->chanEffect[i / 4][i % 4]);
-	});
-	
-	dispatch_apply(MAXTRACK, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		MADBE16(&toSwap->chanBus[i].copyId);
-	});	
-#else
 	for (i = 0; i < 10; i++) {
 		MADBE32(&toSwap->globalEffect[i]);
 	}
@@ -1991,7 +1952,6 @@ static inline void ByteSwapMADSpec(MADSpec *toSwap)
 	for (i = 0; i < MAXTRACK; i++) {
 		MADBE16(&toSwap->chanBus[i].copyId);
 	}
-#endif
 }
 
 static inline void ByteSwapPatHeader(PatHeader *toSwap)
@@ -2398,26 +2358,14 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 			
 			if (curData->amp == 16) {
 				short	*shortPtr = (short*)curData->data;
-#ifdef __BLOCKS__
-				dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
-					MADBE16(&shortPtr[ll]);
-				});
-#else
 				size_t 	ll;
 				for (ll = 0; ll < curData->size / 2; ll++)
 					MADBE16(&shortPtr[ll]);
-#endif
 			}
 		}
 	}
-#ifdef __BLOCKS__
-	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t ixi) {
-		MDriver->fid[ixi].firstSample = ixi * MAXSAMPLE;
-	});
-#else
 	for (i = 0; i < MAXINSTRU; i++)
 		MDriver->fid[i].firstSample = i * MAXSAMPLE;
-#endif
 	
 	// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
 	
@@ -2626,16 +2574,10 @@ MADErr MADMusicSaveCString(MADMusic *music, const char *cName, bool compressMAD)
 			memcpy(dataCopy, curData.data, inOutCount);
 			if (curData.amp == 16) {
 				short *shortPtr = (short*)dataCopy;
-#ifdef __BLOCKS__
-				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t ll) {
-					MADBE16(&shortPtr[ll]);
-				});
-#else
 				size_t ll;
 				for (ll = 0; ll < inOutCount / 2 ; ll++) {
 					MADBE16(&shortPtr[ll]);
 				}
-#endif
 			}
 			iWrite(inOutCount, dataCopy, curFile);
 			free(dataCopy);

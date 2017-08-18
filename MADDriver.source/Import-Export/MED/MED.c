@@ -73,16 +73,10 @@ static void byteSwapMMD0sample(MMD0sample *toSwap) {
 }
 
 static void byteSwapMMD0song(MMD0song *toSwap) {
-#ifdef __BLOCKS__
-	dispatch_apply(63, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		byteSwapMMD0sample(&toSwap->sample[i]);
-	});
-#else
 	int i;
 	for (i = 0; i < 63; i++) {
 		byteSwapMMD0sample(&toSwap->sample[i]);
 	}
-#endif
 	MADBE16(&toSwap->numblocks);
 	MADBE16(&toSwap->songlen);
 	MADBE16(&toSwap->deftempo);

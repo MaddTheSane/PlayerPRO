@@ -26,9 +26,6 @@
 #else
 #include "RDriver.h"
 #include "MADFileUtils.h"
-#ifdef __BLOCKS__
-#include <dispatch/dispatch.h>
-#endif
 #endif
 #include "MADH.h"
 
@@ -129,40 +126,23 @@ static inline void MOToldEnvRec(struct oldEnvRec *e) {
 }
 
 static void MOToldInstrData(struct oldInstrData *i) {
-#ifndef __BLOCKS__
 	int j;
-#endif
 	MADBE16(&i->numSamples);
 	MADBE16(&i->volFade);
-#ifdef __BLOCKS__
-	dispatch_apply(12, dispatch_get_global_queue(0, 0), ^(size_t j) {
-		MOToldEnvRec(&i->volEnv[j]);
-		MOToldEnvRec(&i->pannEnv[j]);
-	});
-#else
 	for(j = 0; j < 12; j++){
 		MOToldEnvRec(&i->volEnv[j]);
 		MOToldEnvRec(&i->pannEnv[j]);
 	}
-#endif
 }
 
 static void MOToldMADSpec(struct oldMADSpec *m){
-#ifndef __BLOCKS__
 	int i;
-#endif
 	MADBE32(&m->MAD);
 	MADBE16(&m->speed);
 	MADBE16(&m->tempo);
-#ifdef __BLOCKS__
-	dispatch_apply(64, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		MOToldInstrData(&m->fid[i]);
-	});
-#else
 	for (i = 0; i < 64; i++) {
 		MOToldInstrData(&m->fid[i]);
 	}
-#endif
 }
 
 MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
@@ -211,14 +191,8 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 		
 		return MADNeedMemory;
 	}
-#ifdef __BLOCKS__
-	dispatch_apply(MAXTRACK, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		theMAD->header->chanBus[i].copyId = i;
-	});
-#else
 	for (i = 0; i < MAXTRACK; i++)
 		theMAD->header->chanBus[i].copyId = i;
-#endif
 	strncpy(theMAD->header->infos, "Converted by PlayerPRO MAD-H Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	/**** Patterns *******/
