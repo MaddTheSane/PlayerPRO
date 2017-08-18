@@ -175,9 +175,9 @@ static inline OSErr TestMINS(const InstrData *CC)
 		memcpy(curData->data, sampData.bytes, inOutCount);
 		if (curData->amp == 16) {
 			short	*shortPtr = (short*)curData->data;
-			dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
+			for (int ll = 0; ll < curData->size / 2; ll++) {
 				MADBE16(&shortPtr[ll]);
-			});
+			}
 		}
 		
 		[InsHeader addSampleObject:[[PPSampleObject alloc] initWithSData:curData]];

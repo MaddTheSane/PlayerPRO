@@ -41,10 +41,10 @@ static MADErr MADReadMAD(MADMusic *MDriver, const void* MADPtr)
 		MDriver->header->MultiChanNo = 48;
 	
 	/**** PARTITION ****/
-	dispatch_apply(MAXPATTERN - MDriver->header->numPat, dispatch_get_global_queue(0, 0), ^(size_t iTmp) {
+	for (int iTmp = 0; iTmp < MAXPATTERN - MDriver->header->numPat; iTmp++) {
 		size_t i = iTmp + MDriver->header->numPat;
 		MDriver->partition[i] = NULL;
-	});
+	}
 	
 	for (i = 0; i < MDriver->header->numPat; i++) {
 		/** Lecture du header de la partition **/
@@ -156,9 +156,9 @@ static MADErr MADReadMAD(MADMusic *MDriver, const void* MADPtr)
 			OffSetToSample += inOutCount;
 		}
 	}
-	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t ixi) {
+	for (int ixi = 0; ixi < MAXINSTRU; ixi++) {
 		MDriver->fid[ixi].firstSample = ixi * MAXSAMPLE;
-	});
+	}
 	
 	// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
 	

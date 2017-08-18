@@ -194,9 +194,9 @@ static const dispatch_block_t initUTIArray = ^{
 - (void)setSets:(NSMutableArray<NSNumber*> *)sets
 {
 	_sets = sets;
-	dispatch_apply(100, dispatch_get_global_queue(0, 0), ^(size_t i) {
+	for (int i = 0; i < 100; i++) {
 		theSet.values[i] = [_sets[i] floatValue];
-	});
+	}
 }
 
 - (float)effectValueAtIndex:(NSInteger)idx

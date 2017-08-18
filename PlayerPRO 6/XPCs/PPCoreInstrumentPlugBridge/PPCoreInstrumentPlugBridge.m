@@ -179,8 +179,8 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 		NSDictionary *infoPlist = [preBundle infoDictionary];
 		id DictionaryTemp;
 		id canImportValue, canExportValue;
-		canImportValue = [infoPlist valueForKey:(__bridge NSString*)kMadPlugDoesImport];
-		canExportValue = [infoPlist valueForKey:(__bridge NSString*)kMadPlugDoesExport];
+		canImportValue = [infoPlist valueForKey:BRIDGE(NSString*, kMadPlugDoesImport)];
+		canExportValue = [infoPlist valueForKey:BRIDGE(NSString*, kMadPlugDoesExport)];
 		MADPlugCapabilities capabilities = PPMADCanDoNothing;
 		if (canImportValue || canExportValue) {
 			if (canImportValue) {
@@ -194,7 +194,7 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 			
 		} else {
 			OSType tempRetType = 0;
-			DictionaryTemp = [infoPlist valueForKey:(__bridge NSString*)kMadPlugModeKey];
+			DictionaryTemp = [infoPlist valueForKey:BRIDGE(NSString*, kMadPlugModeKey)];
 			if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 				tempRetType = NSStringToOSType(DictionaryTemp);
 			} else if ([DictionaryTemp isKindOfClass:numClass]) {

@@ -57,7 +57,6 @@
 			
 		case 16:
 		{
-#if 1
 			short	*SamplePtr = (short*)ourModData8 + (selRange.location / 2);
 			
 			prevtemp = *SamplePtr++;
@@ -72,26 +71,6 @@
 				temp = nexttemp;
 				SamplePtr++;
 			}
-#else
-			__block short *SamplePtr = (short*)theData->data + (SelectionStart / 2);
-			__block long prevtemp, temp;
-			prevtemp = *SamplePtr++;
-			temp = *SamplePtr++;
-			dispatch_apply(length / 2 - 1, dispatch_get_global_queue(0, 0), ^(size_t theSize) {
-				long	nexttemp, work;
-				
-				theSize++;
-				nexttemp = *SamplePtr--;
-				
-				work = ((prevtemp + nexttemp) + (temp * 6)) >> 3;
-				
-				*SamplePtr++ = work;
-				prevtemp = temp;
-				temp = nexttemp;
-				SamplePtr++;
-			});
-			
-#endif
 		}
 			break;
 	}
