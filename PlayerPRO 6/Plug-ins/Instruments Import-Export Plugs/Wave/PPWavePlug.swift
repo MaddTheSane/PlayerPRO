@@ -36,7 +36,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		if (res != noErr) {
 			myErr = .fileNotSupportedByThisPlug;
 		} else {
-			AudioFileClose(audioFile!);
+			AudioFileClose(audioFile!)
 		}
 		
 		return myErr == .noErr
@@ -46,7 +46,10 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		let newSample = PPSampleObject()
 		var fileRef1: ExtAudioFileRef? = nil
 		var iErr = ExtAudioFileOpenURL(url as NSURL, &fileRef1)
-		guard iErr == noErr, let fileRef = fileRef1 else {
+		guard iErr == noErr else {
+			throw MADErr.readingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)], convertToCocoa: false)!
+		}
+		guard let fileRef = fileRef1 else {
 			throw MADErr.readingErr
 		}
 		defer {
@@ -58,7 +61,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			
 			var asbdSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
 			iErr = ExtAudioFileGetProperty(fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
-			if iErr != noErr {
+			guard iErr == noErr else {
 				throw NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)
 			}
 			
@@ -86,7 +89,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			}
 			
 			iErr = ExtAudioFileSetProperty(fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: MemoryLayout<AudioStreamBasicDescription>.size, data: &realFormat)
-			if iErr != noErr {
+			guard iErr == noErr else {
 				throw NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)
 			}
 
@@ -103,13 +106,13 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 					
 					// client format is always linear PCM - so here we determine how many frames of lpcm
 					// we can read/write given our buffer size
-					var numFrames: UInt32 = (kSrcBufSize / realFormat.mBytesPerFrame);
+					var numFrames: UInt32 = kSrcBufSize / realFormat.mBytesPerFrame
 					
 					// printf("test %d\n", numFrames);
 					
 					err = ExtAudioFileRead(fileRef, &numFrames, fillBufList.unsafeMutablePointer);
-					if err != noErr {
-						throw NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)
+					guard err == noErr else {
+						throw NSError(domain: NSOSStatusErrorDomain, code: Int(err), userInfo: nil)
 					}
 					if numFrames == 0 {
 						// this is our termination condition

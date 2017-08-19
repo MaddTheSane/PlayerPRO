@@ -228,7 +228,7 @@ static const int finetune[16] = {
 							oldV = newV;
 						}
 					}
-					curData.data = [sampData copy];
+					curData.data = sampData;
 					reader += curData.data.length;
 				}
 			}
