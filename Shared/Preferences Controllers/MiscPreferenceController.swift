@@ -42,19 +42,19 @@ final class MiscPreferenceController: NSViewController, MASPreferencesViewContro
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		let defaults = UserDefaults.standard
-		addExt.state = defaults.bool(forKey: PPMAddExtension) ? NSControl.StateValue.onState : NSControl.StateValue.offState
-		madCompression.state = defaults.bool(forKey: PPMMadCompression) ? NSControl.StateValue.onState : NSControl.StateValue.offState
-		noLoadMixerFromFile.state = defaults.bool(forKey: PPMNoLoadMixerFromFiles) ? NSControl.StateValue.onState : NSControl.StateValue.offState
-		oscDrawLines.state = defaults.bool(forKey: PPMOscilloscopeDrawLines) ? NSControl.StateValue.onState : NSControl.StateValue.offState
+		addExt.state = defaults.bool(forKey: PPMAddExtension) ? .on : .off
+		madCompression.state = defaults.bool(forKey: PPMMadCompression) ? .on : .off
+		noLoadMixerFromFile.state = defaults.bool(forKey: PPMNoLoadMixerFromFiles) ? .on : .off
+		oscDrawLines.state = defaults.bool(forKey: PPMOscilloscopeDrawLines) ? .on : .off
 	}
 	
 	@IBAction func changePrefs(_ sender: AnyObject?) {
 		let defaults = UserDefaults.standard
 		
-		defaults[PPMAddExtension] = addExt.state == .onState
-		defaults[PPMMadCompression] = madCompression.state == .onState
-		defaults[PPMNoLoadMixerFromFiles] = noLoadMixerFromFile.state == .onState
-		defaults[PPMOscilloscopeDrawLines] = oscDrawLines.state == .onState
+		defaults[PPMAddExtension] = addExt.state == .on
+		defaults[PPMMadCompression] = madCompression.state == .on
+		defaults[PPMNoLoadMixerFromFiles] = noLoadMixerFromFile.state == .on
+		defaults[PPMOscilloscopeDrawLines] = oscDrawLines.state == .on
 		
 		NotificationCenter.default.post(name: .PPMiscPreferencesDidChange, object: self)
 	}

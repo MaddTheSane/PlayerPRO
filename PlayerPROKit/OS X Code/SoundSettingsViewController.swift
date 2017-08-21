@@ -228,10 +228,10 @@ open class SoundSettingsViewController: NSViewController {
 		self.stereoDelayActive = stereoDelayState;
 		self.surroundActive = sett.surround;
 		
-		oversampling.state = oversamplingState ? NSControl.StateValue.onState : NSControl.StateValue.offState
-		reverb.state = reverbState ? NSControl.StateValue.onState : NSControl.StateValue.offState
-		stereoDelay.state = stereoDelayState ? NSControl.StateValue.onState : NSControl.StateValue.offState
-		surround.state = sett.surround ? NSControl.StateValue.onState : NSControl.StateValue.offState
+		oversampling.state = oversamplingState ? .on : .off
+		reverb.state = reverbState ? .on : .off
+		stereoDelay.state = stereoDelayState ? .on : .off
+		surround.state = sett.surround ? .on : .off
 		
 		oversamplingNum.isEnabled = oversamplingState
 		reverbNum.isEnabled = reverbState
@@ -388,10 +388,10 @@ open class SoundSettingsViewController: NSViewController {
 	}
 	
 	@IBAction public func changeChecked(_ sender: AnyObject!) {
-		let reverbState = reverb.state == .offState ? false : true;
-		let stereoDelayState = stereoDelay.state == .offState ? false : true
-		let oversamplingState = oversampling.state == .offState ? false : true
-		let surroundState = surround.state == .offState ? false : true
+		let reverbState = reverb.state == .off ? false : true;
+		let stereoDelayState = stereoDelay.state == .off ? false : true
+		let oversamplingState = oversampling.state == .off ? false : true
+		let surroundState = surround.state == .off ? false : true
 		
 		oversamplingNum.isEnabled = oversamplingState
 		reverbNum.isEnabled = reverbState

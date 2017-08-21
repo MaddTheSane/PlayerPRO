@@ -84,11 +84,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	@objc dynamic var paused: Bool = true {
 		didSet {
 			if paused {
-				pauseButton.state = .onState
-				pauseDockMenuItem.state = .offState
+				pauseButton.state = .on
+				pauseDockMenuItem.state = .off
 			} else {
-				pauseButton.state = .offState
-				pauseDockMenuItem.state = .onState
+				pauseButton.state = .off
+				pauseDockMenuItem.state = .on
 			}
 		}
 	}
