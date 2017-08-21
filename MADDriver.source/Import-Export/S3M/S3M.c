@@ -717,7 +717,7 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 						}
 						else if (aCmd->note == 0xFE)
 						{
-							finalS3MCopy[0] = 254;
+							finalS3MCopy[0] = 0xFE;
 						}
 						else
 						{
