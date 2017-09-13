@@ -519,7 +519,7 @@ MADErr CheckMADFile(const char* name)
 		if (memcmp("MADK", charl, 4) == 0) {
 			err = MADNoErr;
 		} else {
-			err = MADIncompatibleFile;
+			err = MADFileNotSupportedByThisPlug;
 		}
 		
 		iClose(refNum);
