@@ -54,9 +54,9 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	
 	func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
 		if type == .PPMLDCUTI {
-			return NSKeyedArchiver.archivedData(withRootObject: self);
+			return NSKeyedArchiver.archivedData(withRootObject: self)
 		} else {
-			return nil;
+			return nil
 		}
 	}
 

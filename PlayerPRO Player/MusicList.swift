@@ -52,7 +52,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	func makeIterator() -> IndexingIterator<[MusicListObject]> {
-		return musicList.makeIterator();
+		return musicList.makeIterator()
 	}
 	
 	subscript (index: Int) -> MusicListObject {
@@ -176,7 +176,7 @@ private let kPlayerList = "Player List"
 			}
 		}
 		
-		let theIndex = IndexSet(integer: musicList.count);
+		let theIndex = IndexSet(integer: musicList.count)
 		self.willChange(.insertion, valuesAt: theIndex, forKey: kMusicListKVO)
 		musicList.append(obj)
 		self.didChange(.insertion, valuesAt: theIndex, forKey: kMusicListKVO)
@@ -191,24 +191,20 @@ private let kPlayerList = "Player List"
 	}
 	
 	#if os(iOS)
-	class func availablePlaylistUUIDs() -> [UUID]! {
+	class func availablePlaylistUUIDs() throws -> [UUID]! {
 		let fm = FileManager.default
-		let docDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+		let docDir = try fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 		let playlistDir = docDir.appendingPathComponent("Playlists")
-		do {
-			try fm.createDirectory(at: playlistDir, withIntermediateDirectories: true, attributes: nil)
-			let dirConts = try fm.contentsOfDirectory(at: playlistDir, includingPropertiesForKeys: nil, options: [])
-			var toRetUUIDs = [UUID]()
-			for url in dirConts {
-				if let fileUUIDStr = (url.lastPathComponent as NSString?)?.deletingPathExtension, let fileUUID = UUID(uuidString: fileUUIDStr) {
-					toRetUUIDs.append(fileUUID)
-				}
+		try fm.createDirectory(at: playlistDir, withIntermediateDirectories: true, attributes: nil)
+		let dirConts = try fm.contentsOfDirectory(at: playlistDir, includingPropertiesForKeys: nil, options: [])
+		var toRetUUIDs = [UUID]()
+		for url in dirConts {
+			if let fileUUIDStr = (url.lastPathComponent as NSString?)?.deletingPathExtension,
+				let fileUUID = UUID(uuidString: fileUUIDStr) {
+				toRetUUIDs.append(fileUUID)
 			}
-			return toRetUUIDs
-			
-		} catch {
-			return nil
 		}
+		return toRetUUIDs
 	}
 	
 	convenience init?(uuid: UUID) {
@@ -230,7 +226,7 @@ private let kPlayerList = "Player List"
 	// MARK: - NSCoding
 	
 	required init?(coder aDecoder: NSCoder) {
-		lostMusicCount = 0;
+		lostMusicCount = 0
 		if let BookmarkArray = aDecoder.decodeObject(forKey: kMusicListKey4) as? [MusicListObject] {
 			selectedMusic = aDecoder.decodeInteger(forKey: kMusicListLocation4)
 			#if os(iOS)
@@ -239,7 +235,7 @@ private let kPlayerList = "Player List"
 				}
 			#endif
 			for book in BookmarkArray {
-				if !book.checkIsReachableAndReturnError(error: nil) {
+				if !((try? book.checkIsReachable()) ?? false) {
 					if selectedMusic == -1 {
 						//Do nothing
 					} else if selectedMusic == musicList.count + 1 {
@@ -305,7 +301,7 @@ private let kPlayerList = "Player List"
 					lostMusicCount += 1
 				}
 			}
-			selectedMusic = -1;
+			selectedMusic = -1
 		} else {
 			return nil
 		}
@@ -423,24 +419,25 @@ private let kPlayerList = "Player List"
 		}
 	}
 	
+	@objc
 	var countOfMusicList: Int {
 		return musicList.count
 	}
 	
 	@objc(replaceObjectInMusicListAtIndex:withObject:)
 	func replaceObjectInMusicList(at index: Int, with object: MusicListObject) {
-		musicList[index] = object;
+		musicList[index] = object
 	}
 	
 	@objc(objectInMusicListAtIndex:)
 	func objectInMusicList(at index: Int) -> MusicListObject {
-		return musicList[index];
+		return musicList[index]
 	}
 	
 	@objc(removeMusicListAtIndexes:)
 	func remove(at idxSet: IndexSet) {
 		if idxSet.contains(selectedMusic) {
-			selectedMusic = -1;
+			selectedMusic = -1
 		}
 		
 		musicList.remove(indexes: idxSet)
@@ -472,7 +469,7 @@ private let kPlayerList = "Player List"
 	@objc(insertMusicLists:atIndexes:)
 	func insertMusicLists(_ anObj: [MusicListObject], at indexes: IndexSet) {
 		
-		for (i, idx) in zip(indexes, anObj) {
+		for (i, idx) in zip(indexes, anObj).reversed() {
 			musicList.insert(idx, at: i)
 		}
 	}

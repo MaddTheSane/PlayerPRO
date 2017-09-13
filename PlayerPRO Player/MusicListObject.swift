@@ -37,10 +37,10 @@ private func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 		let vals2 = try urlB.resourceValues(forKeys: [.fileResourceIdentifierKey])
 		dat2 = vals2.fileResourceIdentifier
 	} catch _ {
-		bothAreValid = false;
+		bothAreValid = false
 	}
-	if bothAreValid {
-		theSame = dat1?.isEqual(dat2) ?? false
+	if bothAreValid, let dat1 = dat1, let dat2 = dat2 {
+		theSame = dat1.isEqual(dat2)
 	}
 	return theSame
 }
@@ -86,7 +86,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}()
 	
 	@objc private(set) lazy var fileSize: UInt64 = {
-		var val: AnyObject? = nil;
+		var val: AnyObject? = nil
 		do {
 			var values = try self.musicURL.resourceValues(forKeys: [URLResourceKey.totalFileSizeKey])
 			guard let val1 = values.totalFileSize else {
@@ -110,7 +110,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	
 	init(url: URL, date: Date = Date()) {
 		if (url as NSURL).isFileReferenceURL() {
-			musicURL = url;
+			musicURL = url
 		} else {
 			let tmpURL = (url as NSURL).fileReferenceURL()
 			musicURL = tmpURL ?? url
@@ -160,7 +160,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 
 	override func isEqual(_ object: Any?) -> Bool {
 		if object == nil {
-			return false;
+			return false
 		}
 		
 		if let unwrapped = object as? MusicListObject {

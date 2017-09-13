@@ -62,6 +62,10 @@
 		<array>
 			<string>DF098C69-8463-40CD-BD50-A964BBCEFDFE</string>
 		</array>
+		<key>6EBC27C4-899C-11D8-84AE-0003936726FC</key>
+		<array>
+			<string>DF098C69-8463-40CD-BD50-A964BBCEFDFE</string>
+		</array>
 	</dict>
 	<key>CFPlugInUnloadFunction</key>
 	<string></string>
