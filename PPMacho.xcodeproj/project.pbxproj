@@ -649,6 +649,8 @@
 		55B7E667161D1DE1000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E668161D1DEB000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E669161D1DF3000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55B843311F23EC5000B5CCE6 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; };
+		55B843321F23EC5C00B5CCE6 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; };
 		55B8E1B71A3BB5790010CE33 /* MADDebugStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */; };
 		55B8E1B81A3BB57A0010CE33 /* MADDebugStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */; };
 		55BD5AF519ADBBF500D63F54 /* PPKPcmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */; };
@@ -835,6 +837,7 @@
 		55F3D3FF19C2AE8F008172D7 /* PPCrossFadePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3D3FE19C2AE8F008172D7 /* PPCrossFadePlug.m */; };
 		55F3D40219C2B139008172D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55F3D40419C2B139008172D7 /* InfoPlist.strings */; };
 		55F4C3E519763FDD000997BE /* MusicListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4C3E319763FDD000997BE /* MusicListObject.swift */; };
+		55F6DFD51F46156A00F655FA /* PPInstrumentPlugHandler+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F6DFD41F46156A00F655FA /* PPInstrumentPlugHandler+Swift.swift */; };
 		55F8C06D1C52A42E00F8A4BC /* ErrorWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F8C06C1C52A42E00F8A4BC /* ErrorWrappers.swift */; };
 		55F8C06E1C52A42E00F8A4BC /* ErrorWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F8C06C1C52A42E00F8A4BC /* ErrorWrappers.swift */; };
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
@@ -2858,6 +2861,7 @@
 		55F4287716A89A9C009013D8 /* PPMadCommandObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMadCommandObject.m; sourceTree = "<group>"; };
 		55F4C3E119763FDB000997BE /* PlayerPRO Player-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO Player-Bridging-Header.h"; sourceTree = "<group>"; };
 		55F4C3E319763FDD000997BE /* MusicListObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListObject.swift; sourceTree = "<group>"; };
+		55F6DFD41F46156A00F655FA /* PPInstrumentPlugHandler+Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PPInstrumentPlugHandler+Swift.swift"; sourceTree = "<group>"; };
 		55F8C06C1C52A42E00F8A4BC /* ErrorWrappers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorWrappers.swift; sourceTree = "<group>"; };
 		55F8C0771C52A4D200F8A4BC /* PlayerPROKit.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = PlayerPROKit.modulemap; sourceTree = "<group>"; };
 		55F8C0781C52AAAE00F8A4BC /* Spotlight.exp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.exports; path = Spotlight.exp; sourceTree = "<group>"; };
@@ -3512,6 +3516,7 @@
 			files = (
 				551E3B661AAB8D4200D3A530 /* CoreFoundation.framework in Frameworks */,
 				551E3B651AAB8D0000D3A530 /* AudioToolbox.framework in Frameworks */,
+				55B843311F23EC5000B5CCE6 /* SwiftAdditions.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3519,6 +3524,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B843321F23EC5C00B5CCE6 /* SwiftAdditions.framework in Frameworks */,
 				551E3B671AAB8D4300D3A530 /* CoreFoundation.framework in Frameworks */,
 				551E3B641AAB8CD000D3A530 /* Foundation.framework in Frameworks */,
 				55F1BE041975CD2E00AD2C03 /* PlayerPROCore.framework in Frameworks */,
@@ -4875,6 +4881,7 @@
 				55846BC619C3747900D26F94 /* PPInstrumentImporterCompatObject.m */,
 				5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */,
 				5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */,
+				55F6DFD41F46156A00F655FA /* PPInstrumentPlugHandler+Swift.swift */,
 				55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */,
 				55B5DF0519A25B6D0042E062 /* PPComplexImportPlugObject.h */,
 				55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */,
@@ -6483,10 +6490,13 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0900;
 				TargetAttributes = {
 					550FFADF17CEA4570003A2F3 = {
 						LastSwiftMigration = 0800;
+					};
+					551292D7163DD68500C2C639 = {
+						LastSwiftMigration = 0900;
 					};
 					5513EACD19A5AE4200BCC483 = {
 						CreatedOnToolsVersion = 6.0;
@@ -6524,6 +6534,11 @@
 					};
 					555E85381A041E810018FDBC = {
 						LastSwiftMigration = 0800;
+					};
+					5578C48017D9E8560057D11B = {
+						DevelopmentTeam = AZAE6TWF2Z;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
 					};
 					557DE61410E0884100177B4C = {
 						LastSwiftMigration = 0800;
@@ -6572,6 +6587,7 @@
 					};
 					55ADD23919B4F858005588B5 = {
 						CreatedOnToolsVersion = 6.0;
+						LastSwiftMigration = 0900;
 					};
 					55ADD24619B4F895005588B5 = {
 						CreatedOnToolsVersion = 6.0;
@@ -8013,6 +8029,7 @@
 				55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */,
 				552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */,
 				55DC597919A2E6B100212DD0 /* AppDelegate.swift in Sources */,
+				55F6DFD51F46156A00F655FA /* PPInstrumentPlugHandler+Swift.swift in Sources */,
 				55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */,
 				55323353167687A200076604 /* PPTimeFormatter.m in Sources */,
 				55C52CC81A8ABC5100E448F5 /* PPSamplePlugObject.m in Sources */,
@@ -9432,6 +9449,7 @@
 				);
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = PlayerPROKit/PlayerPROKit.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9458,6 +9476,7 @@
 				);
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = PlayerPROKit/PlayerPROKit.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9604,7 +9623,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)InstrumentPlug";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/PAT/PAT-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9629,7 +9648,7 @@
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)InstrumentPlug";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/PAT/PAT-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10026,7 +10045,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "iOS PlayerPRO Player/iOS Player-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -10120,7 +10138,7 @@
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10140,7 +10158,7 @@
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10159,6 +10177,7 @@
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME}";
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
 			};
@@ -10179,6 +10198,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME}";
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
 			};
@@ -10193,7 +10213,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -10201,7 +10223,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -10230,7 +10256,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
@@ -10239,7 +10265,8 @@
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 				WARNING_CFLAGS = "-Wno-gnu-variable-sized-type-not-at-end";
 			};
 			name = Release;
@@ -10347,15 +10374,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AZAE6TWF2Z;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO Player/PlayerPRO Player-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = Shared;
@@ -10368,16 +10399,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AZAE6TWF2Z;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO Player/PlayerPRO Player-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = Shared;
@@ -11153,7 +11188,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Bridging-Header.h";
 				WRAPPER_EXTENSION = ppextimp;
@@ -11169,7 +11203,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Bridging-Header.h";
 				WRAPPER_EXTENSION = ppextimp;
@@ -11190,7 +11223,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Release;
@@ -11209,7 +11242,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Debug;
@@ -11254,7 +11287,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -11262,7 +11297,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -11291,7 +11330,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DDEBUG $(inherited)";
@@ -11301,7 +11340,8 @@
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 				WARNING_CFLAGS = "-Wno-gnu-variable-sized-type-not-at-end";
 			};
 			name = Debug;
@@ -11322,6 +11362,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PPQuickView/PPQuickView-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source $(inherited)";
@@ -11344,6 +11385,7 @@
 				);
 				INFOPLIST_FILE = "PPQuickView/PPQuickView-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source $(inherited)";
@@ -11370,7 +11412,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Wave/Wave-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -11394,7 +11436,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Wave/Wave-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -11496,7 +11538,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 			};
 			name = Release;
@@ -11517,7 +11558,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 			};
 			name = Debug;
@@ -11603,8 +11643,6 @@
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Release;
@@ -11629,7 +11667,6 @@
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Debug;
@@ -11652,7 +11689,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -11675,7 +11712,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -11755,7 +11792,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks @executable_path/../../../../../../../Frameworks @loader_path/../../../../../../../Frameworks";
 				MACH_O_TYPE = mh_execute;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME}";
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
@@ -11783,7 +11819,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks @executable_path/../../../../../../../Frameworks @loader_path/../../../../../../../Frameworks";
 				MACH_O_TYPE = mh_execute;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME}";
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";

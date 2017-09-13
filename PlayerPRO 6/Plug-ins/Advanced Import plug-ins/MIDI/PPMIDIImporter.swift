@@ -10,10 +10,6 @@ import Cocoa
 import PlayerPROCore
 import PlayerPROKit
 
-private func ==(rhs: NSData, lhs: NSData) -> Bool {
-	return rhs.isEqualToData(lhs)
-}
-
 @objc(PPMIDIImporter) final public class MIDIImporter: NSObject, PPComplexImportPlugInterface {
 	
 	public convenience init(forPlugIn: ()) {
@@ -24,27 +20,27 @@ private func ==(rhs: NSData, lhs: NSData) -> Bool {
 		super.init()
 	}
 
-	public func beginImportOfURL(theURL: NSURL, withHandler handler: PPComplexImportHandler) {
+	public func beginImport(of theURL: URL, withHandler handler: @escaping PPComplexImportHandler) {
 		let aImp = MIDIImporterController.newWithLocation(theURL, handler: handler)
 		aImp.beginImportModalSession()
 	}
 	
-	public func canImportURL(theURL: NSURL) throws {
-		func getHeaderData() -> NSData {
-			let headerData: [Int8] = [0x4D, 0x54, 0x68, 0x64, 0, 0, 0, 6, 0]
-			return NSData(bytes: headerData, length: headerData.count)
+	public func canImport(_ theURL: URL) throws {
+		func getHeaderData() -> Data {
+			let headerData: [UInt8] = [0x4D, 0x54, 0x68, 0x64, 0, 0, 0, 6, 0]
+			return Data(headerData)
 		}
 		//var myErr = MADErr.NoErr;
 		do {
-			let aFile = try NSFileHandle(forReadingFromURL:theURL)
-			let fileData = aFile.readDataOfLength(9)
+			let aFile = try FileHandle(forReadingFrom: theURL)
+			let fileData = aFile.readData(ofLength: 9)
 			aFile.closeFile()
 			let headerData = getHeaderData()
 			
-			if fileData.isEqualToData(headerData) {
+			if fileData == headerData {
 				return
 			} else {
-				throw MADErr.FileNotSupportedByThisPlug
+				throw MADErr.fileNotSupportedByThisPlug
 			}
 		}
 	}

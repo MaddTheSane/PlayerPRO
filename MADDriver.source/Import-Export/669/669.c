@@ -33,10 +33,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef __BLOCKS__
-#include <dispatch/dispatch.h>
-#endif
-
 static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	SixSixNine	*the669;
@@ -106,19 +102,6 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 		free(theMAD->header);
 		return MADNeedMemory;
 	}
-#ifdef __BLOCKS__
-	dispatch_apply(MAXTRACK, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		theMAD->header->chanBus[i].copyId = i;
-		
-		if (i % 2 == 0) {
-			theMAD->header->chanPan[i] = MAX_PANNING / 4;
-		} else {
-			theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING / 4;
-		}
-		
-		theMAD->header->chanVol[i] = MAX_VOLUME;
-	});
-#else
 	for (i = 0; i < MAXTRACK; i++) {
 		theMAD->header->chanBus[i].copyId = i;
 		
@@ -129,7 +112,6 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 		
 		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
-#endif
 	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
@@ -150,13 +132,7 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 		return MADNeedMemory;
 	}
 	
-#ifdef __BLOCKS__
-	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		theMAD->fid[i].firstSample = i * MAXSAMPLE;
-	});
-#else
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
-#endif
 	
 	for(i = 0; i < the669->NOS; i++) {
 		temp = (uintptr_t) the669;

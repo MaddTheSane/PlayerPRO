@@ -142,7 +142,7 @@
 		theData.loopSize = (theData.loopSize * (newFreq / 100)) / (int) (theData.c2spd / 100);
 	} else {
 		[_parentWindow endSheet:self.window];
-		_currentBlock(MADUnknownErr);
+		_currentBlock([NSError errorWithDomain:PPMADErrorDomain code:MADUnknownErr userInfo:nil]);
 		return;
 	}
 	
@@ -161,13 +161,13 @@
 
 	
 	[_parentWindow endSheet:self.window];
-	_currentBlock(MADNoErr);
+	_currentBlock(nil);
 }
 
 - (IBAction)cancel:(id)sender
 {
 	[_parentWindow endSheet:self.window];
-	_currentBlock(MADUserCanceledErr);
+	_currentBlock([NSError errorWithDomain:PPMADErrorDomain code:MADUserCanceledErr userInfo:nil]);
 }
 
 - (instancetype)initWithWindow:(NSWindow *)window

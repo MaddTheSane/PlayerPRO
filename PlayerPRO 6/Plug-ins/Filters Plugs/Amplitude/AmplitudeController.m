@@ -9,6 +9,7 @@
 #import "AmplitudeController.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPSampleObject.h>
+#import <PlayerPROKit/PPErrors.h>
 
 @implementation AmplitudeController
 @synthesize theData;
@@ -85,13 +86,13 @@
 	theData.data = ourData;
 	
 	[_parentWindow endSheet:self.window];
-	_currentBlock(MADNoErr);
+	_currentBlock(nil);
 }
 
 - (IBAction)cancel:(id)sender
 {
 	[_parentWindow endSheet:self.window];
-	_currentBlock(MADUserCanceledErr);
+	_currentBlock([NSError errorWithDomain:PPMADErrorDomain code:MADUserCanceledErr userInfo:nil]);
 }
 
 #if 0

@@ -39,7 +39,7 @@ class MasterViewController: UITableViewController {
 		// Dispose of any resources that can be recreated.
 	}
 
-	func insertNewObject(_ sender: AnyObject) {
+	@objc func insertNewObject(_ sender: AnyObject) {
 		objects.insert(NSDate(), at: 0)
 		let indexPath = IndexPath(row: 0, section: 0)
 		self.tableView.insertRows(at: [indexPath], with: .automatic)
@@ -47,7 +47,7 @@ class MasterViewController: UITableViewController {
 
 	// MARK: - Segues
 
-	override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "showDetail" {
 		    let indexPath = self.tableView.indexPathForSelectedRow!
 		    let object = objects[indexPath.row] as! NSDate

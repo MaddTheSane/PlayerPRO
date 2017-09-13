@@ -21,9 +21,13 @@
 	return self = [self init];
 }
 
-- (MADErr)runWithPcmd:(inout Pcmd *)aPcmd driver:(PPDriver *)driver
+- (BOOL)runWithPcmd:(inout Pcmd *)aPcmd driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nullable)error
 {
-	return MADOrderNotImplemented;
+	if (error) {
+		*error = [NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil];
+	}
+	
+	return NO;
 }
 
 - (void)beginRunWithPcmd:(Pcmd *)aPcmd driver:(PPDriver *)driver parentWindow:(NSWindow*)document handler:(PPPlugErrorBlock)handle

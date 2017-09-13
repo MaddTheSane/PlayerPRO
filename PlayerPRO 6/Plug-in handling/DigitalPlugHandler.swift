@@ -10,6 +10,7 @@ import Cocoa
 import PlayerPROKit
 
 final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
+	typealias Index = Int
 	private(set) var digitalPlugs = [DigitalPlugInObject]()
 	
 	override init() {
@@ -89,7 +90,7 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
 		return digitalPlugs[index]
 	}
 	
-	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
+	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (digitalPlugs as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }

@@ -20,17 +20,17 @@ static inline void ByteSwapMADSpec(MADSpec *toSwap)
 	MADBE32(&toSwap->EPitch);
 	MADBE32(&toSwap->ESpeed);
 	
-	dispatch_apply(10, dispatch_get_global_queue(0, 0), ^(size_t i) {
+	for (int i = 0; i < 10; i++) {
 		MADBE32(&toSwap->globalEffect[i]);
-	});
+	}
 	
-	dispatch_apply(MAXTRACK * 4, dispatch_get_global_queue(0, 0), ^(size_t i) {
+	for (int i = 0; i < MAXTRACK * 4; i++) {
 		MADBE32(&toSwap->chanEffect[i / 4][i % 4]);
-	});
+	}
 	
-	dispatch_apply(MAXTRACK, dispatch_get_global_queue(0, 0), ^(size_t i) {
+	for (int i = 0; i < MAXTRACK; i++) {
 		MADBE16(&toSwap->chanBus[i].copyId);
-	});
+	}
 }
 
 static inline void ByteSwapPatHeader(PatHeader *toSwap)
@@ -49,7 +49,7 @@ static inline void ByteSwapInstrData(InstrData *toSwap)
 	
 	MADBE16(&toSwap->MIDI);
 	MADBE16(&toSwap->MIDIType);
-	dispatch_apply(12, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
+	for (int x = 0; x < 12; x++) {
 		MADBE16(&toSwap->volEnv[x].pos);
 		MADBE16(&toSwap->volEnv[x].val);
 		
@@ -58,7 +58,7 @@ static inline void ByteSwapInstrData(InstrData *toSwap)
 		
 		MADBE16(&toSwap->pitchEnv[x].pos);
 		MADBE16(&toSwap->pitchEnv[x].val);
-	});
+	}
 }
 
 static inline void ByteSwapFXSets(FXSets *toSwap)
@@ -67,9 +67,9 @@ static inline void ByteSwapFXSets(FXSets *toSwap)
 	MADBE16(&toSwap->id);
 	MADBE32(&toSwap->FXID);
 	MADBE16(&toSwap->noArg);
-	dispatch_apply(100, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
+	for (int i = 0; i < 100; i++) {
 		MADBE32(&toSwap->values[i]);
-	});
+	}
 }
 
 static inline void ByteSwapsData(sData *toSwap)

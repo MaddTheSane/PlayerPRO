@@ -30,14 +30,14 @@ NS_ASSUME_NONNULL_BEGIN
  *				The \c MADErr returned by the plug-in, or \c MADNoErr on success.
  *	@abstract	This block is passed to complex plug-ins.
  */
-typedef void (^PPComplexImportHandler)(PPMusicObject* __nullable inMus, MADErr inErr);
+typedef void (^PPComplexImportHandler)(PPMusicObject* __nullable inMus, NSError *__nullable inErr);
 /**
  *
  *	@param		error
  *				The \c MADErr returned by the plug-in, or \c MADNoErr on success.
  *	@abstract	This block is passed to plug-ins that need a UI for user interaction.
  */
-typedef void (^PPPlugErrorBlock)(MADErr error);
+typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
 
 /**
  *	@protocol	PPPlugin
@@ -100,7 +100,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *				as a failure.
  *	@sa			beginRunWithPcmd:driver:parentWindow:handler:
  */
-- (MADErr)runWithPcmd:(inout Pcmd*)aPcmd driver:(PPDriver *)driver;
+- (BOOL)runWithPcmd:(inout Pcmd*)aPcmd driver:(PPDriver *)driver error:(NSError**)error;
 
 @optional
 /**
@@ -147,7 +147,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *				as a failure.
  *	@sa			beginRunWithData:driver:parentWindow:handler:
  */
-- (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver;
+- (BOOL)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver error:(NSError**)error;
 
 @optional
 /**
@@ -206,7 +206,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *				as an error.
  *	@sa			beginImportSampleAtURL:driver:parentWindow:handler:
  */
-- (MADErr)importSampleAtURL:(NSURL*)sampleURL sample:(out PPSampleObject* __nullable* __nonnull)sample driver:(PPDriver*)driver;
+- (BOOL)importSampleAtURL:(NSURL*)sampleURL sample:(out PPSampleObject* __nullable* __nonnull)sample driver:(PPDriver*)driver error:(NSError**)error;
 
 @optional
 /**
@@ -226,7 +226,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *	@discussion	This is useful if there needs to be more options for importing a specific sample.
  *	@sa			importSampleAtURL:sample:driver:
  */
-- (void)beginImportSampleAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(void (^)(MADErr error, PPSampleObject *__nullable sample))handler;
+- (void)beginImportSampleAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(void (^)(NSError *error, PPSampleObject *__nullable sample))handler;
 
 /**
  *	@method		playSampleAtURL:driver:
@@ -265,7 +265,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *				as a failure.
  *	@sa			beginExportSample:toURL:driver:parentWindow:handler:
  */
-- (MADErr)exportSample:(PPSampleObject*)sample toURL:(NSURL*)sampleURL driver:(PPDriver*)driver;
+- (BOOL)exportSample:(PPSampleObject*)sample toURL:(NSURL*)sampleURL driver:(PPDriver*)driver error:(NSError**)error;
 
 @optional
 /**
@@ -321,7 +321,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *				as a failure.
  *	@sa			beginImportInstrumentAtURL:driver:parentWindow:handler:
  */
-- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject* __nullable* __nonnull)InsHeader driver:(PPDriver*)driver;
+- (BOOL)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject* __nullable* __nonnull)InsHeader driver:(PPDriver*)driver error:(NSError**)error;
 
 @optional
 
@@ -356,7 +356,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *				importing a specific instrument.
  *	@sa			importInstrumentAtURL:instrument:driver:
  */
-- (void)beginImportInstrumentAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(void (^)(MADErr error, PPInstrumentObject *__nullable sample))handler;
+- (void)beginImportInstrumentAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(void (^)(NSError *__nullable error, PPInstrumentObject *__nullable sample))handler;
 @end
 
 
@@ -382,7 +382,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
  *				as a failure.
  *	@sa			beginExportInstrument:toURL:driver:parentWindow:handler:
  */
-- (MADErr)exportInstrument:(PPInstrumentObject*)InsHeader toURL:(NSURL*)sampleURL driver:(PPDriver*)driver;
+- (BOOL)exportInstrument:(PPInstrumentObject*)InsHeader toURL:(NSURL*)sampleURL driver:(PPDriver*)driver error:(NSError**)error;
 
 @optional
 /**

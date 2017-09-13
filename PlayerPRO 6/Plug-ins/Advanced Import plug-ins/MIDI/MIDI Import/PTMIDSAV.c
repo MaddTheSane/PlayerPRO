@@ -659,14 +659,15 @@ void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header = (MADSpec*)MADPlugNewPtrClear(inOutCount, init);
 	if (theMAD->header == NULL) DebugStr("\pHeader: I NEED MEMORY !!! NOW !");
 	
-	dispatch_apply(MAXTRACK, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		if (i % 2 == 0)
+	for (int i = 0; i < MAXTRACK; i++) {
+		if (i % 2 == 0) {
 			theMAD->header->chanPan[i] = MAX_PANNING / 4;
-		else
+		} else {
 			theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING / 4;
+		}
 		
 		theMAD->header->chanVol[i] = MAX_VOLUME;
-	});
+	}
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
@@ -696,9 +697,9 @@ void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	if (!theMAD->sample)
 		return;
 	
-	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t i) {
+	for (int i = 0; i < MAXINSTRU; i++) {
 		theMAD->fid[i].firstSample = i * MAXSAMPLE;
-	});
+	}
 	
 	for (iT = 0; iT < cSamps; iT++) {
 		Str255		tStr;

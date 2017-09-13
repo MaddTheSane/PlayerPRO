@@ -5,9 +5,236 @@
 #include "dlsmac.h"
 #include "dls.h"
 #include "dls2.h"
-#include <QuickTime/QuickTime.h>
+//#include <QuickTime/QuickTime.h>
 
 #include "WAV.h"
+
+#pragma mark Old QuickTime Code!
+#pragma pack(push, 2)
+
+typedef Handle                          QTAtomContainer;
+typedef long                            QTAtom;
+typedef long                            QTAtomType;
+typedef long                            QTAtomID;
+
+typedef CF_ENUM(UInt8, NoteRequestMIDIChannel) {
+	kNoteRequestNoGM              = 1,    /* don't degrade to a GM synth */
+	kNoteRequestNoSynthType       = 2,    /* don't degrade to another synth of same type but different name */
+	kNoteRequestSynthMustMatch    = 4,    /* synthType must be a match, including kGMSynthComponentSubType */
+
+	kNoteRequestSpecifyMIDIChannel = 0x80
+};
+
+struct ToneDescription {
+	BigEndianOSType     synthesizerType;        /* synthesizer type */
+	Str31               synthesizerName;        /* name of instantiation of synth */
+	Str31               instrumentName;         /* preferred name for human use */
+	BigEndianLong       instrumentNumber;       /* inst-number used if synth-name matches */
+	BigEndianLong       gmNumber;               /* Best matching general MIDI number */
+};
+typedef struct ToneDescription          ToneDescription;
+
+typedef ComponentInstance               NoteAllocator;
+/*
+ The midiChannelAssignment field of this structure is used to assign a MIDI channel
+ when a NoteChannel is created from a NoteRequest.
+ A value of 0 indicates a MIDI channel has *not* been assigned
+ A value of (kNoteRequestSpecifyMIDIChannel | 1->16) is a MIDI channel assignment
+ 
+ This field requires QuickTime 5.0 or later and should be set to 0 for prior versions.
+ */
+//typedef UInt8                           NoteRequestMIDIChannel;
+struct NoteRequestInfo {
+	UInt8               flags;                  /* 1: dont accept GM match, 2: dont accept same-synth-type match */
+	NoteRequestMIDIChannel  midiChannelAssignment; /* (kNoteRequestSpecifyMIDIChannel | 1->16) as MIDI Channel assignement or zero - see notes above  */
+	BigEndianShort      polyphony;              /* Maximum number of voices */
+	BigEndianFixed      typicalPolyphony;       /* Hint for level mixing */
+};
+typedef struct NoteRequestInfo          NoteRequestInfo;
+struct NoteRequest {
+	NoteRequestInfo     info;
+	ToneDescription     tone;
+};
+typedef struct NoteRequest              NoteRequest;
+
+CF_ENUM(OSType) {
+	kSoftSynthComponentSubType    = 'ss  ',
+	kGMSynthComponentSubType      = 'gm  ',
+	kNoteAllocatorComponentType   = 'nota'
+
+	};
+#if 0
+}
+#endif
+
+typedef Handle                          AtomicInstrument;
+typedef Ptr                             AtomicInstrumentPtr;
+
+typedef ComponentInstance               MusicComponent;
+
+enum {
+	kParentAtomIsContainer        = 0
+};
+
+/*
+ The sampleBankFile field of this structure can be used to pass in a pointer to an FSSpec
+ that represents a SoundFont 2 or DLS file (otherwise set it to NULL ).
+ 
+ You then pass in a structure with this field set (all other fields should be zero) to
+ NARegisterMusicDevice:
+ - with synthType as kSoftSynthComponentSubType
+ - with name being used to return to the application the "name" of the synth
+ that should be used in the synthesiserName field of the ToneDescription structure
+ and is also used to retrieve a particular MusicComponent with the
+ NAGetRegisteredMusicDevice call
+ 
+ This call will create a MusicComponent of kSoftSynthComponentSubType, with the specified
+ sound bank as the sample data source.
+ 
+ This field requires QuickTime 5.0 or later and should be set to NULL for prior versions.
+ */
+struct SynthesizerConnections {
+	OSType              clientID;
+	OSType              inputPortID;            /* terminology death: this port is used to SEND to the midi synth */
+	OSType              outputPortID;           /* terminology death: this port receives from a keyboard or other control device */
+	long                midiChannel;            /* The system channel; others are configurable (or the nubus slot number) */
+	long                flags;
+	long                unique;                 /* unique id may be used instead of index, to getinfo and unregister calls */
+	FSSpecPtr           sampleBankFile;         /*  see notes above */
+	long                reserved2;              /* should be zero */
+};
+typedef struct SynthesizerConnections   SynthesizerConnections;
+
+
+struct SynthesizerDescription {
+	OSType              synthesizerType;        /* synthesizer type (must be same as component subtype) */
+	Str31               name;                   /* text name of synthesizer type */
+	unsigned long       flags;                  /* from the above enum */
+	unsigned long       voiceCount;             /* maximum polyphony */
+	
+	unsigned long       partCount;              /* maximum multi-timbrality (and midi channels) */
+	unsigned long       instrumentCount;        /* non gm, built in (rom) instruments only */
+	unsigned long       modifiableInstrumentCount; /* plus n-more are user modifiable */
+	unsigned long       channelMask;            /* (midi device only) which channels device always uses */
+	
+	unsigned long       drumPartCount;          /* maximum multi-timbrality of drum parts */
+	unsigned long       drumCount;              /* non gm, built in (rom) drumkits only */
+	unsigned long       modifiableDrumCount;    /* plus n-more are user modifiable */
+	unsigned long       drumChannelMask;        /* (midi device only) which channels device always uses */
+	
+	unsigned long       outputCount;            /* number of audio outputs (usually two) */
+	unsigned long       latency;                /* response time in µSec */
+	
+	unsigned long       controllers[4];         /* array of 128 bits */
+	unsigned long       gmInstruments[4];       /* array of 128 bits */
+	unsigned long       gmDrums[4];             /* array of 128 bits */
+};
+typedef struct SynthesizerDescription   SynthesizerDescription;
+
+struct InstSampleDescRec {
+	BigEndianOSType     dataFormat;
+	BigEndianShort      numChannels;
+	BigEndianShort      sampleSize;
+	BigEndianUnsignedFixed  sampleRate;
+	BigEndianShort      sampleDataID;
+	BigEndianLong       offset;                 /* offset within SampleData - this could be just for internal use*/
+	BigEndianLong       numSamples;             /* this could also just be for internal use, we'll see*/
+	
+	BigEndianLong       loopType;
+	BigEndianLong       loopStart;
+	BigEndianLong       loopEnd;
+	
+	BigEndianLong       pitchNormal;
+	BigEndianLong       pitchLow;
+	BigEndianLong       pitchHigh;
+};
+typedef struct InstSampleDescRec        InstSampleDescRec;
+
+CF_ENUM(OSType) {
+	kaiToneDescType               = 'tone',
+	kaiNoteRequestInfoType        = 'ntrq',
+	kaiKnobListType               = 'knbl',
+	kaiKeyRangeInfoType           = 'sinf',
+	kaiSampleDescType             = 'sdsc',
+	kaiSampleInfoType             = 'smin',
+	kaiSampleDataType             = 'sdat',
+	kaiSampleDataQUIDType         = 'quid',
+	kaiInstInfoType               = 'iinf',
+	kaiPictType                   = 'pict',
+	kaiWriterType                 = (int)0xA9777274/*'©wrt' */,
+	kaiCopyrightType              = (int)0xA9637079/*'©cpy' */,
+	kaiOtherStrType               = 'str ',
+	kaiInstrumentRefType          = 'iref',
+	kaiInstGMQualityType          = 'qual',
+	kaiLibraryInfoType            = 'linf',
+	kaiLibraryDescType            = 'ldsc'
+	
+};
+#if 0
+}
+#endif
+
+
+extern ComponentResult
+NAGetRegisteredMusicDevice(
+						   NoteAllocator             na,
+						   long                      index,
+						   OSType *                  synthType,
+						   Str31                     name,
+						   SynthesizerConnections *  connections,
+						   MusicComponent *          mc)                               AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_5;
+extern ComponentResult
+MusicGetDescription(
+					MusicComponent            mc,
+					SynthesizerDescription *  sd)                               AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_5;
+extern ComponentResult
+NAStuffToneDescription(
+					   NoteAllocator      na,
+					   long               gmNumber,
+					   ToneDescription *  td)                                      AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_5;
+extern ComponentResult
+MusicSetPartInstrumentNumber(
+							 MusicComponent   mc,
+							 long             part,
+							 long             instrumentNumber)                          AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_5;
+extern ComponentResult
+MusicGetPartAtomicInstrument(
+							 MusicComponent      mc,
+							 long                part,
+							 AtomicInstrument *  ai,
+							 long                flags)                                  AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_5;
+extern short
+QTCountChildrenOfType(
+					  QTAtomContainer   container,
+					  QTAtom            parentAtom,
+					  QTAtomType        childType)                                AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_9;
+extern QTAtom
+QTFindChildByIndex(
+				   QTAtomContainer   container,
+				   QTAtom            parentAtom,
+				   QTAtomType        atomType,
+				   short             index,
+				   QTAtomID *        id)                                       AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_9;
+extern OSErr
+QTLockContainer(QTAtomContainer container)                    AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_9;
+extern OSErr
+QTGetAtomDataPtr(
+				 QTAtomContainer   container,
+				 QTAtom            atom,
+				 long *            dataSize,
+				 Ptr *             atomData)                                 AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_9;
+extern QTAtom
+QTFindChildByID(
+				QTAtomContainer   container,
+				QTAtom            parentAtom,
+				QTAtomType        atomType,
+				QTAtomID          id,
+				short *           index)                                    AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_9;
+extern OSErr
+QTUnlockContainer(QTAtomContainer container)                  AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_9;
+#pragma pack(pop)
+
+#pragma mark - Old QuickTime Code end
 
 //NOTE: A lot of code was copied from MIDI-GM.c.  This file needs to be checked
 //to see if it still works like it did.
@@ -20,7 +247,7 @@ extern MADMusic			*curMusic;
 
 
 void ConvertInstrument(Byte *tempPtr, long sSize);
-short GenerateDLSFromBundle();
+FSIORefNum GenerateDLSFromBundle(void);
 void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai);
 void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst);
 

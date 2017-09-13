@@ -162,7 +162,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 	
 	@IBAction func selectUTI(_ sender: AnyObject?) {
 		guard let menuIte = sender as? NSMenuItem else {
-			NSBeep()
+			NSSound.beep()
 			return
 		}
 			let tag = menuIte.tag;
@@ -302,7 +302,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			}
 	}
 	
-	override init?(nibName: String?, bundle: Bundle?) {
+	override init(nibName: NSNib.Name?, bundle: Bundle?) {
 		openPanel = NSOpenPanel()
 		allowsMultipleSelectionOfTrackers = false
 		utiObjects = [OpenPanelViewItem]()
@@ -352,7 +352,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			})
 		
 		utiObjects = tmpUTIs
-		super.init(nibName: "PPOpenPanel", bundle: nil)
+		super.init(nibName: NSNib.Name(rawValue: "PPOpenPanel"), bundle: nil)
 		
 		openPanel.delegate = self
 	}
@@ -367,11 +367,11 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			if let anInt = OpenPanelsInUse.index(of: self) {
 				OpenPanelsInUse.remove(at: anInt)
 			}
-			resultHandle(result)
+			resultHandle(result.rawValue)
 		})
 	}
 
-	@objc func beginOpenPanel(_ parentWindow: NSWindow, completionHandler resultHandle: @escaping (_ result: Int) -> Void) {
+	@objc func beginOpenPanel(_ parentWindow: NSWindow, completionHandler resultHandle: @escaping (_ result: NSApplication.ModalResponse) -> Void) {
 		OpenPanelsInUse.append(self)
 		openPanel.beginSheetModal(for: parentWindow, completionHandler: { (result) -> Void in
 			if let anInt = OpenPanelsInUse.index(of: self) {

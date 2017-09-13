@@ -26,9 +26,6 @@
 #else
 #include "RDriver.h"
 #include "MADFileUtils.h"
-#ifdef __BLOCKS__
-#include <dispatch/dispatch.h>
-#endif
 #endif
 #include "MADI.h"
 
@@ -136,12 +133,6 @@ static inline void MOToldInstrData(struct oldInstrData *i)
 	MADBE16(&i->firstSample);
 	MADBE16(&i->numSamples);
 	MADBE16(&i->volFade);
-#ifdef __BLOCKS__
-	dispatch_apply(12, dispatch_get_global_queue(0, 0), ^(size_t j) {
-		MOToldEnvRec(&i->volEnv[j]);
-		MOToldEnvRec(&i->pannEnv[j]);
-	});
-#else
 	{
 		char j;
 		for(j = 0; j < 12; j++){
@@ -149,7 +140,6 @@ static inline void MOToldInstrData(struct oldInstrData *i)
 			MOToldEnvRec(&i->pannEnv[j]);
 		}
 	}
-#endif
 }
 
 static void MOToldMADSpec(oldMADSpec * m)
@@ -342,13 +332,7 @@ MADErr MADI2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 		theMAD->fid[d].vibRate = oldIns.vibRate;
 	}
 	
-#ifdef __BLOCKS__
-	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t ii) {
-		theMAD->fid[ii].firstSample = ii * MAXSAMPLE;
-	});
-#else
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
-#endif
 	
 	// Read Samples
 	
@@ -383,18 +367,11 @@ MADErr MADI2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 			memcpy(curData->data, MADPtr + OffSetToSample, curData->size);
 			OffSetToSample += curData->size;
 			if (curData->amp == 16) 			{
-#ifdef __BLOCKS__
-				short *shortPtr = (short*)curData->data;
-				dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
-					MADBE16(&shortPtr[ll]);
-				});
-#else
 				int		ll;
 				short	*shortPtr = (short*)curData->data;
 				
 				for (ll = 0; ll < curData->size/2; ll++)
 					MADBE16(&shortPtr[ll]);
-#endif
 			}
 		}
 	}

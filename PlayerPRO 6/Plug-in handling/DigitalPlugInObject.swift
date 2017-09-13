@@ -73,15 +73,18 @@ final class DigitalPlugInObject : PPPlugInObject {
 	}
 	
 	func beginCall(with myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentDocument theDoc: PPDocument, handler: @escaping PPPlugErrorBlock) {
-		let outError = plugCode.run(with: myPcmd, driver: driver)
-		if outError == .orderNotImplemented {
-			guard let UIFunc = plugCode.beginRun else {
-				handler(outError)
-				return
+		do {
+			try plugCode.run(with: myPcmd, driver: driver)
+			handler(nil)
+		} catch {
+			if isOrderNotImplemented(error) {
+				guard let UIFunc = plugCode.beginRun else {
+					handler(error)
+					return
+				}
+				UIFunc(myPcmd, driver, theDoc.windowForSheet!, handler)
 			}
-			UIFunc(myPcmd, driver, theDoc.windowForSheet!, handler)
-			return
+			handler(error)
 		}
-		handler(outError)
 	}
 }

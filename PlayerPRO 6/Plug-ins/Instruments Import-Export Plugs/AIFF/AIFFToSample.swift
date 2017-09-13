@@ -23,7 +23,7 @@ internal func readAIFF(at url: URL) throws -> PPSampleObject {
 	let realFormat = fileRef.fileDataFormat
 	
 	fileRef.clientDataFormat = {
-		let sampRate = clamp(value: ceil(realFormat.mSampleRate), minimum: 5000, maximum: 44100)
+		let sampRate = clamp(ceil(realFormat.mSampleRate), minimum: 5000, maximum: 44100)
 		let bytesPerSamp: UInt32
 		switch realFormat.mBitsPerChannel {
 		case 1...8:

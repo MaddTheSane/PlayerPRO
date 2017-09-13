@@ -15,10 +15,10 @@ import AudioToolbox
 @objc(PPDocument) class PPDocument: NSDocument {	
 	var instrumentList: InstrumentPanelController! = nil
 	var mainViewController: DocumentWindowController! = nil
-	dynamic let theDriver: PPDriver
-	dynamic private(set) var theMusic: PPMusicObject!
+	@objc dynamic let theDriver: PPDriver
+	@objc dynamic private(set) var theMusic: PPMusicObject!
 	
-	dynamic var musicName: String {
+	@objc dynamic var musicName: String {
 		get {
 			return theMusic.title
 		}
@@ -27,7 +27,7 @@ import AudioToolbox
 		}
 	}
 	
-	dynamic var musicInfo: String {
+	@objc dynamic var musicInfo: String {
 		get {
 			return theMusic.information
 		}
@@ -41,7 +41,7 @@ import AudioToolbox
 		return aType == MADNativeUTI
 	}
 	
-	override class func readableTypes() -> [String] {
+	override class var readableTypes: [String] {
 		struct StaticStorage {
 			static var readables: [String]?
 		}
@@ -65,7 +65,7 @@ import AudioToolbox
 		return toRet
 	}
 	
-	override class func writableTypes() -> [String] {
+	override class var writableTypes: [String] {
 		struct StaticStorage {
 			static var writables: [String]?
 		}
@@ -83,10 +83,10 @@ import AudioToolbox
 	// MARK: -
 	
 	override func makeWindowControllers() {
-		let docWinCon = DocumentWindowController(windowNibName: "PPDocument")
+		let docWinCon = DocumentWindowController(windowNibName: NSNib.Name(rawValue: "PPDocument"))
 		addWindowController(docWinCon)
 		docWinCon.currentDocument = self
-		instrumentList = InstrumentPanelController(windowNibName: "InsPanel")
+		instrumentList = InstrumentPanelController(windowNibName: NSNib.Name(rawValue: "InsPanel"))
 		addWindowController(instrumentList)
 		instrumentList.currentDocument = self
 		mainViewController = docWinCon
@@ -219,9 +219,9 @@ import AudioToolbox
 		return MADNativeUTI
 	}
 	
-    override class func autosavesInPlace() -> Bool {
-        return true
-    }
+	override class var autosavesInPlace: Bool {
+		return true
+	}
 
 	func importMusicObject(_ theObj: PPMusicObject) {
 		if theMusic == nil {

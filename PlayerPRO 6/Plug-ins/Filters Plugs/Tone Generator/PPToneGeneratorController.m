@@ -309,7 +309,7 @@
 - (IBAction)cancel:(id)sender
 {
 	[_parentWindow endSheet:self.window];
-	_currentBlock(MADUserCanceledErr);
+	_currentBlock([NSError errorWithDomain:PPMADErrorDomain code:MADUserCanceledErr userInfo:nil]);
 }
 
 - (IBAction)okay:(id)sender
@@ -328,7 +328,6 @@
 			theData.amplitude = 16;
 		}
 	}
-	char *resultPtr;
 	[self clearAudioPointers];
 	
 	switch (theData.amplitude) {
@@ -345,21 +344,17 @@
 	
 	if (theData.stereo)
 		audioLength *= 2;
-	NSMutableData *resultData = [[NSMutableData alloc] initWithLength:(theData.data.length - (self.selectionEnd - self.selectionStart) + audioLength)];
-	resultPtr = resultData.mutableBytes;
+	NSMutableData *resultData = [theData.data mutableCopy];
 	
-	memcpy(resultPtr, theData.data.bytes, self.selectionStart);
-	
-	if (theData.amplitude == 8)
-		memcpy(resultPtr + self.selectionStart, audio8Ptr, audioLength);
-	else
-		memcpy(resultPtr + self.selectionStart, audio16Ptr, audioLength);
-	
-	memcpy(resultPtr + self.selectionStart + audioLength, theData.data.bytes + self.selectionEnd, theData.data.length - self.selectionEnd);
+	if (theData.amplitude == 8) {
+		[resultData replaceBytesInRange:NSMakeRange(self.selectionStart, self.selectionEnd - self.selectionStart) withBytes:audio8Ptr length:audioLength];
+	} else {
+		[resultData replaceBytesInRange:NSMakeRange(self.selectionStart, self.selectionEnd - self.selectionStart) withBytes:audio16Ptr length:audioLength];
+	}
 	
 	theData.data = resultData;
 	[_parentWindow endSheet:self.window];
-	_currentBlock(MADNoErr);
+	_currentBlock(nil);
 }
 
 - (void)windowDidLoad

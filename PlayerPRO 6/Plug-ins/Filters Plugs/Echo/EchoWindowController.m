@@ -8,6 +8,7 @@
 
 #import "EchoWindowController.h"
 #include <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROKit/PPErrors.h>
 
 #define timeConvert 22254 //≈22KHZ
 
@@ -80,13 +81,13 @@
 	
 	theData.data = ourData;
 	[_parentWindow endSheet:self.window];
-	_currentBlock(MADNoErr);
+	_currentBlock(nil);
 }
 
 - (IBAction)cancel:(id)sender
 {
 	[_parentWindow endSheet:self.window];
-	_currentBlock(MADUserCanceledErr);
+	_currentBlock([NSError errorWithDomain:PPMADErrorDomain code:MADUserCanceledErr userInfo:nil]);
 }
 
 #if 0

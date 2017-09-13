@@ -96,7 +96,9 @@ class PlayerPROKit_Tests: XCTestCase {
 	}
 	
 	func testLoadingUnloadingMusicFromDriver() {
-		var drivSettings = MADDriverSettings.new()
+		//var drivSettings = MADDriverSettings.new()
+		var drivSettings = MADDriverSettings()
+		MADGetBestDriver(&drivSettings)
 		//drivSettings.driverMode = .NoHardwareDriver
 		do {
 			let driver = try PPDriver(library: ourLib!, settings: &drivSettings)

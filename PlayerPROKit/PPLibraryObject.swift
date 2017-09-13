@@ -14,15 +14,15 @@ import SwiftAdditions
 #endif
 
 /// A plug-in that PlayerPROKit can use to import and/or export tracker files.
-public final class PPLibraryObject: NSObject {
+@objc public final class PPLibraryObject: NSObject {
 	/// The menu name of the tracker importer. Might be localized.
-	public let menuName: String
+	@objc public let menuName: String
 	
 	/// The author of the tracker. Might be localized.
-	public let authorString: String
+	@objc public let authorString: String
 	
 	/// The bundle referencing the plug-in.
-	public let bundle: Bundle
+	@objc public let bundle: Bundle
 	
 	/// A tuple of the plug-in identifier.
 	///
@@ -32,22 +32,22 @@ public final class PPLibraryObject: NSObject {
 	/// A `String` of the plug-in identifier.
 	///
 	/// Historically, this was the file type that the Classic Mac OS would use to identify the file.
-	public let type: String
+	@objc public let type: String
 	
 	/// An array of UTIs that the plug-in can open.
-	public let UTITypes: [String]
+	@objc public let UTITypes: [String]
 	
 	/// Can the plug-in export to this tracker type?
-	public let canExport: Bool
+	@objc public let canExport: Bool
 	
 	/// Can the plug-in import the tracker type?
-	public let canImport: Bool
+	@objc public let canImport: Bool
 	
 	/// The version of the plug-in
-	public let plugVersion: UInt32
+	@objc public let plugVersion: UInt32
 	
 	/// The file extensions associated with this plug-in.
-	public var fileExtensions: [String] {
+	@objc public var fileExtensions: [String] {
 		var theOpenables = Set<String>()
 		for anUTI in UTITypes {
 			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassFilenameExtension)?.takeRetainedValue() as NSArray?,
@@ -62,7 +62,7 @@ public final class PPLibraryObject: NSObject {
 	
 	#if os(OSX)
 	/// the File Type `OSType` associated with this plug-in.
-	public var fileTypeCodes: [OSType]? {
+	@objc public var fileTypeCodes: [OSType]? {
 		var theOpenables = [String]()
 		for anUTI in UTITypes {
 			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassOSType)?.takeRetainedValue() as NSArray?,

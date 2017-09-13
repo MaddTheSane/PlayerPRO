@@ -42,34 +42,28 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 		return false
 	}
 	
-	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
-		do {
-			let rv = try FVResourceFile.resourceFileWithContentsOfURL(sampleURL)
-			for res in rv.types {
-				if res.type == "snd " {
-					for aRes in res.resources {
-						var errStr = MADErr.noErr
-						if let data = aRes.data, let asset = assetForSND(data, error: &errStr) {
-							let asample = try readAIFF(at: asset)
+	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) throws {
+		let rv = try FVResourceFile.resourceFileWithContentsOfURL(sampleURL)
+		for res in rv.types {
+			if res.type == "snd " {
+				for aRes in res.resources {
+					if let data = aRes.data {
+						let asset = try assetForSND(data)
+						let asample = try readAIFF(at: asset)
+						
+						asample.name = (sampleURL.lastPathComponent as NSString).deletingPathExtension
+						sample.pointee = asample
+						do {
+							try FileManager.default.removeItem(at: asset)
+						} catch {
 							
-							asample.name = (sampleURL.lastPathComponent as NSString).deletingPathExtension
-							sample.pointee = asample
-							do {
-								try FileManager.default.removeItem(at: asset)
-							} catch {
-								
-							}
-							
-							return errStr
 						}
+						
+						return
 					}
 				}
 			}
-			return .fileNotSupportedByThisPlug
-		} catch let error as MADErr {
-			return error
-		} catch {
-			return .readingErr
 		}
+		throw MADErr.fileNotSupportedByThisPlug
 	}
 }

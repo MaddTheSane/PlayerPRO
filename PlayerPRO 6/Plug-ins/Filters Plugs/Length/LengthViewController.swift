@@ -10,9 +10,9 @@ import Cocoa
 
 class LengthViewController: NSViewController {
 	@IBOutlet weak var samplesCount: NSTextField? = nil
-	dynamic var dataSize = 0
-	dynamic var samplesNumCount = 0
-	dynamic var isNewSize = false
+	@objc dynamic var dataSize = 0
+	@objc dynamic var samplesNumCount = 0
+	@objc dynamic var isNewSize = false
 	
 	
     @available(OSX 10.10, *)

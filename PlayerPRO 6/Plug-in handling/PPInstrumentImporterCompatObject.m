@@ -147,22 +147,22 @@
 	return MADOrderNotImplemented;
 }
 
-- (void)beginImportInstrumentAtURL:(NSURL *)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(void (^)(MADErr, PPInstrumentObject *))handler
+- (void)beginImportInstrumentAtURL:(NSURL *)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(void (^)(NSError*, PPInstrumentObject *))handler
 {
 	NSData *aDat = PPInstrumentToData([PPInstrumentObject new]);
 	[[self remoteConnectionProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL instrumentData:aDat instrumentNumber:0 reply:^(MADErr error, NSData *outInsData) {
 		if (error == MADNoErr) {
 			PPInstrumentObject *aRet = PPDataToInstrument(outInsData);
-			handler(error, aRet);
+			handler(nil, aRet);
 		} else {
-			handler(error, nil);
+			handler([NSError errorWithDomain:PPMADErrorDomain code:error userInfo:nil], nil);
 		}
 	}];
 }
 
 - (void)beginExportInstrument:(PPInstrumentObject *)anIns toURL:(NSURL *)sampURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(PPPlugErrorBlock)handler
 {
-	handler(MADOrderNotImplemented);
+	handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil]);
 }
 
 @end

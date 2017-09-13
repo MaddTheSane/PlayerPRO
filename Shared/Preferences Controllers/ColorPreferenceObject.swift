@@ -12,7 +12,8 @@ class ColorPreferenceObject: NSObject {
 	var color: NSColor
 	let colorIndex: Int
 	
-	init(Color aColor:NSColor, index idx: Int) {
+	@objc(initWithColor:index:)
+	init(color aColor:NSColor, index idx: Int) {
 		color = aColor
 		colorIndex = idx
 		

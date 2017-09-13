@@ -112,7 +112,7 @@ MADErr LoadMADK(const char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSe
 		MADBE16(&curIns->firstSample);
 		MADBE16(&curIns->volFade);
 		
-		dispatch_apply(12, dispatch_get_global_queue(0, 0), ^(size_t x) {
+		for (int x = 0; x < 12; x++) {
 			MADBE16(&curIns->volEnv[x].pos);
 			MADBE16(&curIns->volEnv[x].val);
 			
@@ -121,7 +121,7 @@ MADErr LoadMADK(const char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSe
 			
 			MADBE16(&curIns->pannEnv[x].pos);
 			MADBE16(&curIns->pannEnv[x].val);
-		});
+		}
 		
 		if (i != curIns->no) {
 			MadFile->fid[curIns->no] = *curIns;
@@ -185,17 +185,16 @@ MADErr LoadMADK(const char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSe
 			if (curData->amp == 16) {
 				short *shortPtr = (short*)curData->data;
 				
-				dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
+				for (int ll = 0; ll < curData->size / 2; ll++) {
 					MADBE16(&shortPtr[ll]);
-				});
+				}
 			}
-			
 		}
 	}
 	
-	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t i) {
+	for (int i = 0; i < MAXINSTRU; i++) {
 		MadFile->fid[i].firstSample = i * MAXSAMPLE;
-	});
+	}
 	
 	/*********************/
 	
@@ -213,9 +212,9 @@ MADErr LoadMADK(const char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSe
 				MADBE16(&MadFile->sets[alpha].noArg);
 				MADBE16(&MadFile->sets[alpha].track);
 				MADBE32(&MadFile->sets[alpha].FXID);
-				dispatch_apply(100, dispatch_get_global_queue(0, 0), ^(size_t y) {
+				for (int y = 0; y < 100; y++) {
 					MADBE32(&MadFile->sets[alpha].values[y]);
-				});
+				}
 				alpha++;
 			}
 		}
@@ -230,9 +229,9 @@ MADErr LoadMADK(const char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSe
 					MADBE16(&MadFile->sets[alpha].noArg);
 					MADBE16(&MadFile->sets[alpha].track);
 					MADBE32(&MadFile->sets[alpha].FXID);
-					dispatch_apply(100, dispatch_get_global_queue(0, 0), ^(size_t y) {
+					for (int y = 0; y < 100; y++) {
 						MADBE32(&MadFile->sets[alpha].values[y]);
-					});
+					}
 					alpha++;
 				}
 			}

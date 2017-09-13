@@ -10,6 +10,7 @@ import Cocoa
 import PlayerPROKit
 
 final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, Collection {
+	typealias Index = Int
 	private(set) var plugIns = [PPComplexImportPlugObject]()
 	
 	@nonobjc var startIndex: Int {
@@ -69,7 +70,7 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, Collection {
 		return plugIns[index]
 	}
 	
-	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
+	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (plugIns as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }

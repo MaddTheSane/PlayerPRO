@@ -43,10 +43,10 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	OffSetToSample += inOutCount;
 	
 	/**** PARTITION ****/
-	dispatch_apply(MAXPATTERN - toreturn->header->numPat, dispatch_get_global_queue(0, 0), ^(size_t iTmp) {
+	for (int iTmp = 0; iTmp < MAXPATTERN - toreturn->header->numPat; iTmp++) {
 		size_t i = iTmp + toreturn->header->numPat;
 		toreturn->partition[i] = NULL;
-	});
+	}
 	
 	for (i = 0; i < toreturn->header->numPat; i++) {
 		/** Lecture du header de la partition **/
@@ -164,9 +164,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			OffSetToSample += inOutCount;
 		}
 	}
-	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t ixi) {
+	for (int ixi = 0; ixi < MAXINSTRU; ixi++) {
 		toreturn->fid[ixi].firstSample = ixi * MAXSAMPLE;
-	});
+	}
 	
 	// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
 	
@@ -307,15 +307,15 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	
 	int i, x;
 	{
-		__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
+		InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
 		if (!tempInstrData) {
 			return MADNeedMemory;
 		}
 		memcpy(tempInstrData, [self internalMadMusicStruct]->fid, sizeof(InstrData) * MAXINSTRU);
 		
-		dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
+		for (int x = 0; x < MAXINSTRU; x++) {
 			ByteSwapInstrData(&tempInstrData[x]);
-		});
+		}
 		[outData writeData:[[NSData alloc] initWithBytesNoCopy:tempInstrData length:sizeof(InstrData)* MAXINSTRU]];
 	}
 	
@@ -336,11 +336,11 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 				
 				memcpy(dataData, curData->data, curData->size);
 				if (curData->amp == 16) {
-					__block short *shortPtr = (short*) dataData;
+					short *shortPtr = (short*) dataData;
 					
-					dispatch_apply(curData->size / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
+					for (int y = 0; y < curData->size / 2; y++) {
 						MADBE16(&shortPtr[y]);
-					});
+					}
 				}
 				[outData writeData:[[NSData alloc] initWithBytesNoCopy:dataData length:curData->size]];
 			}
@@ -694,7 +694,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	}
 	int		x, i;
 	long	inOutCount, filePos = 0;
-	__block InstrData *tempInstrData;
+	InstrData *tempInstrData;
 	{
 		tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
 		if (tempInstrData == NULL) {
@@ -715,9 +715,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		}
 		[fileData getBytes:tempInstrData range:NSMakeRange(filePos, inOutCount)];
 		
-		dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
+		for (int x = 0; x < MAXINSTRU; x++) {
 			ByteSwapInstrData(&tempInstrData[x]);
-		});
+		}
 		filePos += inOutCount;
 	}
 	
@@ -738,14 +738,14 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 					*theErr = PPCreateErrorFromMADErrorType(MADNeedMemory);
 				}
 				free(tempInstrData);
-				dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
+				for (int x = 0; x < MAXSAMPLE * MAXINSTRU; x++) {
 					if (tmpsData[x]) {
 						if (tmpsData[x]->data) {
 							free(tmpsData[x]->data);
 						}
 						free(tmpsData[x]);
 					}
-				});
+				}
 				
 				free(tmpsData);
 				return NO;
@@ -759,21 +759,20 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			// ** Read Sample DATA
 			
 			curData->data = malloc(curData->size);
-			if (curData->data == NULL)
-			{
+			if (curData->data == NULL) {
 				if (theErr) {
 					*theErr = PPCreateErrorFromMADErrorType(MADNeedMemory);
 				}
 				
 				free(tempInstrData);
-				dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
+				for (int x = 0; x < MAXSAMPLE * MAXINSTRU; x++) {
 					if (tmpsData[x]) {
 						if (tmpsData[x]->data) {
 							free(tmpsData[x]->data);
 						}
 						free(tmpsData[x]);
 					}
-				});
+				}
 				
 				free(tmpsData);
 				return NO;
@@ -783,11 +782,11 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			[fileData getBytes:curData->data range:NSMakeRange(filePos, inOutCount)];
 			filePos += inOutCount;
 			if (curData->amp == 16) {
-				__block short *shortPtr = (short*)curData->data;
+				short *shortPtr = (short*)curData->data;
 				
-				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
+				for (int y = 0; y < inOutCount / 2; y++) {
 					MADBE16(&shortPtr[y]);
-				});
+				}
 			}
 		}
 	}
@@ -797,14 +796,14 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	memcpy(currentMusic->fid, tempInstrData, inOutCount);
 	free(tempInstrData);
 	
-	dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
+	for (int x = 0; x < MAXSAMPLE * MAXINSTRU; x++) {
 		if (currentMusic->sample[x]) {
 			if (currentMusic->sample[x]->data) {
 				free(currentMusic->sample[x]->data);
 			}
 			free(currentMusic->sample[x]);
 		}
-	});
+	}
 	free(currentMusic->sample);
 	currentMusic->sample = tmpsData;
 	for (i = 0; i < MAXINSTRU; i++) {

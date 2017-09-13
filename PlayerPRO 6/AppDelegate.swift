@@ -27,13 +27,13 @@ private func CocoaDebugStr(_ line: Int16, file: UnsafePointer<Int8>?, text: Unsa
 
 	let alert = PPRunCriticalAlertPanel(title: errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr)
 	switch (alert) {
-	case NSAlertSecondButtonReturn:
+	case NSApplication.ModalResponse.alertSecondButtonReturn:
 		break
 		
-	case NSAlertThirdButtonReturn:
+	case NSApplication.ModalResponse.alertThirdButtonReturn:
 		assert(false, "Chose to go to debugger.")
 		
-	case NSAlertFirstButtonReturn:
+	case NSApplication.ModalResponse.alertFirstButtonReturn:
 		print("Choosing to fail!")
 		fallthrough
 	default:
@@ -114,7 +114,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		
 		let infoCont = PlugInInfoController.windowController(from: inf)
 		infoCont.window!.center()
-		NSApplication.shared().runModal(for: infoCont.window!)
+		NSApplication.shared.runModal(for: infoCont.window!)
 	}
 
 	func updatePlugInInfoMenu() {
@@ -348,7 +348,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 	
 	@discardableResult
 	func handleFile(_ theURL1: URL, ofType theUTI: String) -> Bool {
-		let sharedWorkspace = NSWorkspace.shared()
+		let sharedWorkspace = NSWorkspace.shared
 		var theURL = theURL1
 		if sharedWorkspace.type(theUTI, conformsToType: MADNativeUTI) {
 			// Document controller should automatically handle this.
@@ -383,7 +383,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 			
 			let retVal = PPRunInformationalAlertPanel(title: invExt, message: unwrapped, defaultButton: renameFile, alternateButton: openFile, otherButton: cancelOp);
 			switch (retVal) {
-			case NSAlertFirstButtonReturn:
+			case NSApplication.ModalResponse.alertFirstButtonReturn:
 				do {
 					let identRet = try madLib.identifyFile(at: theURL)
 					let info = try! madLib.information(from: theURL, type: identRet)
@@ -402,7 +402,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 					return false
 				}
 				
-			case NSAlertSecondButtonReturn:
+			case NSApplication.ModalResponse.alertSecondButtonReturn:
 				break;
 				
 				//case NSAlertThirdButtonReturn:
@@ -440,20 +440,21 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 					}
 					if canImport {
 						obj.beginImport(of: theURL1, withHandler: { (ourObject, anErr) -> Void in
-							if anErr == .noErr {
-								let aPPDoc = PPDocument(music: ourObject!)
+							if let anErr = anErr {
+								if PPErrorIsUserCancelled(anErr) == false {
+									NSAlert(error: anErr).runModal()
+								} else {
+									NSSound.beep()
+								}
+							} else if let ourObject = ourObject {
+								let aPPDoc = PPDocument(music: ourObject)
 								
 								self.addDocument(aPPDoc)
 								aPPDoc.makeWindowControllers()
 								aPPDoc.showWindows()
 								aPPDoc.displayName = ((theURL1.lastPathComponent as NSString).deletingPathExtension)
 							} else {
-								let nsErr = createNSError(from: anErr)!
-								if PPErrorIsUserCancelled(nsErr) == false {
-									NSAlert(error: nsErr).runModal()
-								} else {
-									NSBeep()
-								}
+								fatalError("Either ourObject or anErr should be nil, not both!")
 							}
 						})
 						return true
@@ -613,7 +614,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 					var err: NSError? = nil
 					let utiFile: String?
 					do {
-						utiFile = try NSWorkspace.shared().type(ofFile: filename)
+						utiFile = try NSWorkspace.shared.type(ofFile: filename)
 					} catch let error as NSError {
 						err = error
 						utiFile = nil
@@ -641,7 +642,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 	func application(_ theApplication: NSApplication, openFile filename: String) -> Bool {
 		let utiFile: String?
 		do {
-			utiFile = try NSWorkspace.shared().type(ofFile: filename)
+			utiFile = try NSWorkspace.shared.type(ofFile: filename)
 		} catch let err as NSError {
 			PPRunAlertPanel(title: "Error opening file", message: String(format:"Unable to open %@: %@", (filename as NSString).lastPathComponent, err.localizedFailureReason!))
 			return false

@@ -127,20 +127,23 @@
 	return MADCannotFindPlug;
 }
 
-- (MADErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType
+- (BOOL)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType error:(NSError**)error;
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if ([obj canImportFileAtURL:ref] == true) {
 			if (outType) {
 				*outType = obj.type;
 			}
-			return MADNoErr;
+			return YES;
 		}
 	}
 	if (outType) {
 		*outType = '!!!!';
 	}
-	return MADCannotFindPlug;
+	if (error) {
+		*error = [NSError errorWithDomain:PPMADErrorDomain code:MADCannotFindPlug userInfo:@{NSURLErrorKey: ref}];
+	}
+	return NO;
 }
 
 - (void)beginExportingInstrument:(PPInstrumentObject*)theIns ofType:(OSType)aType toURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
@@ -154,13 +157,13 @@
 	}
 	
 	if (aPlug == nil) {
-		handler(MADCannotFindPlug);
+		handler([NSError errorWithDomain:PPMADErrorDomain code:MADCannotFindPlug userInfo:nil]);
 	} else {
 		[aPlug beginExportInstrument:theIns toURL:aURL driver:driver parentDocument:document handler:handler];
 	}
 }
 
-- (void)beginImportingInstrumentOfType:(OSType)aType fromURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(MADErr errorCode, PPInstrumentObject *createdIns))handler
+- (void)beginImportingInstrumentOfType:(OSType)aType fromURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(NSError *errorCode, PPInstrumentObject *createdIns))handler
 {
 	PPInstrumentImporterObject *aPlug;
 	for (PPInstrumentImporterObject *plug in instrumentIEArray) {
@@ -171,7 +174,7 @@
 	}
 	
 	if (aPlug == nil) {
-		handler(MADCannotFindPlug, nil);
+		handler([NSError errorWithDomain:PPMADErrorDomain code:MADCannotFindPlug userInfo:nil], nil);
 	} else {
 		[aPlug beginImportInstrumentAtURL:aURL driver:driver parentDocument:document handler:handler];
 	}

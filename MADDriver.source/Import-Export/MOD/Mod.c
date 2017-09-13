@@ -33,10 +33,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef __BLOCKS__
-#include <dispatch/dispatch.h>
-#endif
-
 static short FoundNote(short Period)
 {
 	short	note = 0xFF;
@@ -452,19 +448,11 @@ static MADErr PPConvertMod2Mad(char* aMOD, long MODSize, MADMusic *theMAD, MADDr
 	theMAD->header->numPat = PatMax;
 	theMAD->header->numPointers = MODInt->numPointers;
 	
-#ifdef __BLOCKS__
-	dispatch_apply(128, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		theMAD->header->oPointers[i] = MODInt->oPointers[i];
-	});
-#else
 	for(i=0; i<128; i++)
 		theMAD->header->oPointers[i] = MODInt->oPointers[i];
-#endif
 	
 	theMAD->header->numChn = tracksNo;
 	
-	//TODO: dispatch this
-	//It's going to be tricky...
 	x = 1;
 	for (i = 0; i < MAXTRACK; i++) {
 		if (x > 0)

@@ -39,20 +39,20 @@ private let kPlayerList = "Player List"
 #endif
 
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, Collection {
-	private(set)	dynamic var musicList = [MusicListObject]()
+	@objc private(set)	dynamic var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount: UInt
-	dynamic var		selectedMusic: Int
+	@objc dynamic var		selectedMusic: Int
 	#if os(iOS)
-	dynamic var		name = "New Music List"
+	@objc dynamic var		name = "New Music List"
 	private(set)	var fileUUID = UUID()
 	#endif
 	
-	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
+	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 	
 	func makeIterator() -> IndexingIterator<[MusicListObject]> {
-		return musicList.makeIterator();
+		return musicList.makeIterator()
 	}
 	
 	subscript (index: Int) -> MusicListObject {
@@ -176,7 +176,7 @@ private let kPlayerList = "Player List"
 			}
 		}
 		
-		let theIndex = IndexSet(integer: musicList.count);
+		let theIndex = IndexSet(integer: musicList.count)
 		self.willChange(.insertion, valuesAt: theIndex, forKey: kMusicListKVO)
 		musicList.append(obj)
 		self.didChange(.insertion, valuesAt: theIndex, forKey: kMusicListKVO)
@@ -191,24 +191,20 @@ private let kPlayerList = "Player List"
 	}
 	
 	#if os(iOS)
-	class func availablePlaylistUUIDs() -> [UUID]! {
+	class func availablePlaylistUUIDs() throws -> [UUID]! {
 		let fm = FileManager.default
-		let docDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+		let docDir = try fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 		let playlistDir = docDir.appendingPathComponent("Playlists")
-		do {
-			try fm.createDirectory(at: playlistDir, withIntermediateDirectories: true, attributes: nil)
-			let dirConts = try fm.contentsOfDirectory(at: playlistDir, includingPropertiesForKeys: nil, options: [])
-			var toRetUUIDs = [UUID]()
-			for url in dirConts {
-				if let fileUUIDStr = (url.lastPathComponent as NSString?)?.deletingPathExtension, let fileUUID = UUID(uuidString: fileUUIDStr) {
-					toRetUUIDs.append(fileUUID)
-				}
+		try fm.createDirectory(at: playlistDir, withIntermediateDirectories: true, attributes: nil)
+		let dirConts = try fm.contentsOfDirectory(at: playlistDir, includingPropertiesForKeys: nil, options: [])
+		var toRetUUIDs = [UUID]()
+		for url in dirConts {
+			if let fileUUIDStr = (url.lastPathComponent as NSString?)?.deletingPathExtension,
+				let fileUUID = UUID(uuidString: fileUUIDStr) {
+				toRetUUIDs.append(fileUUID)
 			}
-			return toRetUUIDs
-			
-		} catch {
-			return nil
 		}
+		return toRetUUIDs
 	}
 	
 	convenience init?(uuid: UUID) {
@@ -230,7 +226,7 @@ private let kPlayerList = "Player List"
 	// MARK: - NSCoding
 	
 	required init?(coder aDecoder: NSCoder) {
-		lostMusicCount = 0;
+		lostMusicCount = 0
 		if let BookmarkArray = aDecoder.decodeObject(forKey: kMusicListKey4) as? [MusicListObject] {
 			selectedMusic = aDecoder.decodeInteger(forKey: kMusicListLocation4)
 			#if os(iOS)
@@ -239,7 +235,7 @@ private let kPlayerList = "Player List"
 				}
 			#endif
 			for book in BookmarkArray {
-				if !book.checkIsReachableAndReturnError(error: nil) {
+				if !((try? book.checkIsReachable()) ?? false) {
 					if selectedMusic == -1 {
 						//Do nothing
 					} else if selectedMusic == musicList.count + 1 {
@@ -280,9 +276,10 @@ private let kPlayerList = "Player List"
 			// Have all the new MusicListObjects use the same date
 			let currentDate = Date()
 			for bookData in bookmarkArray {
-				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .withoutUI, relativeURL: homeURL, date: currentDate) {
+				do {
+					let fullURL = try MusicListObject(bookmarkData: bookData, resolutionOptions: .withoutUI, relativeURL: homeURL, date: currentDate)
 					musicList.append(fullURL)
-				} else {
+				} catch {
 					if (selectedMusic == -1) {
 						//Do nothing
 					} else if (selectedMusic == musicList.count + 1) {
@@ -297,13 +294,14 @@ private let kPlayerList = "Player List"
 			// Have all the new MusicListObjects use the same date
 			let currentDate = Date()
 			for bookData in bookmarkArray {
-				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .withoutUI, date: currentDate) {
+				do {
+					let fullURL = try MusicListObject(bookmarkData: bookData, resolutionOptions: .withoutUI, date: currentDate)
 					musicList.append(fullURL)
-				} else {
+				} catch {
 					lostMusicCount += 1
 				}
 			}
-			selectedMusic = -1;
+			selectedMusic = -1
 		} else {
 			return nil
 		}
@@ -421,24 +419,25 @@ private let kPlayerList = "Player List"
 		}
 	}
 	
+	@objc
 	var countOfMusicList: Int {
 		return musicList.count
 	}
 	
 	@objc(replaceObjectInMusicListAtIndex:withObject:)
 	func replaceObjectInMusicList(at index: Int, with object: MusicListObject) {
-		musicList[index] = object;
+		musicList[index] = object
 	}
 	
 	@objc(objectInMusicListAtIndex:)
 	func objectInMusicList(at index: Int) -> MusicListObject {
-		return musicList[index];
+		return musicList[index]
 	}
 	
 	@objc(removeMusicListAtIndexes:)
 	func remove(at idxSet: IndexSet) {
 		if idxSet.contains(selectedMusic) {
-			selectedMusic = -1;
+			selectedMusic = -1
 		}
 		
 		musicList.remove(indexes: idxSet)
@@ -470,7 +469,7 @@ private let kPlayerList = "Player List"
 	@objc(insertMusicLists:atIndexes:)
 	func insertMusicLists(_ anObj: [MusicListObject], at indexes: IndexSet) {
 		
-		for (i, idx) in zip(indexes, anObj) {
+		for (i, idx) in zip(indexes, anObj).reversed() {
 			musicList.insert(idx, at: i)
 		}
 	}
@@ -497,12 +496,21 @@ private let kPlayerList = "Player List"
 	
 	#if os(OSX)
 	func beginLoadingOfOldMusicList(at toOpen: URL, completionHandle theHandle: @escaping (_ theErr: Error?) -> Void) {
+		let modDate: Date? = {
+			do {
+				var values = try toOpen.resourceValues(forKeys: [.contentModificationDateKey])
+				return values.contentModificationDate
+			} catch _ {
+				return nil
+			}
+		}()
+		
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
 		conn.remoteObjectInterface = NSXPCInterface(with: PPSTImporterHelper.self)
 		
 		conn.resume()
 		
-		(conn.remoteObjectProxy as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData:[String : Any]?, error: Error?) -> Void in
+		(conn.remoteObjectProxy as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData: [String : Any]?, error: Error?) -> Void in
 			OperationQueue.main.addOperation({
 				defer {
 					conn.invalidate()
@@ -516,10 +524,10 @@ private let kPlayerList = "Player List"
 						let pathsAny = bookmarkData?["MusicPaths"] as? NSArray as? [String] else {
 							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Invalid data returned from helper", comment: "Invalid data returned from helper")])
 							theHandle(lolwut)
-							return;
+							return
 					}
 					// Have all the new MusicListObjects use the same date
-					let currentDate = Date()
+					let currentDate = modDate ?? Date()
 					let pathsURL = pathsAny.map({ (aPath) -> MusicListObject in
 						let tmpURL = URL(fileURLWithPath: aPath)
 						let tmpObj = MusicListObject(url: tmpURL, date: currentDate)

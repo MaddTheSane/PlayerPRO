@@ -47,10 +47,10 @@ class DocumentWindowController: NSWindowController {
 
 	}
 	
-	override var windowNibName: String {
+	override var windowNibName: NSNib.Name? {
 		// Override returning the nib file name of the document
 		// If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-		return "PPDocument"
+		return NSNib.Name(rawValue: "PPDocument")
 	}
 	
 	@IBAction func showBoxEditor(_ sender: AnyObject!) {
@@ -70,12 +70,12 @@ class DocumentWindowController: NSWindowController {
 	}
 	
 	@IBAction func okayExportSettings(_ sender: AnyObject!) {
-		currentDocument.windowForSheet!.endSheet(exportWindow, returnCode: NSAlertFirstButtonReturn)
+		currentDocument.windowForSheet!.endSheet(exportWindow, returnCode: NSApplication.ModalResponse.alertFirstButtonReturn)
 		exportWindow.close()
 	}
 	
 	@IBAction func cancelExportSettings(_ sender: AnyObject!) {
-		currentDocument.windowForSheet!.endSheet(exportWindow, returnCode: NSAlertSecondButtonReturn)
+		currentDocument.windowForSheet!.endSheet(exportWindow, returnCode: NSApplication.ModalResponse.alertSecondButtonReturn)
 		exportWindow.close()
 	}
 	
@@ -85,7 +85,7 @@ class DocumentWindowController: NSWindowController {
 		
 		currentDocument.windowForSheet!.beginSheet(infoWindow, completionHandler: { (response) -> Void in
 			switch response {
-			case NSAlertFirstButtonReturn:
+			case NSApplication.ModalResponse.alertFirstButtonReturn:
 				let um = self.currentDocument.undoManager!
 				um.beginUndoGrouping()
 				
@@ -116,12 +116,12 @@ class DocumentWindowController: NSWindowController {
 	}
 	
 	@IBAction func okayMusicInfo(_ sender: AnyObject?) {
-		currentDocument.windowForSheet!.endSheet(infoWindow, returnCode: NSAlertFirstButtonReturn)
+		currentDocument.windowForSheet!.endSheet(infoWindow, returnCode: NSApplication.ModalResponse.alertFirstButtonReturn)
 		infoWindow.close()
 	}
 	
 	@IBAction func cancelMusicInfo(_ sender: AnyObject?) {
-		currentDocument.windowForSheet!.endSheet(infoWindow, returnCode: NSModalResponseCancel)
+		currentDocument.windowForSheet!.endSheet(infoWindow, returnCode: NSApplication.ModalResponse.cancel)
 		infoWindow.close()
 	}
 	
@@ -243,7 +243,7 @@ class DocumentWindowController: NSWindowController {
 		exportController.settingsFromDriverSettings(exportSettings)
 		
 		self.currentDocument.windowForSheet!.beginSheet(exportWindow, completionHandler: { (returnCode) -> Void in
-			if (returnCode == NSAlertFirstButtonReturn) {
+			if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
 				switch (expType) {
 				case -1:
 					let expObj = ExportObject(destination: theURL, exportBlock: { (theURL, errStr) -> MADErr in
@@ -253,7 +253,7 @@ class DocumentWindowController: NSWindowController {
 						self.currentDocument.theDriver.endExport()
 						return theErr
 					})
-					(NSApplication.shared().delegate as! AppDelegate).add(exportObject: expObj)
+					(NSApplication.shared.delegate as! AppDelegate).add(exportObject: expObj)
 					
 				case -2:
 					let expObj = ExportObject(destination: theURL, exportBlock: { (theURL, errStr) -> MADErr in
@@ -261,37 +261,37 @@ class DocumentWindowController: NSWindowController {
 						var theErr = MADErr.noErr;
 						func generateAVMetadataInfo(_ oldMusicName: String, oldMusicInfo: String) -> [AVMetadataItem] {
 							let titleName = AVMutableMetadataItem()
-							titleName.keySpace = AVMetadataKeySpaceCommon
-							titleName.key = AVMetadataCommonKeyTitle as NSString
+							titleName.keySpace = AVMetadataKeySpace.common
+							titleName.key = AVMetadataKey.commonKeyTitle as NSString
 							titleName.value = oldMusicName as NSString
 							
 							let dataInfo = AVMutableMetadataItem()
-							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData;
-							dataInfo.key = (AVMetadataQuickTimeUserDataKeySoftware) as NSString
+							dataInfo.keySpace = AVMetadataKeySpace.quickTimeUserData
+							dataInfo.key = AVMetadataKey.quickTimeUserDataKeySoftware as NSString
 							dataInfo.value = "PlayerPRO 6" as NSString
 							dataInfo.locale = Locale(identifier: "en")
 							
 							let musicInfoQTUser = AVMutableMetadataItem();
-							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
-							musicInfoQTUser.key = (AVMetadataQuickTimeUserDataKeyInformation) as NSString
+							musicInfoQTUser.keySpace = AVMetadataKeySpace.quickTimeUserData
+							musicInfoQTUser.key = AVMetadataKey.quickTimeUserDataKeyInformation as NSString
 							musicInfoQTUser.value = (oldMusicInfo) as NSString
 							musicInfoQTUser.locale = Locale.current
 
 							let musicNameQTUser = AVMutableMetadataItem()
-							musicNameQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
-							musicNameQTUser.key = (AVMetadataQuickTimeUserDataKeyFullName) as NSString
-							musicNameQTUser.value = (oldMusicName) as NSString
+							musicNameQTUser.keySpace = AVMetadataKeySpace.quickTimeUserData
+							musicNameQTUser.key = AVMetadataKey.quickTimeUserDataKeyFullName as NSString
+							musicNameQTUser.value = oldMusicName as NSString
 							musicNameQTUser.locale = Locale.current
 							
 							let musicInfoiTunes = AVMutableMetadataItem()
-							musicInfoiTunes.keySpace = AVMetadataKeySpaceiTunes
-							musicInfoiTunes.key = (AVMetadataiTunesMetadataKeyUserComment) as NSString
-							musicInfoiTunes.value = (oldMusicInfo) as NSString
+							musicInfoiTunes.keySpace = AVMetadataKeySpace.iTunes
+							musicInfoiTunes.key = AVMetadataKey.iTunesMetadataKeyUserComment as NSString
+							musicInfoiTunes.value = oldMusicInfo as NSString
 							
 							let musicInfoQTMeta = AVMutableMetadataItem();
-							musicInfoQTMeta.keySpace = AVMetadataKeySpaceQuickTimeMetadata
-							musicInfoQTMeta.key = (AVMetadataQuickTimeMetadataKeyInformation) as NSString
-							musicInfoQTMeta.value = (oldMusicInfo) as NSString
+							musicInfoQTMeta.keySpace = AVMetadataKeySpace.quickTimeMetadata
+							musicInfoQTMeta.key = AVMetadataKey.quickTimeMetadataKeyInformation as NSString
+							musicInfoQTMeta.value = oldMusicInfo as NSString
 							musicInfoQTMeta.locale = Locale.current
 							
 							return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser];
@@ -334,7 +334,7 @@ class DocumentWindowController: NSWindowController {
 							
 						}
 						session.outputURL = theURL;
-						session.outputFileType = AVFileTypeAppleM4A;
+						session.outputFileType = AVFileType.m4a;
 						session.metadata = metadataInfo;
 						let sessionWaitSemaphore = DispatchSemaphore(value: 0);
 						session.exportAsynchronously(completionHandler: { () -> Void in
@@ -353,7 +353,7 @@ class DocumentWindowController: NSWindowController {
 						}
 						//} catch _ {}
 					})
-					(NSApplication.shared().delegate as! AppDelegate).add(exportObject: expObj)
+					(NSApplication.shared.delegate as! AppDelegate).add(exportObject: expObj)
 					
 				default:
 					self.currentDocument.theDriver.isExporting = false
@@ -378,11 +378,11 @@ class DocumentWindowController: NSWindowController {
 		switch (tag) {
 		case -1:
 			//AIFF
-			savePanel.allowedFileTypes = [AVFileTypeAIFF]
+			savePanel.allowedFileTypes = [AVFileType.aiff.rawValue]
 			savePanel.title = "Export as AIFF audio"
 			
 			savePanel.beginSheetModal(for: self.currentDocument.windowForSheet!, completionHandler: { (result) -> Void in
-				if result == NSFileHandlingPanelOKButton {
+				if result.rawValue == NSFileHandlingPanelOKButton {
 					self.showExportSettingsWithExportType(-1, URL: savePanel.url!)
 				} else {
 					self.currentDocument.theDriver.endExport()
@@ -393,10 +393,10 @@ class DocumentWindowController: NSWindowController {
 			
 		case -2:
 			//MP4
-			savePanel.allowedFileTypes = [AVFileTypeAppleM4A]
+			savePanel.allowedFileTypes = [AVFileType.m4a.rawValue]
 			savePanel.title = "Export as MPEG-4 Audio"
 			savePanel.beginSheetModal(for: self.currentDocument.windowForSheet!, completionHandler: { (result) -> Void in
-				if result == NSFileHandlingPanelOKButton {
+				if result.rawValue == NSFileHandlingPanelOKButton {
 					self.showExportSettingsWithExportType(-2, URL: savePanel.url!)
 				} else {
 					self.currentDocument.theDriver.endExport()
@@ -407,7 +407,7 @@ class DocumentWindowController: NSWindowController {
 		default:
 			
 			if (tag > Int(globalMadLib.pluginCount) || tag < 0) {
-				NSBeep();
+				NSSound.beep();
 				self.currentDocument.theDriver.endExport()
 				
 				return;
@@ -418,7 +418,7 @@ class DocumentWindowController: NSWindowController {
 			savePanel.title = "Export as \(tmpObj.menuName)"
 			
 			savePanel.beginSheetModal(for: self.currentDocument.windowForSheet!, completionHandler: { (result) -> Void in
-				if result == NSFileHandlingPanelOKButton {
+				if result.rawValue == NSFileHandlingPanelOKButton {
 					let expObj = ExportObject(destination: savePanel.url!, exportBlock: { (theURL, errStr) -> MADErr in
 						var theErr = MADErr.noErr
 						do {
@@ -433,7 +433,7 @@ class DocumentWindowController: NSWindowController {
 						self.currentDocument.theDriver.endExport()
 						return theErr
 					})
-					(NSApplication.shared().delegate as! AppDelegate).add(exportObject: expObj)
+					(NSApplication.shared.delegate as! AppDelegate).add(exportObject: expObj)
 				} else {
 					self.currentDocument.theDriver.isExporting = false
 				}

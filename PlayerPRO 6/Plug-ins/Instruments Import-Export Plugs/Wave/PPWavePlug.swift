@@ -36,35 +36,38 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		if (res != noErr) {
 			myErr = .fileNotSupportedByThisPlug;
 		} else {
-			AudioFileClose(audioFile!);
+			AudioFileClose(audioFile!)
 		}
 		
 		return myErr == .noErr
 	}
 	
-	public func importSample(at url: URL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
+	public func importSample(at url: URL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) throws {
 		let newSample = PPSampleObject()
 		var fileRef1: ExtAudioFileRef? = nil
 		var iErr = ExtAudioFileOpenURL(url as NSURL, &fileRef1)
-		guard iErr == noErr, let fileRef = fileRef1 else {
-			return .readingErr
+		guard iErr == noErr else {
+			throw MADErr.readingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)], convertToCocoa: false)!
+		}
+		guard let fileRef = fileRef1 else {
+			throw MADErr.readingErr
 		}
 		defer {
 			ExtAudioFileDispose(fileRef)
 		}
 
-		if let mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) {
+		if var mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) as NSData? as Data? {
 			var realFormat = AudioStreamBasicDescription()
 			
 			var asbdSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
 			iErr = ExtAudioFileGetProperty(fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
-			if iErr != noErr {
-				return .unknownErr
+			guard iErr == noErr else {
+				throw NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)
 			}
 			
 			//Constrain the audio conversion to values supported by PlayerPRO
 			realFormat.mSampleRate = ceil(realFormat.mSampleRate)
-			realFormat.mSampleRate = clamp(value: realFormat.mSampleRate, minimum: 5000, maximum: 44100)
+			realFormat.mSampleRate = clamp(realFormat.mSampleRate, minimum: 5000, maximum: 44100)
 			realFormat.formatFlags = [.nativeEndian, .packed, .signedInteger]
 			switch realFormat.mBitsPerChannel {
 			case 8, 16:
@@ -86,8 +89,8 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			}
 			
 			iErr = ExtAudioFileSetProperty(fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: MemoryLayout<AudioStreamBasicDescription>.size, data: &realFormat)
-			if iErr != noErr {
-				return .unknownErr
+			guard iErr == noErr else {
+				throw NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)
 			}
 
 			readLoop: while true {
@@ -103,13 +106,13 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 					
 					// client format is always linear PCM - so here we determine how many frames of lpcm
 					// we can read/write given our buffer size
-					var numFrames: UInt32 = (kSrcBufSize / realFormat.mBytesPerFrame);
+					var numFrames: UInt32 = kSrcBufSize / realFormat.mBytesPerFrame
 					
 					// printf("test %d\n", numFrames);
 					
 					err = ExtAudioFileRead(fileRef, &numFrames, fillBufList.unsafeMutablePointer);
-					if err != noErr {
-						return .unknownErr
+					guard err == noErr else {
+						throw NSError(domain: NSOSStatusErrorDomain, code: Int(err), userInfo: nil)
 					}
 					if numFrames == 0 {
 						// this is our termination condition
@@ -119,7 +122,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 					tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
 					mutableData.append(tmpMutDat as Data)
 				} else {
-					return .needMemory
+					throw MADErr.needMemory
 				}
 			}
 			
@@ -129,47 +132,37 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			newSample.relativeNote = 0
 			newSample.amplitude = MADByte(realFormat.mBitsPerChannel)
 			newSample.isStereo = realFormat.mChannelsPerFrame == 2
-			newSample.data = mutableData as Data
+			newSample.data = mutableData
 			
 			asample.pointee = newSample
-			
-			return .noErr
 		} else {
-			return .needMemory
+			throw MADErr.needMemory
 		}
 	}
 	
-	public func exportSample(_ sample: PPSampleObject, to sampleURL: URL, driver: PPDriver) -> MADErr {
+	public func exportSample(_ sample: PPSampleObject, to sampleURL: URL, driver: PPDriver) throws {
 		func applyMetadata(to audFile: ExtAudioFile) {
-			
+			// TODO: implement!
 		}
 		let numChannels: UInt32 = sample.isStereo ? 2 : 1
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [.signedInteger, .packed], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
 		let realFormat = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
 		
-		do {
-			let audOut = try ExtAudioFile(createURL: sampleURL, fileType: .WAVE, streamDescription: &asbd, flags: [.eraseFile])
-			audOut.clientDataFormat = realFormat
+		let audOut = try ExtAudioFile(createURL: sampleURL, fileType: .WAVE, streamDescription: &asbd, flags: [.eraseFile])
+		audOut.clientDataFormat = realFormat
+		
+		try sample.data.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
+			let toWriteSize = sample.data.count
 			
-			try sample.data.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
-				let toWriteSize = sample.data.count
-				
-				var audBufList = AudioBufferList()
-				audBufList.mNumberBuffers = 1
-				audBufList.mBuffers.mNumberChannels = numChannels
-				audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
-				audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
-				
-				try audOut.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
-			}
+			var audBufList = AudioBufferList()
+			audBufList.mNumberBuffers = 1
+			audBufList.mBuffers.mNumberChannels = numChannels
+			audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
+			audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
 			
-			applyMetadata(to: audOut)
-		} catch let error as MADErr {
-			return error
-		} catch {
-			return .writingErr
+			try audOut.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 		}
 		
-		return .noErr
+		applyMetadata(to: audOut)
 	}
 }

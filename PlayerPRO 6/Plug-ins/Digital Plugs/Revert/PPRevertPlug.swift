@@ -20,7 +20,7 @@ public final class Revert: NSObject, PPDigitalPlugin {
 		super.init()
 	}
 
-	public func run(with myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver) -> MADErr {
+	public func run(with myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver) throws {
 		let srcCmd = PPKPcmd(myPcmd)
 		let maxLenth = srcCmd.length - 1
 		
@@ -30,7 +30,5 @@ public final class Revert: NSObject, PPDigitalPlugin {
 				replaceCommand(row: row, track: track, command: myCmdsrc, aPcmd: myPcmd)
 			}
 		}
-		
-		return .noErr
 	}
 }

@@ -9,6 +9,8 @@
 import Cocoa
 
 final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
+	
+	
 	let theIndexSet: IndexSet
 	
 	@objc init(indexSet: IndexSet) {
@@ -17,16 +19,16 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 		super.init()
 	}
 	
-	class func readableTypes(for pasteboard: NSPasteboard) -> [String] {
-		return [PPMLDCUTI]
+	class func readableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
+		return [.PPMLDCUTI]
 	}
 	
-	func writableTypes(for pasteboard: NSPasteboard) -> [String] {
-		return [PPMLDCUTI]
+	func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
+		return [.PPMLDCUTI]
 	}
-	
-	class func readingOptions(forType type: String, pasteboard: NSPasteboard) -> NSPasteboardReadingOptions {
-		if type == PPMLDCUTI {
+
+	class func readingOptions(forType type: NSPasteboard.PasteboardType, pasteboard: NSPasteboard) -> NSPasteboard.ReadingOptions {
+		if type == .PPMLDCUTI {
 			return .asKeyedArchive
 		} else {
 			return []
@@ -39,9 +41,9 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 		super.init()
 	}
 	
-	convenience required init?(pasteboardPropertyList propertyList: Any, ofType type: String) {
-		if type == PPMLDCUTI {
-			if let plistData = propertyList as? Data, let unArchive = NSKeyedUnarchiver(forReadingWith: plistData).decodeObject(forKey: PPMLDCUTI) as? IndexSet {
+	convenience required init?(pasteboardPropertyList propertyList: Any, ofType type: NSPasteboard.PasteboardType) {
+		if type == .PPMLDCUTI {
+			if let plistData = propertyList as? Data, let unArchive = NSKeyedUnarchiver(forReadingWith: plistData).decodeObject(forKey: NSPasteboard.PasteboardType.PPMLDCUTI.rawValue) as? IndexSet {
 				self.init(indexSet: unArchive)
 				return
 			}
@@ -50,11 +52,11 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 		return nil
 	}
 	
-	@objc func pasteboardPropertyList(forType type: String) -> Any? {
-		if type == PPMLDCUTI {
-			return NSKeyedArchiver.archivedData(withRootObject: self);
+	func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
+		if type == .PPMLDCUTI {
+			return NSKeyedArchiver.archivedData(withRootObject: self)
 		} else {
-			return nil;
+			return nil
 		}
 	}
 
@@ -62,11 +64,11 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	static let supportsSecureCoding: Bool = true
 	
 	func encode(with aCoder: NSCoder) {
-		aCoder.encode(theIndexSet, forKey: PPMLDCUTI)
+		aCoder.encode(theIndexSet, forKey: NSPasteboard.PasteboardType.PPMLDCUTI.rawValue)
 	}
 	
 	convenience required init?(coder aDecoder: NSCoder) {
-		guard let decoded = aDecoder.decodeObject(forKey: PPMLDCUTI) as? IndexSet else {
+		guard let decoded = aDecoder.decodeObject(forKey: NSPasteboard.PasteboardType.PPMLDCUTI.rawValue) as? IndexSet else {
 			return nil
 		}
 		self.init(indexSet: decoded)

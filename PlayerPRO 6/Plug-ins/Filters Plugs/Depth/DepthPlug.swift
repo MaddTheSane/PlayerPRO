@@ -21,8 +21,8 @@ final public class Depth: NSObject, PPFilterPlugin {
 		super.init()
 	}
 	
-	public func run(withData theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver) -> MADErr {
-		return .orderNotImplemented
+	public func run(withData theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver) throws {
+		throw MADErr.orderNotImplemented
 	}
 	
 	public func beginRun(withData theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver, parentWindow document: NSWindow, handler handle: @escaping PPPlugErrorBlock) {

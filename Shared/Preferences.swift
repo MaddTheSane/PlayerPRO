@@ -19,7 +19,7 @@ extension TagCoupling {
 final class Preferences: MASPreferencesWindowController {
 	
 	class func newPreferenceController() -> Self {
-		var tmpControllers = [NSViewController]()
+		var tmpControllers = [NSViewController & MASPreferencesViewController]()
 		
 		tmpControllers.append(SoundOutputController.newPreferenceView()!)
 		#if PLAYERPRO6
@@ -42,8 +42,8 @@ final class Preferences: MASPreferencesWindowController {
 	override func windowWillClose(_ notification: Notification) {
 		if let aWin = notification.object as? NSWindow {
 			if aWin === self.window {
-				if NSColorPanel.sharedColorPanelExists() {
-					NSColorPanel.shared().close()
+				if NSColorPanel.sharedColorPanelExists{
+					NSColorPanel.shared.close()
 				}
 			}
 		}

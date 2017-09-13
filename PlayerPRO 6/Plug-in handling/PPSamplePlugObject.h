@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)canImportFileAtURL:(NSURL *)fileURL;
 - (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
-- (void)beginImportSampleAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(MADErr theErr, PPSampleObject *aSample))handler;
+- (void)beginImportSampleAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(NSError *__nullable theErr, PPSampleObject *__nullable aSample))handler;
 - (void)beginExportSample:(PPSampleObject*)aSamp toURL:(NSURL*)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(PPPlugErrorBlock)handler;
 
 @end

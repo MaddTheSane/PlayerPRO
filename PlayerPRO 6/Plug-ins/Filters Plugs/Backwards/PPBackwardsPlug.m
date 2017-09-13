@@ -21,7 +21,7 @@
 	return self = [self init];
 }
 
-- (MADErr)runWithData:(inout PPSampleObject *)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver *)driver
+- (BOOL)runWithData:(inout PPSampleObject *)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nullable)error
 {
 	size_t			i;
 	unsigned short	temp1, temp2;
@@ -78,7 +78,7 @@
 	
 	theData.data = ourData;
 	
-	return MADNoErr;
+	return YES;
 }
 
 @end

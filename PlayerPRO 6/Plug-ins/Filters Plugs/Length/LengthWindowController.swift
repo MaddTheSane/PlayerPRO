@@ -16,7 +16,7 @@ class LengthWindowController: NSWindowController {
 	@IBOutlet weak var theNewBox: NSBox!
 	@IBOutlet weak var lengthCompensationMatrix: NSMatrix!
 	
-	dynamic var changeRate = false
+	@objc dynamic var changeRate = false
 	
 	var parentWindow: NSWindow?
 	
@@ -79,12 +79,12 @@ class LengthWindowController: NSWindowController {
 		}
 
 		parentWindow?.endSheet(self.window!)
-		currentBlock(.noErr)
+		currentBlock(nil)
 	}
 	
 	@IBAction func cancel(_ sender: AnyObject?) {
 		parentWindow?.endSheet(self.window!)
-		currentBlock(.userCanceledErr)
+		currentBlock(MADErr.userCanceledErr)
 	}
 	
 	private func convertSample(size destinationSize: Int) -> NSMutableData? {

@@ -10,6 +10,7 @@ import Foundation
 import PlayerPROCore
 
 class FilterPlugHandler: NSObject, NSFastEnumeration, Collection, Sequence {
+	typealias Index = Int
 	private(set) var plugInArray = [PPFilterPlugObject]()
 	
 	override init() {
@@ -46,7 +47,7 @@ class FilterPlugHandler: NSObject, NSFastEnumeration, Collection, Sequence {
 		return plugInArray[index]
 	}
 	
-	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
+	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (plugInArray as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 	

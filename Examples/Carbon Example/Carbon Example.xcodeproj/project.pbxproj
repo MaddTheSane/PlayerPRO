@@ -479,6 +479,13 @@
 			remoteGlobalIDString = 555E85451A041E810018FDBC;
 			remoteInfo = "Classic Sound";
 		};
+		55F6DF221F44FEE800F655FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55D8E1951C4EC0BC00C2B397;
+			remoteInfo = ITv2;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -609,7 +616,7 @@
 				5526AB71188C955D008D0C14 /* iOS PlayerPRO Player.app */,
 				5526AB73188C955D008D0C14 /* iOS PlayerPRO PlayerTests.xctest */,
 				5526AB6F188C955D008D0C14 /* updateInfoPlist */,
-				5526AB75188C955D008D0C14 /* PPImport Cocoa.mdimporter */,
+				5526AB75188C955D008D0C14 /* PPImport.mdimporter */,
 				5526AB77188C955D008D0C14 /* PPQuickView.qlgenerator */,
 				559696F5194E82050068C5AC /* net.sourceforge.playerpro.StcfImporter.xpc */,
 				55AD866F1A8D971800839E28 /* PPCoreInstrumentPlugBridge.xpc */,
@@ -625,6 +632,7 @@
 				5570E9BA12A4C24900167E1A /* AMF.ppimpexp */,
 				5570E9BC12A4C24900167E1A /* DMF.ppimpexp */,
 				5570E9BE12A4C24900167E1A /* IT.ppimpexp */,
+				55F6DF231F44FEE800F655FA /* ITv2.ppimpexp */,
 				5570E9C012A4C24900167E1A /* MADfg.ppimpexp */,
 				5570E9C212A4C24900167E1A /* MADH.ppimpexp */,
 				5570E9C412A4C24900167E1A /* MADI.ppimpexp */,
@@ -635,9 +643,9 @@
 				5570E9CE12A4C24900167E1A /* ULT.ppimpexp */,
 				5570E9D012A4C24900167E1A /* UMX.ppimpexp */,
 				5570E9D212A4C24900167E1A /* XM.ppimpexp */,
-				5570E9D412A4C24900167E1A /* MIDI.ppimpexp */,
+				5570E9D412A4C24900167E1A /* MIDI.ppextimp */,
 				55AD86791A8D971800839E28 /* net.sourceforge.playerpro.MIDI-Import.xpc */,
-				5570E9D612A4C24900167E1A /* APPL.ppimpexp */,
+				5570E9D612A4C24900167E1A /* Classic App.ppextimp */,
 				5570E9D812A4C24900167E1A /* Complex Fade.plugin */,
 				5570E9DA12A4C24900167E1A /* Fade Note.plugin */,
 				5570E9DC12A4C24900167E1A /* Fade Volume.plugin */,
@@ -701,7 +709,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0900;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Carbon Example" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -758,7 +766,7 @@
 			remoteRef = 5526AB72188C955D008D0C14 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5526AB75188C955D008D0C14 /* PPImport Cocoa.mdimporter */ = {
+		5526AB75188C955D008D0C14 /* PPImport.mdimporter */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = PPImport.mdimporter;
@@ -912,14 +920,14 @@
 			remoteRef = 5570E9D112A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5570E9D412A4C24900167E1A /* MIDI.ppimpexp */ = {
+		5570E9D412A4C24900167E1A /* MIDI.ppextimp */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = MIDI.ppextimp;
 			remoteRef = 5570E9D312A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5570E9D612A4C24900167E1A /* APPL.ppimpexp */ = {
+		5570E9D612A4C24900167E1A /* Classic App.ppextimp */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "Classic App.ppextimp";
@@ -1178,6 +1186,13 @@
 			remoteRef = 55AD867C1A8D971800839E28 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		55F6DF231F44FEE800F655FA /* ITv2.ppimpexp */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ITv2.ppimpexp;
+			remoteRef = 55F6DF221F44FEE800F655FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1238,6 +1253,7 @@
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Carbon Example";
 			};
 			name = Debug;
@@ -1251,6 +1267,7 @@
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Carbon Example";
 			};
 			name = Release;
@@ -1259,25 +1276,37 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -1299,23 +1328,34 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;

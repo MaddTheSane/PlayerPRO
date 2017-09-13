@@ -10,14 +10,14 @@ import Cocoa
 
 class MIDIImporterController: NSWindowController {
 	@IBOutlet weak var theURLField: NSTextField!
-	private var locationOfFile: NSURL!
-	dynamic var QTIns = false
-	dynamic var trackCount = 8
+	private var locationOfFile: URL!
+	@objc dynamic var QTIns = false
+	@objc dynamic var trackCount = 8
 	private var handler: PPComplexImportHandler!
-	private var modalSession: NSModalSession!
+	private var modalSession: NSApplication.ModalSession!
 	
-	class func newWithLocation(loc: NSURL, handler hand: PPComplexImportHandler) -> MIDIImporterController {
-		let impCont = MIDIImporterController(windowNibName: "MIDIImporterController")
+	class func newWithLocation(_ loc: URL, handler hand: @escaping PPComplexImportHandler) -> MIDIImporterController {
+		let impCont = MIDIImporterController(windowNibName: NSNib.Name(rawValue: "MIDIImporterController"))
 		impCont.locationOfFile = loc
 		impCont.handler = hand
 		
@@ -27,27 +27,30 @@ class MIDIImporterController: NSWindowController {
 	func beginImportModalSession() {
 		trackCount = GetTracksNumber(locationOfFile);
 		if trackCount == -1 {
-			handler(nil, .IncompatibleFile)
+			handler(nil, MADErr.incompatibleFile)
 			return
 		}
-		modalSession = NSApplication.sharedApplication().beginModalSessionForWindow(window!)
+		modalSession = NSApplication.shared.beginModalSession(for: window!)
 	}
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		theURLField.stringValue = locationOfFile.path!
+		theURLField.stringValue = locationOfFile.path
 	}
 	
 	@IBAction func okayButtonPressed(sender: AnyObject) {
-		NSApplication.sharedApplication().endModalSession(modalSession)
+		NSApplication.shared.endModalSession(modalSession)
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.MIDI-Import")
-		conn.remoteObjectInterface = NSXPCInterface(withProtocol: PPMIDIImportHelper.self)
+		conn.remoteObjectInterface = NSXPCInterface(with: PPMIDIImportHelper.self)
 		
 		conn.resume()
-		conn.remoteObjectProxy.importMIDIFileAtURL(locationOfFile, numberOfTracks: trackCount, useQTInstruments: true, withReply:{ (aDat, aErr) -> Void in
-			if aErr == MADErr.NoErr {
+		let conn2 = conn.remoteObjectProxyWithErrorHandler { (err) in
+			self.handler(nil, err)
+		}
+		(conn2 as AnyObject).importMIDIFile(at: locationOfFile, numberOfTracks: trackCount, useQTInstruments: true, withReply:{ (aDat, aErr) -> Void in
+			if aErr == MADErr.noErr {
 				let tmpObj = MIDIReadFromData(aDat)
-				self.handler(tmpObj, aErr)
+				self.handler(tmpObj, nil)
 			} else {
 				self.handler(nil, aErr)
 			}
@@ -56,7 +59,7 @@ class MIDIImporterController: NSWindowController {
 	}
 
 	@IBAction func cancelButtonPressed(sender: AnyObject) {
-		NSApplication.sharedApplication().endModalSession(modalSession)
-		handler(nil, .UserCanceledErr)
+		NSApplication.shared.endModalSession(modalSession)
+		handler(nil, MADErr.userCanceledErr)
 	}
 }

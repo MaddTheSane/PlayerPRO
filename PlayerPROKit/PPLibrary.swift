@@ -30,9 +30,10 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 }
 
 /// Class that represents the additional tracker types that PlayerPRO can load via plug-ins.
-public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
+@objc public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
+	public typealias Index = Int
 	public let trackerLibraries: [PPLibraryObject]
-	internal let theLibrary: UnsafeMutablePointer<MADLibrary>
+	@objc internal let theLibrary: UnsafeMutablePointer<MADLibrary>
 	/// Comparable to `MADInfoRec`, but more Swift-friendly.
 	public struct MusicFileInfo: CustomStringConvertible {
 		///The total amount of patterns
@@ -456,7 +457,7 @@ public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	}
 	
 	/// `NSFastEnumeration` protocol method.
-	public func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>!, count len: Int) -> Int {
+	public func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (trackerLibraries as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }

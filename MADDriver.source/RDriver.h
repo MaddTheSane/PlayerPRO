@@ -765,7 +765,7 @@ PPEXPORT bool	MADSoundDriverIsAvalable(MADSoundOutput theDriver);
  *	@return		A list of available sound drivers in a bit field.
  *	@seealso	MADSoundOutputBit
  */
-PPEXPORT MADSoundOutputBit	MADSoundDriverList();
+PPEXPORT MADSoundOutputBit	MADSoundDriverList(void);
 
 #pragma mark Music Driver initialization and memory allocation
 /*!
@@ -949,7 +949,7 @@ PPEXPORT MADErr		MADKillCmd(Cmd*);
 PPEXPORT void		MADUpdateTracksNumber(MADDriverRecPtr);
 PPEXPORT MADErr		MADCreateVolumeTable(MADDriverRecPtr intDriver);
 PPEXPORT void		MADDisposeVolumeTable(MADDriverRecPtr intDriver);
-PPEXPORT MADMusic*	CreateFreeMADK();
+PPEXPORT MADMusic*	CreateFreeMADK(void);
 PPEXPORT short		MADFindAFreeChannel(MADDriverRecPtr intDriver);
 
 #pragma mark Swift helpers

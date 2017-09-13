@@ -36,17 +36,17 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			}
 			
 			guard aRet.count > 0 else {
-				handler(nil, .fileNotSupportedByThisPlug)
+				handler(nil, MADErr.fileNotSupportedByThisPlug)
 				return
 			}
 			
-			let controller = ImportWindowController(windowNibName: "PPAPPLImporter")
+			let controller = ImportWindowController(windowNibName: NSNib.Name(rawValue: "PPAPPLImporter"))
 			controller.currentBlock = handler
 			controller.resourceFile = resFile
 			controller.addResourceDictionary(aRet)
 			controller.beginImportModalSession()
-		} catch _ {
-			handler(nil, .readingErr)
+		} catch {
+			handler(nil, MADErr.readingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey: error], convertToCocoa: false)!)
 		}
 	}
 	

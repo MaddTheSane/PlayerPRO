@@ -6,6 +6,9 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 #import <Foundation/NSString.h>
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#endif
 
 #pragma GCC visibility push(hidden)
 
@@ -33,8 +36,10 @@ extern NSString * const PPPCMDUTI;
 extern NSString * const PPGenericTrackerUTI;
 extern NSString * const PPGenericInstrumentUTI;
 extern NSString * const PPInstrumentListUTI;
+#if TARGET_OS_OSX
 //! The drag UTI for music list objects
-extern NSString * const PPMLDCUTI;
+extern NSPasteboardType const PPMLDCUTI;
+#endif
 
 #pragma mark Music list preference keys
 extern NSString * const PPRememberMusicList;

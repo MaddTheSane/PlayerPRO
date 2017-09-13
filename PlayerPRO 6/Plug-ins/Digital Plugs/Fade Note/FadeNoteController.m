@@ -92,14 +92,14 @@ static inline short NSStringToNote(NSString *myTT)
 			}
 		}
 		[_parentWindow endSheet:self.window];
-		_currentBlock(MADNoErr);
+		_currentBlock(nil);
 	}
 }
 
 - (IBAction)cancel:(id)sender
 {
 	[_parentWindow endSheet:self.window];
-	_currentBlock(MADUserCanceledErr);
+	_currentBlock([NSError errorWithDomain:PPMADErrorDomain code:MADUserCanceledErr userInfo:nil]);
 }
 
 @end

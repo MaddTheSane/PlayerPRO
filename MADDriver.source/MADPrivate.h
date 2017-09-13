@@ -172,7 +172,7 @@ __private_extern uint32_t getfrequency(uint32_t period);
 __private_extern void SetOSType(CFURLRef, OSType);
 #endif
 
-__private_extern sData* inMADCreateSample();
+__private_extern sData* inMADCreateSample(void);
 
 #ifdef __cplusplus
 }
