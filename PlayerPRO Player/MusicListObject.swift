@@ -109,19 +109,16 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}()
 	
 	init(url: URL, date: Date = Date()) {
-		if (url as NSURL).isFileReferenceURL() {
-			musicURL = url
-		} else {
-			let tmpURL = (url as NSURL).fileReferenceURL()
-			musicURL = tmpURL ?? url
-		}
+		musicURL = url
 		addedDate = date
 		super.init()
 	}
 	
 	convenience init(bookmarkData: Data, resolutionOptions: NSURL.BookmarkResolutionOptions = [], relativeURL: URL? = nil, date: Date? = Date()) throws {
 		var unusedStale = false
-		let resolvedURL = try URL(resolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeTo: relativeURL, bookmarkDataIsStale: &unusedStale)!
+		guard let resolvedURL = try URL(resolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeTo: relativeURL, bookmarkDataIsStale: &unusedStale) else {
+			throw NSError(domain: NSCocoaErrorDomain, code: NSFileNoSuchFileError)
+		}
 		self.init(url: resolvedURL, date: date ?? Date())
 	}
 	
@@ -129,9 +126,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		do {
 			return try checkIsReachable()
 		} catch let swiftError as NSError {
-			if let error = error {
-				error.pointee = swiftError
-			}
+			error?.pointee = swiftError
 			return false
 		} catch {
 			return false

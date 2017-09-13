@@ -254,11 +254,11 @@ private let kPlayerList = "Player List"
 			let currentDate = Date()
 			for bookURL in bookmarkArray {
 				if !bookURL.checkResourceIsReachableAndReturnError(nil) {
-					if (selectedMusic == -1) {
+					if selectedMusic == -1 {
 						//Do nothing
-					} else if (selectedMusic == musicList.count + 1) {
+					} else if selectedMusic == musicList.count + 1 {
 						selectedMusic = -1
-					} else if (selectedMusic > musicList.count + 1) {
+					} else if selectedMusic > musicList.count + 1 {
 						selectedMusic -= 1
 					}
 					lostMusicCount += 1
@@ -280,11 +280,11 @@ private let kPlayerList = "Player List"
 					let fullURL = try MusicListObject(bookmarkData: bookData, resolutionOptions: .withoutUI, relativeURL: homeURL, date: currentDate)
 					musicList.append(fullURL)
 				} catch {
-					if (selectedMusic == -1) {
+					if selectedMusic == -1 {
 						//Do nothing
-					} else if (selectedMusic == musicList.count + 1) {
+					} else if selectedMusic == musicList.count + 1 {
 						selectedMusic = -1
-					} else if (selectedMusic > musicList.count + 1) {
+					} else if selectedMusic > musicList.count + 1 {
 						selectedMusic -= 1
 					}
 					lostMusicCount += 1
@@ -438,6 +438,8 @@ private let kPlayerList = "Player List"
 	func remove(at idxSet: IndexSet) {
 		if idxSet.contains(selectedMusic) {
 			selectedMusic = -1
+		} else {
+			selectedMusic -= idxSet.count(in: 0..<selectedMusic)
 		}
 		
 		musicList.remove(indexes: idxSet)
@@ -460,10 +462,13 @@ private let kPlayerList = "Player List"
 	
 	@objc(arrayOfObjectsInMusicListAtIndexes:)
 	func objectsInMusicList(at theSet : IndexSet) -> [MusicListObject] {
-		return musicList.filter({ (include) -> Bool in
-			let idx = self.musicList.index(of: include)!
-			return theSet.contains(idx)
-		})
+		var toRet = [MusicListObject]()
+		for (i, obj) in musicList.enumerated() {
+			if theSet.contains(i) {
+				toRet.append(obj)
+			}
+		}
+		return toRet
 	}
 	
 	@objc(insertMusicLists:atIndexes:)

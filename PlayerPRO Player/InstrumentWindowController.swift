@@ -57,7 +57,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		}
 		
 		if let unwrapped = object as? PPInstrumentObject {
-			if (unwrapped.countOfSamples > 0) {
+			if unwrapped.countOfSamples > 0 {
 				object = unwrapped.samplesObject(at: 0)
 			} else {
 				object = nil
@@ -68,7 +68,27 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 			object = nil
 		}
 		
-		if (object == nil) {
+		if let sampleObj = object as? PPSampleObject {
+			if sampleObj.data.count == 0 {
+				instrumentSize.stringValue = ""
+			} else {
+				instrumentSize!.integerValue = sampleObj.data.count
+			}
+			if sampleObj.loopSize == 0 {
+				instrumentLoopSize.stringValue = ""
+				instrumentLoopStart.stringValue = ""
+			} else {
+				instrumentLoopStart!.integerValue = Int(sampleObj.loopBegin)
+				instrumentLoopSize!.integerValue = Int(sampleObj.loopSize)
+			}
+			instrumentVolume!.integerValue = Int(sampleObj.volume)
+			instrumentRate!.stringValue = "\(sampleObj.c2spd) Hz"
+			instrumentNote!.stringValue = octaveName(from: UInt8(bitPattern: sampleObj.relativeNote)) ?? "None"
+			instrumentBits!.stringValue = "\(sampleObj.amplitude)-bit"
+			instrumentMode!.stringValue = sampleObj.loopType == .pingPong ? "Ping-Pong" : "Classic"
+			let sampImage = sampleObj.waveformImage(view: waveFormImage!)
+			waveFormImage!.image = sampImage
+		} else {
 			instrumentSize!.stringValue = PPDoubleDash
 			instrumentLoopStart!.stringValue = PPDoubleDash
 			instrumentLoopSize!.stringValue = PPDoubleDash
@@ -78,29 +98,6 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 			instrumentBits!.stringValue = PPDoubleDash
 			instrumentMode!.stringValue = PPDoubleDash
 			waveFormImage!.image = nil
-			return;
-		} else {
-			let sampleObj = object as! PPSampleObject
-			
-			if sampleObj.data.count == 0 {
-				instrumentSize.stringValue = ""
-			} else {
-			instrumentSize!.integerValue = sampleObj.data.count
-			}
-			if sampleObj.loopSize == 0 {
-				instrumentLoopSize.stringValue = ""
-				instrumentLoopStart.stringValue = ""
-			} else {
-			instrumentLoopStart!.integerValue = Int(sampleObj.loopBegin)
-			instrumentLoopSize!.integerValue = Int(sampleObj.loopSize)
-			}
-			instrumentVolume!.integerValue = Int(sampleObj.volume)
-			instrumentRate!.stringValue = "\(sampleObj.c2spd) Hz"
-			instrumentNote!.stringValue = octaveName(from: UInt8(bitPattern: sampleObj.relativeNote)) ?? "None"
-			instrumentBits!.stringValue = "\(sampleObj.amplitude)-bit"
-			instrumentMode!.stringValue = sampleObj.loopType == .pingPong ? "Ping-Pong" : "Classic"
-			let sampImage = sampleObj.waveformImage(view: waveFormImage!)
-			waveFormImage!.image = sampImage
 		}
 	}
 	
@@ -116,12 +113,12 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		if (item == nil) {
-			return (NSApplication.shared.delegate as! PlayerAppDelegate).music!.instruments[index];
+			return (NSApplication.shared.delegate as! PlayerAppDelegate).music!.instruments[index]
 		}
 		if let item = item as? PPInstrumentObject {
-			return (item).samplesObject(at: index)
+			return item.samplesObject(at: index)
 		}
-		return NSNull();
+		return NSNull()
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: Any?) -> Any? {

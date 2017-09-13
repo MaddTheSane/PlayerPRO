@@ -32,7 +32,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 /// Class that represents the additional tracker types that PlayerPRO can load via plug-ins.
 @objc public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	public typealias Index = Int
-	public let trackerLibraries: [PPLibraryObject]
+	@objc public let trackerLibraries: [PPLibraryObject]
 	@objc internal let theLibrary: UnsafeMutablePointer<MADLibrary>
 	/// Comparable to `MADInfoRec`, but more Swift-friendly.
 	public struct MusicFileInfo: CustomStringConvertible {
@@ -94,7 +94,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	}
 
 	/// Resets the debug function called by `MADDebugStr` to the default.
-	public class func deregisterDebugFunction() {
+	@objc public class func deregisterDebugFunction() {
 		MADRegisterDebugBlock(nil)
 	}
 	
@@ -128,7 +128,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		return trackerLibraries.count
 	}
 
-	public subscript(index: Int) -> PPLibraryObject {
+	@objc public subscript(index: Int) -> PPLibraryObject {
 		return trackerLibraries[index]
 	}
 	
@@ -200,7 +200,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	}
 	
 	/// The amount of plug-ins registered by the library.
-	public var pluginCount: Int {
+	@objc public var pluginCount: Int {
 		return trackerLibraries.count
 	}
 	
@@ -241,7 +241,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - returns: An error value, or `MADNoErr` on success.
 	///
 	/// This is mainly for Objective-C code. For Swift code, use `identifyFile(at:) throws` instead.
-	@objc(identifyFileAtURL:stringType:)
+	@discardableResult @objc(identifyFileAtURL:stringType:)
 	public func identifyFile(at apath: URL, type: AutoreleasingUnsafeMutablePointer<NSString?>) -> MADErr {
 		do {
 			type.pointee = try identifyFile(at: apath) as NSString
@@ -267,7 +267,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - returns: An error value, or `MADNoErr` on success.
 	///
 	/// This is mainly for Objective-C code. For Swift code, use `identifyFile(atPath:) throws` instead.
-	@objc(identifyFileAtPath:stringType:)
+	@discardableResult @objc(identifyFileAtPath:stringType:)
 	public func identifyFile(atPath apath: String, type: AutoreleasingUnsafeMutablePointer<NSString?>) -> MADErr {
 		do {
 			type.pointee = try identifyFile(atPath: apath) as NSString
@@ -285,7 +285,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		return .unknownErr
 	}
 	
-	fileprivate func information(from URL: URL, cType: [Int8]) throws -> MADInfoRec {
+	private func information(from URL: URL, cType: [Int8]) throws -> MADInfoRec {
 		var cStrType = cType
 		var infoRec = MADInfoRec()
 
@@ -331,7 +331,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - returns: An error value, or `MADNoErr` on success.
 	///
 	/// This is mainly for Objective-C code. For Swift code, use `information(from:type:) throws` instead.
-	@objc(getInformationFromFileAtURL:stringType:info:)
+	@discardableResult @objc(getInformationFromFileAtURL:stringType:info:)
 	public func getInformation(from path: URL, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary?>) -> MADErr {
 		guard let cStrType = type.cString(using: String.Encoding.macOSRoman) else {
 			return .parametersErr
@@ -363,7 +363,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - returns: An error value, or `MADNoErr` on success.
 	///
 	/// This is mainly for Objective-C code. For Swift code, use `information(from:type:) throws` instead.
-	@objc(getInformationFromFileAtPath:stringType:info:)
+	@discardableResult @objc(getInformationFromFileAtPath:stringType:info:)
 	public func getInformation(fromPath path: String, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary?>) -> MADErr {
 		let anURL = URL(fileURLWithPath: path)
 		return getInformation(from: anURL, type: type, info: info)
@@ -374,7 +374,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - parameter url: The file URL of the tracker to test.
 	/// - parameter type: The type to test for.
 	/// - returns: An error value, or `MADNoErr` if the tracker is of the specified type.
-	@objc(testFileAtURL:stringType:)
+	@discardableResult @objc(testFileAtURL:stringType:)
 	public func testFile(at url: URL, type: String) -> MADErr {
 		do {
 			try testFile(at: url, as: type)
@@ -397,7 +397,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - parameter path: The path of the tracker to test.
 	/// - parameter type: The type to test for.
 	/// - returns: An error value, or `MADNoErr` if the tracker is of the specified type.
-	@objc(testFileAtPath:stringType:)
+	@discardableResult @objc(testFileAtPath:stringType:)
 	public func testFile(atPath path: String, type: String) -> MADErr {
 		let url = URL(fileURLWithPath: path)
 		return testFile(at: url, type: type)
@@ -421,7 +421,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	///
 	/// - parameter aUTI: The UTI to find a plug-in type for.
 	/// - returns: A plug-in type, four characters long, or `nil` if there's no plug-in that opens the UTI.
-	public func typeFromUTI(_ aUTI: String) -> String? {
+	@objc public func typeFromUTI(_ aUTI: String) -> String? {
 		if aUTI == kPlayerPROMADKUTI {
 			return MadIDString
 		}
@@ -442,7 +442,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - parameter aType: the four-character plug-in type to get a UTI for.
 	/// - returns: The first UTI in the plug-in's UTI list that corrisponds to the type,
 	/// or `nil` if the type isn't listed.
-	public func typeToUTI(_ aType: String) -> String? {
+	@objc public func typeToUTI(_ aType: String) -> String? {
 		if aType == MadIDString {
 			return kPlayerPROMADKUTI
 		}
@@ -457,7 +457,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	}
 	
 	/// `NSFastEnumeration` protocol method.
-	public func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
+	@objc public func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (trackerLibraries as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }
