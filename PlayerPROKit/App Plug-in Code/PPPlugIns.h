@@ -92,15 +92,19 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				the \c Pcmd to modify.
  *	@param		driver
  *				The \c PPDriver to send in, just in case more info is needed.
- *	@return		A \c MADErr on failure, \c MADNoErr on succes, or 
- *				\c MADParametersErr if a UI is needed by the plug-in.
+ *	@param		error
+ *				If returned <code>NO</code>, should be filled with an error object
+ *				describing why it failed.
+ *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
+ *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
+ *				the plug-in.
  *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
  *				<code>beginRunWithPcmd:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
  *				as a failure.
  *	@sa			beginRunWithPcmd:driver:parentWindow:handler:
  */
-- (BOOL)runWithPcmd:(inout Pcmd*)aPcmd driver:(PPDriver *)driver error:(NSError**)error;
+- (BOOL)runWithPcmd:(inout Pcmd*)aPcmd driver:(PPDriver *)driver error:(NSError *__autoreleasing __nullable *__nonnull)error;
 
 @optional
 /**
@@ -139,15 +143,19 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				Otherwise, modifies the right or mono channel.
  *	@param		driver
  *				The \c PPDriver to send in, just in case more info is needed.
- *	@return		A \c MADErr on failure, \c MADNoErr on succes, or
- *				\c MADParametersErr if a UI is needed by the plug-in.
+ *	@param		error
+ *				If returned <code>NO</code>, should be filled with an error object
+ *				describing why it failed.
+ *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
+ *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
+ *				the plug-in.
  *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
  *				<code>beginRunWithData:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
  *				as a failure.
  *	@sa			beginRunWithData:driver:parentWindow:handler:
  */
-- (BOOL)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver error:(NSError**)error;
+- (BOOL)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver error:(NSError *__autoreleasing __nullable *__nonnull)error;
 
 @optional
 /**
@@ -198,15 +206,19 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				be set to \c nil on failure.
  *	@param		driver
  *				The \c PPDriver to send in, just in case more info is needed.
- *	@return		A \c MADErr on failure, \c MADNoErr on succes, or
- *				\c MADParametersErr if a UI is needed by the plug-in.
+ *	@param		error
+ *				If returned <code>NO</code>, should be filled with an error object
+ *				describing why it failed.
+ *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
+ *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
+ *				the plug-in.
  *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
  *				<code>beginImportSampleAtURL:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it 
  *				as an error.
  *	@sa			beginImportSampleAtURL:driver:parentWindow:handler:
  */
-- (BOOL)importSampleAtURL:(NSURL*)sampleURL sample:(out PPSampleObject* __nullable* __nonnull)sample driver:(PPDriver*)driver error:(NSError**)error;
+- (BOOL)importSampleAtURL:(NSURL*)sampleURL sample:(out PPSampleObject* __nullable* __nonnull)sample driver:(PPDriver*)driver error:(NSError *__autoreleasing __nullable *__nonnull)error;
 
 @optional
 /**
@@ -257,15 +269,19 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				The file URL to export the sample to.
  *	@param		driver
  *				The \c PPDriver to send in, just in case more info is needed.
- *	@return		A \c MADErr on failure, \c MADNoErr on succes, or
- *				\c MADParametersErr if a UI is needed by the plug-in.
+ *	@param		error
+ *				If returned <code>NO</code>, should be filled with an error object
+ *				describing why it failed.
+ *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
+ *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
+ *				the plug-in.
  *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
  *				<code>beginRunWithPcmd:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
  *				as a failure.
  *	@sa			beginExportSample:toURL:driver:parentWindow:handler:
  */
-- (BOOL)exportSample:(PPSampleObject*)sample toURL:(NSURL*)sampleURL driver:(PPDriver*)driver error:(NSError**)error;
+- (BOOL)exportSample:(PPSampleObject*)sample toURL:(NSURL*)sampleURL driver:(PPDriver*)driver error:(NSError *__autoreleasing __nullable *__nonnull)error;
 
 @optional
 /**
@@ -313,15 +329,19 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				The newly created instrument object, or \c nil on failure.
  *	@param		driver
  *				The \c PPDriver to send in, just in case more info is needed.
- *	@return		A \c MADErr on failure, \c MADNoErr on succes, or
- *				\c MADParametersErr if a UI is needed by the plug-in.
+ *	@param		error
+ *				If returned <code>NO</code>, should be filled with an error object
+ *				describing why it failed.
+ *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
+ *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
+ *				the plug-in.
  *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
  *				<code>beginRunWithPcmd:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
  *				as a failure.
  *	@sa			beginImportInstrumentAtURL:driver:parentWindow:handler:
  */
-- (BOOL)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject* __nullable* __nonnull)InsHeader driver:(PPDriver*)driver error:(NSError**)error;
+- (BOOL)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject* __nullable* __nonnull)InsHeader driver:(PPDriver*)driver error:(NSError *__autoreleasing __nullable *__nonnull)error;
 
 @optional
 
@@ -374,15 +394,19 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				The file URL to write to.
  *	@param		driver
  *				The \c PPDriver to send in, just in case more info is needed.
- *	@return		A \c MADErr on failure, \c MADNoErr on succes, or
- *				\c MADParametersErr if a UI is needed by the plug-in.
+ *	@param		error
+ *				If returned <code>NO</code>, should be filled with an error object
+ *				describing why it failed.
+ *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
+ *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
+ *				the plug-in.
  *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
  *				<code>beginExportInstrument:toURL:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
  *				as a failure.
  *	@sa			beginExportInstrument:toURL:driver:parentWindow:handler:
  */
-- (BOOL)exportInstrument:(PPInstrumentObject*)InsHeader toURL:(NSURL*)sampleURL driver:(PPDriver*)driver error:(NSError**)error;
+- (BOOL)exportInstrument:(PPInstrumentObject*)InsHeader toURL:(NSURL*)sampleURL driver:(PPDriver*)driver error:(NSError *__autoreleasing __nullable *__nonnull)error;
 
 @optional
 /**
@@ -409,7 +433,7 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
 /**
  *	@protocol	PPComplexImportPlugInterface
  *	@discussion	This doesn't need to conform to \c PPCorePlugin because
- *				it will <b>always</b> have a UI.
+ *				it will \b always have a UI.
  */
 @protocol PPComplexImportPlugInterface <PPPlugin, NSObject>
 
@@ -421,9 +445,9 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *	@param		outErr
  *				If returned <code>NO</code>, should be filled with an error object
  *				describing why it failed.
- *	@return		\c YES if the file can be imported, or \c NO otherwise.
+ *	@return		\c YES if the file can be imported by this plug-in, or \c NO otherwise.
  */
-- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError * __nullable __autoreleasing* __nullable)outErr;
+- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError *__autoreleasing __nullable *__nonnull)outErr;
 
 /**
  *	@method		beginImportOfURL:withHandler:
