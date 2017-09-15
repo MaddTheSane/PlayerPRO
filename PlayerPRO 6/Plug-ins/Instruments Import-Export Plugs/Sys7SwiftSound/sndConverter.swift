@@ -249,11 +249,19 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	
 	// Create a temporary file for storage
 	let url = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent("\(arc4random())-\(Date.timeIntervalSinceReferenceDate).aif"))
-	var audioFile: ExtAudioFileRef? = nil
-	let createStatus = ExtAudioFileCreate(url: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile)
+	var audioFile1: ExtAudioFileRef? = nil
+	let createStatus = ExtAudioFileCreate(url: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile1)
 	if createStatus != noErr {
 		errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")
-		throw MADErr.writingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(createStatus), userInfo: nil)], convertToCocoa: false)!
+		throw MADErr.writingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(createStatus))], convertToCocoa: false)!
+	}
+	guard let audioFile = audioFile1 else {
+		throw MADErr.writingErr
+	}
+	defer {
+		// Finish up
+		let disposeStatus = ExtAudioFileDispose(audioFile)
+		errmsg("ExtAudioFileDispose failed with status \(disposeStatus)")
 	}
 	
 	// Configure the AudioBufferList
@@ -269,19 +277,11 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	var bufferList = AudioBufferList(mNumberBuffers: 1, mBuffers: audioBuffer)
 	
 	// Write the data to the file
-	let writeStatus = ExtAudioFileWrite(audioFile!, header.length, &bufferList)
+	let writeStatus = ExtAudioFileWrite(audioFile, header.length, &bufferList)
 	if writeStatus != noErr {
 		errmsg("ExtAudioFileWrite failed with status \(writeStatus)")
-		throw MADErr.writingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(writeStatus), userInfo: nil)], convertToCocoa: false)!
+		throw MADErr.writingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(writeStatus))], convertToCocoa: false)!
 	}
 	
-	// Finish up
-	let disposeStatus = ExtAudioFileDispose(audioFile!)
-	if disposeStatus != noErr {
-		errmsg("ExtAudioFileDispose failed with status \(disposeStatus)")
-		throw MADErr.writingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(disposeStatus), userInfo: nil)], convertToCocoa: false)!
-	}
-	
-	// Generate an AVAsset
 	return url
 }

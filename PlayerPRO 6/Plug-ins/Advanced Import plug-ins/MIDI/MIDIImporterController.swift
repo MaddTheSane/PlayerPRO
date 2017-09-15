@@ -46,15 +46,17 @@ class MIDIImporterController: NSWindowController {
 		conn.resume()
 		let conn2 = conn.remoteObjectProxyWithErrorHandler { (err) in
 			self.handler(nil, err)
-		}
-		(conn2 as AnyObject).importMIDIFile(at: locationOfFile, numberOfTracks: trackCount, useQTInstruments: true, withReply:{ (aDat, aErr) -> Void in
-			if aErr == MADErr.noErr {
-				let tmpObj = MIDIReadFromData(aDat)
-				self.handler(tmpObj, nil)
-			} else {
-				self.handler(nil, aErr)
+		} as! PPMIDIImportHelper
+		conn2.importMIDIFile(at: locationOfFile, numberOfTracks: trackCount, useQTInstruments: true, withReply:{ (aDat, aErr) -> Void in
+			OperationQueue.main.addOperation {
+				if aErr == MADErr.noErr {
+					let tmpObj = MIDIReadFromData(aDat)
+					self.handler(tmpObj, nil)
+				} else {
+					self.handler(nil, aErr)
+				}
+				conn.invalidate()
 			}
-			conn.invalidate();
 		})
 	}
 

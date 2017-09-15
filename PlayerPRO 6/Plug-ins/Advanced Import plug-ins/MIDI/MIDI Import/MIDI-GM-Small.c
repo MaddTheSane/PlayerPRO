@@ -5,10 +5,13 @@
 #include "dlsmac.h"
 #include "dls.h"
 #include "dls2.h"
-//#include <QuickTime/QuickTime.h>
+#if __has_include(<QuickTime/QuickTime.h>)
+# include <QuickTime/QuickTime.h>
+#endif
 
 #include "WAV.h"
 
+#ifndef __MOVIES__
 #pragma mark Old QuickTime Code!
 #pragma pack(push, 2)
 
@@ -18,19 +21,19 @@ typedef long                            QTAtomType;
 typedef long                            QTAtomID;
 
 typedef CF_ENUM(UInt8, NoteRequestMIDIChannel) {
-	kNoteRequestNoGM              = 1,    /* don't degrade to a GM synth */
-	kNoteRequestNoSynthType       = 2,    /* don't degrade to another synth of same type but different name */
-	kNoteRequestSynthMustMatch    = 4,    /* synthType must be a match, including kGMSynthComponentSubType */
+	kNoteRequestNoGM              = 1,    /*!< don't degrade to a GM synth */
+	kNoteRequestNoSynthType       = 2,    /*!< don't degrade to another synth of same type but different name */
+	kNoteRequestSynthMustMatch    = 4,    /*!< synthType must be a match, including kGMSynthComponentSubType */
 
 	kNoteRequestSpecifyMIDIChannel = 0x80
 };
 
 struct ToneDescription {
-	BigEndianOSType     synthesizerType;        /* synthesizer type */
-	Str31               synthesizerName;        /* name of instantiation of synth */
-	Str31               instrumentName;         /* preferred name for human use */
-	BigEndianLong       instrumentNumber;       /* inst-number used if synth-name matches */
-	BigEndianLong       gmNumber;               /* Best matching general MIDI number */
+	BigEndianOSType     synthesizerType;        /*!< synthesizer type */
+	Str31               synthesizerName;        /*!< name of instantiation of synth */
+	Str31               instrumentName;         /*!< preferred name for human use */
+	BigEndianLong       instrumentNumber;       /*!< inst-number used if synth-name matches */
+	BigEndianLong       gmNumber;               /*!< Best matching general MIDI number */
 };
 typedef struct ToneDescription          ToneDescription;
 
@@ -45,10 +48,10 @@ typedef ComponentInstance               NoteAllocator;
  */
 //typedef UInt8                           NoteRequestMIDIChannel;
 struct NoteRequestInfo {
-	UInt8               flags;                  /* 1: dont accept GM match, 2: dont accept same-synth-type match */
-	NoteRequestMIDIChannel  midiChannelAssignment; /* (kNoteRequestSpecifyMIDIChannel | 1->16) as MIDI Channel assignement or zero - see notes above  */
-	BigEndianShort      polyphony;              /* Maximum number of voices */
-	BigEndianFixed      typicalPolyphony;       /* Hint for level mixing */
+	UInt8               flags;                  /*!< 1: dont accept GM match, 2: dont accept same-synth-type match */
+	NoteRequestMIDIChannel  midiChannelAssignment; /*!< (kNoteRequestSpecifyMIDIChannel | 1->16) as MIDI Channel assignement or zero - see notes above  */
+	BigEndianShort      polyphony;              /*!< Maximum number of voices */
+	BigEndianFixed      typicalPolyphony;       /*!< Hint for level mixing */
 };
 typedef struct NoteRequestInfo          NoteRequestInfo;
 struct NoteRequest {
@@ -76,7 +79,7 @@ enum {
 	kParentAtomIsContainer        = 0
 };
 
-/*
+/*!
  The sampleBankFile field of this structure can be used to pass in a pointer to an FSSpec
  that represents a SoundFont 2 or DLS file (otherwise set it to NULL ).
  
@@ -95,39 +98,39 @@ enum {
  */
 struct SynthesizerConnections {
 	OSType              clientID;
-	OSType              inputPortID;            /* terminology death: this port is used to SEND to the midi synth */
-	OSType              outputPortID;           /* terminology death: this port receives from a keyboard or other control device */
-	long                midiChannel;            /* The system channel; others are configurable (or the nubus slot number) */
+	OSType              inputPortID;            /*!< terminology death: this port is used to SEND to the midi synth */
+	OSType              outputPortID;           /*!< terminology death: this port receives from a keyboard or other control device */
+	long                midiChannel;            /*!< The system channel; others are configurable (or the nubus slot number) */
 	long                flags;
-	long                unique;                 /* unique id may be used instead of index, to getinfo and unregister calls */
-	FSSpecPtr           sampleBankFile;         /*  see notes above */
-	long                reserved2;              /* should be zero */
+	long                unique;                 /*!< unique id may be used instead of index, to getinfo and unregister calls */
+	FSSpecPtr           sampleBankFile;         /*!<  see notes above */
+	long                reserved2;              /*!< should be zero */
 };
 typedef struct SynthesizerConnections   SynthesizerConnections;
 
 
 struct SynthesizerDescription {
-	OSType              synthesizerType;        /* synthesizer type (must be same as component subtype) */
-	Str31               name;                   /* text name of synthesizer type */
-	unsigned long       flags;                  /* from the above enum */
-	unsigned long       voiceCount;             /* maximum polyphony */
+	OSType              synthesizerType;        /*!< synthesizer type (must be same as component subtype) */
+	Str31               name;                   /*!< text name of synthesizer type */
+	unsigned long       flags;                  /*!< from the above enum */
+	unsigned long       voiceCount;             /*!< maximum polyphony */
 	
-	unsigned long       partCount;              /* maximum multi-timbrality (and midi channels) */
-	unsigned long       instrumentCount;        /* non gm, built in (rom) instruments only */
-	unsigned long       modifiableInstrumentCount; /* plus n-more are user modifiable */
-	unsigned long       channelMask;            /* (midi device only) which channels device always uses */
+	unsigned long       partCount;              /*!< maximum multi-timbrality (and midi channels) */
+	unsigned long       instrumentCount;        /*!< non gm, built in (rom) instruments only */
+	unsigned long       modifiableInstrumentCount; /*!< plus n-more are user modifiable */
+	unsigned long       channelMask;            /*!< (midi device only) which channels device always uses */
 	
-	unsigned long       drumPartCount;          /* maximum multi-timbrality of drum parts */
-	unsigned long       drumCount;              /* non gm, built in (rom) drumkits only */
-	unsigned long       modifiableDrumCount;    /* plus n-more are user modifiable */
-	unsigned long       drumChannelMask;        /* (midi device only) which channels device always uses */
+	unsigned long       drumPartCount;          /*!< maximum multi-timbrality of drum parts */
+	unsigned long       drumCount;              /*!< non gm, built in (rom) drumkits only */
+	unsigned long       modifiableDrumCount;    /*!< plus n-more are user modifiable */
+	unsigned long       drumChannelMask;        /*!< (midi device only) which channels device always uses */
 	
-	unsigned long       outputCount;            /* number of audio outputs (usually two) */
-	unsigned long       latency;                /* response time in µSec */
+	unsigned long       outputCount;            /*!< number of audio outputs (usually two) */
+	unsigned long       latency;                /*!< response time in µSec */
 	
-	unsigned long       controllers[4];         /* array of 128 bits */
-	unsigned long       gmInstruments[4];       /* array of 128 bits */
-	unsigned long       gmDrums[4];             /* array of 128 bits */
+	unsigned long       controllers[4];         /*!< array of 128 bits */
+	unsigned long       gmInstruments[4];       /*!< array of 128 bits */
+	unsigned long       gmDrums[4];             /*!< array of 128 bits */
 };
 typedef struct SynthesizerDescription   SynthesizerDescription;
 
@@ -137,8 +140,8 @@ struct InstSampleDescRec {
 	BigEndianShort      sampleSize;
 	BigEndianUnsignedFixed  sampleRate;
 	BigEndianShort      sampleDataID;
-	BigEndianLong       offset;                 /* offset within SampleData - this could be just for internal use*/
-	BigEndianLong       numSamples;             /* this could also just be for internal use, we'll see*/
+	BigEndianLong       offset;                 /*!< offset within SampleData - this could be just for internal use*/
+	BigEndianLong       numSamples;             /*!< this could also just be for internal use, we'll see*/
 	
 	BigEndianLong       loopType;
 	BigEndianLong       loopStart;
@@ -235,6 +238,7 @@ QTUnlockContainer(QTAtomContainer container)                  AVAILABLE_MAC_OS_X
 #pragma pack(pop)
 
 #pragma mark - Old QuickTime Code end
+#endif
 
 //NOTE: A lot of code was copied from MIDI-GM.c.  This file needs to be checked
 //to see if it still works like it did.
@@ -1043,7 +1047,7 @@ FSIORefNum GenerateDLSFromBundle()
 		return -1;
 	}
 	
-	rsrcURL = CFBundleCopyResourceURL(AudioBundle, CFSTR("gs_instruments"),  CFSTR("dls"), NULL);
+	rsrcURL = CFBundleCopyResourceURL(AudioBundle, CFSTR("gs_instruments"), CFSTR("dls"), NULL);
 	CFURLGetFSRef(rsrcURL, &rsrcRef);
 	iErr = FSOpenFork(&rsrcRef, 0, 0, fsRdPerm, &refNum);
 	CFRelease(rsrcURL);

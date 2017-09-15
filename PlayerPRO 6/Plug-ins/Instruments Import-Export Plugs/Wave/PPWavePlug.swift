@@ -43,27 +43,14 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 	}
 	
 	public func importSample(at url: URL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) throws {
+		let fileRef1 = try ExtAudioFile(openURL: url)
 		let newSample = PPSampleObject()
-		var fileRef1: ExtAudioFileRef? = nil
-		var iErr = ExtAudioFileOpenURL(url as NSURL, &fileRef1)
-		guard iErr == noErr else {
-			throw MADErr.readingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey: NSError(domain: NSOSStatusErrorDomain, code: Int(iErr))], convertToCocoa: false)!
-		}
-		guard let fileRef = fileRef1 else {
-			throw MADErr.readingErr
-		}
-		defer {
-			ExtAudioFileDispose(fileRef)
-		}
 
 		if var mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) as NSData? as Data? {
 			var realFormat = AudioStreamBasicDescription()
 			
 			var asbdSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
-			iErr = ExtAudioFileGetProperty(fileRef, propertyID: kExtAudioFileProperty_FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
-			guard iErr == noErr else {
-				throw NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)
-			}
+			try fileRef1.get(property: kExtAudioFileProperty_FileDataFormat, dataSize: &asbdSize, data: &realFormat)
 			
 			//Constrain the audio conversion to values supported by PlayerPRO
 			realFormat.mSampleRate = ceil(realFormat.mSampleRate)
@@ -88,10 +75,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 				realFormat.mChannelsPerFrame = 2
 			}
 			
-			iErr = ExtAudioFileSetProperty(fileRef, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: MemoryLayout<AudioStreamBasicDescription>.size, data: &realFormat)
-			guard iErr == noErr else {
-				throw NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)
-			}
+			fileRef1.clientDataFormat = realFormat
 
 			readLoop: while true {
 				if let tmpMutDat = NSMutableData(length: Int(kSrcBufSize)) {
@@ -99,7 +83,6 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 					defer {
 						free(fillBufList.unsafeMutablePointer)
 					}
-					var err: OSStatus = noErr
 					fillBufList[0].mNumberChannels = realFormat.mChannelsPerFrame
 					fillBufList[0].mDataByteSize = kSrcBufSize
 					fillBufList[0].mData = tmpMutDat.mutableBytes
@@ -110,10 +93,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 					
 					// printf("test %d\n", numFrames);
 					
-					err = ExtAudioFileRead(fileRef, &numFrames, fillBufList.unsafeMutablePointer);
-					guard err == noErr else {
-						throw NSError(domain: NSOSStatusErrorDomain, code: Int(err), userInfo: nil)
-					}
+					try fileRef1.read(frames: &numFrames, data: fillBufList.unsafeMutablePointer)
 					if numFrames == 0 {
 						// this is our termination condition
 						break readLoop

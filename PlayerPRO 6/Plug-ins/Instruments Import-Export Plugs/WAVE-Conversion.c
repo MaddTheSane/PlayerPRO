@@ -9,11 +9,15 @@
 //TODO: re-write this to use the AudioToolbox OS X framework: it can natively handle wave audio.
 
 #ifndef __LP64__
-//#include <QuickTime/QuickTime.h>
+#if __has_include(<QuickTime/QuickTime.h>)
+# include <QuickTime/QuickTime.h>
+#endif
 #include <ApplicationServices/ApplicationServices.h>
 
+#ifndef __MOVIES__
 typedef struct MovieType**              Movie;
 typedef struct TrackType**              Track;
+#endif
 #endif
 
 
@@ -238,7 +242,7 @@ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 	myCursH = GetCursor(357);
 	
 	if (myCursH == NULL) {
-		MADDebugStr(__LINE__, __FILE__, "");
+		MADDebugStr(__LINE__, __FILE__, "Missing cursor");
 		return MADUnknownErr;
 	}
 	DetachResource((Handle)myCursH);

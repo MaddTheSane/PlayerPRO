@@ -10,6 +10,11 @@ import Cocoa
 import PlayerPROCore
 import PlayerPROKit
 
+private let headerData: Data = {
+	let headerData2: [UInt8] = [0x4D, 0x54, 0x68, 0x64, 0, 0, 0, 6, 0]
+	return Data(headerData2)
+}()
+
 @objc(PPMIDIImporter) final public class MIDIImporter: NSObject, PPComplexImportPlugInterface {
 	
 	public convenience init(forPlugIn: ()) {
@@ -26,22 +31,14 @@ import PlayerPROKit
 	}
 	
 	public func canImport(_ theURL: URL) throws {
-		func getHeaderData() -> Data {
-			let headerData: [UInt8] = [0x4D, 0x54, 0x68, 0x64, 0, 0, 0, 6, 0]
-			return Data(headerData)
-		}
-		//var myErr = MADErr.NoErr;
-		do {
-			let aFile = try FileHandle(forReadingFrom: theURL)
-			let fileData = aFile.readData(ofLength: 9)
-			aFile.closeFile()
-			let headerData = getHeaderData()
-			
-			if fileData == headerData {
-				return
-			} else {
-				throw MADErr.fileNotSupportedByThisPlug
-			}
+		let aFile = try FileHandle(forReadingFrom: theURL)
+		let fileData = aFile.readData(ofLength: 9)
+		aFile.closeFile()
+		
+		if fileData == headerData {
+			return
+		} else {
+			throw MADErr.fileNotSupportedByThisPlug
 		}
 	}
 }

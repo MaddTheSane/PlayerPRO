@@ -86,7 +86,7 @@ static inline OSErr TestMINS(const InstrData *CC)
 	return TestMINS(theSound.bytes) == MADNoErr;
 }
 
--(BOOL)importInstrumentAtURL:(NSURL *)sampleURL instrument:(out PPInstrumentObject *__autoreleasing *)outHeader driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nullable)error
+-(BOOL)importInstrumentAtURL:(NSURL *)sampleURL instrument:(out PPInstrumentObject *__autoreleasing *)outHeader driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nonnull)error
 {
 	NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingFromURL:sampleURL error:NULL];
 	if (!readHandle) {
@@ -189,7 +189,7 @@ static inline OSErr TestMINS(const InstrData *CC)
 	return YES;
 }
 
-- (BOOL)exportInstrument:(PPInstrumentObject *)InsHeader toURL:(NSURL *)sampleURL driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nullable)error
+- (BOOL)exportInstrument:(PPInstrumentObject *)InsHeader toURL:(NSURL *)sampleURL driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nonnull)error
 {
 	NSFileHandle *fileHand = [NSFileHandle fileHandleForWritingToURL:sampleURL error:NULL];
 	if (fileHand == nil) {

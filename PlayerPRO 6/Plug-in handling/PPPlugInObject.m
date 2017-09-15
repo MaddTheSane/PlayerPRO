@@ -86,10 +86,12 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, int chan
 - (instancetype)initWithBundle:(NSBundle *)aBund
 {
 	if (self = [super init]) {
-		CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)[aBund bundleURL]);
-		
-		self.version = CFBundleGetVersionNumber(cfBundle);
-		CFRelease(cfBundle);
+		{
+			CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)[aBund bundleURL]);
+			
+			self.version = CFBundleGetVersionNumber(cfBundle);
+			CFRelease(cfBundle);
+		}
 		
 		NSMutableDictionary *tempDict = [[aBund infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[aBund localizedInfoDictionary]];
