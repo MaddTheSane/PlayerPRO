@@ -33,7 +33,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		var res: OSStatus = noErr
 		
 		res = AudioFileOpen(url: sampleURL as NSURL, permissions: .readPermission, fileTypeHint: .WAVE, audioFile: &audioFile);
-		if (res != noErr) {
+		if res != noErr {
 			myErr = .fileNotSupportedByThisPlug;
 		} else {
 			AudioFileClose(audioFile!)
@@ -47,7 +47,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		var fileRef1: ExtAudioFileRef? = nil
 		var iErr = ExtAudioFileOpenURL(url as NSURL, &fileRef1)
 		guard iErr == noErr else {
-			throw MADErr.readingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(iErr), userInfo: nil)], convertToCocoa: false)!
+			throw MADErr.readingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey: NSError(domain: NSOSStatusErrorDomain, code: Int(iErr))], convertToCocoa: false)!
 		}
 		guard let fileRef = fileRef1 else {
 			throw MADErr.readingErr

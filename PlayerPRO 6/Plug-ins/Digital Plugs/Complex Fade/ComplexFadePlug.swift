@@ -10,7 +10,9 @@ import Foundation
 import PlayerPROKit.PPPlugIns
 
 public final class ComplexFade: NSObject, PPDigitalPlugin {
-	public let hasUIConfiguration = true
+	public var hasUIConfiguration: Bool {
+		return true
+	}
 	
 	public convenience init(forPlugIn: ()) {
 		self.init()

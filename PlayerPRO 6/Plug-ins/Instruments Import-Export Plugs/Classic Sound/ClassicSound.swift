@@ -35,7 +35,6 @@ public final class ClassicSound: NSObject, PPSampleImportPlugin {
 	}
 	
 	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) throws {
-		var iErr = MADErr.readingErr
 		let data = try Data(contentsOf: sampleURL)
 		let tmpURL = try assetForSND(data)
 		defer {

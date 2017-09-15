@@ -30,7 +30,8 @@ class FilterPlugHandler: NSObject, NSFastEnumeration, Collection, Sequence {
 				
 				
 				for component in aComp {
-					if let theBundle = Bundle(url: component), let tempObj = PPFilterPlugObject(bundle: theBundle) {
+					if let theBundle = Bundle(url: component),
+						let tempObj = PPFilterPlugObject(bundle: theBundle) {
 						plugInArray.append(tempObj)
 					}
 				}
@@ -80,19 +81,19 @@ class FilterPlugHandler: NSObject, NSFastEnumeration, Collection, Sequence {
 		aPlug.beginRun(withData: theData, selectionRange: selRange, onlyCurrentChannel: StereoMode, driver: driver, parentDocument: document, handler: handler)
 	}
 	
-	@objc(addPlugInFromPath:) func addPlugIn(path thePath: String) {
+	@objc(addPlugInFromPath:) func addPlugIn(fromPath thePath: String) {
 		if let bund = Bundle(path: thePath) {
-			addPlugIn(bundle: bund)
+			addPlugIn(from: bund)
 		}
 	}
 	
-	@objc(addPlugInFromURL:) func addPlugIn(URL urlpath: URL) {
+	@objc(addPlugInFromURL:) func addPlugIn(from urlpath: URL) {
 		if let bund = Bundle(url: urlpath) {
-			addPlugIn(bundle: bund)
+			addPlugIn(from: bund)
 		}
 	}
 	
-	@objc(addPlugInFromBundle:) func addPlugIn(bundle theBund: Bundle) {
+	@objc(addPlugInFromBundle:) func addPlugIn(from theBund: Bundle) {
 		if let newPlug = PPFilterPlugObject(bundle: theBund) {
 			plugInArray.append(newPlug)
 		}

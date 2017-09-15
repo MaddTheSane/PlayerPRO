@@ -30,7 +30,8 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
 				
 				
 				for component in aComp {
-					if let theBundle = Bundle(url: component), let tempObj = DigitalPlugInObject(bundle: theBundle) {
+					if let theBundle = Bundle(url: component),
+						let tempObj = DigitalPlugInObject(bundle: theBundle) {
 						digitalPlugs.append(tempObj)
 					}
 				}
@@ -44,21 +45,21 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
 		tmp.beginCall(with: myPcmd, driver: driver, parentDocument: doc, handler: handler)
 	}
 	
-	func addPlugInFromBundle(_ theBund: Bundle) {
+	func addPlugIn(from theBund: Bundle) {
 		if let obj = DigitalPlugInObject(bundle: theBund) {
 			digitalPlugs.append(obj)
 		}
 	}
 	
-	func addPlugInFromURL(_ urlpath: URL) {
+	func addPlugIn(from urlpath: URL) {
 		if let theBund = Bundle(url: urlpath) {
-			addPlugInFromBundle(theBund)
+			addPlugIn(from: theBund)
 		}
 	}
 	
-	func addPlugInFromPath(_ thePath: String) {
+	func addPlugIn(fromPath thePath: String) {
 		if let theBund = Bundle(path: thePath) {
-			addPlugInFromBundle(theBund)
+			addPlugIn(from: theBund)
 		}
 	}
 	

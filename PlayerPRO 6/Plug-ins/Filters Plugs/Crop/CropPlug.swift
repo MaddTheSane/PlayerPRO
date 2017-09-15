@@ -10,7 +10,9 @@ import Foundation
 import PlayerPROKit
 
 public final class Crop: NSObject, PPFilterPlugin {
-	public let hasUIConfiguration = false
+	public var hasUIConfiguration: Bool {
+		return false
+	}
 	
 	@objc public convenience init(forPlugIn: ()) {
 		self.init()

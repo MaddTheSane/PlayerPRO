@@ -11,7 +11,9 @@ import AppKit.NSWindow
 import PlayerPROKit
 
 final public class Depth: NSObject, PPFilterPlugin {
-	public let hasUIConfiguration = true;
+	public var hasUIConfiguration: Bool {
+		return true
+	}
 	
 	public convenience init(forPlugIn: ()) {
 		self.init()

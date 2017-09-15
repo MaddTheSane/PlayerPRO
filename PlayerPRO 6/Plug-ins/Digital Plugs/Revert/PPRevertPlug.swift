@@ -10,7 +10,9 @@ import Foundation
 import PlayerPROKit
 
 public final class Revert: NSObject, PPDigitalPlugin {
-	public let hasUIConfiguration = false
+	public var hasUIConfiguration: Bool {
+		return false
+	}
 	
 	public convenience init(forPlugIn: ()) {
 		self.init()

@@ -26,7 +26,7 @@ func ==(lhs: DigitalPlugInObject, rhs: DigitalPlugInObject) -> Bool {
 
 final class DigitalPlugInObject : PPPlugInObject {
 	private let hasUI: Bool
-	private var plugCode: PPDigitalPlugin!
+	private var plugCode: PPDigitalPlugin
 	override init?(bundle toInit: Bundle) {
 		guard let archs = toInit.executableArchitectures else {
 			return nil
@@ -40,11 +40,8 @@ final class DigitalPlugInObject : PPPlugInObject {
 			}
 		}
 		
-		guard hasArch else {
-			return nil
-		}
-		
-		guard let rawBundClass: AnyClass = toInit.principalClass,
+		guard hasArch,
+			let rawBundClass: AnyClass = toInit.principalClass,
 			let bundClass = rawBundClass as? PPDigitalPlugin.Type,
 			let aPlugCode = bundClass.init(forPlugIn: ()) else {
 				return nil
