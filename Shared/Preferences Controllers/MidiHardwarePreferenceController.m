@@ -29,7 +29,17 @@
 
 - (NSImage*)toolbarItemImage
 {
-	return nil;
+	// Try to use system-available image. Because the icon might change in the future
+	NSURL *localAppDir = [[NSFileManager defaultManager] URLForDirectory:NSApplicationDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL];
+	NSURL *audMidSetupURL = [localAppDir URLByAppendingPathComponent:@"Utilities"];
+	audMidSetupURL = [audMidSetupURL URLByAppendingPathComponent:@"Audio MIDI Setup.app"];
+	NSBundle *audMidSetupBundle = [NSBundle bundleWithURL:audMidSetupURL];
+	NSImage *midiIcon = [audMidSetupBundle imageForResource:@"AudioMIDISetup"];
+	if (midiIcon) {
+		return midiIcon;
+	}
+	// Fall-back to known icon
+	return [NSImage imageNamed:@"Preferences/MIDI"];
 }
 
 

@@ -27,7 +27,14 @@ final class SoundOutputController: SoundSettingsViewController, SoundSettingsVie
 	}
 	
 	var toolbarItemImage: NSImage? {
-		return nil //TODO: implement
+		// Try to use system-available image. Because the icon might change in the future
+		if let localAppDir = (try? FileManager.default.url(for: .applicationDirectory, in: .localDomainMask, appropriateFor: nil, create: false))?.appendingPathComponent("Utilities").appendingPathComponent("Audio MIDI Setup.app"),
+			let audMidSetupBundle = Bundle(url: localAppDir),
+			let soundImg = audMidSetupBundle.image(forResource: NSImage.Name("SpeakerIcon")) {
+			return soundImg
+		}
+		// Fall-back to known icon
+		return #imageLiteral(resourceName: "Preferences/Sound")
 	}
 	
 	class func newPreferenceView() -> Self? {
