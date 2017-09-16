@@ -1526,6 +1526,7 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 	CFWriteStreamRef	curFile = NULL;
 	MADErr	theErr = MADNoErr;
 	MADSpec aHeader;
+	CFIndex	bytesWritten = 0;
 	
 	if (music->musicUnderModification)
 		return MADWritingErr;
@@ -1562,7 +1563,7 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 	aHeader = *music->header;
 	aHeader.numInstru = x;
 	ByteSwapMADSpec(&aHeader);
-	CFWriteStreamWrite(curFile, (const UInt8*)&aHeader, sizeof(MADSpec));
+	bytesWritten = CFWriteStreamWrite(curFile, (const UInt8*)&aHeader, sizeof(MADSpec));
 	
 	if (compressMAD) {
 		for (i = 0; i < music->header->numPat ; i++) {
@@ -1571,7 +1572,7 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 				inOutCount = tmpPat->header.patBytes + sizeof(PatHeader);
 				tmpPat->header.compMode = 'MAD1';
 				ByteSwapPatHeader(&tmpPat->header);
-				CFWriteStreamWrite(curFile, (const UInt8*)tmpPat, inOutCount);
+				bytesWritten = CFWriteStreamWrite(curFile, (const UInt8*)tmpPat, inOutCount);
 				free(tmpPat);
 			}
 		}
@@ -1585,7 +1586,7 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 				memcpy(tmpPat, music->partition[i], inOutCount);
 				tmpPat->header.compMode = 'NONE';
 				ByteSwapPatHeader(&tmpPat->header);
-				CFWriteStreamWrite(curFile, (const UInt8*)tmpPat, inOutCount);
+				bytesWritten = CFWriteStreamWrite(curFile, (const UInt8*)tmpPat, inOutCount);
 				free(tmpPat);
 			}
 		}
@@ -1597,7 +1598,7 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 			music->fid[i].no = i;
 			instData = music->fid[i];
 			ByteSwapInstrData(&instData);
-			CFWriteStreamWrite(curFile, (const UInt8*)&instData, sizeof(InstrData));
+			bytesWritten = CFWriteStreamWrite(curFile, (const UInt8*)&instData, sizeof(InstrData));
 		}
 	}
 	
@@ -1612,9 +1613,12 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 			ByteSwapsData(&curData);
 			memcpy(&copyData, &curData, inOutCount);
 			copyData.data = 0;
-			CFWriteStreamWrite(curFile, (const UInt8*)&copyData, inOutCount);
+			bytesWritten = CFWriteStreamWrite(curFile, (const UInt8*)&copyData, inOutCount);
 			
 			inOutCount = music->sample[music->fid[i].firstSample + x]->size;
+			if (inOutCount == 0) {
+				continue;
+			}
 			dataCopy = malloc(inOutCount);
 			memcpy(dataCopy, curData.data, inOutCount);
 #ifdef __LITTLE_ENDIAN__
@@ -1638,7 +1642,7 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 			}
 #endif
 
-			CFWriteStreamWrite(curFile, (const UInt8*)dataCopy, inOutCount);
+			bytesWritten = CFWriteStreamWrite(curFile, (const UInt8*)dataCopy, inOutCount);
 			free(dataCopy);
 		}
 	}
@@ -1651,7 +1655,7 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 			inOutCount = sizeof(FXSets);
 			aSet = music->sets[alpha];
 			SwapFXSets(&aSet);
-			CFWriteStreamWrite(curFile, (const UInt8*)&aSet, inOutCount);
+			bytesWritten = CFWriteStreamWrite(curFile, (const UInt8*)&aSet, inOutCount);
 			alpha++;
 		}
 	}
@@ -1663,7 +1667,7 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 				inOutCount = sizeof(FXSets);
 				aSet = music->sets[alpha];
 				SwapFXSets(&aSet);
-				CFWriteStreamWrite(curFile, (const UInt8*)&aSet, inOutCount);
+				bytesWritten = CFWriteStreamWrite(curFile, (const UInt8*)&aSet, inOutCount);
 				alpha++;
 			}
 		}
@@ -2300,7 +2304,7 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 			
 			// ** Read Sample header **
 			
-			curData = MDriver->sample[i * MAXSAMPLE + x] = (sData*)malloc(sizeof(sData));
+			curData = MDriver->sample[i * MAXSAMPLE + x] = (sData*)calloc(1, sizeof(sData));
 			if (curData == NULL) {
 				for (x = 0; x < MAXINSTRU ; x++)
 					MADKillInstrument(MDriver, x);
@@ -2381,6 +2385,9 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 					
 #ifdef _MAC_H
 				case MADCFReadStreamType:
+					if (inOutCount==0) {
+						break;
+					}
 					bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)curData->data, inOutCount);
 					if (bytesRead == -1)
 						theErr = MADReadingErr;
@@ -2395,8 +2402,10 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 					break;
 			}
 			
+#ifdef __BLOCKS__
 #if __LITTLE_ENDIAN__
 			if (curData->amp == 16) {
+				size_t 	ll;
 				short	*shortPtr = (short*)curData->data;
 				dispatch_apply((curData->size / 2) / BYTESWAP_STRIDE, dispatch_get_global_queue(0, 0), ^(size_t i) {
 					size_t j = i * BYTESWAP_STRIDE;
@@ -2410,7 +2419,16 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 					MADBE16(&shortPtr[j+6]);
 					MADBE16(&shortPtr[j+7]);
 				});
-				for (int ll = (curData->size / 2) - ((curData->size / 2) % BYTESWAP_STRIDE); ll < curData->size / 2; ll++) {
+				for (ll = (curData->size / 2) - ((curData->size / 2) % BYTESWAP_STRIDE); ll < curData->size / 2; ll++) {
+					MADBE16(&shortPtr[ll]);
+				}
+			}
+#endif
+#else
+			if (curData->amp == 16) {
+				short	*shortPtr = (short*)curData->data;
+				size_t 	ll;
+				for (ll = 0; ll < curData->size / 2; ll++) {
 					MADBE16(&shortPtr[ll]);
 				}
 			}
@@ -2625,13 +2643,34 @@ MADErr MADMusicSaveCString(MADMusic *music, const char *cName, bool compressMAD)
 			inOutCount = music->sample[music->fid[i].firstSample + x]->size;
 			dataCopy = malloc(inOutCount);
 			memcpy(dataCopy, curData.data, inOutCount);
+#ifdef __LITTLE_ENDIAN__
 			if (curData.amp == 16) {
-				short *shortPtr = (short*)dataCopy;
+				short	*shortPtr = (short*)dataCopy;
 				size_t ll;
-				for (ll = 0; ll < inOutCount / 2 ; ll++) {
+#if __BLOCKS__
+				dispatch_apply((inOutCount / 2) / BYTESWAP_STRIDE, dispatch_get_global_queue(0, 0), ^(size_t i) {
+					size_t j = i * BYTESWAP_STRIDE;
+					
+					MADBE16(&shortPtr[j+0]);
+					MADBE16(&shortPtr[j+1]);
+					MADBE16(&shortPtr[j+2]);
+					MADBE16(&shortPtr[j+3]);
+					MADBE16(&shortPtr[j+4]);
+					MADBE16(&shortPtr[j+5]);
+					MADBE16(&shortPtr[j+6]);
+					MADBE16(&shortPtr[j+7]);
+				});
+				for (ll = (inOutCount / 2) - ((inOutCount / 2) % BYTESWAP_STRIDE); ll < inOutCount / 2; ll++) {
 					MADBE16(&shortPtr[ll]);
 				}
+#else
+				short *shortPtr = (short*)dataCopy;
+				for (ll = 0; ll < inOutCount / 2; ll++) {
+					MADBE16(&shortPtr[ll]);
+				}
+#endif
 			}
+#endif
 			iWrite(inOutCount, dataCopy, curFile);
 			free(dataCopy);
 		}
