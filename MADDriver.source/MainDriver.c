@@ -30,8 +30,12 @@
 #ifdef _MAC_H
 #include <CoreFoundation/CoreFoundation.h>
 #else
+#ifdef __BLOCKS__
+#include <dispatch/dispatch.h>
+#endif
 typedef void *CFReadStreamRef;
 #endif
+#define BYTESWAP_STRIDE 8
 
 ///////////////////////////////
 
@@ -1613,12 +1617,27 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 			inOutCount = music->sample[music->fid[i].firstSample + x]->size;
 			dataCopy = malloc(inOutCount);
 			memcpy(dataCopy, curData.data, inOutCount);
+#ifdef __LITTLE_ENDIAN__
 			if (curData.amp == 16) {
-				short *shortPtr = (short*)dataCopy;
-				for (size_t ll = 0; ll < inOutCount / 2; ll++) {
+				short	*shortPtr = (short*)dataCopy;
+				dispatch_apply((inOutCount / 2) / BYTESWAP_STRIDE, dispatch_get_global_queue(0, 0), ^(size_t i) {
+					size_t j = i * BYTESWAP_STRIDE;
+					
+					MADBE16(&shortPtr[j+0]);
+					MADBE16(&shortPtr[j+1]);
+					MADBE16(&shortPtr[j+2]);
+					MADBE16(&shortPtr[j+3]);
+					MADBE16(&shortPtr[j+4]);
+					MADBE16(&shortPtr[j+5]);
+					MADBE16(&shortPtr[j+6]);
+					MADBE16(&shortPtr[j+7]);
+				});
+				for (size_t ll = (inOutCount / 2) - ((inOutCount / 2) % BYTESWAP_STRIDE); ll < inOutCount / 2; ll++) {
 					MADBE16(&shortPtr[ll]);
 				}
 			}
+#endif
+
 			CFWriteStreamWrite(curFile, (const UInt8*)dataCopy, inOutCount);
 			free(dataCopy);
 		}
@@ -1908,9 +1927,29 @@ static inline void SwapFXSets(FXSets *set)
 	MADBE16(&set->noArg);
 	MADBE16(&set->track);
 	MADBE32(&set->FXID);
+#ifdef __BLOCKS__
+#if __LITTLE_ENDIAN__
+	dispatch_apply(100 / BYTESWAP_STRIDE, dispatch_get_global_queue(0, 0), ^(size_t y) {
+		size_t j = y * BYTESWAP_STRIDE;
+		
+		MADBE32(&set->values[j+0]);
+		MADBE32(&set->values[j+1]);
+		MADBE32(&set->values[j+2]);
+		MADBE32(&set->values[j+3]);
+		MADBE32(&set->values[j+4]);
+		MADBE32(&set->values[j+5]);
+		MADBE32(&set->values[j+6]);
+		MADBE32(&set->values[j+7]);
+	});
+	for (y = 100 - (100 % BYTESWAP_STRIDE); y < 100; y++) {
+		MADBE32(&set->values[y]);
+	}
+#endif
+#else
 	for (y = 0; y < 100; y++) {
 		MADBE32(&set->values[y]);
 	}
+#endif
 }
 
 static inline void ByteSwapInstrData(InstrData *toSwap)
@@ -2356,12 +2395,26 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 					break;
 			}
 			
+#if __LITTLE_ENDIAN__
 			if (curData->amp == 16) {
 				short	*shortPtr = (short*)curData->data;
-				size_t 	ll;
-				for (ll = 0; ll < curData->size / 2; ll++)
+				dispatch_apply((curData->size / 2) / BYTESWAP_STRIDE, dispatch_get_global_queue(0, 0), ^(size_t i) {
+					size_t j = i * BYTESWAP_STRIDE;
+					
+					MADBE16(&shortPtr[j+0]);
+					MADBE16(&shortPtr[j+1]);
+					MADBE16(&shortPtr[j+2]);
+					MADBE16(&shortPtr[j+3]);
+					MADBE16(&shortPtr[j+4]);
+					MADBE16(&shortPtr[j+5]);
+					MADBE16(&shortPtr[j+6]);
+					MADBE16(&shortPtr[j+7]);
+				});
+				for (int ll = (curData->size / 2) - ((curData->size / 2) % BYTESWAP_STRIDE); ll < curData->size / 2; ll++) {
 					MADBE16(&shortPtr[ll]);
+				}
 			}
+#endif
 		}
 	}
 	for (i = 0; i < MAXINSTRU; i++)

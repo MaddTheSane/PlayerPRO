@@ -12,6 +12,8 @@
 #include <dispatch/dispatch.h>
 #include <PlayerPROCore/MAD.h>
 
+#define BYTESWAP_STRIDE 8
+
 static inline void ByteSwapMADSpec(MADSpec *toSwap)
 {
 	MADBE32(&toSwap->MAD);
@@ -67,9 +69,23 @@ static inline void ByteSwapFXSets(FXSets *toSwap)
 	MADBE16(&toSwap->id);
 	MADBE32(&toSwap->FXID);
 	MADBE16(&toSwap->noArg);
-	for (int i = 0; i < 100; i++) {
+#if __LITTLE_ENDIAN__
+	dispatch_apply(100 / BYTESWAP_STRIDE, dispatch_get_global_queue(0, 0), ^(size_t y) {
+		size_t j = y * BYTESWAP_STRIDE;
+		
+		MADBE32(&toSwap->values[j+0]);
+		MADBE32(&toSwap->values[j+1]);
+		MADBE32(&toSwap->values[j+2]);
+		MADBE32(&toSwap->values[j+3]);
+		MADBE32(&toSwap->values[j+4]);
+		MADBE32(&toSwap->values[j+5]);
+		MADBE32(&toSwap->values[j+6]);
+		MADBE32(&toSwap->values[j+7]);
+	});
+	for (int i = 100 - (100 % BYTESWAP_STRIDE); i < 100; i++) {
 		MADBE32(&toSwap->values[i]);
 	}
+#endif
 }
 
 static inline void ByteSwapsData(sData *toSwap)
@@ -79,5 +95,7 @@ static inline void ByteSwapsData(sData *toSwap)
 	MADBE32(&toSwap->loopSize);
 	MADBE16(&toSwap->c2spd);
 }
+
+#undef BYTESWAP_STRIDE
 
 #endif

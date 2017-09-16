@@ -10,6 +10,8 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 
+#define BYTESWAP_STRIDE 8
+
 @interface PPInstrumentObject (private)
 - (InstrData)theInstrument;
 @end
@@ -173,12 +175,26 @@ static inline OSErr TestMINS(const InstrData *CC)
 		curData->data = malloc(inOutCount);
 		NSData *sampData = [readHandle readDataOfLength:inOutCount];
 		memcpy(curData->data, sampData.bytes, inOutCount);
+#if __LITTLE_ENDIAN__
 		if (curData->amp == 16) {
 			short	*shortPtr = (short*)curData->data;
-			for (int ll = 0; ll < curData->size / 2; ll++) {
+			dispatch_apply((curData->size / 2) / BYTESWAP_STRIDE, dispatch_get_global_queue(0, 0), ^(size_t i) {
+				size_t j = i * BYTESWAP_STRIDE;
+				
+				MADBE16(&shortPtr[j+0]);
+				MADBE16(&shortPtr[j+1]);
+				MADBE16(&shortPtr[j+2]);
+				MADBE16(&shortPtr[j+3]);
+				MADBE16(&shortPtr[j+4]);
+				MADBE16(&shortPtr[j+5]);
+				MADBE16(&shortPtr[j+6]);
+				MADBE16(&shortPtr[j+7]);
+			});
+			for (int ll = (curData->size / 2) - ((curData->size / 2) % BYTESWAP_STRIDE); ll < curData->size / 2; ll++) {
 				MADBE16(&shortPtr[ll]);
 			}
 		}
+#endif
 		
 		[InsHeader addSampleObject:[[PPSampleObject alloc] initWithSData:curData]];
 		free(curData->data);
@@ -222,12 +238,26 @@ static inline OSErr TestMINS(const InstrData *CC)
 		[fileHand writeData:[NSData dataWithBytes:&toWrite length:sizeof(sData32)]];
 		
 		NSMutableData *sDataData = [samp.data mutableCopy];
+#if __LITTLE_ENDIAN__
 		if (samp.amplitude == 16) {
 			short	*shortPtr = (short*)sDataData.mutableBytes;
-			for (NSInteger i = 0; i < sDataData.length / 2; i++) {
+			dispatch_apply((sDataData.length / 2) / BYTESWAP_STRIDE, dispatch_get_global_queue(0, 0), ^(size_t i) {
+				size_t j = i * BYTESWAP_STRIDE;
+
+				MADBE16(&shortPtr[j+0]);
+				MADBE16(&shortPtr[j+1]);
+				MADBE16(&shortPtr[j+2]);
+				MADBE16(&shortPtr[j+3]);
+				MADBE16(&shortPtr[j+4]);
+				MADBE16(&shortPtr[j+5]);
+				MADBE16(&shortPtr[j+6]);
+				MADBE16(&shortPtr[j+7]);
+			});
+			for (NSInteger i = (sDataData.length / 2) - ((sDataData.length / 2) % BYTESWAP_STRIDE); i < sDataData.length / 2; i++) {
 				MADBE16(&shortPtr[i]);
 			}
 		}
+#endif
 		[fileHand writeData:sDataData];
 	}
 	[fileHand closeFile];
