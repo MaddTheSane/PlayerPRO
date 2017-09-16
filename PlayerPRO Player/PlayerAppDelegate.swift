@@ -757,7 +757,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	func saveMusic(to tosave: URL) {
 		do {
-			try music!.saveMusic(to: tosave)
+			try music!.saveMusic(to: tosave, compress: false)
 		} catch {
 			NSAlert(error: error).runModal()
 		}
@@ -859,7 +859,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			PPRunAlertPanel(title: kUnresolvableFile, message: unresolvable)
 		}
 		
-		if selMus != -1 {
+		if selMus != -1 && selMus < musicList.countOfMusicList {
 			selectMusic(atIndex: selMus)
 			do {
 				try loadMusic(at: musicList.url(at: selMus), autoPlay: false)
@@ -867,12 +867,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				selectedIndex.playbackURL = musicList.url(at: selMus)
 				playingIndex = selectedIndex
 			} catch let error1 {
-				NSAlert(error: error1).runModal()
+				NSApp.presentError(error1)
 			}
 		} else {
 			self.music = PPMusicObject()
 			music!.attach(to: madDriver)
 			setTitleForSongLabelBasedOnMusic()
+			musicList.selectedMusic = -1
 		}
 	}
 	

@@ -80,7 +80,8 @@ private let kPlayerList = "Player List"
 	
 	/// Returns `NSNotFound` if the URL couldn't be found.
 	///
-	/// Use `indexOfObjectSimilar(URL:)` on Swift instead.
+	/// Use `indexOfObjectSimilar(to:)` on Swift instead.
+	@objc(indexOfObjectSimilarToURL:)
 	func indexOfObjectSimilarToURL(_ theURL: URL) -> Int {
 		return indexOfObjectSimilar(to: theURL) ?? NSNotFound
 	}
@@ -485,7 +486,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	@objc(removeObjectsInMusicListAtIndexes:)
-	func removeObjectsInMusicListAtIndexes(_ idxSet: IndexSet) {
+	func removeObjectsInMusicList(at idxSet: IndexSet) {
 		remove(at: idxSet)
 	}
 	
