@@ -61,6 +61,7 @@ static short FoundNote(short Period)
 	return note;
 }
 
+#if !defined(NOEXPORTMUSIC) || NOEXPORTMUSIC == 0
 static void Convert16to8(char* srcPtr, char* destPtr, size_t size)
 {
 	size_t i;
@@ -71,6 +72,7 @@ static void Convert16to8(char* srcPtr, char* destPtr, size_t size)
 		destPtr[i] = srcPtr[i*2];
 	}
 }
+#endif
 
 static void AnalyseSignatureMOD(size_t EOFo, MADFourChar temp, short *maxInstru, int *PatternSize, short *tracksNo, MODDef* aMOD)
 {
@@ -595,6 +597,7 @@ static MADErr PPConvertMod2Mad(char* aMOD, long MODSize, MADMusic *theMAD, MADDr
 	return MADNoErr;
 }
 
+#if !defined(NOEXPORTMUSIC) || NOEXPORTMUSIC == 0
 static int ConvertSampleC4SPD(char* src, size_t srcSize, short amp, int srcC4SPD, char* dst, int dstC4SPD)
 {
 	short	*src16 = (short*) src, *dst16 = (short*) dst;
@@ -894,6 +897,7 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 	
 	return (char*)theMOD;
 }
+#endif
 
 static MADErr ExtractMODInfo(MADInfoRec *info, void *AlienFile)
 {
@@ -1038,6 +1042,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				myErr = MADReadingErr;
 			break;
 			
+#if !defined(NOEXPORTMUSIC) || NOEXPORTMUSIC == 0
 		case MADPlugExport:
 			AlienFile = PPConvertMad2Mod(MadFile, init, &sndSize);
 			
@@ -1054,6 +1059,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			} else
 				myErr = MADReadingErr;
 			break;
+#endif
 			
 		case MADPlugInfo:
 			iFileRefI = iFileOpenRead(AlienFileName);

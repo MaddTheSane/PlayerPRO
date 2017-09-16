@@ -575,6 +575,7 @@ bool MADPlugAvailable(const MADLibrary *inMADDriver, const char* kindFile)
 	return false;
 }
 
+#if !defined(NOEXPORTMUSIC) || NOEXPORTMUSIC == 0
 MADErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)
 {
 	MADInfoRec InfoRec;
@@ -586,6 +587,7 @@ MADErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	}
 	return MADCannotFindPlug;
 }
+#endif
 
 MADErr PPTestFile(MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 {

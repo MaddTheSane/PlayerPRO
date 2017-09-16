@@ -10439,6 +10439,7 @@
 					"NOEXPORTFUNCS=1",
 					"BUILDINGPPRO=1",
 					"NOSOUND=1",
+					"NOEXPORTMUSIC=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -10466,6 +10467,7 @@
 					"NOEXPORTFUNCS=1",
 					"BUILDINGPPRO=1",
 					"NOSOUND=1",
+					"NOEXPORTMUSIC=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -11363,6 +11365,7 @@
 					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
 					"BUILDINGPPRO=1",
+					"NOEXPORTMUSIC=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -11387,6 +11390,7 @@
 					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
 					"BUILDINGPPRO=1",
+					"NOEXPORTMUSIC=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "PPQuickView/PPQuickView-Info.plist";
