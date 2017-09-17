@@ -18,7 +18,6 @@
 #ifdef __OBJC__
 #import <Cocoa/Cocoa.h>
 #import <PlayerPROKit/PlayerPROKit.h>
-#import "PlayerPRO_6-Swift.h"
 #endif
 
 #endif

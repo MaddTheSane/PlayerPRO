@@ -2609,7 +2609,6 @@
 		5578C48117D9E8560057D11B /* PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C48517D9E8560057D11B /* PlayerPRO Player-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plist"; sourceTree = "<group>"; };
 		5578C48717D9E8560057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5578C48B17D9E8560057D11B /* PlayerPRO Player-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO Player-Prefix.pch"; sourceTree = "<group>"; };
 		5578C48D17D9E8560057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		5578C52F17DB94A50057D11B /* PPImport.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPImport.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C53017DB94A60057D11B /* PPImport-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPImport-Info.plist"; sourceTree = "<group>"; };
@@ -4620,7 +4619,6 @@
 				55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */,
 				5578C48617D9E8560057D11B /* InfoPlist.strings */,
 				55211BE91DD6457300ED9EE5 /* Localizable.strings */,
-				5578C48B17D9E8560057D11B /* PlayerPRO Player-Prefix.pch */,
 				5578C48C17D9E8560057D11B /* Credits.rtf */,
 			);
 			name = "Supporting Files";
@@ -10388,8 +10386,6 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AZAE6TWF2Z;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
@@ -10413,8 +10409,6 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AZAE6TWF2Z;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
