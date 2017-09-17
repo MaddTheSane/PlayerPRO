@@ -148,7 +148,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				NSAlert(error: err).runModal()
 			}
 		} else if selMusFromList != -1 {
-			selectMusic(atIndex: selMusFromList)
+			selectMusic(at: selMusFromList)
 		}
 		let lostCount = musicList.lostMusicCount
 		if lostCount != 0 {
@@ -237,7 +237,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	private func selectCurrentlyPlayingMusic() {
 		if (self.selectedIndex.index >= 0) {
 			//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
-			selectMusic(atIndex: selectedIndex.index)
+			selectMusic(at: selectedIndex.index)
 		}
 	}
 	
@@ -280,7 +280,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						NSApp.presentError(err)
 					}
 				} else {
-					selectMusic(atIndex: musicList.countOfMusicList - 1)
+					selectMusic(at: musicList.countOfMusicList - 1)
 				}
 				
 			case .alertSecondButtonReturn:
@@ -296,7 +296,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						NSApp.presentError(err)
 					}
 				} else {
-					selectMusic(atIndex: similarMusicIndex)
+					selectMusic(at: similarMusicIndex)
 				}
 				
 			default:
@@ -314,7 +314,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					NSApp.presentError(err)
 				}
 			} else {
-				selectMusic(atIndex: musicList.countOfMusicList - 1)
+				selectMusic(at: musicList.countOfMusicList - 1)
 			}
 		}
 	}
@@ -484,7 +484,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			madDriver.getMusicStatusTime(current: &curTime, total: &fullTime)
 			
 			madDriver.stopDriver()
-			//[madDriver stopDriver];
 		}
 		var theSettinit = MADDriverSettings.new()
 		let defaults = UserDefaults.standard
@@ -507,7 +506,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			theSettinit.MicroDelaySize = 0
 		}
 		
-		if let i16 = Int16(exactly: defaults.integer(forKey: PPSoundDriver)), let driver = MADSoundOutput(rawValue: i16) {
+		if let i16 = Int16(exactly: defaults.integer(forKey: PPSoundDriver)),
+			let driver = MADSoundOutput(rawValue: i16) {
 			theSettinit.driverMode = driver
 		} else {
 			theSettinit.driverMode = .CoreAudioDriver
@@ -596,7 +596,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		}
 	}
 	
-	private func selectMusic(atIndex anIdx: Int) {
+	private func selectMusic(at anIdx: Int) {
 		guard anIdx >= 0 && anIdx < musicList.countOfMusicList else {
 			NSSound.beep()
 			return
@@ -860,7 +860,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		}
 		
 		if selMus != -1 && selMus < musicList.countOfMusicList {
-			selectMusic(atIndex: selMus)
+			selectMusic(at: selMus)
 			do {
 				try loadMusic(at: musicList.url(at: selMus), autoPlay: false)
 				selectedIndex.index = selMus
@@ -1195,7 +1195,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 								NSApplication.shared.reply(toApplicationShouldTerminate: true)
 							} else {
 								DispatchQueue.main.async() {
-									NSAlert(error: thErr).runModal()
+									NSApp.presentError(thErr)
 								}
 							}
 						}
@@ -1560,7 +1560,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			if let info = madLib.typeFromUTI(fileUTI) {
 				aPPInfo = try madLib.information(from: musicURL, type: info)
 			} else {
-				badValues()
+				throw MADErr.noErr
 			}
 		} catch _ {
 			badValues()
@@ -1600,8 +1600,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			})
 			musicListContentsDidMove()
 			return true
-		} else if let tmpArray = dragPB.readObjects(forClasses: [NSURL.self], options:[NSPasteboard.ReadingOptionKey.urlReadingFileURLsOnly : true,
-		                                                                               NSPasteboard.ReadingOptionKey.urlReadingContentsConformToTypes : self.trackerUTIs]) {
+		} else if let tmpArray = dragPB.readObjects(forClasses: [NSURL.self], options:[.urlReadingFileURLsOnly : true,
+		                                                                               .urlReadingContentsConformToTypes : self.trackerUTIs]) {
 				if tmpArray.count < 1 {
 					return false
 				}
