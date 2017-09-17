@@ -255,7 +255,7 @@ public let maximumChannelVolume: MADByte = 128
 public let maximumArpeggio: Int32 = 3
 public let equalizerPacketElements = 512
 
-/// PlayerPROCore's internal debugger function
+/// PlayerPROCore's internal debugger function, wrapped to include the line and file in Swift.
 /// - parameter text: Developer text that is used to help debug the issue. **Cannot be NULL**, but may be an empty string.
 /// - parameter file: The file that has the problem.
 /// - parameter line: the line of the source file that's having a problem.
@@ -352,7 +352,7 @@ extension sData {
 extension EnvRec: Hashable {
 	public var hashValue: Int {
 		var aHi = UInt(pos)
-		aHi |= UInt(val) << 2
+		aHi |= UInt(val) << 16
 		
 		return Int(bitPattern: aHi)
 	}
@@ -361,8 +361,8 @@ extension EnvRec: Hashable {
 extension FXBus: Hashable {
 	public var hashValue: Int {
 		var aVar = Int(copyId)
-		aVar |= Active.boolValue ? 1 << 4 : 0
-		aVar |= ByPass.boolValue ? 1 << 5 : 0
+		aVar |= Active.boolValue ? 1 << 16 : 0
+		aVar |= ByPass.boolValue ? 1 << 17 : 0
 		
 		return aVar
 	}
@@ -446,15 +446,15 @@ extension IntPcmd: CommandIterator, Equatable {
 		var row = arow
 		var track = atrack
 		if row < 0 {
-			row = 0;
+			row = 0
 		} else if row >= length {
-			row = length - 1;
+			row = length - 1
 		}
 		
 		if track < 0 {
-			track = 0;
+			track = 0
 		} else if track >= tracks {
-			track = tracks - 1;
+			track = tracks - 1
 		}
 		
 		return Int(length) * Int(track) + Int(row)
@@ -472,7 +472,7 @@ extension IntPcmd: CommandIterator, Equatable {
 		commandBlock(&myCmd[ourAddr])
 	}
 	
-	public mutating func replaceCommand(row: Int16, track: Int16, command: Cmd) {
+	public mutating func replaceCommand(row: Int16, track: Int16, with command: Cmd) {
 		modifyCommand(row: row, track: track, commandBlock: {( aCmd: inout Cmd) -> () in
 			aCmd = command
 		})

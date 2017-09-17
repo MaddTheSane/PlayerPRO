@@ -9,7 +9,7 @@
 import Foundation
 import PlayerPROCore
 
-/// A Swift-friendly way of messing with Pcmds.
+/// A Swift-friendly way of interacting with Pcmds.
 public struct PPKPcmd: MutableCollection, CommandIterator {
 	public typealias Generator = IndexingIterator<[Cmd]>
 	public typealias Index = Int
@@ -170,7 +170,7 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 			
 			for i in 0 ..< (tracks * length) {
 				let oldCmd = getCommand(row: i % length, track: i / length)
-				anewPcmd.replaceCommand(row: i % length, track: i / length, command: oldCmd)
+				anewPcmd.replaceCommand(row: i % length, track: i / length, with: oldCmd)
 			}
 			
 			self = anewPcmd
@@ -190,7 +190,7 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 			
 			for i in 0 ..< (tracks * length) {
 				let oldCmd = getCommand(row: i % length, track: i / length)
-				anewPcmd.replaceCommand(row: i % length, track: i / length, command: oldCmd)
+				anewPcmd.replaceCommand(row: i % length, track: i / length, with: oldCmd)
 			}
 			
 			self = anewPcmd
@@ -200,16 +200,16 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 	public mutating func modifyCommand(row row1: Int16, track track1: Int16, commandBlock: (inout Cmd)-> ()) {
 		var track = track1
 		var row = row1
-		if (row1 < 0) {
+		if row1 < 0 {
 			row = 0;
-		} else if (row1 >= length) {
+		} else if row1 >= length {
 			row = length - 1;
 		}
 		
-		if (track1 < 0) {
-			track = 0;
-		} else if (track1 >= tracks) {
-			track = tracks - 1;
+		if track1 < 0 {
+			track = 0
+		} else if track1 >= tracks {
+			track = tracks - 1
 		}
 		
 		commandBlock(&myCmd[Int((length * track) + row)])
@@ -219,19 +219,19 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 		myCmd.append(command)
 	}
 	
-	public mutating func replaceCommand(row row1: Int16, track track1: Int16, command: Cmd) {
+	public mutating func replaceCommand(row row1: Int16, track track1: Int16, with command: Cmd) {
 		var track = track1
 		var row = row1
-		if (row < 0) {
-			row = 0;
-		} else if (row >= length) {
-			row = length - 1;
+		if row < 0 {
+			row = 0
+		} else if row >= length {
+			row = length - 1
 		}
 		
-		if (track < 0) {
+		if track < 0 {
 			track = 0;
-		} else if (track >= tracks) {
-			track = tracks - 1;
+		} else if track >= tracks {
+			track = tracks - 1
 		}
 		
 		myCmd[Int((length * track) + row)] = command
@@ -240,16 +240,16 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 	public func getCommand(row row1: Int16, track track1: Int16) -> Cmd {
 		var track = track1
 		var row = row1
-		if (row1 < 0) {
-			row = 0;
-		} else if (row1 >= length) {
-			row = length - 1;
+		if row1 < 0 {
+			row = 0
+		} else if row1 >= length {
+			row = length - 1
 		}
 		
-		if (track1 < 0) {
-			track = 0;
-		} else if (track1 >= tracks) {
-			track = tracks - 1;
+		if track1 < 0 {
+			track = 0
+		} else if track1 >= tracks {
+			track = tracks - 1
 		}
 		
 		return myCmd[Int((length * track) + row)]
