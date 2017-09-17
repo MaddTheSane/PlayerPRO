@@ -10269,7 +10269,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
@@ -10320,6 +10319,8 @@
 			buildSettings = {
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				CODE_SIGN_IDENTITY = "-";
+				COPY_HEADERS_RUN_UNIFDEF = YES;
+				COPY_HEADERS_UNIFDEF_FLAGS = "-D_MAC_H -D__APPLE__ -U_BE_H -UWIN32";
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
@@ -10334,10 +10335,11 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "MADDriver.source/Resources/PlayerPROCore-Info.plist";
-				LLVM_LTO = YES;
+				LLVM_LTO = YES_THIN;
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.playerpro.PlayerPROCore;
 				PRODUCT_NAME = PlayerPROCore;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
@@ -10351,6 +10353,8 @@
 			buildSettings = {
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				CODE_SIGN_IDENTITY = "-";
+				COPY_HEADERS_RUN_UNIFDEF = YES;
+				COPY_HEADERS_UNIFDEF_FLAGS = "-D_MAC_H -D__APPLE__ -U_BE_H -UWIN32";
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
@@ -10368,6 +10372,7 @@
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.playerpro.PlayerPROCore;
 				PRODUCT_NAME = PlayerPROCore;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
@@ -11841,6 +11846,8 @@
 			buildSettings = {
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_HEADERS_RUN_UNIFDEF = YES;
+				COPY_HEADERS_UNIFDEF_FLAGS = "-D_MAC_H -D__APPLE__ -U_BE_H -UWIN32";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
@@ -11881,6 +11888,8 @@
 			buildSettings = {
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_HEADERS_RUN_UNIFDEF = YES;
+				COPY_HEADERS_UNIFDEF_FLAGS = "-D_MAC_H -D__APPLE__ -U_BE_H -UWIN32";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
