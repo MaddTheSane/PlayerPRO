@@ -43,7 +43,7 @@ PPExtImpBundle = "PlayerPRO 6 Complex Import Plug-in";
 "net.sourceforge.playerpro.amf" = "AMF Tracker Audio";
 "net.sourceforge.playerpro.669" = "669 Tracker Audio";
 "net.sourceforge.playerpro.okta" = "Oktalyzer Tracker Audio";
-"com.medsoundstudio.OctaMED" = "OctaMED Tracker Audio";
+"com.medsoundstudio.octamed" = "OctaMED Tracker Audio";
 
 "com.quadmation.playerpro.mad" = "PlayerPRO MAD Tracker";
 "com.quadmation.playerpro.madfg" = "PlayerPRO MAD-fg Tracker";

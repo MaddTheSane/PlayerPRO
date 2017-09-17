@@ -603,6 +603,7 @@ static MADErr ExtractMEDInfo(MADInfoRec *info, char* theMED, struct MEDInfo *med
 	 short	maxInstru;
 	 short	tracksNo;
 	 long	inOutCount;*/
+	short totalPats, partLen;
 	
 	medInfo->theMEDRead = theMED;
 	
@@ -617,8 +618,12 @@ static MADErr ExtractMEDInfo(MADInfoRec *info, char* theMED, struct MEDInfo *med
 	//strcpy(info->internalFileName, "");
 	info->internalFileName[0] = '\0';
 	
-	info->totalPatterns = medInfo->ms->numblocks;
-	info->partitionLength = medInfo->ms->songlen;
+	totalPats = medInfo->ms->numblocks;
+	partLen = medInfo->ms->songlen;
+	MADBE16(&totalPats);
+	MADBE16(&partLen);
+	info->totalPatterns = totalPats;
+	info->partitionLength = partLen;
 	info->totalInstruments = medInfo->ms->numsamples;
 	info->totalTracks = 0;
 	

@@ -1149,7 +1149,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>com.medsoundstudio.OctaMED</string>
+			<string>com.medsoundstudio.octamed</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>

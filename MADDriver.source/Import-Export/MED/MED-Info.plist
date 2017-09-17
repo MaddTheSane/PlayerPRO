@@ -32,7 +32,7 @@
 	<string>MED </string>
 	<key>MADPlugUTITypes</key>
 	<array>
-		<string>com.medsoundstudio.OctaMED</string>
+		<string>com.medsoundstudio.octamed</string>
 	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Written by A.ROSSET © 1995</string>
