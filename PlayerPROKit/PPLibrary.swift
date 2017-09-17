@@ -214,7 +214,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		var cType = [Int8](repeating: 0, count: 5)
 		
 		let aRet = MADMusicIdentifyCFURL(theLibrary, &cType, apath as NSURL)
-		let sRet = String(cString: cType, encoding: String.Encoding.macOSRoman)
+		let sRet = String(cString: cType, encoding: .macOSRoman)
 		
 		guard aRet == .noErr else {
 			throw aRet
@@ -303,7 +303,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - returns: A `MusicFileInfo` struct describing the file pointed to in `URL`.
 	/// - throws: A `MADErr` wrapped in an `NSError`.
 	public func information(from apath: URL, type: String) throws -> MusicFileInfo {
-		guard let cStrType = type.cString(using: String.Encoding.macOSRoman) else {
+		guard let cStrType = type.cString(using: .macOSRoman) else {
 			throw MADErr.parametersErr
 		}
 		
@@ -531,7 +531,7 @@ extension PPLibrary {
 	}
 	
 	///Deprecated: Use `-identifyFileAtPath:stringType:` (Obj-C) or `identifyFile(at:) throws` (Swift) instead
-	@available(*, deprecated, message: "Use -identifyFileAtPath:stringType: (Obj-C) or identifyFile(at:) (Swift) instead", renamed: "identifyFile(at:)")
+	@available(*, deprecated, message: "Use -identifyFileAtPath:stringType: (Obj-C) or identifyFile(atPath:) (Swift) instead", renamed: "identifyFile(atPath:)")
 	@objc(identifyFileAtPath:type:)
 	public func identifyFile(atPath apath: String, type: UnsafeMutablePointer<Int8>?) -> MADErr {
 		guard let type = type else {

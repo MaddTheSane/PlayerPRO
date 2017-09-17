@@ -352,7 +352,7 @@ extension sData {
 extension EnvRec: Hashable {
 	public var hashValue: Int {
 		var aHi = UInt(pos)
-		aHi |= UInt(val) << 4
+		aHi |= UInt(val) << 2
 		
 		return Int(bitPattern: aHi)
 	}
