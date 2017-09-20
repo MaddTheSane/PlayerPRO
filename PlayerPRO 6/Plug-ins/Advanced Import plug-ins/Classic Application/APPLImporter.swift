@@ -23,7 +23,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 	
 	public func beginImport(of theURL: URL, withHandler handler: @escaping PPComplexImportHandler) {
 		do {
-			let resFile = try FVResourceFile.resourceFileWithContentsOfURL(theURL)
+			let resFile = try FVResourceFile.resourceFileWithContents(of: theURL)
 			var aRet = [String: [FVResource]]()
 			for resourceType in resFile.types {
 				switch resourceType.type {
@@ -51,7 +51,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 	}
 	
 	public func canImport(_ theURL: URL) throws {
-		let resFile = try FVResourceFile.resourceFileWithContentsOfURL(theURL)
+		let resFile = try FVResourceFile.resourceFileWithContents(of: theURL)
 		for resType in resFile.types {
 			switch resType.type {
 			case "MADK", "MADI", "MADH", "MADF", "MADG":

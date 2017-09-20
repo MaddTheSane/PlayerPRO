@@ -28,7 +28,7 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 
 	public func canImportSample(at AlienFileURL: URL) -> Bool {
 		do {
-			let rv = try FVResourceFile.resourceFileWithContentsOfURL(AlienFileURL)
+			let rv = try FVResourceFile.resourceFileWithContents(of: AlienFileURL)
 			if !rv.isResourceFork {
 				return false
 			}
@@ -43,7 +43,7 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 	}
 	
 	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) throws {
-		let rv = try FVResourceFile.resourceFileWithContentsOfURL(sampleURL)
+		let rv = try FVResourceFile.resourceFileWithContents(of: sampleURL)
 		for res in rv.types {
 			if res.type == "snd " {
 				for aRes in res.resources {
