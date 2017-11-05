@@ -309,8 +309,6 @@
 		555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		555E014819FA33A10063F058 /* PPLibraryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555E014719FA33A10063F058 /* PPLibraryObject.swift */; };
-		555E014919FA33A10063F058 /* PPLibraryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555E014719FA33A10063F058 /* PPLibraryObject.swift */; };
 		555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		555F5C611993327D0056AF01 /* OpenPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555F5C601993327D0056AF01 /* OpenPanelViewController.swift */; };
@@ -1250,6 +1248,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 556BC17319CF47FC00508F49;
 			remoteInfo = PPCoreInstrumentPlugBridge32;
+		};
+		556BC3F91FAFD6F70015C622 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5527AC131FAE7CB1009CC7FC;
+			remoteInfo = CoreTextAdditions;
+		};
+		556BC3FB1FAFD6F70015C622 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5527AC1B1FAE7CB1009CC7FC;
+			remoteInfo = CoreTextAdditionsTests;
 		};
 		557003281B2260D600C623AB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2550,7 +2562,6 @@
 		555A283619AFE4F000FB4D5B /* MIDIImporterController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MIDIImporterController.xib; sourceTree = "<group>"; };
 		555C0F8C19829663003B9347 /* CurrentlyPlayingIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentlyPlayingIndex.swift; sourceTree = "<group>"; };
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
-		555E014719FA33A10063F058 /* PPLibraryObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPLibraryObject.swift; sourceTree = "<group>"; };
 		555E85371A041E580018FDBC /* ClassicSoundInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ClassicSoundInfo.plist; sourceTree = "<group>"; };
 		555E85451A041E810018FDBC /* Classic Sound.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Classic Sound.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		555F5C601993327D0056AF01 /* OpenPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenPanelViewController.swift; sourceTree = "<group>"; };
@@ -4577,7 +4588,6 @@
 				55DE87CB187E60F400C36533 /* PPFXSetObject.h */,
 				55DE87CC187E60F400C36533 /* PPFXSetObject.m */,
 				55CAB9D01A9C5ADB0047F1D6 /* PPLibrary.swift */,
-				555E014719FA33A10063F058 /* PPLibraryObject.swift */,
 				558D4DD81666F14E00A333E8 /* PPDriver.h */,
 				558D4DD91666F14E00A333E8 /* PPDriver.m */,
 				55B1B4F5166A861900820424 /* PPMusicObject.h */,
@@ -4850,6 +4860,8 @@
 				55D5E97E1B01496100EB2C84 /* ForceFeedbackAdditionsTests.xctest */,
 				55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */,
 				55D5E9821B01496100EB2C84 /* SwiftAudioAdditionsTests.xctest */,
+				556BC3FA1FAFD6F70015C622 /* CoreTextAdditions.framework */,
+				556BC3FC1FAFD6F70015C622 /* CoreTextAdditionsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6744,6 +6756,20 @@
 			remoteRef = 55379CA61D63E35500387CF3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		556BC3FA1FAFD6F70015C622 /* CoreTextAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CoreTextAdditions.framework;
+			remoteRef = 556BC3F91FAFD6F70015C622 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		556BC3FC1FAFD6F70015C622 /* CoreTextAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CoreTextAdditionsTests.xctest;
+			remoteRef = 556BC3FB1FAFD6F70015C622 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5593A1411DAC04C20040CACA /* MASPreferences.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -7402,7 +7428,6 @@
 				5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */,
 				55BD5AF519ADBBF500D63F54 /* PPKPcmd.swift in Sources */,
 				55DE87C8187E5B9100C36533 /* PPFXBusObject.m in Sources */,
-				555E014819FA33A10063F058 /* PPLibraryObject.swift in Sources */,
 				55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */,
 				55D59C2C1A646F60008A6E51 /* PPKSwiftToC.m in Sources */,
 				5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */,
@@ -8151,7 +8176,6 @@
 				55F1BE131975CD7200AD2C03 /* PPFXSetObject.m in Sources */,
 				55F1BE0A1975CD7200AD2C03 /* PPInstrumentObject.m in Sources */,
 				55F1BE1B1975CD7200AD2C03 /* PPErrors.m in Sources */,
-				555E014919FA33A10063F058 /* PPLibraryObject.swift in Sources */,
 				55F1BE111975CD7200AD2C03 /* PPFXBusObject.m in Sources */,
 				555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55BD5AF619ADBBF500D63F54 /* PPKPcmd.swift in Sources */,
