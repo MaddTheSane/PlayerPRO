@@ -15,7 +15,7 @@ import SwiftAdditions
 final class SoundOutputController: SoundSettingsViewController, SoundSettingsViewWithDriverControllerDelegate, MASPreferencesViewController {
 	override var identifier: NSUserInterfaceItemIdentifier? {
 		get {
-			return NSUserInterfaceItemIdentifier(rawValue: PPSoundSettPrefID)
+			return .PPSoundSettPrefID
 		}
 		set {
 			//do nothing

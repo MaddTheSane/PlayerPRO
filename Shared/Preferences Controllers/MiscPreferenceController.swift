@@ -24,7 +24,7 @@ final class MiscPreferenceController: NSViewController, MASPreferencesViewContro
 	
 	override var identifier: NSUserInterfaceItemIdentifier? {
 		get {
-			return NSUserInterfaceItemIdentifier(rawValue: PPMiscPrefID)
+			return .PPMiscPrefID
 		}
 		set {
 			//do nothing

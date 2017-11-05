@@ -27,7 +27,7 @@ final class MusicListPreferenceController: NSViewController, MASPreferencesViewC
 	
 	override var identifier: NSUserInterfaceItemIdentifier? {
 		get {
-			return NSUserInterfaceItemIdentifier(rawValue: PPMusicListPrefID)
+			return .PPMusicListPrefID
 		}
 		set {
 			// do nothing

@@ -40,13 +40,10 @@ final class Preferences: MASPreferencesWindowController {
 	
 	// MARK: NSWindowDelegate
 	override func windowWillClose(_ notification: Notification) {
-		if let aWin = notification.object as? NSWindow {
-			if aWin === self.window {
-				if NSColorPanel.sharedColorPanelExists{
-					NSColorPanel.shared.close()
-				}
-			}
+		if let aWin = notification.object as? NSWindow,
+			aWin === self.window,
+			NSColorPanel.sharedColorPanelExists {
+			NSColorPanel.shared.close()
 		}
 	}
-	
 }

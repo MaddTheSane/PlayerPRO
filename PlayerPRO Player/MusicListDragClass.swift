@@ -9,8 +9,6 @@
 import Cocoa
 
 final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
-	
-	
 	let theIndexSet: IndexSet
 	
 	@objc init(indexSet: IndexSet) {
