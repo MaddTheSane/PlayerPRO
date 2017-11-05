@@ -51,7 +51,7 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 }
 
 public func note(from myTT: String) -> Int16? {
-	if myTT == "" || myTT == "---" || myTT.characters.count < 2 {
+	if myTT == "" || myTT == "---" || myTT.count < 2 {
 		return nil
 	}
 	
