@@ -38,6 +38,7 @@ extern NSString * const PPGenericInstrumentUTI;
 extern NSString * const PPInstrumentListUTI;
 #if TARGET_OS_OSX
 //! The drag UTI for music list objects
+//! Stands for PlayerPRO Music List Drag Class UTI.
 extern NSPasteboardType const PPMLDCUTI;
 #endif
 
@@ -204,16 +205,18 @@ extern NSString * const PPCETempoNum;
 extern NSString * const PPCETempoUnit;
 extern NSString * const PPCETrackHeight;
 
+#if TARGET_OS_OSX
 #pragma mark Preference identifiers
-#define PPSoundSettPrefID	@"PPSoundOut"
-#define PPMusicListPrefID	@"PPMusicList"
-#define PPPianoPrefID		@"PPPiano"
-#define PPColorPrefID		@"PPColors"
-#define PPMiscPrefID		@"PPMisc"
-#define PPDigitalPrefID		@"PPDigital"
-#define PPMIDIPrefID		@"PPMIDI"
-#define PPBoxPrefID			@"PPBox"
-#define PPClassicPrefID		@"PPClassical"
+extern NSUserInterfaceItemIdentifier const PPSoundSettPrefID;
+extern NSUserInterfaceItemIdentifier const PPMusicListPrefID;
+extern NSUserInterfaceItemIdentifier const PPPianoPrefID;
+extern NSUserInterfaceItemIdentifier const PPColorPrefID;
+extern NSUserInterfaceItemIdentifier const PPMiscPrefID;
+extern NSUserInterfaceItemIdentifier const PPDigitalPrefID;
+extern NSUserInterfaceItemIdentifier const PPMIDIPrefID;
+extern NSUserInterfaceItemIdentifier const PPBoxPrefID;
+extern NSUserInterfaceItemIdentifier const PPClassicPrefID;
+#endif
 
 #pragma mark Misc./other
 extern NSString * const PPDoubleDash;

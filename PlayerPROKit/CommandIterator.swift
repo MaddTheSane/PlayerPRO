@@ -12,7 +12,7 @@ import Foundation
 public protocol CommandIterator {
 	func getCommand(row: Int16, track: Int16) -> Cmd
 	mutating func modifyCommand(row: Int16, track: Int16, commandBlock: (inout Cmd) -> ())
-	mutating func replaceCommand(row: Int16, track: Int16, command: Cmd)
+	mutating func replaceCommand(row: Int16, track: Int16, with command: Cmd)
 	
 	var commandLength: Int16 {get}
 	var commandTracks: Int16 {get}
@@ -24,7 +24,7 @@ extension CommandIterator {
 			for x in 0 ..< commandTracks {
 				var aCmd = getCommand(row: i, track: x)
 				if block(&aCmd, i, x) {
-					replaceCommand(row: i, track: x, command: aCmd)
+					replaceCommand(row: i, track: x, with: aCmd)
 				}
 			}
 		}
@@ -36,7 +36,7 @@ public func getCommand<X>(row: Int16, track: Int16, aIntPcmd: X) -> Cmd where X:
 }
 
 public func replaceCommand<X>(row: Int16, track: Int16, command: Cmd, aPcmd: inout X) where X: CommandIterator {
-	aPcmd.replaceCommand(row: row, track: track, command: command)
+	aPcmd.replaceCommand(row: row, track: track, with: command)
 }
 
 public func modifyCommand<X>(row: Int16, track: Int16, aPcmd: inout X, commandBlock: (inout Cmd) -> ()) where X: CommandIterator {

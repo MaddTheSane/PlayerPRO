@@ -9,8 +9,8 @@
 import Cocoa
 
 class ColorPreferenceObject: NSObject {
-	var color: NSColor
-	let colorIndex: Int
+	@objc var color: NSColor
+	@objc let colorIndex: Int
 	
 	@objc(initWithColor:index:)
 	init(color aColor:NSColor, index idx: Int) {

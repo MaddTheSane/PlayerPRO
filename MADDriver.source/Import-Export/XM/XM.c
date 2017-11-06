@@ -97,6 +97,7 @@ static void XM_Cleanup(struct staticXMData *xmData)
 	}
 }
 
+#if !defined(NOEXPORTMUSIC) || NOEXPORTMUSIC == 0
 static void XM_WriteNote(Cmd *cmd, struct staticXMData *xmData)
 {
 	UBYTE	cmp = 0;
@@ -147,6 +148,7 @@ static void XM_WriteNote(Cmd *cmd, struct staticXMData *xmData)
 		}
 	}
 }
+#endif
 
 static void XM_ReadNote(XMNOTE *n, struct staticXMData *xmData)
 {
@@ -315,6 +317,7 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd *aCmd, short channel)
 	}
 }
 
+#if !defined(NOEXPORTMUSIC) || NOEXPORTMUSIC == 0
 static void XM_Convert2XM(Cmd *aCmd)
 {
 	if (aCmd->note == 0xFE)
@@ -329,6 +332,7 @@ static void XM_Convert2XM(Cmd *aCmd)
 	if ((MADByte)aCmd->cmd == 0xFF)
 		aCmd->cmd = 0;
 }
+#endif
 
 static MADErr XMReadPattern(MADMusic *theMAD, MADDriverSettings *init, struct staticXMData *xmData)
 {
@@ -788,6 +792,7 @@ static int ConvertSampleC4SPDXM(char* src, size_t srcSize, short amp, int srcC4S
 }
 #endif
 
+#if !defined(NOEXPORTMUSIC) || NOEXPORTMUSIC == 0
 static long XMGetPeriod(short note, int c2spd)
 {
 	uint32_t 	period, n,o, mytab[12] = {1712 * 16, 1616 * 16, 1524 * 16, 1440 * 16, 1356 * 16, 1280 * 16,
@@ -803,7 +808,6 @@ static long XMGetPeriod(short note, int c2spd)
 	
 	return period;
 }
-
 
 static char* ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndSize, struct staticXMData *xmData)
 {
@@ -1182,6 +1186,7 @@ static char* ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndS
 	
 	return finalXMPtr;
 }
+#endif
 
 static MADErr TestXMFile(char* AlienFile, struct staticXMData *xmData)
 {
@@ -1313,6 +1318,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 		return MADNeedMemory;
 	
 	switch (order) {
+#if !defined(NOEXPORTMUSIC) || NOEXPORTMUSIC == 0
 		case MADPlugExport:
 			AlienFile = ConvertMad2XM(MadFile, init, &sndSize, &xmData);
 			
@@ -1330,6 +1336,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			} else
 				myErr = MADNeedMemory;
 			break;
+#endif
 			
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);

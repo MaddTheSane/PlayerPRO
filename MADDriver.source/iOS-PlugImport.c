@@ -104,7 +104,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "MED ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTITypes = (CFStringRef[]){CFSTR("com.medsoundstudio.OctaMED"), NULL},
+		.UTITypes = (CFStringRef[]){CFSTR("com.medsoundstudio.octamed"), NULL},
 	},
 	{
 		.IOPlug = mainMOD,

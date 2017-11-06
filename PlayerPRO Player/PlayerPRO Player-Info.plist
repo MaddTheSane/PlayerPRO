@@ -382,7 +382,7 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.medsoundstudio.OctaMED</string>
+				<string>com.medsoundstudio.octamed</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -420,7 +420,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeIdentifier</key>
-			<string>com.medsoundstudio.OctaMED</string>
+			<string>com.medsoundstudio.octamed</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

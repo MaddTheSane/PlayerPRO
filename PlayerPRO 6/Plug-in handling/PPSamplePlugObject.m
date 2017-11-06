@@ -142,7 +142,7 @@ PPSamplePlugCompatObject *tryOldAPI(NSBundle *theBundle)
 		}
 		
 		if ((!_canImport) && (!_canExport)) {
-			// exclude plug-ins that can be detected as a different class
+			// exclude plug-ins that can be initialized with a different class
 			if ([bundClass conformsToProtocol:@protocol(PPInstrumentImportPlugin)]) {
 				return nil;
 			} else if ([bundClass conformsToProtocol:@protocol(PPInstrumentExportPlugin)]) {
@@ -185,6 +185,7 @@ BOOL isOrderNotImplemented(NSError *err) {
 
 - (void)beginImportSampleAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(NSError *theErr, PPSampleObject *aSample))handler
 {
+	NSError *err;
 	if (![_plugCode conformsToProtocol:@protocol(PPSampleImportPlugin)]) {
 		handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil], nil);
 		return;
@@ -192,7 +193,6 @@ BOOL isOrderNotImplemented(NSError *err) {
 	
 	if (![_plugCode hasUIForImport]) {
 		PPSampleObject *aSampObj;
-		NSError *err;
 		if (![_plugCode importSampleAtURL:sampleURL sample:&aSampObj driver:driver error:&err]) {
 			if (!isOrderNotImplemented(err)) {
 				handler(err, aSampObj);
@@ -206,7 +206,7 @@ BOOL isOrderNotImplemented(NSError *err) {
 	if ([_plugCode respondsToSelector:@selector(beginImportSampleAtURL:driver:parentWindow:handler:)]) {
 		[_plugCode beginImportSampleAtURL:sampleURL driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
-		handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil], nil);
+		handler(err ?: [NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil], nil);
 	}
 }
 
@@ -217,9 +217,9 @@ BOOL isOrderNotImplemented(NSError *err) {
 		return;
 	}
 	
+	NSError *err;
 	if ([_plugCode hasUIForExport]) {
 		PPSampleObject *aSampObj;
-		NSError *err;
 		if (![_plugCode exportSample:aSampObj toURL:sampleURL driver:driver error:&err]) {
 			if (!isOrderNotImplemented(err)) {
 				handler(err);
@@ -233,7 +233,7 @@ BOOL isOrderNotImplemented(NSError *err) {
 	if ([_plugCode respondsToSelector:@selector(beginExportSample:toURL:driver:parentWindow:handler:)]) {
 		[_plugCode beginExportSample:aSamp toURL:sampleURL driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
-		handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil]);
+		handler(err ?: [NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil]);
 	}
 }
 

@@ -1,4 +1,4 @@
-﻿/* Localized versions of Info.plist keys */
+/* Localized versions of Info.plist keys */
 
 CFBundleShortVersionString = "1.6.2";
 CFBundleGetInfoString = "PlayerPRO Importer version 1.6.2, Copyright © 2013-2016 SourceForge.";
@@ -30,7 +30,7 @@ NSHumanReadableCopyright = "Copyright © 2013-2016 SourceForge.";
 "net.sourceforge.playerpro.amf" = "AMF Tracker Audio";
 "net.sourceforge.playerpro.669" = "669 Tracker Audio";
 "net.sourceforge.playerpro.okta" = "Oktalyzer Tracker Audio";
-"com.medsoundstudio.OctaMED" = "MED Tracker Audio";
+"com.medsoundstudio.octamed" = "OctaMED Tracker Audio";
 
 "com.quadmation.playerpro.mad" = "PlayerPRO MAD Tracker";
 "com.quadmation.playerpro.madfg" = "PlayerPRO MAD-fg Tracker";

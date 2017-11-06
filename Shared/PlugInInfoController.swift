@@ -17,7 +17,7 @@ final class PlugInInfoController: NSWindowController {
 	private var info:						PlugInInfo!
 
 	class func windowController(from plugInfo: PlugInInfo) -> Self {
-		let toRet = self.init(windowNibName:NSNib.Name(rawValue: "PPPlugInInfoController"))
+		let toRet = self.init(windowNibName: NSNib.Name(rawValue: "PPPlugInInfoController"))
 		toRet.info = plugInfo
 		
 		return toRet
@@ -26,8 +26,6 @@ final class PlugInInfoController: NSWindowController {
     override func windowDidLoad() {
 		let plugImSize = NSSize(width: 64, height: 64)
 		super.windowDidLoad()
-		
-		// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 		
 		nameField.stringValue = info.plugName
 		authorField.stringValue = info.authorName

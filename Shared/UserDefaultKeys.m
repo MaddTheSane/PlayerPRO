@@ -98,3 +98,15 @@ NSString * const PPCEMarkerLoop = @"Classical Editor Marker Loop";
 NSString * const PPCETempoNum = @"Classical Editor Temo Num.";
 NSString * const PPCETempoUnit = @"Classical Editor Tempo Unit";
 NSString * const PPCETrackHeight = @"Classical Editor Track Height";
+
+#if TARGET_OS_OSX
+NSUserInterfaceItemIdentifier const PPSoundSettPrefID = @"PPSoundOut";
+NSUserInterfaceItemIdentifier const PPMusicListPrefID = @"PPMusicList";
+NSUserInterfaceItemIdentifier const PPPianoPrefID = @"PPPiano";
+NSUserInterfaceItemIdentifier const PPColorPrefID = @"PPColors";
+NSUserInterfaceItemIdentifier const PPMiscPrefID = @"PPMisc";
+NSUserInterfaceItemIdentifier const PPDigitalPrefID = @"PPDigital";
+NSUserInterfaceItemIdentifier const PPMIDIPrefID = @"PPMIDI";
+NSUserInterfaceItemIdentifier const PPBoxPrefID = @"PPBox";
+NSUserInterfaceItemIdentifier const PPClassicPrefID = @"PPClassical";
+#endif

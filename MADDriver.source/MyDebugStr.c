@@ -53,7 +53,7 @@ void MADDebugStr(short line, const char *file, const char *text)
 	if (MyDebugBlock != NULL) {
 		MyDebugBlock(line, file, text);
 	} else {
-		fprintf(stderr, "PlayerPROCore: %s:%u error text: %s!", file, line, text);
+		fprintf(stderr, "PlayerPROCore: %s:%u error text: %s!\n", file, line, text);
 		fflush(stderr);
 		
 		abort();
@@ -74,7 +74,7 @@ void MADDebugStr(short line, const char *file, const char *text)
 	if (MyDebugFunc != NULL) {
 		(*MyDebugFunc)(line, file, text);
 	} else {
-		fprintf(stderr, "PlayerPROCore: %s:%u error text: %s!", file, line, text);
+		fprintf(stderr, "PlayerPROCore: %s:%u error text: %s!\n", file, line, text);
 		fflush(stderr);
 		
 		abort();

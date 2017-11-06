@@ -83,7 +83,7 @@
 {
 	NSError *err2;
 	BOOL success = [plugCode runWithData:theData selectionRange:selRange onlyCurrentChannel:StereoMode driver:driver error:&err2];
-	if (!success && [err2.domain isEqualToString:PPMADErrorDomain] && err2.code == MADOrderNotImplemented && [plugCode respondsToSelector:@selector(beginRunWithData:selectionRange:onlyCurrentChannel:driver:parentWindow:handler:)]) {
+	if (!success && isOrderNotImplemented(err2) && [plugCode respondsToSelector:@selector(beginRunWithData:selectionRange:onlyCurrentChannel:driver:parentWindow:handler:)]) {
 		[plugCode beginRunWithData:theData selectionRange:selRange onlyCurrentChannel:StereoMode driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
 		handler(err2);

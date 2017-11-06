@@ -51,7 +51,7 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 }
 
 public func note(from myTT: String) -> Int16? {
-	if myTT == "" || myTT == "---" || myTT.characters.count < 2 {
+	if myTT == "" || myTT == "---" || myTT.count < 2 {
 		return nil
 	}
 	
@@ -68,19 +68,19 @@ public func note(from myTT: String) -> Int16? {
 	
 	let theRest = myTT[myTT.startIndex ..< idx]
 	
-	let theRet: (outString: String, sharp: Bool) = {
+	let theRet: (outString: Substring, sharp: Bool) = {
 		let idx2 = myTT.index(before: idx)
 		let maybeSign = myTT[idx2]
 		let maybeStr = myTT[myTT.startIndex ..< idx2]
 		switch maybeSign {
 		case "#", "♯"/*Unicode sharp sign, just in case*/:
-			return (String(maybeStr), true)
+			return (maybeStr, true)
 			
 		case " ", "-":
-			return (String(maybeStr), false)
+			return (maybeStr, false)
 			
 		default:
-			return (String(theRest), false)
+			return (theRest, false)
 		}
 	}()
 	
@@ -286,7 +286,7 @@ extension PPSampleObject {
 
 	final public class func drawSample(start start1: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
 		var start = start1
-		ctxRef.saveGState();
+		ctxRef.saveGState()
 		defer {
 			ctxRef.restoreGState()
 		}
@@ -354,7 +354,7 @@ extension PPSampleObject {
 			let sampleSize = curData.data.count
 			let theSample = (curData.data as NSData).bytes.assumingMemoryBound(to: UInt8.self)
 
-			var BS = start + (tSS * sampleSize) / larg;
+			var BS = start + (tSS * sampleSize) / larg
 			if isStereo {
 				BS /= 2; BS *= 2;
 				BS += Int(channel)
@@ -373,11 +373,11 @@ extension PPSampleObject {
 					BS /= 2; BS *= 2;
 					BE /= 2; BE *= 2;
 					
-					BS += Int(channel);
-					BE += Int(channel);
+					BS += Int(channel)
+					BE += Int(channel)
 				}
 				
-				temp = CGFloat(theSample[BS] &- 0x80);
+				temp = CGFloat(theSample[BS] &- 0x80)
 				minY = temp; maxY = temp;
 				temp *= CGFloat(high) * oneShiftedBy8
 				ctxRef.addLine(to: CGPoint(x: CGFloat(trueH + i), y: temp + CGFloat(trueV)))
@@ -391,7 +391,7 @@ extension PPSampleObject {
 						minY = min(temp, minY)
 						
 						if isStereo {
-							x += 1;
+							x += 1
 						}
 						x += 1
 					}
@@ -403,8 +403,8 @@ extension PPSampleObject {
 				}
 			}
 		}
-		ctxRef.closePath();
-		ctxRef.strokePath();
+		ctxRef.closePath()
+		ctxRef.strokePath()
 	}
 	
 	@objc(octaveNameFromNote:) final public class func octaveName(from octNote: Int16) -> String {
@@ -415,8 +415,8 @@ extension PPSampleObject {
 		return PlayerPROKit.octaveName(from: octNote, letters: usingSingularLetter) ?? "---"
 	}
 
-	@objc(noteFromString:) final public class func noteFromString(myTT: String) -> Int16 {
-		return note(from: myTT) ?? 0xFF
+	@objc(noteFromString:) final public class func note(from myTT: String) -> Int16 {
+		return PlayerPROKit.note(from: myTT) ?? 0xFF
 	}
 }
 
@@ -478,8 +478,8 @@ extension PPDriver {
 		return playSoundData(data: theSnd, channel: theChan, amplitude: amp, bitRate: rate, stereo: stereo, note: theNote, loopInRange: NSRange(loopRange))
 	}
 	
-	///The time values are in 1/60th of a second.
-	///Returns `nil` on error.
+	/// The time values are in 1/60th of a second.
+	/// Returns `nil` on error.
 	public var musicStatusTime: (current: Int, total: Int)? {
 		var cT = 0
 		var tT = 0

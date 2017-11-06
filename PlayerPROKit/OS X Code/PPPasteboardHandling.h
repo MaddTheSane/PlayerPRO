@@ -21,13 +21,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString * const kPPKSamplePasteboardUTI;
-extern NSString * const kPPKMADCommandPasteboardUTI;
-extern NSString * const kPPKPatternPasteboardUTI;
-extern NSString * const kPPKFXBusPasteboardUTI;
-extern NSString * const kPPKFXSetPasteboardUTI;
-extern NSString * const kPPKEnvelopePasteboardUTI;
-extern NSString * const kPPKInstrumentPasteboardUTI;
+extern NSPasteboardType const kPPKSamplePasteboardUTI;
+extern NSPasteboardType const kPPKMADCommandPasteboardUTI;
+extern NSPasteboardType const kPPKPatternPasteboardUTI;
+extern NSPasteboardType const kPPKFXBusPasteboardUTI;
+extern NSPasteboardType const kPPKFXSetPasteboardUTI;
+extern NSPasteboardType const kPPKEnvelopePasteboardUTI;
+extern NSPasteboardType const kPPKInstrumentPasteboardUTI;
 
 NS_ASSUME_NONNULL_END
 

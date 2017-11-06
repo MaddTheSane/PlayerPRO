@@ -15,7 +15,7 @@
 __BEGIN_DECLS
 
 //! The error domain of \c MADErr errors in <code>NSError</code>s.
-extern NSString * __nonnull const PPMADErrorDomain;
+extern NSErrorDomain __nonnull const PPMADErrorDomain;
 
 /*!
  *	@function	PPCreateErrorFromMADErrorType
@@ -31,7 +31,7 @@ extern NSString * __nonnull const PPMADErrorDomain;
  *				it returns an \c NSError in the \c NSOSStatusErrorDomain with 
  *				nothing in the \c userInfo dictionary.
  */
-extern NSError* __nullable PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETURNS_RETAINED;
+extern NSError* __nullable PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETURNS_RETAINED NS_REFINED_FOR_SWIFT;
 
 /*!
  *	@function	PPCreateErrorFromMADErrorTypeConvertingToCocoa
@@ -49,14 +49,14 @@ extern NSError* __nullable PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETUR
  *				If the value in \c theErr isn't a value in \c MADErr, it returns an \c NSError in the
  *				\c NSOSStatusErrorDomain with nothing in the \c userInfo dictionary.
  */
-extern NSError* __nullable PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa) NS_RETURNS_RETAINED;
+extern NSError* __nullable PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa) NS_RETURNS_RETAINED NS_REFINED_FOR_SWIFT;
 
 /*!
  *	@function	PPErrorIsUserCancelled
  *	@abstract	Checks to see if the error type was cancelled by the user.
  *	@param		theErr
  *				The \c NSError object to check.
- *	@return		\c YES if the value was user cahcelled, \c NO otherwise.
+ *	@return		\c YES if the value was user cancelled, \c NO otherwise.
  *	@discussion	Checks if the error sent to it is a user cancelled error.
  *				This checks for \c MADUserCanceledErr in the <code>PPMADErrorDomain</code>,
  *				\c NSUserCancelledError in the <code>NSCocoaErrorDomain</code>, and \c userCanceledErr

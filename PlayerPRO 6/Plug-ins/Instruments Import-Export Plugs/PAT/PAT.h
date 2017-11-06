@@ -54,7 +54,7 @@ typedef struct _LayerHeader
 
 typedef CF_OPTIONS(unsigned char, PatSampFlags) {
 	PatSampIs16Bit			= 1 << 0,	///< 0=8 bit, 1=16 bit wave data.
-	PatSampIsSigned			= 1 << 1,	///< 0=Signed data, 1=Unsigned data.
+	PatSampIsSigned			= 1 << 1,	///< 0=Unsigned data, 1=Signed data.
 	PatSampLoops			= 1 << 2,	///< Enable looping
 	PatSampIsPingPong		= 1 << 3,	///< Enable bidirectional looping
 	PatSampLoopBackward		= 1 << 4,	///< Enable looping backward

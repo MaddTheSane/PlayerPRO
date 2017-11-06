@@ -11,6 +11,7 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROKit/PPConstants.h>
 
 @class PPLibrary;
 @class PPMusicObject;
@@ -108,11 +109,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - More in-depth modification of the driver:
 
-- (MADChannel)channelAtIndex:(NSInteger)idx; //Read-only
+- (MADChannel)channelAtIndex:(NSInteger)idx; //!< Read-only
 @property short patternPosition;
 @property short patternIdentifier;
 @property short partitionPosition;
-///0 to 64
+/// 0 to 64
 @property short volume;
 @property BOOL usesEqualizer;
 @property (readonly, nullable) void *oscilloscopePointer NS_RETURNS_INNER_POINTER;
@@ -129,5 +130,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+__BEGIN_DECLS
+extern NSDictionary<PPLibraryInfoKeys,id> * __nonnull PPInfoRecToDictionary(MADInfoRec infoRec);
+__END_DECLS
+
 
 #endif

@@ -43,7 +43,7 @@
 		self.connectionToService.interruptionHandler = nil;
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			self.connectionToService = nil;
-			//[self logText:@"connection invalidated\n"];
+			NSLog(@"Connection invalidated for plug-in %@ (%p)", self, self);
 		}];
 	};
 	self.connectionToService.invalidationHandler = errorHandler;
@@ -130,7 +130,7 @@
 
 - (void)beginExportSample:(PPSampleObject *)aSamp toURL:(NSURL *)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(PPPlugErrorBlock)handler
 {
-	handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:nil]);
+	handler([NSError errorWithDomain:PPMADErrorDomain code:MADOrderNotImplemented userInfo:@{NSLocalizedFailureReasonErrorKey: @"Legacy plug-ins cannot export."}]);
 }
 
 - (BOOL)canImportFileAtURL:(NSURL *)fileURL;

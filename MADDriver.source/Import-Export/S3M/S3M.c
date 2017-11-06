@@ -242,6 +242,7 @@ static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg,
 	}
 }
 
+#if !defined(NOEXPORTMUSIC) || NOEXPORTMUSIC == 0
 static void ConvertMADEffect(MADByte Cmd, MADByte Arg, MADByte *B0, MADByte *B1)
 {
 	*B0 = 0;
@@ -782,6 +783,7 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 	
 	return((char*) finalS3M);
 }
+#endif
 
 static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
@@ -1432,6 +1434,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 	UNFILE	iFileRefI;
 	
 	switch (order) {
+#if !defined(NOEXPORTMUSIC) || NOEXPORTMUSIC == 0
 		case MADPlugExport:
 			AlienFile = ConvertMad2S3M(MadFile, init, &sndSize);
 			
@@ -1446,6 +1449,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			} else
 				myErr = MADNeedMemory;
 			break;
+#endif
 			
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);

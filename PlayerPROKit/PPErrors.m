@@ -201,6 +201,8 @@ static NSString *stringForKeyAndError(NSString *userInfoKey, MADErr errCode)
 	return nil;
 }
 
+#undef PPErrorLocalizedString
+
 BOOL PPErrorIsUserCancelled(NSError *theErr)
 {
 	if ([theErr.domain isEqualToString:PPMADErrorDomain]) {

@@ -10,8 +10,7 @@ import Cocoa
 import PlayerPROKit
 import SwiftAdditions
 
-private func importPAT(_ insHeader: PPInstrumentObject, data: Data) -> MADErr {
-	do {
+private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
 	try data.withUnsafeBytes { (PATData1: UnsafePointer<UInt8>) -> Void in
 		var PATHeader: UnsafePointer<PatchHeader>
 		var PATIns: UnsafePointer<PatInsHeader>
@@ -63,7 +62,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) -> MADErr {
 		// SAMPLES
 		for x in 0..<sampleCount {
 			let curData = PPSampleObject()
-			var signedData: Bool
+			let signedData: Bool
 			
 			PATSamp = UnsafeRawPointer(PATData).assumingMemoryBound(to: PatSampHeader.self)
 			//curData = sample[x] = inMADCreateSample();
@@ -135,7 +134,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) -> MADErr {
 				}
 			}
 			
-			for i in 0 ..< 107{
+			for i in 0 ..< 107 {
 				if scale_table[i] >= PATSamp.pointee.maxFreq {
 					tmpHeader.maxFreq = Int32(i)
 					break
@@ -154,22 +153,43 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) -> MADErr {
 			var dat2 = Data(bytes: UnsafeRawPointer(PATData), count: Int(sampSize))
 			
 			//if aData != nil {
+			let BYTESWAP_STRIDE = 8
 			if (curData.amplitude == 16) {
 				dat2.withUnsafeMutableBytes({ (tt: UnsafeMutablePointer<UInt16>) -> Void in
-					DispatchQueue.concurrentPerform(iterations: Int(sampSize / 2), execute: { (tL) -> Void in
-						tt[tL] = tt[tL].littleEndian
-						
+					DispatchQueue.concurrentPerform(iterations: Int(sampSize / 2) / BYTESWAP_STRIDE, execute: { (tL) -> Void in
+						for j in 0 ..< BYTESWAP_STRIDE {
+							tt[tL*BYTESWAP_STRIDE+j] = tt[tL*BYTESWAP_STRIDE+j].littleEndian
+						}
+
 						if signedData {
-							tt[tL] = tt[tL] &+ 0x8000
+							for j in 0 ..< BYTESWAP_STRIDE {
+								tt[tL*BYTESWAP_STRIDE+j] = tt[tL*BYTESWAP_STRIDE+j] &+ 0x8000
+							}
 						}
 					})
+					if Int(sampSize / 2) % BYTESWAP_STRIDE != 0 {
+						for i in Int(sampSize / 2) ..< (Int(sampSize / 2) - (Int(sampSize / 2)) % BYTESWAP_STRIDE) {
+							tt[i] = tt[i].littleEndian
+
+							if signedData {
+								tt[i] = tt[i] &+ 0x8000
+							}
+						}
+					}
 				})
 			} else {
 				if signedData {
 					dat2.withUnsafeMutableBytes({ (aData: UnsafeMutablePointer<UInt8>) -> Void in
-						DispatchQueue.concurrentPerform(iterations: Int(sampSize), execute: { (ixi) -> Void in
-							aData[ixi] = aData[ixi] &+ 0x80
+						DispatchQueue.concurrentPerform(iterations: Int(sampSize) / BYTESWAP_STRIDE, execute: { (ixi) -> Void in
+							for j in 0 ..< BYTESWAP_STRIDE {
+								aData[ixi*BYTESWAP_STRIDE+j] = aData[ixi*BYTESWAP_STRIDE+j] &+ 0x80
+							}
 						})
+						if Int(sampSize) % BYTESWAP_STRIDE != 0 {
+							for i in Int(sampSize) ..< (Int(sampSize) - (Int(sampSize)) % BYTESWAP_STRIDE) {
+								aData[i] = aData[i] &+ 0x80
+							}
+						}
 					})
 				}
 			}
@@ -180,15 +200,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) -> MADErr {
 			
 			insHeader.add(curData)
 		}
-
 	}
-	} catch let error as MADErr {
-		return error
-	} catch {
-		return .unknownErr
-	}
-	
-	return .noErr
 }
 
 
@@ -219,20 +231,19 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 	}
 	
 	public func importInstrument(at sampleURL: URL, instrument InsHeader: AutoreleasingUnsafeMutablePointer<PPInstrumentObject?>, driver: PPDriver) throws {
-		if let inData = try? Data(contentsOf: sampleURL) {
-			if let ourIns = PPInstrumentObject() as PPInstrumentObject? {
-				ourIns.resetInstrument()
-				
-				let iErr = importPAT(ourIns, data: inData)
-				if iErr == .noErr {
-					InsHeader.pointee = ourIns
-				}
-				throw iErr
-			} else {
-				throw MADErr.needMemory
-			}
+		let inData: Data
+		do {
+			inData = try Data(contentsOf: sampleURL)
+		} catch {
+			throw NSError(domain: PPMADErrorDomain, code: Int(MADErr.readingErr.rawValue), userInfo: [NSUnderlyingErrorKey : error])
+		}
+		if let ourIns = PPInstrumentObject() as PPInstrumentObject? {
+			ourIns.resetInstrument()
+			
+			try importPAT(ourIns, data: inData)
+			InsHeader.pointee = ourIns
 		} else {
-			throw MADErr.readingErr
+			throw MADErr.needMemory
 		}
 	}
 }

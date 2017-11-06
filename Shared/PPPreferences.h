@@ -8,9 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#pragma pack(push)
 typedef struct TagCoupling {
 	int amount;
 	NSInteger tag;
 } TagCoupling;
-#pragma pack(pop)
