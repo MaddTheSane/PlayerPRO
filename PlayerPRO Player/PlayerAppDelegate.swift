@@ -614,7 +614,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			
 			if returnVal == NSApplication.ModalResponse.alertSecondButtonReturn {
 				changeValueForMusicListKey( {
-					self.musicList.clearMusicList()
+					//self.musicList.clearMusicList()
 				})
 				if self.selectedIndex.index != -1 {
 					clearMusic()
@@ -632,7 +632,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		savePanel.canSelectHiddenExtension = true
 		savePanel.beginSheetModal(for: self.window, completionHandler: { (result) -> Void in
 			if result.rawValue == NSFileHandlingPanelOKButton {
-				self.musicList.saveMusicList(to: savePanel.url!)
+				do {
+					try self.musicList.saveMusicList(to: savePanel.url!)
+				} catch {
+					NSApp.presentError(error)
+				}
 			}
 		})
 	}
@@ -682,18 +686,21 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			}
 		}
 		if sharedWorkspace.type(theUTI, conformsToType: PPMusicListUTI) {
-			if musicListWillChange() {
-				changeValueForMusicListKey({ () -> Void in
-					self.musicList.loadMusicList(from: theURL)
-					self.selMusFromList = self.musicList.selectedMusic
-				})
-				musicListDidChange()
-				return true
+			do {
+				do {
+				let newList = try MusicList.from(contentsOf: theURL)
+					// Add to list
+					_ = newList
+					return true
+				} catch {
+					NSApp.presentError(error)
+					return false
+				}
 			}
 		} else if sharedWorkspace.type(theUTI, conformsToType: PPOldMusicListUTI) {
-			if musicListWillChange() {
-				self.willChangeValue(forKey: kMusicListKVO)
-				musicList.beginLoadingOfOldMusicList(at: theURL, completionHandle: { (theErr) -> Void in
+				musicList.beginLoadingOfOldMusicList(at: theURL, completionHandle: { (newList, theErr) -> Void in
+					// Add to list
+
 					self.selMusFromList = self.musicList.selectedMusic
 					self.didChangeValue(forKey: kMusicListKVO)
 					if let theErr = theErr {
@@ -701,7 +708,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					}
 				})
 				return true
-			}
 		} else {
 			//TODO: check for valid extension.
 			for aUTI in trackerUTIs {
@@ -914,9 +920,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		
 		madDriver.stopDriver()
 		musicList.selectedMusic = selectedIndex.index
-		if UserDefaults.standard.bool(forKey: PPRememberMusicList) {
-			musicList.saveApplicationMusicList()
-		}
 		
 		NotificationCenter.default.removeObserver(self)
 	}
@@ -1664,7 +1667,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	func tableView(_ atableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
 		changeValueForMusicListKey({
-			self.musicList.sortMusicList(descriptors: atableView.sortDescriptors)
+			self.musicList.sortMusicList(using: atableView.sortDescriptors)
 		})
 		atableView.reloadData()
 		musicListContentsDidMove()

@@ -38,12 +38,12 @@ private let kPlayerList = "Player List"
 	private let PPPPath = (try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)).appendingPathComponent("Playlists", isDirectory: true)
 #endif
 
-@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, Collection {
+@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, Collection, Codable {
 	@objc private(set)	dynamic var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount: UInt
 	@objc dynamic var		selectedMusic: Int
-	#if os(iOS)
 	@objc dynamic var		name = "New Music List"
+	#if os(iOS)
 	private(set)	var fileUUID = UUID()
 	#endif
 	
@@ -117,22 +117,15 @@ private let kPlayerList = "Player List"
 		}
 	}
 	
-	func clearMusicList() {
-		let theIndex = NSIndexSet(indexesIn: NSRange(location: 0, length: musicList.count)) as IndexSet
-		self.willChange(.removal, valuesAt: theIndex, forKey: kMusicListKVO)
-		musicList.removeAll()
-		self.didChange(.removal, valuesAt: theIndex, forKey: kMusicListKVO)
-	}
-	
 	@objc(sortMusicListUsingBlock:)
-	func sortMusicList(block: (_ lhs: MusicListObject, _ rhs: MusicListObject) -> Bool) {
+	func sortMusicList(using block: (_ lhs: MusicListObject, _ rhs: MusicListObject) -> Bool) {
 		self.willChangeValue(forKey: kMusicListKVO)
 		musicList.sort(by: block)
 		self.didChangeValue(forKey: kMusicListKVO)
 	}
 	
 	@objc(sortMusicListUsingComparator:)
-	func sortMusicList(comparator: Comparator) {
+	func sortMusicList(using comparator: Comparator) {
 		self.willChangeValue(forKey: kMusicListKVO)
 		musicList.sort(by: { (obj1, obj2) -> Bool in
 			return comparator(obj1, obj2) == .orderedAscending
@@ -150,7 +143,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	@objc(sortMusicListUsingDescriptors:)
-	func sortMusicList(descriptors: [NSSortDescriptor]) {
+	func sortMusicList(using descriptors: [NSSortDescriptor]) {
 		let anArray = musicList.sorted(using: descriptors)
 		musicList = anArray
 	}
@@ -230,11 +223,9 @@ private let kPlayerList = "Player List"
 		lostMusicCount = 0
 		if let BookmarkArray = aDecoder.decodeObject(forKey: kMusicListKey4) as? [MusicListObject] {
 			selectedMusic = aDecoder.decodeInteger(forKey: kMusicListLocation4)
-			#if os(iOS)
-				if let aName = aDecoder.decodeObject(forKey: kMusicListName4) as? String {
-					name = aName
-				}
-			#endif
+			if let aName = aDecoder.decodeObject(forKey: kMusicListName4) as? String {
+				name = aName
+			}
 			for book in BookmarkArray {
 				if !((try? book.checkIsReachable()) ?? false) {
 					if selectedMusic == -1 {
@@ -313,9 +304,7 @@ private let kPlayerList = "Player List"
 	func encode(with aCoder: NSCoder) {
 		aCoder.encode(selectedMusic, forKey: kMusicListLocation4)
 		aCoder.encode(musicList, forKey: kMusicListKey4)
-		#if os(iOS)
-			aCoder.encode(name, forKey: kMusicListName4)
-		#endif
+		aCoder.encode(name, forKey: kMusicListName4)
 	}
 	
 	static let supportsSecureCoding = true
@@ -327,89 +316,25 @@ private let kPlayerList = "Player List"
 	}
 	
 	// MARK: - saving/loading
-	private func loadMusicList(_ newArray: [MusicListObject]) {
-		willChangeValue(forKey: kMusicListKVO)
-		musicList = newArray
-		didChangeValue(forKey: kMusicListKVO)
-	}
-	
-	private func loadMusicList(from theData: Data) -> Bool {
-		if let postList = NSKeyedUnarchiver.unarchiveObject(with: theData) as? MusicList {
-			lostMusicCount = postList.lostMusicCount
-			loadMusicList(postList.musicList)
-			self.selectedMusic = postList.selectedMusic
-			#if os(iOS)
-				name = postList.name
-			#endif
-			return true
-		} else {
-			return false
+	static func from(contentsOf url: URL) throws -> MusicList {
+		let wrappedData = try Data(contentsOf: url)
+		let keyedUnarc = NSKeyedUnarchiver(forReadingWith: wrappedData)
+		guard let newList = MusicList(coder: keyedUnarc) else {
+			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError)
 		}
-	}
-	
-	@discardableResult
-	func loadMusicList(from fromURL: URL) -> Bool {
-		if let unWrappedListData = try? Data(contentsOf: fromURL) {
-			return loadMusicList(from: unWrappedListData)
-		} else {
-			return false
-		}
+		return newList
 	}
 	
 	@discardableResult
 	func loadApplicationMusicList() -> Bool {
-		let manager = FileManager.default
-		#if os(OSX)
-			let musListDefName = "PlayerPRO Music List"
-			let defaults = UserDefaults.standard
-			if let listData = defaults.data(forKey: musListDefName) {
-				if loadMusicList(from: listData) {
-					defaults.removeObject(forKey: musListDefName) //Otherwise the preference file is abnormally large.
-					_ = saveApplicationMusicList()
-					//Technically we did succeed...
-					return true
-				}
-				//We couldn't load it, but it's still there, taking up space...
-				defaults.removeObject(forKey: musListDefName)
-			}
-		#endif
-		if !((try? PPPPath.checkResourceIsReachable()) ?? false) {
-			do {
-				try manager.createDirectory(at: PPPPath, withIntermediateDirectories: true, attributes: nil)
-			} catch _ {
-				return false
-			}
-			
-		}
-		return loadMusicList(from: PPPPath.appendingPathComponent(kPlayerList, isDirectory: false))
+		let musListDefName = "PlayerPRO Music List"
+		UserDefaults.standard.removeObject(forKey: musListDefName)
+		return false
 	}
 	
-	@discardableResult
-	@objc(saveMusicListToURL:)
-	func saveMusicList(to URL: Foundation.URL) -> Bool {
+	func saveMusicList(to URL: Foundation.URL) throws {
 		let theList = NSKeyedArchiver.archivedData(withRootObject: self)
-		do {
-			try theList.write(to: URL, options: [])
-			return true
-		} catch _ {
-			return false
-		}
-	}
-	
-	@discardableResult
-	func saveApplicationMusicList() -> Bool {
-		let manager = FileManager.default
-		
-		if !((try? PPPPath.checkResourceIsReachable()) ?? false) {
-			do {
-				//Just making sure...
-				try manager.createDirectory(at: PPPPath, withIntermediateDirectories: true, attributes:nil)
-			} catch _ {
-				return false
-			}
-		}
-		
-		return self.saveMusicList(to: PPPPath.appendingPathComponent(kPlayerList, isDirectory: false))
+		try theList.write(to: URL, options: [])
 	}
 	
 	// MARK: - Key-valued Coding
@@ -501,7 +426,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	#if os(OSX)
-	func beginLoadingOfOldMusicList(at toOpen: URL, completionHandle theHandle: @escaping (_ theErr: Error?) -> Void) {
+	func beginLoadingOfOldMusicList(at toOpen: URL, completionHandle theHandle: @escaping (_ newList: MusicList?, _ theErr: Error?) -> Void) {
 		let modDate: Date? = {
 			do {
 				var values = try toOpen.resourceValues(forKeys: [.contentModificationDateKey])
@@ -522,14 +447,14 @@ private let kPlayerList = "Player List"
 					conn.invalidate()
 				}
 				if let error = error {
-					theHandle(error)
+					theHandle(nil, error)
 					return
 				} else {
 					guard let invalidAny = bookmarkData?["lostMusicCount"] as? UInt,
 						let selectedAny = bookmarkData?["SelectedMusic"] as? Int,
 						let pathsAny = bookmarkData?["MusicPaths"] as? NSArray as? [String] else {
 							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Invalid data returned from helper", comment: "Invalid data returned from helper")])
-							theHandle(lolwut)
+							theHandle(nil, lolwut)
 							return
 					}
 					// Have all the new MusicListObjects use the same date
@@ -539,11 +464,13 @@ private let kPlayerList = "Player List"
 						let tmpObj = MusicListObject(url: tmpURL, date: currentDate)
 						return tmpObj
 					})
-					self.loadMusicList(pathsURL)
-					self.lostMusicCount = invalidAny
-					self.selectedMusic = selectedAny
+					let newList = MusicList()
+					newList.musicList = pathsURL
+					newList.lostMusicCount = invalidAny
+					newList.selectedMusic = selectedAny
+					newList.name = toOpen.lastPathComponent
 					
-					theHandle(nil)
+					theHandle(newList, nil)
 				}
 			})
 		})

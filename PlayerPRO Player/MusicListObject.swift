@@ -256,3 +256,44 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		self.init(url: aURL, date: aaddedDate)
 	}
 }
+
+extension MusicListObject: Codable {
+	enum CodingKeys: String, CodingKey {
+		case musicURL = "url"
+		case dateAdded = "date_added"
+		
+		case bookmarkData = "bookmark_data"
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		#if os(OSX)
+			if let bookmark = try? musicURL.bookmarkData(includingResourceValuesForKeys: [.volumeURLKey, .volumeUUIDStringKey], relativeTo: homeURL) {
+				try container.encode(bookmark, forKey: .bookmarkData)
+			}
+		#endif
+		try container.encode(musicURL, forKey: .musicURL)
+		try container.encode(addedDate, forKey: .dateAdded)
+	}
+	
+	convenience init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		let dateAdded = try values.decode(Date.self, forKey: .dateAdded)
+		var url: URL?
+		
+		#if os(OSX)
+		if values.contains(.bookmarkData) {
+			let bookDat = try values.decode(Data.self, forKey: .bookmarkData)
+			var unusedStale = false
+			if let url2 = try? URL(resolvingBookmarkData: bookDat, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &unusedStale) {
+				url = url2
+			}
+		}
+		#endif
+		
+		if url == nil {
+			url = try values.decode(URL.self, forKey: .musicURL)
+		}
+		self.init(url: url!, date: dateAdded)
+	}
+}
