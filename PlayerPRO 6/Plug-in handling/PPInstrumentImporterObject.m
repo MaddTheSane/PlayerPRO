@@ -12,9 +12,6 @@
 #import "PPInstrumentImporterCompatObject.h"
 #import "PlayerPRO_6-Swift.h"
 
-static Class strClass;
-static Class numClass;
-
 static PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle) NS_RETURNS_RETAINED;
 PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 {
@@ -92,16 +89,16 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugUTITypesKey];
 		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
 			self.UTITypes = DictionaryTemp;
-		} else if ([DictionaryTemp isKindOfClass:strClass]) {
+		} else if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 			self.UTITypes = @[[NSString stringWithString:DictionaryTemp]];
 		} else {
 			return nil;
 		}
 		
 		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugTypeKey];
-		if ([DictionaryTemp isKindOfClass:strClass]) {
+		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 			type = NSStringToOSType(DictionaryTemp);
-		} else if ([DictionaryTemp isKindOfClass:numClass]) {
+		} else if ([DictionaryTemp isKindOfClass:[NSNumber class]]) {
 			type = [(NSNumber*)DictionaryTemp unsignedIntValue];
 		} else {
 			return nil;
@@ -112,12 +109,6 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 
 - (instancetype)initWithBundle:(NSBundle *)tempBundle
 {
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		strClass = [NSString class];
-		numClass = [NSNumber class];
-	});
-
 	if (self = [self initWithBundleNoInit:tempBundle]) {
 		{
 			NSArray *archs = tempBundle.executableArchitectures;
@@ -147,8 +138,8 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 			self.canImport = YES;
 		}
 
-		if ((!_canImport) && (!_canExport)) {
-			// exclude plug-ins that can be detected as a different class
+		if (!(_canImport || _canExport)) {
+			// exclude plug-ins that can be initialized with a different class
 			if ([bundClass conformsToProtocol:@protocol(PPSampleImportPlugin)]) {
 				return nil;
 			} else if ([bundClass conformsToProtocol:@protocol(PPSampleExportPlugin)]) {
@@ -196,7 +187,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 	NSError *ourErr;
 	BOOL success = [plugCode importInstrumentAtURL:sampleURL instrument:&outIns driver:driver error:&ourErr];
 
-	if (isOrderNotImplemented(ourErr) && [plugCode respondsToSelector:@selector(beginImportInstrumentAtURL:driver:parentWindow:handler:)]) {
+	if (!success && isOrderNotImplemented(ourErr) && [plugCode respondsToSelector:@selector(beginImportInstrumentAtURL:driver:parentWindow:handler:)]) {
 		[plugCode beginImportInstrumentAtURL:sampleURL driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
 		handler(success ? nil : ourErr, outIns);
@@ -213,7 +204,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 	
 	NSError *ourErr;
 	BOOL success = [plugCode exportInstrument:anIns toURL:sampURL driver:driver error:&ourErr];
-	if (isOrderNotImplemented(ourErr) && [plugCode respondsToSelector:@selector(beginExportInstrument:toURL:driver:parentWindow:handler:)]) {
+	if (!success && isOrderNotImplemented(ourErr) && [plugCode respondsToSelector:@selector(beginExportInstrument:toURL:driver:parentWindow:handler:)]) {
 		[plugCode beginExportInstrument:anIns toURL:sampURL driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
 		handler(success ? nil : ourErr);

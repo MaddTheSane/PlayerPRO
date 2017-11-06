@@ -102,10 +102,10 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		}
 		#endif
 		
-		///The plug-in mode.
+		/// The plug-in mode.
 		///
-		///The mode indicates, via `OSType`, the export and import capabilities of the plug-in.
-		///You can just use `canImport` and `canExport` instead.
+		/// The mode indicates, via `OSType`, the export and import capabilities of the plug-in.
+		/// You can just use `canImport` and `canExport` instead.
 		public var mode: MADFourChar {
 			if self.canExport && self.canImport {
 				return MADPlugModes.importExport.rawValue
