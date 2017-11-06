@@ -77,6 +77,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		do {
 			var values = try self.musicURL.resourceValues(forKeys: [URLResourceKey.localizedNameKey])
 			guard let retStr = values.localizedName else {
+				// only used to assure we get to the catch statement: it doesn't mean anything
 				throw NSError(domain: NSCocoaErrorDomain, code: -1, userInfo: nil)
 			}
 			return retStr
@@ -90,6 +91,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		do {
 			var values = try self.musicURL.resourceValues(forKeys: [URLResourceKey.totalFileSizeKey])
 			guard let val1 = values.totalFileSize else {
+				// only used to assure we get to the catch statement: it doesn't mean anything
 				throw NSError(domain: NSCocoaErrorDomain, code: -1, userInfo: nil)
 			}
 			return UInt64(val1)
@@ -99,6 +101,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 				let theparam = try manager.attributesOfItem(atPath: self.musicURL.path)
 				guard let tmpfilesize: Any = theparam[FileAttributeKey.size],
 					let aFileSize = tmpfilesize as? NSNumber else {
+						// only used to assure we get to the catch statement: it doesn't mean anything
 						throw NSError(domain: NSCocoaErrorDomain, code: -1, userInfo: nil)
 				}
 				return aFileSize.uint64Value
