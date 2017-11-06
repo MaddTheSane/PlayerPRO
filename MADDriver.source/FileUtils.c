@@ -54,7 +54,7 @@ void iFileCreate(const char *path, MADFourChar type)
 				break;
 				
 			default:
-				fprintf(stderr, "Error encountered deleting %s: %s", path, strerror(errno));
+				fprintf(stderr, "Error encountered deleting %s: %s\n", path, strerror(errno));
 				errno = 0;
 				return;
 				break;
