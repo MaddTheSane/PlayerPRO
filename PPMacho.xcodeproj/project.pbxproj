@@ -25,6 +25,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				556BC40C1FAFEDF40015C622 /* PBXTargetDependency */,
 				5518A4191B03E492005AF928 /* PBXTargetDependency */,
 				5511F4E8186CFC39008F6BE1 /* PBXTargetDependency */,
 				551FEB7910E7282700EDF2F1 /* PBXTargetDependency */,
@@ -344,6 +345,9 @@
 		556BC17B19CF47FC00508F49 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		556BC18419CF482600508F49 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		556BC18A19CF75F900508F49 /* PPCoreInstrumentPlugBridge32.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		556BC4091FAFEBF90015C622 /* snd.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E104D10D6C79E00BB619C /* snd.c */; };
+		556BC40A1FAFEDC10015C622 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		556BC40D1FAFEE090015C622 /* Old Classic Sound.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 556BC4011FAFEB9E0015C622 /* Old Classic Sound.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		557003361B2261B300C623AB /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; };
 		557003371B2261B300C623AB /* SwiftAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1262,6 +1266,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 5527AC1B1FAE7CB1009CC7FC;
 			remoteInfo = CoreTextAdditionsTests;
+		};
+		556BC4071FAFEBE90015C622 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		556BC40B1FAFEDF40015C622 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 556BC4001FAFEB9E0015C622;
+			remoteInfo = "Old Classic Sound";
 		};
 		557003281B2260D600C623AB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2212,6 +2230,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				556BC40D1FAFEE090015C622 /* Old Classic Sound.plugin in Copy PlugIns */,
 				5518A44A1B03FFD1005AF928 /* Classic Sound.plugin in Copy PlugIns */,
 				5518A41A1B03E4E3005AF928 /* System 7.plugin in Copy PlugIns */,
 				5511F4E9186CFC63008F6BE1 /* AIFF.plugin in Copy PlugIns */,
@@ -2592,6 +2611,8 @@
 		556BC18619CF4F7000508F49 /* PPInsPlugBridge.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPInsPlugBridge.pch; sourceTree = "<group>"; };
 		556BC18719CF5F2400508F49 /* PPMINsPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMINsPlug.h; sourceTree = "<group>"; };
 		556BC18819CF5F2400508F49 /* PPMINsPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMINsPlug.m; sourceTree = "<group>"; };
+		556BC4011FAFEB9E0015C622 /* Old Classic Sound.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Old Classic Sound.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		556BC4031FAFEB9E0015C622 /* OldClassicSoundInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = OldClassicSoundInfo.plist; sourceTree = "<group>"; };
 		5571120D1C31C9A900637A09 /* FilterPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterPlugHandler.swift; sourceTree = "<group>"; };
 		557139E51685007B00831A5A /* PPOpenPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPOpenPanel.xib; sourceTree = "<group>"; };
 		557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "OSX-VSTPlugIn.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -3124,6 +3145,14 @@
 			files = (
 				55C5F27D1B1DE63300EBC776 /* Foundation.framework in Frameworks */,
 				556BC18419CF482600508F49 /* PlayerPROCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		556BC3FE1FAFEB9E0015C622 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				556BC40A1FAFEDC10015C622 /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4467,6 +4496,7 @@
 				5518A4381B03F561005AF928 /* ClassicSound.swift */,
 				554E104D10D6C79E00BB619C /* snd.c */,
 				555E85371A041E580018FDBC /* ClassicSoundInfo.plist */,
+				556BC4031FAFEB9E0015C622 /* OldClassicSoundInfo.plist */,
 			);
 			path = "Classic Sound";
 			sourceTree = "<group>";
@@ -5124,6 +5154,7 @@
 				55534ACD1817C387006D6BCB /* updateInfoPlist */,
 				55D5E9581B01466D00EB2C84 /* System 7.plugin */,
 				55D8E1951C4EC0BC00C2B397 /* ITv2.ppimpexp */,
+				556BC4011FAFEB9E0015C622 /* Old Classic Sound.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5664,6 +5695,24 @@
 			productName = PPCoreInstrumentPlugBridge;
 			productReference = 556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */;
 			productType = "com.apple.product-type.xpc-service";
+		};
+		556BC4001FAFEB9E0015C622 /* Old Classic Sound */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 556BC4041FAFEB9E0015C622 /* Build configuration list for PBXNativeTarget "Old Classic Sound" */;
+			buildPhases = (
+				556BC3FD1FAFEB9E0015C622 /* Sources */,
+				556BC3FE1FAFEB9E0015C622 /* Frameworks */,
+				556BC3FF1FAFEB9E0015C622 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				556BC4081FAFEBE90015C622 /* PBXTargetDependency */,
+			);
+			name = "Old Classic Sound";
+			productName = "Old Classic Sound";
+			productReference = 556BC4011FAFEB9E0015C622 /* Old Classic Sound.plugin */;
+			productType = "com.apple.product-type.bundle";
 		};
 		5573A33E10B50D2600FF8B50 /* PlayerPROCore */ = {
 			isa = PBXNativeTarget;
@@ -6549,6 +6598,10 @@
 					555E85381A041E810018FDBC = {
 						LastSwiftMigration = 0800;
 					};
+					556BC4001FAFEB9E0015C622 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
 					5578C48017D9E8560057D11B = {
 						DevelopmentTeam = AZAE6TWF2Z;
 						LastSwiftMigration = 0900;
@@ -6715,6 +6768,7 @@
 				55D5E9571B01466D00EB2C84 /* System 7 */,
 				555E85381A041E810018FDBC /* Classic Sound */,
 				55E898A810F17C2B004EB52B /* QuickTime */,
+				556BC4001FAFEB9E0015C622 /* Old Classic Sound */,
 				557DE3BD10E06BB500177B4C /* Filters Plugs */,
 				557DE42510E06BF200177B4C /* Amplitude */,
 				557DE5D110E0882800177B4C /* Backwards */,
@@ -6998,6 +7052,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		556BC17E19CF47FC00508F49 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		556BC3FF1FAFEB9E0015C622 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -7617,6 +7678,14 @@
 				556BC17919CF47FC00508F49 /* PPInstrumentPlugBridgeObject.m in Sources */,
 				556BC17A19CF47FC00508F49 /* PPCoreInstrumentPlugBridge.m in Sources */,
 				556BC17B19CF47FC00508F49 /* PPInstrumentPlugBridgeHelper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		556BC3FD1FAFEB9E0015C622 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				556BC4091FAFEBF90015C622 /* snd.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8456,6 +8525,16 @@
 			isa = PBXTargetDependency;
 			target = 556BC17319CF47FC00508F49 /* PPCoreInstrumentPlugBridge32 */;
 			targetProxy = 556BC18B19CF75F900508F49 /* PBXContainerItemProxy */;
+		};
+		556BC4081FAFEBE90015C622 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 556BC4071FAFEBE90015C622 /* PBXContainerItemProxy */;
+		};
+		556BC40C1FAFEDF40015C622 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 556BC4001FAFEB9E0015C622 /* Old Classic Sound */;
+			targetProxy = 556BC40B1FAFEDF40015C622 /* PBXContainerItemProxy */;
 		};
 		557003291B2260D600C623AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10332,6 +10411,47 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = i386;
+			};
+			name = Debug;
+		};
+		556BC4051FAFEB9E0015C622 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Classic Sound/OldClassicSoundInfo.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.maddthesane.Old-Classic-Sound";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		556BC4061FAFEB9E0015C622 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Classic Sound/OldClassicSoundInfo.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.maddthesane.Old-Classic-Sound";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
 		};
@@ -12231,6 +12351,15 @@
 			buildConfigurations = (
 				556BC18019CF47FC00508F49 /* Release */,
 				556BC18119CF47FC00508F49 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		556BC4041FAFEB9E0015C622 /* Build configuration list for PBXNativeTarget "Old Classic Sound" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				556BC4051FAFEB9E0015C622 /* Release */,
+				556BC4061FAFEB9E0015C622 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -20,10 +20,10 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 	if (!plugInTypes) {
 		return nil;
 	}
+	NSString *insString = CFBridgingRelease(CFUUIDCreateString(kCFAllocatorDefault, kPlayerPROInstrumentPlugTypeID));
+	NSUUID *insUUID = [[NSUUID alloc] initWithUUIDString:insString];
 	
 	for (NSString *key in plugInTypes) {
-		NSString *insString = CFBridgingRelease(CFUUIDCreateString(kCFAllocatorDefault, kPlayerPROInstrumentPlugTypeID));
-		NSUUID *insUUID = [[NSUUID alloc] initWithUUIDString:insString];
 		NSUUID *keyUUID = [[NSUUID alloc] initWithUUIDString:key];
 		
 		if ([keyUUID isEqual:insUUID]) {
