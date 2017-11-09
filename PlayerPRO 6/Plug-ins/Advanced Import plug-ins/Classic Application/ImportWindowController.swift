@@ -100,7 +100,7 @@ class ImportWindowController: NSWindowController {
 	
 	@IBAction func cancelImport(_ sender: AnyObject?) {
 		NSApplication.shared.endModalSession(modalSession)
-		currentBlock(nil, MADErr.userCanceledErr)
+		currentBlock(nil, MADErr.userCancelledErr)
 	}
 
 	func addResourceDictionary(_ theDict: [String: [FVResource]]) {

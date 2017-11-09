@@ -200,6 +200,6 @@ class ComplexFadeController: NSWindowController {
 	
 	@IBAction func cancel(_ sender: AnyObject!) {
 		parentWindow.endSheet(window!)
-		currentBlock(MADErr.userCanceledErr)
+		currentBlock(MADErr.userCancelledErr)
 	}
 }

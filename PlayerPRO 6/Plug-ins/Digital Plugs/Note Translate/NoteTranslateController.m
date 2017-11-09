@@ -31,7 +31,7 @@
 - (IBAction)cancel:(id)sender
 {
 	[_parentWindow endSheet:self.window];
-	_currentBlock([NSError errorWithDomain:PPMADErrorDomain code:MADUserCanceledErr userInfo:nil]);
+	_currentBlock([NSError errorWithDomain:PPMADErrorDomain code:MADUserCancelledErr userInfo:nil]);
 }
 
 - (IBAction)okay:(id)sender
