@@ -12,12 +12,12 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/MADPlug.h>
 #import <Foundation/Foundation.h>
+#import <AppKit/NSWindow.h>
 
-@class PPSampleObject;
-@class PPInstrumentObject;
-@class PPMusicObject;
+#import <PlayerPROKit/PPSampleObject.h>
+#import <PlayerPROKit/PPInstrumentObject.h>
+#import <PlayerPROKit/PPMusicObject.h>
 @class PPDriver;
-@class NSWindow;
 
 NS_ASSUME_NONNULL_BEGIN
 
