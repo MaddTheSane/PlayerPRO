@@ -7,6 +7,19 @@
 #include "MADFileUtils.h"
 #include "GetMetadataForFile.h"
 
+static NSString *utf8OrMacRoman(const char *text) NS_RETURNS_RETAINED;
+NSString *utf8OrMacRoman(const char *text)
+{
+	if (memcmp(text, "\xEF\xBB\xBF", 3) == 0) {
+		const char *plus3 = text + 3;
+		NSString *uniStr = [[NSString alloc] initWithUTF8String:plus3];
+		if (uniStr) {
+			return uniStr;
+		}
+	}
+	return [[NSString alloc] initWithCString:text encoding:NSMacOSRomanStringEncoding];
+}
+
 static NSString *StripStringOfSpaces(NSString *s, BOOL andDashes) NS_RETURNS_RETAINED;
 NSString *StripStringOfSpaces(NSString *s, BOOL andDashes)
 {
@@ -164,7 +177,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 				// Note that most trackers don't have an info field, so most will be "Converted by PlayerPRO..."
 				// Hence why we're only letting the MADK tracker show it.
 				
-				NSString *infoString = [[NSString alloc] initWithCString:MADMusic1->header->infos encoding:NSMacOSRomanStringEncoding];
+				NSString *infoString = utf8OrMacRoman(MADMusic1->header->infos);
 				if (infoString) {
 					NSattribs[kPPMDMADKInfo] = infoString;
 				}

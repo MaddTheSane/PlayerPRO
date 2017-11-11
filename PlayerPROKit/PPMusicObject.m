@@ -19,6 +19,19 @@
 #import "PPPatternObject.h"
 #import "PPErrors.h"
 
+static NSString *utf8OrMacRoman(const char *text) NS_RETURNS_RETAINED;
+static NSString *utf8OrMacRoman(const char *text)
+{
+	if (memcmp(text, "\xEF\xBB\xBF", 3) == 0) {
+		const char *plus3 = text + 3;
+		NSString *uniStr = [[NSString alloc] initWithUTF8String:plus3];
+		if (uniStr) {
+			return uniStr;
+		}
+	}
+	return [[NSString alloc] initWithCString:text encoding:NSMacOSRomanStringEncoding];
+}
+
 static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 {
 	if (!oldMus) {
@@ -207,7 +220,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 {
 	NSMutableArray<PPInstrumentObject*>	*_instruments;
 }
-@property (readwrite, strong) NSURL *filePath;
 @property (readwrite, strong, nonatomic) NSMutableArray *patterns;
 @property (readwrite, strong, nonatomic) NSMutableArray *buses;
 @end
@@ -403,7 +415,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	internalFileName = nil;
 	NSData *outMacRoman = [newInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 	if (!outMacRoman || outMacRoman.length == 0) {
-		memset(currentMusic->header->infos, 0, sizeof(currentMusic->header->infos));
+		memset(currentMusic->header->name, 0, sizeof(currentMusic->header->name));
 	} else {
 		char fileNameInt[32] = {0};
 		[outMacRoman getBytes:fileNameInt length:MIN(outMacRoman.length, sizeof(fileNameInt) - 1)];
@@ -414,20 +426,23 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 - (void)setInformation:(NSString*)newInfo
 {
 	madInfo = nil;
-	NSData *outMacRoman = [newInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	// Prefer Mac OS Roman for backwards compatibility.
+	NSData *outMacRoman = [newInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:NO];
 	if (!outMacRoman || outMacRoman.length == 0) {
-		memset(currentMusic->header->infos, 0, sizeof(currentMusic->header->infos));
-	} else {
-		char fileNameInt[239] = {0};
-		[outMacRoman getBytes:fileNameInt length:MIN(outMacRoman.length, sizeof(fileNameInt) - 1)];
-		strlcpy(currentMusic->header->infos, fileNameInt, sizeof(currentMusic->header->infos));
+		NSMutableData *utf8BOM = [NSMutableData dataWithBytes:"\xEF\xBB\xBF" length:3];
+		NSData *outUTF8 = [[newInfo precomposedStringWithCanonicalMapping] dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+		[utf8BOM appendData:outUTF8];
+		outMacRoman = utf8BOM;
 	}
+	char fileNameInt[239] = {0};
+	[outMacRoman getBytes:fileNameInt length:MIN(outMacRoman.length, sizeof(fileNameInt) - 1)];
+	strlcpy(currentMusic->header->infos, fileNameInt, sizeof(currentMusic->header->infos));
 }
 
 - (NSString*)information
 {
 	if (!madInfo) {
-		madInfo = [[NSString alloc] initWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
+		madInfo = utf8OrMacRoman(currentMusic->header->infos);
 	}
 	if (!madInfo) {
 		madInfo = @"";
@@ -463,7 +478,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			return nil;
 		}
 		
-		self.filePath = url;
 	}
 	
 	return self;
@@ -512,9 +526,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 				*error = PPCreateErrorFromMADErrorType(iErr);
 			}
 			return nil;
-		}
-		if (strcmp(type, "MADK") == 0) {
-			self.filePath = url.fileReferenceURL;
 		}
 	}
 	return self;
@@ -593,10 +604,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	MADErr retErr;
 	if ((retErr = MADMusicSaveCFURL(currentMusic, (__bridge CFURLRef)tosave, mad1Comp)) == MADNoErr) {
 		currentMusic->hasChanged = false;
-		self.filePath = tosave;
 	}
 	
-	if (error) {
+	if (retErr != MADNoErr && error) {
 		*error = PPCreateErrorFromMADErrorType(retErr);
 	}
 	
@@ -632,9 +642,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 - (id)copyWithZone:(NSZone *)zone
 {
 	PPMusicObject *copyWrap = [[PPMusicObject alloc] initWithMusicStruct:currentMusic];
-	if (self.filePath) {
-		copyWrap.filePath = self.filePath;
-	}
 	
 	copyWrap.information = self.information;
 	copyWrap.title = self.title;

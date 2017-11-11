@@ -32,7 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite, copy, null_resettable) NSString *title;
 @property (readwrite, copy, null_resettable) NSString *information;
 @property (readonly, weak, nullable) PPDriver *attachedDriver;
-@property (readonly, strong, nullable) NSURL *filePath;
 
 @property BOOL usesLinearPitchTable;
 @property BOOL limitPitchToMODTable;

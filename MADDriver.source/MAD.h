@@ -308,7 +308,9 @@ typedef struct MADSpec {
 	MADFourChar	MAD;
 	/// Music's name
 	char 		name[32];
-	/// Informations & author name of the music
+	/// Informations & author name of the music.
+	/// Format is Mac OS Roman unless it begins with the
+	/// UTF-8 BOM.
 	char		infos[INFOSSIZE];
 	/// General panning
 	MADByte		generalPan;
