@@ -94,7 +94,6 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		MADMusic			*MADMusic1 = NULL;
 		MADLibrary			*MADLib = NULL;
 		MADDriverSettings	init = {0};
-		NSMutableDictionary *NSattribs = (__bridge NSMutableDictionary*)attributes;
 		
 		MADGetBestDriver(&init);
 		init.driverMode = NoHardwareDriver;
@@ -106,6 +105,8 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			return FALSE;
 		}
 		
+		NSMutableDictionary *NSattribs = (__bridge NSMutableDictionary*)attributes;
+
 		{
 			char type[5] = {0};
 			OSType info = 0;

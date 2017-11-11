@@ -230,9 +230,8 @@ static void MovePluginInfoOver(const iPlugInfo *src, PlugInfo *dst)
 	CFMutableArrayRef tmpArray = CFArrayCreateMutable(kCFAllocatorDefault, 5, &kCFTypeArrayCallBacks);
 	int i = 0;
 	while (src->UTITypes[i]) {
-		CFStringRef tmpStr = CFStringCreateCopy(kCFAllocatorDefault, src->UTITypes[i++]);
+		CFStringRef tmpStr = src->UTITypes[i++];
 		CFArrayAppendValue(tmpArray, tmpStr);
-		CFRelease(tmpStr);
 	}
 	dst->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, tmpArray);
 	CFRelease(tmpArray);

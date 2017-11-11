@@ -72,6 +72,10 @@
             argument = "${HOME}/Music/Mod\ music/Energy.xm"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/Users/cwbetts/Music/Mod\ music/&quot;sea of fantasy.madk&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
