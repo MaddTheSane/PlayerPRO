@@ -11,8 +11,7 @@ static NSString *utf8OrMacRoman(const char *text) NS_RETURNS_RETAINED;
 NSString *utf8OrMacRoman(const char *text)
 {
 	if (memcmp(text, "\xEF\xBB\xBF", 3) == 0) {
-		const char *plus3 = text + 3;
-		NSString *uniStr = [[NSString alloc] initWithUTF8String:plus3];
+		NSString *uniStr = [[NSString alloc] initWithUTF8String:text];
 		if (uniStr) {
 			return uniStr;
 		}
