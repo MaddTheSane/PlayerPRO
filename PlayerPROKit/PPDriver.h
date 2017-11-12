@@ -10,7 +10,8 @@
 #define __PLAYERPROKIT_PPDRIVER_H__
 
 #import <Foundation/Foundation.h>
-#include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/MAD.h>
+#include <PlayerPROCore/RDriver.h>
 #import <PlayerPROKit/PPConstants.h>
 
 @class PPLibrary;

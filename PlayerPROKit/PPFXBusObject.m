@@ -6,8 +6,9 @@
 //
 //
 
+#include <PlayerPROCore/PlayerPROCore.h>
 #import "PPFXBusObject.h"
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 #import "PPPasteboardHandling.h"
 #endif
 
@@ -22,7 +23,7 @@
 @implementation PPFXBusObject
 @synthesize theBus;
 
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 NSString * const kPPKFXBusPasteboardUTI = @"net.sourceforge.playerpro.FXBus";
 
 static NSArray *UTIArray;

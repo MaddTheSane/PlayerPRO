@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "PPErrors.h"
-#include <PlayerPROCore/PlayerPROCore.h>
 #import "PPMusicObject.h"
 
 #ifndef __MACERRORS__

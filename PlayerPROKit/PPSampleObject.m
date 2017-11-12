@@ -6,9 +6,10 @@
 //
 //
 
+#include <PlayerPROCore/PlayerPROCore.h>
 #import "PPSampleObject.h"
 #import "PPSampleObject_PPKPrivate.h"
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 #import "PPPasteboardHandling.h"
 #endif
 
@@ -89,7 +90,7 @@
 	_data = [[NSData alloc] initWithBytesNoCopy:sampleWriteTo->data length:sampleWriteTo->size freeWhenDone:NO];
 }
 
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 NSString * const kPPKSamplePasteboardUTI = @"net.sourceforge.playerpro.sData";
 
 static NSArray *UTIArray;

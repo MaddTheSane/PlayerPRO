@@ -10,7 +10,7 @@
 #define __PLAYERPROKIT_PPFXSETOBJECT_H__
 
 #import <Foundation/Foundation.h>
-#include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/MAD.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
 #ifndef NS_DESIGNATED_INITIALIZER

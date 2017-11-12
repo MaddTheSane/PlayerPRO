@@ -10,7 +10,7 @@
 #define __PLAYERPROKIT_PPINSTRUMENTOBJECT_H__
 
 #import <Foundation/Foundation.h>
-#include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/MAD.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
 NS_ASSUME_NONNULL_BEGIN

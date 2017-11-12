@@ -6,9 +6,10 @@
 //
 //
 
+#include <PlayerPROCore/PlayerPROCore.h>
 #import "PPMadCommandObject.h"
 #include <PlayerPROCore/RDriverInt.h>
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 #import "PPPasteboardHandling.h"
 #endif
 
@@ -24,7 +25,7 @@
 	Cmd theCommand;
 }
 
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 NSString * const kPPKMADCommandPasteboardUTI = @"net.sourceforge.playerpro.MADCommand";
 
 static NSArray *UTIArray;

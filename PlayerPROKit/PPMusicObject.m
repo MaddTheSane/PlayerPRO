@@ -12,6 +12,7 @@
 #import "PPDriver.h"
 #import "PPDriver_Private.h"
 #import "PPMusicObject_PPKPrivate.h"
+#include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import "PPInstrumentObject.h"
