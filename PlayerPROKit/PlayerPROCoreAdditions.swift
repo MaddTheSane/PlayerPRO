@@ -282,7 +282,7 @@ extension sData32 {
 		self.c2spd = noFineTune
 		self.loopType = .classic
 		self.amp = 8
-		self.relNote = 0
+		self.realNote = 0
 		self.name = BlankNameChar32
 		self.stereo = false
 		self.data = 0
@@ -304,7 +304,7 @@ extension sData32 {
 		c2spd = fromSData32.c2spd
 		loopType = fromSData32.loopType
 		amp = fromSData32.amp
-		relNote = fromSData32.relNote
+		realNote = fromSData32.realNote
 		name = fromSData32.name
 		stereo = fromSData32.stereo
 		data = 0
@@ -328,7 +328,7 @@ extension sData {
 		c2spd = fromSData32.c2spd
 		loopType = fromSData32.loopType
 		amp = fromSData32.amp
-		relNote = fromSData32.relNote
+		realNote = fromSData32.realNote
 		name = fromSData32.name
 		stereo = fromSData32.stereo
 		data = nil
@@ -342,7 +342,7 @@ extension sData {
 		self.c2spd = noFineTune
 		self.loopType = .classic
 		self.amp = 8
-		self.relNote = 0
+		self.realNote = 0
 		self.name = BlankNameChar32
 		self.stereo = false
 		self.data = nil

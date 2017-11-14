@@ -228,7 +228,7 @@ static inline OSErr TestMINS(const InstrData *CC)
 		toWrite.loopBeg = samp.loopBegin;
 		toWrite.loopSize = samp.loopSize;
 		toWrite.loopType = samp.loopType;
-		toWrite.relNote = samp.relativeNote;
+		toWrite.realNote = samp.realNote;
 		toWrite.stereo = samp.stereo;
 		toWrite.vol = samp.volume;
 		toWrite.size = (int)[samp.data length];

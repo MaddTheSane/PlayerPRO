@@ -727,7 +727,7 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 							if (aCmd->ins != 0)
 							{
 								if (theMAD->fid[aCmd->ins-1].numSamples > 0)
-									curNote = aCmd->note + theMAD->sample[(aCmd->ins-1)*MAXSAMPLE + 0]->relNote;
+									curNote = aCmd->note + theMAD->sample[(aCmd->ins-1)*MAXSAMPLE + 0]->realNote;
 								else 	curNote = aCmd->note;
 							}
 							else curNote = aCmd->note;
@@ -1078,7 +1078,7 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 			curData->loopType	= 0;
 			curData->amp		= 8;		if (s3minfo.insdata[i].insflags&4)	curData->amp		= 16;
 			
-			curData->relNote	= 0;
+			curData->realNote	= 0;
 			//	for (x = 0; x < 28; x++) theMAD->fid[i].name[x] = s3minfo.insdata[i].insname[x];
 			
 			if (curData->amp == 16)

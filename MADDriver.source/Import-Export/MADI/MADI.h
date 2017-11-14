@@ -69,7 +69,7 @@ typedef struct oldsData {
 	unsigned short	c2spd;		///< c2spd
 	MADByte			loopType;
 	MADByte			amp;		///< 8 or 16 bits
-	char			relNote;
+	char			realNote;
 	char 			name[32];	///< Sample name
 	MADByte			stereo;		///< Stereo
 	uint32_t		data;		///< Used only in memory, not in files

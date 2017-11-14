@@ -690,7 +690,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 				if (ITinfo.sampdata[i].Flag & 1)
 					curData->amp	= 16;
 				
-				curData->relNote	= 0;
+				curData->realNote	= 0;
 				for (x = 0; x < 28; x++) theMAD->fid[i].name[x] = ITinfo.sampdata[i].DOSName[x];
 				
 				curData->data 		= malloc(curData->size);

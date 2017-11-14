@@ -355,7 +355,7 @@ MADErr MADI2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 			curData->loopType	= oldcurData->loopType;
 			curData->amp		= oldcurData->amp;
 			//curData->panning	= oldcurData->panning;
-			curData->relNote	= oldcurData->relNote;
+			curData->realNote	= oldcurData->realNote;
 			
 			memcpy(curData->name, oldcurData->name, 32);
 			curData->stereo		= oldcurData->stereo;

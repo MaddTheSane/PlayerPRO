@@ -200,7 +200,7 @@ void MADCleanDriver(MADDriverRec *intDriver)
 		
 		intDriver->base.chan[i].note		= 0xFF;
 		intDriver->base.chan[i].noteOld		= 0xFF;
-		intDriver->base.chan[i].relNoteOld	= 0;
+		intDriver->base.chan[i].realNoteOld	= 0;
 		
 		intDriver->base.chan[i].period		= GetOldPeriod(40, NOFINETUNE, intDriver);
 		intDriver->base.chan[i].periodOld	= GetOldPeriod(40, NOFINETUNE, intDriver);
@@ -367,7 +367,7 @@ void ProcessEnvelope(MADChannel *ch, MADDriverRec *intDriver, bool Recurrent)
 				if (curData == NULL)
 					return;
 				
-				basePeriod = GetOldPeriod(48 + curData->relNote, ch->fineTune, intDriver);
+				basePeriod = GetOldPeriod(48 + curData->realNote, ch->fineTune, intDriver);
 			}
 			
 			v = InterpolateEnv(p, &curIns->volEnv[a], &curIns->volEnv[b]);
@@ -477,7 +477,7 @@ void ProcessPanning(MADChannel *ch, MADDriverRec *intDriver, bool Recurrent)
 				curData = intDriver->base.curMusic->sample[curIns->firstSample + ch->samp];
 				if (curData == NULL)
 					return;
-				basePeriod = GetOldPeriod(48 + curData->relNote, ch->fineTune, intDriver);
+				basePeriod = GetOldPeriod(48 + curData->realNote, ch->fineTune, intDriver);
 			}
 			
 			v = InterpolateEnv(pp, &curIns->pannEnv[aa], &curIns->pannEnv[bb]);
@@ -824,7 +824,7 @@ void ReadNote(MADChannel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 					curVoice->nextvolFade	= 32767;
 				}
 			} else {
-				intCmd.note = curVoice->noteOld - curVoice->relNoteOld;
+				intCmd.note = curVoice->noteOld - curVoice->realNoteOld;
 			}
 		} else {
 			curVoice->noteOld 		= intCmd.note;
@@ -838,8 +838,8 @@ void ReadNote(MADChannel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 					sData	*curData;
 					
 					curData					= intDriver->base.curMusic->sample[intDriver->base.curMusic->fid[ins].firstSample + curVoice->samp];
-					curVoice->noteOld		= intCmd.note + curData->relNote;
-					curVoice->relNoteOld	= curData->relNote;
+					curVoice->noteOld		= intCmd.note + curData->realNote;
+					curVoice->realNoteOld	= curData->realNote;
 				}
 			}
 		}
@@ -950,7 +950,7 @@ void ReadNote(MADChannel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 			if (samp < intDriver->base.curMusic->fid[curVoice->ins].numSamples) {
 				curData				= intDriver->base.curMusic->sample[intDriver->base.curMusic->fid[curVoice->ins].firstSample + samp];
 				
-				curVoice->note		= intCmd.note + curData->relNote;
+				curVoice->note		= intCmd.note + curData->realNote;
 				curVoice->fineTune	= curData->c2spd;
 				curVoice->KeyOn		= true;
 				

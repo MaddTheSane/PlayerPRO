@@ -807,7 +807,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					curData->vol		= MAX_VOLUME;
 					curData->loopType	= MADLoopTypeClassic;
 					curData->amp		= 8;
-					curData->relNote	= 60 - wsmp.usUnityNote;
+					curData->realNote	= 60 - wsmp.usUnityNote;
 					
 					// curData->name
 					
@@ -998,7 +998,7 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 						
 						// **
 						curData->c2spd		= GetNEUnsignedFixed(sdesc->sampleRate) >> 16;
-						curData->relNote	= 60 - GetNELong(sdesc->pitchNormal);
+						curData->realNote	= 60 - GetNELong(sdesc->pitchNormal);
 						// **
 						
 						OctavesMIDIName(GetNELong(sdesc->pitchLow) - 12, aStr);

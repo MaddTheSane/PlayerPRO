@@ -418,7 +418,7 @@ MADErr MADFG2Mad(const char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSet
 			curData->c2spd		= finetune[oldMAD->fid[i].fineTune];
 			curData->loopType	= 0;
 			curData->amp		= oldMAD->fid[i].amplitude;
-			curData->relNote	= 0;
+			curData->realNote	= 0;
 			curData->data 		= (char*)malloc(curData->size);
 			if (curData->data == NULL) {
 				int y;

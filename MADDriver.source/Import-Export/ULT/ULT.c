@@ -176,7 +176,7 @@ static MADErr ConvertULT2Mad(char* theULT, size_t MODSize, MADMusic *theMAD, MAD
 					break;
 			}
 			
-			curData->relNote = 0;
+			curData->realNote = 0;
 			for (x = 0; x < 28; x++) theMAD->fid[i].name[x] = ULTSuite.ins[i].name[x];
 			
 			curData->data = malloc(curData->size);

@@ -191,7 +191,7 @@ MADErr MADAddSoundToMAD(void			*theSound,
 	curData->vol		= 64;
 	curData->amp		= sS;
 	curData->c2spd		= rate;
-	curData->relNote	= 60 - bFreq;
+	curData->realNote	= 60 - bFreq;
 	curData->stereo		= stereo;
 	
 	strlcpy(curData->name, name, sizeof(curData->name));

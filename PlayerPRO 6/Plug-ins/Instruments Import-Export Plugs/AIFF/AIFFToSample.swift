@@ -82,7 +82,7 @@ internal func readAIFF(at url: URL) throws -> PPSampleObject {
 	sample.volume = 64
 	sample.c2spd = UInt16(realFormat.mSampleRate)
 	sample.loopType = .classic
-	sample.relativeNote = 0
+	sample.realNote = 0
 	sample.amplitude = MADByte(realFormat.mBitsPerChannel)
 	sample.isStereo = realFormat.mChannelsPerFrame == 2
 	sample.data = mutableData

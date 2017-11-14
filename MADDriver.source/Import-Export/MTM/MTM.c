@@ -178,7 +178,7 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 			curData->loopType	= 0;
 			curData->amp		= 8;
 			
-			curData->relNote	= 0;
+			curData->realNote	= 0;
 			//for (x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
 			curData->data = (char*)malloc(curData->size);

@@ -109,7 +109,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			newSample.volume = 64
 			newSample.c2spd = UInt16(realFormat.mSampleRate)
 			newSample.loopType = .classic
-			newSample.relativeNote = 0
+			newSample.realNote = 0
 			newSample.amplitude = MADByte(realFormat.mBitsPerChannel)
 			newSample.isStereo = realFormat.mChannelsPerFrame == 2
 			newSample.data = mutableData

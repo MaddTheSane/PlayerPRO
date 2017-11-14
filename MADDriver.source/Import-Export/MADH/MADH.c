@@ -392,7 +392,7 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 			curData->loopType	= oldcurData->loopType;
 			curData->amp		= oldcurData->amp;
 			//	curData->panning	= oldcurData->panning;
-			curData->relNote	= oldcurData->relNote;
+			curData->realNote	= oldcurData->realNote;
 			
 			curData->data 		= malloc(curData->size);
 			if (curData->data == NULL) {

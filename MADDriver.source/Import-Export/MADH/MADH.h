@@ -70,7 +70,7 @@ typedef struct oldsData {
 	MADByte			loopType;
 	MADByte			amp;		///< 8 or 16 bits
 	MADByte			panning;
-	char			relNote;
+	char			realNote;
 	char			name[32];	///< Sample name
 	uint32_t		data;		///< Used only in memory, not in files
 } oldsData;

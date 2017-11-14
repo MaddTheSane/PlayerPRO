@@ -45,7 +45,7 @@ sData *MADCreateSample(MADMusic *MDriver, short ins, short sample)
 		curData->loopType	= 0;
 		curData->amp		= 8;
 		
-		curData->relNote	= 0;
+		curData->realNote	= 0;
 		//curData->name
 		curData->data		= NULL;
 		

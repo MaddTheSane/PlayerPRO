@@ -76,7 +76,7 @@ NSDictionary *EncodeSampleObject(PPSampleObject *sampObj)
 	toRet[C2SPDKEY] = @(sampObj.c2spd);
 	toRet[LOOPTYPEKEY] = @(sampObj.loopType);
 	toRet[AMPLITUDEKEY] = @(sampObj.amplitude);
-	toRet[RELATIVENOTEKEY] = @(sampObj.relativeNote);
+	toRet[RELATIVENOTEKEY] = @(sampObj.realNote);
 	toRet[NAMEKEY] = sampObj.name;
 	toRet[STEREOKEY] = @(sampObj.stereo);
 	toRet[DATAKEY] = sampObj.data;
@@ -155,7 +155,7 @@ PPSampleObject *newSampleFromDictionary(NSDictionary *sampleDict)
 	sampObj.loopType = [(NSNumber*)sampleDict[LOOPTYPEKEY] unsignedCharValue];
 	sampObj.volume = [(NSNumber*)sampleDict[VOLUMEKEY] unsignedCharValue];
 	sampObj.c2spd = [(NSNumber*)sampleDict[C2SPDKEY] unsignedShortValue];
-	sampObj.relativeNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
+	sampObj.realNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
 	sampObj.stereo = [(NSNumber*)sampleDict[STEREOKEY] boolValue];
 
 	return sampObj;
@@ -401,7 +401,7 @@ NSDictionary *sampleToDictionary(sData *sampObj)
 		toRet[C2SPDKEY] = @(sampObj->c2spd);
 		toRet[LOOPTYPEKEY] = @(sampObj->loopType);
 		toRet[AMPLITUDEKEY] = @(sampObj->amp);
-		toRet[RELATIVENOTEKEY] = @(sampObj->relNote);
+		toRet[RELATIVENOTEKEY] = @(sampObj->realNote);
 		toRet[NAMEKEY] = [NSString stringWithCString:sampObj->name encoding:NSMacOSRomanStringEncoding] ?: [NSString string];
 		toRet[STEREOKEY] = @(sampObj->stereo);
 		toRet[DATAKEY] = sampObj->size != 0 ? [NSData dataWithBytes:sampObj->data length:sampObj->size] : [NSData data];
@@ -449,7 +449,7 @@ sData *dictionaryToSample(NSDictionary *sampleDict)
 		toRet->loopType = [(NSNumber*)sampleDict[LOOPTYPEKEY] unsignedCharValue];
 		toRet->vol = [(NSNumber*)sampleDict[VOLUMEKEY] unsignedCharValue];
 		toRet->c2spd = [(NSNumber*)sampleDict[C2SPDKEY] unsignedShortValue];
-		toRet->relNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
+		toRet->realNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
 		toRet->stereo = [(NSNumber*)sampleDict[STEREOKEY] boolValue];
 		return toRet;
 	}
