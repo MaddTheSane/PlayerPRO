@@ -169,8 +169,8 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 			var anewPcmd = PPKPcmd(tracks: self.tracks, startTrack: self.trackStart, rows: length + 1, startPosition: positionStart)
 			
 			for i in 0 ..< (tracks * length) {
-				let oldCmd = getCommand(row: i % length, track: i / length)
-				anewPcmd.replaceCommand(row: i % length, track: i / length, with: oldCmd)
+				let oldCmd = getCommand(atRow: i % length, track: i / length)
+				anewPcmd.replaceCommand(atRow: i % length, track: i / length, with: oldCmd)
 			}
 			
 			self = anewPcmd
@@ -189,15 +189,15 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 			var anewPcmd = PPKPcmd(tracks: self.tracks + 1, startTrack: self.trackStart, rows: length, startPosition: positionStart)
 			
 			for i in 0 ..< (tracks * length) {
-				let oldCmd = getCommand(row: i % length, track: i / length)
-				anewPcmd.replaceCommand(row: i % length, track: i / length, with: oldCmd)
+				let oldCmd = getCommand(atRow: i % length, track: i / length)
+				anewPcmd.replaceCommand(atRow: i % length, track: i / length, with: oldCmd)
 			}
 			
 			self = anewPcmd
 		#endif
 	}
 	
-	public mutating func modifyCommand(row row1: Int16, track track1: Int16, commandBlock: (inout Cmd)-> ()) {
+	public mutating func modifyCommand(atRow row1: Int16, track track1: Int16, commandBlock: (inout Cmd)-> ()) {
 		var track = track1
 		var row = row1
 		if row1 < 0 {
@@ -219,7 +219,7 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 		myCmd.append(command)
 	}
 	
-	public mutating func replaceCommand(row row1: Int16, track track1: Int16, with command: Cmd) {
+	public mutating func replaceCommand(atRow row1: Int16, track track1: Int16, with command: Cmd) {
 		var track = track1
 		var row = row1
 		if row < 0 {
@@ -237,7 +237,7 @@ public struct PPKPcmd: MutableCollection, CommandIterator {
 		myCmd[Int((length * track) + row)] = command
 	}
 	
-	public func getCommand(row row1: Int16, track track1: Int16) -> Cmd {
+	public func getCommand(atRow row1: Int16, track track1: Int16) -> Cmd {
 		var track = track1
 		var row = row1
 		if row1 < 0 {
