@@ -27,7 +27,7 @@ class NotesConversion: XCTestCase {
 	func getNotesWithLetters(useLetters: Bool) -> [String] {
 		var noteNames = [String]()
 		for i in Int16(0)..<96 {
-			if let aNote = octaveName(from: i, letters: useLetters) {
+			if let aNote = octaveName(fromNote: i, options: useLetters ? [] : .solfege) {
 				noteNames.append(aNote)
 			}
 		}
@@ -96,7 +96,7 @@ class NotesConversion: XCTestCase {
 	func testInvalidStringsFromNotes() {
 		let invalidNums: [Int16] = [-1, 96, 100, 0xFF, 0xFE]
 		for i in invalidNums {
-			if let aStr = octaveName(from: i) {
+			if let aStr = octaveName(fromNote: i) {
 				XCTFail("Accidentally got a number back, \(i) got converted to \(aStr)")
 			}
 		}

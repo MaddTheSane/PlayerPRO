@@ -124,22 +124,38 @@ public func note(from myTT: String) -> Int16? {
 	return Oct
 }
 
-public func octaveName(from octNote: UInt8, letters isUseLetters: Bool = true) -> String? {
-	return octaveName(from: Int16(octNote), letters: isUseLetters)
+/// Converts an octave note from a numerical value to a human-readable string.
+/// - parameter octNote: The note to convert.
+/// - parameter options: A set of options to determine how the notes should be formatted.
+/// - returns: A string denoting the note, such as *"D#4"*, or `nil` if unsuccessful.
+public func octaveName(fromNote octNote: UInt8, options: PPSampleNoteOptions = []) -> String? {
+	return octaveName(fromNote: Int16(octNote), options: options)
 }
 
-public func octaveName(from octNote: Int16, letters isUseLetters: Bool = true) -> String? {
+/// Converts an octave note from a numerical value to a human-readable string.
+/// - parameter octNote: The note to convert.
+/// - parameter options: A set of options to determine how the notes should be formatted.
+/// - returns: A string denoting the note, such as *"D#4"*, or `nil` if unsuccessful.
+public func octaveName(fromNote octNote: Int16, options: PPSampleNoteOptions = []) -> String? {
 	if octNote > 95 || octNote < 0 {
 		return nil
 	}
 	
 	let NNames: [String]
+	let poundSign: Character
 	
-	if isUseLetters {
-		NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
+	if options.contains(.useSharpSymbol) {
+		poundSign = "♯"
 	} else {
-		NNames = ["Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
+		poundSign = "#"
 	}
+	
+	if options.contains(.solfege) {
+		NNames = ["Do", "Do\(poundSign)", "Ré", "Ré\(poundSign)", "Mi", "Fa", "Fa\(poundSign)", "Sol", "Sol\(poundSign)", "La", "La\(poundSign)", "Ti"]
+	} else {
+		NNames = ["C ", "C\(poundSign)", "D ", "D\(poundSign)", "E ", "F ", "F\(poundSign)", "G ", "G\(poundSign)", "A ", "A\(poundSign)", "B "]
+	}
+	
 	return "\(NNames[Int(octNote % 12)])\(octNote / 12)"
 }
 
@@ -408,12 +424,31 @@ extension PPSampleObject {
 		ctxRef.strokePath()
 	}
 	
-	@objc(octaveNameFromNote:) final public class func octaveName(from octNote: Int16) -> String {
-		return PlayerPROKit.octaveName(from: octNote) ?? "---"
+	/// Converts an octave note from a numerical value to a human-readable string.
+	/// - parameter octNote: The note to convert.
+	/// - returns: A string denoting the note, such as `"D#4"`, or `"---"` if unsuccessful.
+	@objc(octaveNameFromNote:)
+	final public class func octaveName(fromNote octNote: Int16) -> String {
+		return PlayerPROKit.octaveName(fromNote: octNote) ?? "---"
 	}
 
-	@objc(octaveNameFromNote:usingSingularLetter:) final public class func octaveName(from octNote: Int16, usingSingularLetter: Bool) -> String {
-		return PlayerPROKit.octaveName(from: octNote, letters: usingSingularLetter) ?? "---"
+	/// Converts an octave note from a numerical value to a human-readable string.
+	/// - parameter octNote: The note to convert.
+	/// - parameter usingSingularLetter: If `true`/`YES`, the note will be generated with the alphabetical
+	/// value of the note, otherwise they will be solfège of the *fixed do* scale.
+	/// - returns: A string denoting the note, such as `"D#4"`, or `"---"` if unsuccessful.
+	@objc(octaveNameFromNote:usingSingularLetter:) @available(*, deprecated)
+	final public class func octaveName(fromNote octNote: Int16, usingSingularLetter: Bool) -> String {
+		return PlayerPROKit.octaveName(fromNote: octNote, options: usingSingularLetter ? [] : .solfege) ?? "---"
+	}
+	
+	/// Converts an octave note from a numerical value to a human-readable string.
+	/// - parameter octNote: The note to convert.
+	/// - parameter options: A set of options to determine how the notes should be formatted.
+	/// - returns: A string denoting the note, such as `"D#4"`, or `"---"` if unsuccessful.
+	@objc(octaveNameFromNote:options:)
+	final public class func octaveName(fromNote octNote: Int16, options: PPSampleNoteOptions) -> String {
+		return PlayerPROKit.octaveName(fromNote: octNote, options: options) ?? "---"
 	}
 
 	@objc(noteFromString:) final public class func note(from myTT: String) -> Int16 {
