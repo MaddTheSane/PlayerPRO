@@ -16,7 +16,8 @@ __BEGIN_DECLS
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark PPLibrary info keys
-typedef NSString *PPLibraryInfoKeys NS_STRING_ENUM;
+//! PPLibrary dictionary info keys.
+typedef NSString *PPLibraryInfoKeys NS_TYPED_ENUM;
 
 /// The total number of patterns. Type is <code>NSNumber</code>.
 extern PPLibraryInfoKeys const kPPTotalPatterns;
