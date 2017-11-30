@@ -84,6 +84,16 @@ class NotesConversion: XCTestCase {
 		}
 	}
 	
+	func testRoundRobbinNotes() {
+		let note = getNotesWithLetters(useLetters: true)
+		let hi = note.map { (aStr) -> Int16 in
+			return PlayerPROKit.note(from: String(aStr))!
+		}
+		if hi != Array(Int16(0)..<96) {
+			XCTFail()
+		}
+	}
+	
 	func testInvalidNotesFromString() {
 		let invalidStrs = ["", "  ", "c", "C", "---", "B75", "adda5", "♯2", "b9"]
 		for aStr in invalidStrs {

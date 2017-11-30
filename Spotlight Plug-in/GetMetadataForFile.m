@@ -10,6 +10,9 @@
 static NSString *utf8OrMacRoman(const char *text) NS_RETURNS_RETAINED;
 NSString *utf8OrMacRoman(const char *text)
 {
+	if (!text) {
+		return nil;
+	}
 	if (memcmp(text, "\xEF\xBB\xBF", 3) == 0) {
 		NSString *uniStr = [[NSString alloc] initWithUTF8String:text];
 		if (uniStr) {
