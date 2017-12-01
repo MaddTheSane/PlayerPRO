@@ -156,7 +156,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	@objc public let trackerLibraries: [PlugInObject]
 	@objc internal let theLibrary: UnsafeMutablePointer<MADLibrary>
 	/// Comparable to `MADInfoRec`, but more Swift-friendly.
-	public struct MusicFileInfo: CustomStringConvertible {
+	public struct MusicFileInfo: CustomStringConvertible, CustomDebugStringConvertible {
 		///The total amount of patterns
 		public var totalPatterns: Int
 		
@@ -198,19 +198,34 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 			formatDescription = String(cString: bArray, encoding: String.Encoding.macOSRoman) ?? ""
 		}
 		
-		private init(infoDict: [PPLibraryInfoKeys: Any]) {
-			totalPatterns = infoDict[.totalPatterns] as! Int
-			partitionLength = infoDict[.partitionLength] as! Int
-			fileSize = infoDict[.fileSize] as! Int
-			totalTracks = infoDict[.totalTracks] as! Int
-			totalInstruments = infoDict[.totalInstruments] as! Int
-			internalFileName = infoDict[.internalFileName] as! String
-			formatDescription = infoDict[.formatDescription] as! String
-			signature = infoDict[.signature] as! String
+		public init?(infoDict: [PPLibraryInfoKeys: Any]) {
+			if let tp = infoDict[.totalPatterns] as? Int,
+				let pl = infoDict[.partitionLength] as? Int,
+				let fs = infoDict[.fileSize] as? Int,
+				let tt = infoDict[.totalTracks] as? Int,
+				let ti = infoDict[.totalInstruments] as? Int,
+				let ifn = infoDict[.internalFileName] as? String,
+				let fd = infoDict[.formatDescription] as? String,
+				let sig = infoDict[.signature] as? String {
+				totalPatterns = tp
+				partitionLength = pl
+				fileSize = fs
+				totalTracks = tt
+				totalInstruments = ti
+				internalFileName = ifn
+				formatDescription = fd
+				signature = sig
+			} else {
+				return nil
+			}
 		}
 		
 		public var description: String {
-			return "patterns: \(totalPatterns), partition length: \(partitionLength), size: \(fileSize), tracks: \(totalTracks), instruments \(totalInstruments), title: '\(internalFileName)', format description: \(formatDescription), signature: '\(signature)'"
+			return "patterns: \(totalPatterns), partition length: \(partitionLength), size: \(fileSize), tracks: \(totalTracks), instruments \(totalInstruments), title: '\(internalFileName)', format description: '\(formatDescription)', signature: '\(signature)'"
+		}
+		
+		public var debugDescription: String {
+			return "patterns: \(totalPatterns), partition length: \(partitionLength), size: \(fileSize), tracks: \(totalTracks), instruments \(totalInstruments), title: '\(internalFileName)', format description: '\(formatDescription)', signature: '\(signature)'"
 		}
 	}
 
@@ -366,9 +381,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		} catch let anErr as MADErr {
 			return anErr
 		} catch let anErr as NSError {
-			if anErr.domain == PPMADErrorDomain,
-				let exact = Int16(exactly: anErr.code),
-				let errVal = MADErr(rawValue: exact) {
+			if let errVal = MADErr(error: anErr) {
 				return errVal
 			}
 		}
@@ -392,9 +405,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		} catch let anErr as MADErr {
 			return anErr
 		} catch let anErr as NSError {
-			if anErr.domain == PPMADErrorDomain,
-				let exact = Int16(exactly: anErr.code),
-				let errVal = MADErr(rawValue: exact) {
+			if let errVal = MADErr(error: anErr) {
 				return errVal
 			}
 		}
@@ -462,9 +473,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		} catch let anErr as MADErr {
 			return anErr
 		} catch let anErr as NSError {
-			if anErr.domain == PPMADErrorDomain,
-				let exact = Int16(exactly: anErr.code),
-				let errVal = MADErr(rawValue: exact) {
+			if let errVal = MADErr(error: anErr) {
 				return errVal
 			}
 		}
@@ -499,9 +508,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		} catch let anErr as MADErr {
 			return anErr
 		} catch let anErr as NSError {
-			if anErr.domain == PPMADErrorDomain,
-				let exact = Int16(exactly: anErr.code),
-				let errVal = MADErr(rawValue: exact) {
+			if let errVal = MADErr(error: anErr) {
 				return errVal
 			}
 		}
@@ -609,9 +616,7 @@ extension PPLibrary {
 		} catch let anErr as MADErr {
 			return anErr
 		} catch let anErr as NSError {
-			if anErr.domain == PPMADErrorDomain,
-				let exact = Int16(exactly: anErr.code),
-				let errVal = MADErr(rawValue: exact) {
+			if let errVal = MADErr(error: anErr) {
 				return errVal
 			}
 		}
@@ -637,9 +642,7 @@ extension PPLibrary {
 		} catch let anErr as MADErr {
 			return anErr
 		} catch let anErr as NSError {
-			if anErr.domain == PPMADErrorDomain,
-				let exact = Int16(exactly: anErr.code),
-				let errVal = MADErr(rawValue: exact) {
+			if let errVal = MADErr(error: anErr) {
 				return errVal
 			}
 		}
@@ -665,9 +668,7 @@ extension PPLibrary {
 		} catch let anErr as MADErr {
 			return anErr
 		} catch let anErr as NSError {
-			if anErr.domain == PPMADErrorDomain,
-				let exact = Int16(exactly: anErr.code),
-				let errVal = MADErr(rawValue: exact) {
+			if let errVal = MADErr(error: anErr) {
 				return errVal
 			}
 		}

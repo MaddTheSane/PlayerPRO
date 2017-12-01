@@ -87,7 +87,7 @@ class NotesConversion: XCTestCase {
 	func testRoundRobbinNotes() {
 		let note = getNotesWithLetters(useLetters: true)
 		let hi = note.map { (aStr) -> Int16 in
-			return PlayerPROKit.note(from: String(aStr))!
+			return PlayerPROKit.note(from: aStr)!
 		}
 		if hi != Array(Int16(0)..<96) {
 			XCTFail()
