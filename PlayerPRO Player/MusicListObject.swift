@@ -268,7 +268,7 @@ extension MusicListObject: Codable {
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		#if os(OSX)
-			if let bookmark = try? musicURL.bookmarkData(includingResourceValuesForKeys: [.volumeURLKey, .volumeUUIDStringKey], relativeTo: homeURL) {
+			if let bookmark = try? musicURL.bookmarkData(includingResourceValuesForKeys: [.volumeURLKey, .volumeUUIDStringKey, .volumeURLForRemountingKey], relativeTo: homeURL) {
 				try container.encode(bookmark, forKey: .bookmarkData)
 			}
 		#endif
@@ -283,9 +283,9 @@ extension MusicListObject: Codable {
 		
 		#if os(OSX)
 		if values.contains(.bookmarkData) {
-			let bookDat = try values.decode(Data.self, forKey: .bookmarkData)
 			var unusedStale = false
-			if let url2 = try? URL(resolvingBookmarkData: bookDat, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &unusedStale) {
+			if let bookDat = try? values.decode(Data.self, forKey: .bookmarkData),
+				let url2 = try? URL(resolvingBookmarkData: bookDat, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &unusedStale) {
 				url = url2
 			}
 		}

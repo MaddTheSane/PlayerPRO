@@ -452,7 +452,7 @@ private let kPlayerList = "Player List"
 				} else {
 					guard let invalidAny = bookmarkData?["lostMusicCount"] as? UInt,
 						let selectedAny = bookmarkData?["SelectedMusic"] as? Int,
-						let pathsAny = bookmarkData?["MusicPaths"] as? NSArray as? [String] else {
+						let pathsAny = bookmarkData?["MusicPaths"] as? NSArray as? [URL] else {
 							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Invalid data returned from helper", comment: "Invalid data returned from helper")])
 							theHandle(nil, lolwut)
 							return
@@ -460,8 +460,7 @@ private let kPlayerList = "Player List"
 					// Have all the new MusicListObjects use the same date
 					let currentDate = modDate ?? Date()
 					let pathsURL = pathsAny.map({ (aPath) -> MusicListObject in
-						let tmpURL = URL(fileURLWithPath: aPath)
-						let tmpObj = MusicListObject(url: tmpURL, date: currentDate)
+						let tmpObj = MusicListObject(url: aPath, date: currentDate)
 						return tmpObj
 					})
 					let newList = MusicList()

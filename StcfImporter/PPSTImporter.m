@@ -114,7 +114,7 @@ static NSString *pascalStringToNSString(StringPtr aStr, CFStringEncoding encodin
 	DisposeHandle(locHand);
 	locHand = NULL;
 	
-	NSMutableArray<NSString*> *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
+	NSMutableArray<NSURL*> *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
 	CFStringEncoding MacCompatible = CFStringGetMostCompatibleMacStringEncoding(CFStringGetSystemEncoding());
 	
 	for (int i = 0; i < theNo * 2; i += 2) {
@@ -146,7 +146,7 @@ static NSString *pascalStringToNSString(StringPtr aStr, CFStringEncoding encodin
 			fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)together, kCFURLHFSPathStyle, false));
 		}
 		if ([fullPath checkResourceIsReachableAndReturnError:NULL]) {
-			[newArray addObject:[fullPath path]];
+			[newArray addObject:fullPath];
 		} else {
 			if (location != -1 && location == (i / 2)) {
 				location = -1;
