@@ -7,6 +7,16 @@
 
 import Foundation
 
+private let PPMusicBase: URL = {
+	var toRet = try! FileManager.default.url(for: .musicDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+	toRet.appendPathComponent("PlayerPRO", isDirectory: true)
+	return toRet
+}()
+
+private let PPMusicLib: URL = {
+	return PPMusicBase.appendingPathComponent("PlayerPRO Library.pplib")
+}()
+
 class MusicListLibrary: NSObject {
 	var allMusicObjects: [MusicListObject]
 	var allLists: [MusicList]
@@ -17,6 +27,22 @@ class MusicListLibrary: NSObject {
 		super.init()
 	}
 	
+	class func load() throws -> MusicListLibrary {
+		let data = try Data(contentsOf: PPMusicLib)
+		
+		return try JSONDecoder().decode(MusicListLibrary.self, from: data)
+	}
+	
+	func save() throws {
+		if (try? PPMusicBase.checkResourceIsReachable()) ?? false {
+			try FileManager.default.createDirectory(at: PPMusicBase, withIntermediateDirectories: true, attributes: nil)
+		}
+		let dat = try JSONEncoder().encode(self)
+		try dat.write(to: PPMusicLib)
+	}
+	
+	
+	// MARK: - codable
 	required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		allMusicObjects = try values.decode(Array<MusicListObject>.self, forKey: .allMusicObjects)
@@ -26,7 +52,6 @@ class MusicListLibrary: NSObject {
 			list.resolveObjects(against: self)
 		}
 	}
-
 }
 
 extension MusicListLibrary: Codable {
