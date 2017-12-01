@@ -46,19 +46,15 @@ private func cocoaDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: Unsafe
 @NSApplicationMain
 class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource {
 	@IBOutlet var window: NSWindow! = nil
-	@IBOutlet var loopButton: NSButton!
 	@IBOutlet var playButton: NSButton!
-	@IBOutlet var stopButton: NSButton!
 	@IBOutlet var songCurTime: NSTextField!
 	@IBOutlet var songTotalTime: NSTextField!
 	@IBOutlet var songPos: NSSlider!
-	@IBOutlet var pauseButton: NSButton!
 	
 	@IBOutlet var aboutPlugInMenu: NSMenu!
 	
 	@IBOutlet var musicExportMenu: NSMenu!
 	
-	@IBOutlet var infoDrawer: NSDrawer!
 	@IBOutlet var fileName: NSTextField!
 	@IBOutlet var internalName: NSTextField!
 	@IBOutlet var fileSize: NSTextField!
@@ -70,11 +66,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	@IBOutlet var tableView: NSTableView!
 	@IBOutlet var musicListController: NSArrayController!
+	@IBOutlet weak var playlistsController: NSTreeController!
 	@IBOutlet var exportWindow: NSWindow!
 	@IBOutlet var pauseDockMenuItem: NSMenuItem!
 	@objc dynamic var music: PPMusicObject?
 	
-	@IBOutlet var toolsPanel: NSPanel!
 	var timeChecker: Timer!
 	var madDriver: PPDriver!
 	let madLib: PPLibrary = {
@@ -84,10 +80,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	@objc dynamic var paused: Bool = true {
 		didSet {
 			if paused {
-				pauseButton.state = .on
 				pauseDockMenuItem.state = .off
 			} else {
-				pauseButton.state = .off
 				pauseDockMenuItem.state = .on
 			}
 		}
@@ -1031,7 +1025,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	@IBAction func showTools(_ sender: AnyObject?) {
-		toolsPanel.makeKeyAndOrderFront(sender)
+		
 	}
 	
 	// MARK: - Exporting functions
@@ -1447,7 +1441,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	@IBAction func toggleInfo(_ sender: AnyObject?) {
-		infoDrawer.toggle(sender)
 	}
 	
 	@IBAction func sortMusicList(_ sender: AnyObject?) {
@@ -1487,36 +1480,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			})
 		} else {
 			NSSound.beep()
-		}
-	}
-	
-	override func validateToolbarItem(_ theItem: NSToolbarItem) -> Bool {
-		let theTag = MusicToolbarTypes(rawValue: theItem.tag) ?? .Unknown
-		switch theTag {
-		case .Sort, .AddMusic:
-			return true
-			
-		case .FileInfo:
-			if infoDrawer.state == Int(NSDrawer.State.openingState.rawValue) || infoDrawer.state == Int(NSDrawer.State.openState.rawValue) {
-				return true
-			}
-			fallthrough
-		case .PlayMusic:
-			if tableView.selectedRowIndexes.count == 1 {
-				return true
-			} else {
-				return false
-			}
-			
-		case .RemoveMusic:
-			if tableView.selectedRowIndexes.count > 0 {
-				return true
-			} else {
-				return false
-			}
-			
-		default:
-			return false
 		}
 	}
 	
