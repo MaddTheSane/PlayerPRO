@@ -783,7 +783,7 @@ Gw
                 </constraints>
             </view>
         </window>
-        <window title="PlayerPRO Player" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="OBw-Gl-YYB">
+        <window title="PlayerPRO Player" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="PPMainWindow" animationBehavior="default" id="OBw-Gl-YYB">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="131" y="158" width="714" height="333"/>
@@ -889,18 +889,18 @@ Gw
                             <constraint firstItem="CJa-v1-73Z" firstAttribute="centerY" secondItem="OtW-Au-kvr" secondAttribute="centerY" id="tKc-ou-zvX"/>
                         </constraints>
                     </customView>
-                    <splitView arrangesAllSubviews="NO" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahg-IJ-M5p">
+                    <splitView arrangesAllSubviews="NO" autosaveName="PlaylistsMainSplit" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahg-IJ-M5p">
                         <rect key="frame" x="-1" y="-1" width="716" height="295"/>
                         <subviews>
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="cgO-c8-3HY">
-                                <rect key="frame" x="0.0" y="0.0" width="259" height="295"/>
+                                <rect key="frame" x="0.0" y="0.0" width="262" height="295"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" id="vVk-18-N5G">
-                                    <rect key="frame" x="1" y="1" width="257" height="293"/>
+                                    <rect key="frame" x="1" y="1" width="260" height="293"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="e9F-ie-e6f" id="rj8-42-w4l">
-                                            <rect key="frame" x="0.0" y="0.0" width="257" height="293"/>
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" autosaveName="PlaylistsOutline" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" autosaveExpandedItems="YES" outlineTableColumn="e9F-ie-e6f" id="rj8-42-w4l">
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="293"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -957,14 +957,14 @@ Gw
                                 </scroller>
                             </scrollView>
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="732">
-                                <rect key="frame" x="268" y="0.0" width="448" height="295"/>
+                                <rect key="frame" x="263" y="0.0" width="453" height="295"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" copiesOnScroll="NO" id="IzQ-pA-1c2">
-                                    <rect key="frame" x="1" y="0.0" width="446" height="294"/>
+                                    <rect key="frame" x="1" y="0.0" width="451" height="294"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="reverseSequential" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" autosaveName="MusicListColumnInfo" headerView="F6Y-TG-a0s" id="733">
-                                            <rect key="frame" x="0.0" y="0.0" width="446" height="271"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="451" height="271"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -981,7 +981,7 @@ Gw
                                                         <binding destination="536" name="value" keyPath="arrangedObjects.fileIcon" id="46z-do-JzH"/>
                                                     </connections>
                                                 </tableColumn>
-                                                <tableColumn identifier="MusicListNameColumn" editable="NO" width="320" minWidth="10" maxWidth="3.4028234663852886e+38" id="NKI-PH-Tz3">
+                                                <tableColumn identifier="MusicListNameColumn" editable="NO" width="325" minWidth="10" maxWidth="3.4028234663852886e+38" id="NKI-PH-Tz3">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1037,7 +1037,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" id="F6Y-TG-a0s">
-                                    <rect key="frame" x="0.0" y="0.0" width="446" height="23"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="451" height="23"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -1058,7 +1058,7 @@ Gw
                     <constraint firstAttribute="trailing" secondItem="ahg-IJ-M5p" secondAttribute="trailing" constant="-1" id="suM-19-2dJ"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="890" y="1.5"/>
+            <point key="canvasLocation" x="891" y="23"/>
         </window>
     </objects>
     <resources>
