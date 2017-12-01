@@ -310,6 +310,7 @@
 		555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		555DA4CF1FD1F33900133544 /* MusicListLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555DA4CE1FD1F33900133544 /* MusicListLibrary.swift */; };
 		555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		555F5C611993327D0056AF01 /* OpenPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555F5C601993327D0056AF01 /* OpenPanelViewController.swift */; };
@@ -2580,6 +2581,7 @@
 		555A283619AFE4F000FB4D5B /* MIDIImporterController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MIDIImporterController.xib; sourceTree = "<group>"; };
 		555C0F8C19829663003B9347 /* CurrentlyPlayingIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentlyPlayingIndex.swift; sourceTree = "<group>"; };
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		555DA4CE1FD1F33900133544 /* MusicListLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListLibrary.swift; sourceTree = "<group>"; };
 		555E85371A041E580018FDBC /* ClassicSoundInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ClassicSoundInfo.plist; sourceTree = "<group>"; };
 		555E85451A041E810018FDBC /* Classic Sound.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Classic Sound.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		555F5C601993327D0056AF01 /* OpenPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenPanelViewController.swift; sourceTree = "<group>"; };
@@ -4636,6 +4638,7 @@
 			children = (
 				55F4C3E119763FDB000997BE /* PlayerPRO Player-Bridging-Header.h */,
 				55DCF07F1999879C00A1B9A1 /* MusicList.swift */,
+				555DA4CE1FD1F33900133544 /* MusicListLibrary.swift */,
 				55F4C3E319763FDD000997BE /* MusicListObject.swift */,
 				552788021981C95100708906 /* MusicListDragClass.swift */,
 				555C0F8C19829663003B9347 /* CurrentlyPlayingIndex.swift */,
@@ -7728,6 +7731,7 @@
 				55588A97199951B300C3D4EE /* PlugInInfoController.swift in Sources */,
 				5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */,
 				557191D118A40D9900F6DAD4 /* MidiHardwarePreferenceController.m in Sources */,
+				555DA4CF1FD1F33900133544 /* MusicListLibrary.swift in Sources */,
 				55E99F961A5B39560015D878 /* MiscPreferenceController.swift in Sources */,
 				5547DA5719A5690E0014A620 /* Preferences.swift in Sources */,
 				55D64A8C1AA805020017158E /* MusicListPreferenceController.swift in Sources */,

@@ -217,6 +217,10 @@ private let kPlayerList = "Player List"
 	}
 	#endif
 	
+	func resolveObjects(against: MusicListLibrary) {
+		
+	}
+	
 	// MARK: - NSCoding
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -307,7 +311,9 @@ private let kPlayerList = "Player List"
 		aCoder.encode(name, forKey: kMusicListName4)
 	}
 	
-	static let supportsSecureCoding = true
+	static var supportsSecureCoding: Bool {
+		return true
+	}
 	
 	//MARK: -
 	@objc(URLAtIndex:) func url(at index: Int) -> URL {

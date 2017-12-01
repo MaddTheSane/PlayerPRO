@@ -14,6 +14,7 @@ import Foundation
 private let kMusicListURLKey		= "URLKey"
 private let kMusicListURLBookmark	= "Bookmark"
 private let kMusicListDateAddedKey	= "DateAdded"
+private let MusicListUUIDKey		= "UUID"
 
 #if os(OSX)
 internal var homeURL: URL {
@@ -64,6 +65,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 @objc(PPMusicListObject) final class MusicListObject: NSObject, NSCopying, NSSecureCoding {
 	let musicURL: URL
 	let addedDate: Date
+	let uuid: UUID
 
 	#if os(OSX)
 	@objc private(set) lazy var fileIcon: NSImage = {
@@ -111,9 +113,10 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 	}()
 	
-	init(url: URL, date: Date = Date()) {
+	init(url: URL, date: Date = Date(), uuid aUUID: UUID = UUID()) {
 		musicURL = url
 		addedDate = date
+		uuid = aUUID
 		super.init()
 	}
 	
@@ -220,7 +223,9 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}
 
 	// MARK: NSSecureCoding protocol
-	static let supportsSecureCoding = true
+	static var supportsSecureCoding: Bool {
+		return true
+	}
 	
 	func encode(with aCoder: NSCoder) {
 		#if os(OSX)
@@ -230,6 +235,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		#endif
 		aCoder.encode(musicURL, forKey: kMusicListURLKey)
 		aCoder.encode(addedDate, forKey: kMusicListDateAddedKey)
+		aCoder.encode(uuid, forKey: MusicListUUIDKey)
 	}
 	
 	convenience required init?(coder aDecoder: NSCoder) {
@@ -252,8 +258,9 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 			let aaddedDate = aDecoder.decodeObject(forKey: kMusicListDateAddedKey) as? Date else {
 				return nil
 		}
+		let aUUID = (aDecoder.decodeObject(forKey: MusicListUUIDKey) as? UUID) ?? UUID()
 		
-		self.init(url: aURL, date: aaddedDate)
+		self.init(url: aURL, date: aaddedDate, uuid: aUUID)
 	}
 }
 
@@ -261,6 +268,7 @@ extension MusicListObject: Codable {
 	enum CodingKeys: String, CodingKey {
 		case musicURL = "url"
 		case dateAdded = "date_added"
+		case uuid = "uuid"
 		
 		case bookmarkData = "bookmark_data"
 	}
@@ -274,6 +282,7 @@ extension MusicListObject: Codable {
 		#endif
 		try container.encode(musicURL, forKey: .musicURL)
 		try container.encode(addedDate, forKey: .dateAdded)
+		try container.encode(uuid, forKey: .uuid)
 	}
 	
 	convenience init(from decoder: Decoder) throws {
@@ -284,7 +293,7 @@ extension MusicListObject: Codable {
 		#if os(OSX)
 		if values.contains(.bookmarkData) {
 			var unusedStale = false
-			if let bookDat = try? values.decode(Data.self, forKey: .bookmarkData),
+			if let bookDat = try values.decodeIfPresent(Data.self, forKey: .bookmarkData),
 				let url2 = try? URL(resolvingBookmarkData: bookDat, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &unusedStale) {
 				url = url2
 			}
@@ -294,6 +303,10 @@ extension MusicListObject: Codable {
 		if url == nil {
 			url = try values.decode(URL.self, forKey: .musicURL)
 		}
-		self.init(url: url!, date: dateAdded)
+		if let aUUID = try values.decodeIfPresent(UUID.self, forKey: .uuid) {
+			self.init(url: url!, date: dateAdded, uuid: aUUID)
+		} else {
+			self.init(url: url!, date: dateAdded)
+		}
 	}
 }
