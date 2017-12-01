@@ -257,7 +257,7 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 			curData->loopType	= 0;
 			curData->amp		= 8;
 			
-			curData->relNote	= 0;
+			curData->realNote	= 0;
 			
 			curData->data 		= (char*)malloc(curData->size);
 			if (curData->data == NULL) return MADNeedMemory;

@@ -556,7 +556,7 @@ static MADErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init, struc
 			READXMFILE(&wh.finetune,	1);
 			READXMFILE(&wh.type,		1);
 			READXMFILE(&wh.panning,		1);
-			READXMFILE(&wh.relnote,		1);
+			READXMFILE(&wh.realNote,		1);
 			READXMFILE(&wh.reserved,	1);
 			READXMFILE(&wh.samplename,	22);
 			
@@ -601,7 +601,7 @@ static MADErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init, struc
 				}
 				
 				//	curData->panning	= wh.panning;
-				curData->relNote	= wh.relnote;
+				curData->realNote	= wh.realNote;
 				for (x = 0; x < 22; x++)
 					curData->name[x] = wh.samplename[x];
 			}
@@ -1102,7 +1102,7 @@ static char* ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndS
 				}
 				
 				wh.panning = 128;	//curData->panning;
-				wh.relnote = curData->relNote + modifc2spd;
+				wh.realNote = curData->realNote + modifc2spd;
 				strncpy(wh.samplename, curData->name, sizeof(wh.samplename));
 				
 				theXMReadCopy = xmData->theXMRead;
@@ -1117,7 +1117,7 @@ static char* ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndS
 				WRITEXMFILE(&wh.type,		1);
 				wh.panning		= 128;
 				WRITEXMFILE(&wh.panning,	1);
-				WRITEXMFILE(&wh.relnote,	1);
+				WRITEXMFILE(&wh.realNote,	1);
 				WRITEXMFILE(&wh.reserved,	1);
 				WRITEXMFILE(&wh.samplename,	22);
 				xmData->theXMRead = theXMReadCopy + ihssizecopy;

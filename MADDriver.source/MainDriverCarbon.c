@@ -8,7 +8,7 @@
 
 #include "RDriverCarbon.h"
 
-#if defined(_MAC_H) && !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if defined(_MAC_H) && TARGET_OS_OSX
 
 MADErr MADLoadMusicFSRef(MADLibrary *lib, MADMusic **music, char *plugType, FSRefPtr theRef)
 {

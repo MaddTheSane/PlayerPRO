@@ -156,8 +156,8 @@ typedef struct sData {
 	MADLoopType		loopType;
 	/// The sound sample's amplitude. Currently limited to 8 or 16 bits
 	MADByte			amp;
-	/// Relative note
-	char			relNote;
+	/// The actual note
+	char			realNote;
 	/// Sample name
 	char 			name[32];
 	/// Is the sample stereo?
@@ -187,7 +187,7 @@ typedef struct sData32 {
 	unsigned short	c2spd;
 	MADLoopType		loopType;
 	MADByte			amp;
-	char			relNote;
+	char			realNote;
 	char 			name[32];
 	MADBool			stereo;
 	/// an unsigned 32-bit integer to keep reading/writing sample datas safe.
@@ -308,7 +308,9 @@ typedef struct MADSpec {
 	MADFourChar	MAD;
 	/// Music's name
 	char 		name[32];
-	/// Informations & author name of the music
+	/// Informations & author name of the music.
+	/// Format is Mac OS Roman unless it begins with the
+	/// UTF-8 BOM.
 	char		infos[INFOSSIZE];
 	/// General panning
 	MADByte		generalPan;

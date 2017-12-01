@@ -6,9 +6,10 @@
 //
 //
 
+#include <PlayerPROCore/PlayerPROCore.h>
 #import "PPSampleObject.h"
 #import "PPSampleObject_PPKPrivate.h"
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 #import "PPPasteboardHandling.h"
 #endif
 
@@ -89,7 +90,7 @@
 	_data = [[NSData alloc] initWithBytesNoCopy:sampleWriteTo->data length:sampleWriteTo->size freeWhenDone:NO];
 }
 
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 NSString * const kPPKSamplePasteboardUTI = @"net.sourceforge.playerpro.sData";
 
 static NSArray *UTIArray;
@@ -204,14 +205,14 @@ static const dispatch_block_t initUTIArray = ^{
 	return sampleWriteTo->loopType;
 }
 
-- (void)setRelativeNote:(char)relativeNote
+- (void)setRealNote:(char)relativeNote
 {
-	sampleWriteTo->relNote = relativeNote;
+	sampleWriteTo->realNote = relativeNote;
 }
 
-- (char)relativeNote
+- (char)realNote
 {
-	return sampleWriteTo->relNote;
+	return sampleWriteTo->realNote;
 }
 
 - (MADByte)volume
@@ -258,7 +259,7 @@ static const dispatch_block_t initUTIArray = ^{
 			theSample.stereo = FALSE;
 			theSample.loopBeg = 0;
 			theSample.loopSize = 0;
-			theSample.relNote = 0;
+			theSample.realNote = 0;
 			sampleWriteTo = &theSample;
 		} else {
 			theSample = *theData;
@@ -374,7 +375,7 @@ static const dispatch_block_t initUTIArray = ^{
 		obj.stereo = self.stereo;
 		obj.c2spd = self.c2spd;
 		obj.loopType = self.loopType;
-		obj.relativeNote = self.relativeNote;
+		obj.realNote = self.realNote;
 		obj.loop = self.loop;
 	}
 	return obj;
@@ -396,7 +397,7 @@ static const dispatch_block_t initUTIArray = ^{
 	[aCoder encodeObject:@(sampleWriteTo->c2spd) forKey:C2SPDKEY];
 	[aCoder encodeObject:@(sampleWriteTo->loopType) forKey:LOOPTYPEKEY];
 	[aCoder encodeObject:@(sampleWriteTo->amp) forKey:AMPLITUDEKEY];
-	[aCoder encodeObject:@(sampleWriteTo->relNote) forKey:RELATIVENOTEKEY];
+	[aCoder encodeObject:@(sampleWriteTo->realNote) forKey:RELATIVENOTEKEY];
 	[aCoder encodeBool:sampleWriteTo->stereo forKey:STEREOKEY];
 	
 	[aCoder encodeInteger:self.sampleIndex forKey:SAMPLEINDEXKEY];
@@ -415,7 +416,7 @@ static const dispatch_block_t initUTIArray = ^{
 		self.c2spd = [[aDecoder decodeObjectForKey:C2SPDKEY] unsignedShortValue];
 		self.loopType = [[aDecoder decodeObjectForKey:LOOPTYPEKEY] unsignedCharValue];
 		self.amplitude = [[aDecoder decodeObjectForKey:AMPLITUDEKEY] unsignedCharValue];
-		self.relativeNote = [[aDecoder decodeObjectForKey:RELATIVENOTEKEY] charValue];
+		self.realNote = [[aDecoder decodeObjectForKey:RELATIVENOTEKEY] charValue];
 		self.stereo = [aDecoder decodeBoolForKey:STEREOKEY];
 		
 		self.sampleIndex = [aDecoder decodeIntegerForKey:SAMPLEINDEXKEY];

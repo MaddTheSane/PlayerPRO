@@ -83,7 +83,7 @@ extern NSString * const PPDEMusicTraceOn;
 extern NSString * const PPDEPatternWrappingPartition;
 extern NSString * const PPDEDragAsPcmd;
 
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 #pragma mark Color preference keys
 #define PPCColor1	@"PPColor 1"
 #define PPCColor2	@"PPColor 2"

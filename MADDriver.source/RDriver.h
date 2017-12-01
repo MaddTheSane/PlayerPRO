@@ -116,7 +116,7 @@ typedef struct MADChannel {
 	/// Previous note played on this Channel
 	int		noteOld;
 	/// Previous realnote
-	int		relNoteOld;
+	int		realNoteOld;
 	
 	/// Current period
 	int		period;

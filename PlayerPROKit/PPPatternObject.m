@@ -6,6 +6,7 @@
 //
 //
 
+#include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/MADPlug.h>
 #import <PlayerPROKit/PlayerPROKit-Swift.h>
 #import "PPPatternObject.h"
@@ -13,7 +14,7 @@
 #import "PPPatternObject_PcmdHandling.h"
 #import "PPMusicObject_PPKPrivate.h"
 #import "PPSampleObject.h"
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 #import "PPPasteboardHandling.h"
 #endif
 
@@ -62,7 +63,7 @@ static inline Pcmd* CopyPcmd(const Pcmd* tocopy)
 	return commands.count;
 }
 
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 NSString * const kPPKPatternPasteboardUTI = @"net.sourceforge.playerpro.pattern";
 
 static NSArray *UTIArray;

@@ -10,7 +10,19 @@ import Foundation
 
 @IBDesignable
 public final class MusicNoteFormatter: Formatter {
-	@IBInspectable public var useSingleLetter = true
+	@IBInspectable public var useSingleLetter: Bool {
+		get {
+			return !noteOptions.contains(.solfege)
+		}
+		set {
+			if newValue {
+				noteOptions.remove(.solfege)
+			} else {
+				noteOptions.insert(.solfege)
+			}
+		}
+	}
+	public var noteOptions: PPSampleNoteOptions = []
 	
 	override public func string(for obj: Any?) -> String? {
 		if let objInt = obj as? Int {
@@ -19,7 +31,7 @@ public final class MusicNoteFormatter: Formatter {
 				return "---"
 				
 			case 0..<96:
-				return octaveName(from: Int16(objInt), letters: useSingleLetter)
+				return octaveName(fromNote: Int16(objInt), options: noteOptions)
 				
 			default:
 				return nil

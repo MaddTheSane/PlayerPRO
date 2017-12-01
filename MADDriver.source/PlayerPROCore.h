@@ -23,7 +23,7 @@ EXP double PlayerPROCoreVersionNumber;
 EXP const unsigned char PlayerPROCoreVersionString[];
 #endif
 
-#if defined(_MAC_H) && !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if defined(_MAC_H) && TARGET_OS_OSX
 #include "RDriverCarbon.h"
 #endif
 

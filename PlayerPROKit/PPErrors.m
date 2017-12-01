@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "PPErrors.h"
-#include <PlayerPROCore/PlayerPROCore.h>
 #import "PPMusicObject.h"
 
 #ifndef __MACERRORS__
@@ -184,7 +183,7 @@ static NSString *stringForKeyAndError(NSString *userInfoKey, MADErr errCode)
 			}
 			break;
 			
-		case MADUserCanceledErr:
+		case MADUserCancelledErr:
 			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
 				return PPErrorLocalizedString(@"User Cancelled Action", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
@@ -206,7 +205,7 @@ static NSString *stringForKeyAndError(NSString *userInfoKey, MADErr errCode)
 BOOL PPErrorIsUserCancelled(NSError *theErr)
 {
 	if ([theErr.domain isEqualToString:PPMADErrorDomain]) {
-		if (theErr.code == MADUserCanceledErr) {
+		if (theErr.code == MADUserCancelledErr) {
 			return YES;
 		}
 	} else if([theErr.domain isEqualToString:NSCocoaErrorDomain]) {
@@ -324,7 +323,7 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 										 userInfo:userInfo];
 			break;
 			
-		case MADUserCanceledErr:
+		case MADUserCancelledErr:
 			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain
 											 code:NSUserCancelledError
 										 userInfo:userInfo];

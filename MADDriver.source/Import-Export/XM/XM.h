@@ -349,7 +349,7 @@ typedef struct XMWAVHEADER{
 									///< 2 = Ping-pong loop;
 									///< 4: 16-bit sampledata
 	UBYTE panning;			///< (byte) Panning (0-255)
-	BYTE  relnote;			///< (byte) Relative note number (signed byte)
+	BYTE  realNote;			///< (byte) Relative note number (signed byte)
 	UBYTE reserved;			///< (byte) Reserved
 	char  samplename[22];	///< (char) Sample name
 } XMWAVHEADER;

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#include <PlayerPROCore/PlayerPROCore.h>
 
 //! Project version number for PlayerPROKit.
 FOUNDATION_EXPORT double PlayerPROKit_VersionNumber;
@@ -27,7 +26,7 @@ FOUNDATION_EXPORT const unsigned char PlayerPROKit_VersionString[];
 #import <PlayerPROKit/PPFXBusObject.h>
 #import <PlayerPROKit/PPFXSetObject.h>
 #import <PlayerPROKit/PPPatternObject_PcmdHandling.h>
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 #import <PlayerPROKit/PPSampleWaveformView.h>
 #import <PlayerPROKit/PPPasteboardHandling.h>
 #import <PlayerPROKit/PPPlugIns.h>

@@ -83,7 +83,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 			}
 			instrumentVolume!.integerValue = Int(sampleObj.volume)
 			instrumentRate!.stringValue = "\(sampleObj.c2spd) Hz"
-			instrumentNote!.stringValue = octaveName(from: UInt8(bitPattern: sampleObj.relativeNote)) ?? "None"
+			instrumentNote!.stringValue = octaveName(fromNote: UInt8(bitPattern: sampleObj.realNote), options: [.useSharpSymbol]) ?? "None"
 			instrumentBits!.stringValue = "\(sampleObj.amplitude)-bit"
 			instrumentMode!.stringValue = sampleObj.loopType == .pingPong ? "Ping-Pong" : "Classic"
 			let sampImage = sampleObj.waveformImage(view: waveFormImage!)

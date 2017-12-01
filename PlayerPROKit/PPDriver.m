@@ -6,6 +6,7 @@
 //
 //
 
+#include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 #import <PlayerPROKit/PlayerPROKit-Swift.h>
 #import "PPDriver.h"

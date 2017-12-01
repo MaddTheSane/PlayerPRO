@@ -125,7 +125,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
 				}
 			}
 			
-			curData.relativeNote = Int8(60 - (12 + PATSamp.pointee.originRate))
+			curData.realNote = Int8(60 - (12 + PATSamp.pointee.originRate))
 			
 			for i in 0 ..< 107 {
 				if scale_table[i] >= PATSamp.pointee.minFreq {

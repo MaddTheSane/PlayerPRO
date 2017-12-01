@@ -10,7 +10,7 @@
 #define __PLAYERPROKIT_PPSAMPLEOBJECT_H__
 
 #import <Foundation/Foundation.h>
-#include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/MAD.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
 #ifndef NS_DESIGNATED_INITIALIZER
@@ -51,8 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property MADLoopType loopType;
 /// The sound sample's amplitude. Currently limited to 8 or 16 bits.
 @property MADByte amplitude;
-/// Relative note.
-@property char relativeNote;
+/// Real note.
+@property char realNote;
 /// Sample name.
 @property (copy, null_resettable) NSString *name;
 /// Is the sample stereo?

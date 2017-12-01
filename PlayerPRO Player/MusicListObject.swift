@@ -224,7 +224,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	
 	func encode(with aCoder: NSCoder) {
 		#if os(OSX)
-		if let bookmark = try? musicURL.bookmarkData(options: [], includingResourceValuesForKeys: [.volumeURLKey, .volumeUUIDStringKey], relativeTo: homeURL) {
+		if let bookmark = try? musicURL.bookmarkData(options: [], includingResourceValuesForKeys: [.volumeURLKey, .volumeUUIDStringKey, .volumeURLForRemountingKey], relativeTo: homeURL) {
 			aCoder.encode(bookmark, forKey: kMusicListURLBookmark)
 		}
 		#endif

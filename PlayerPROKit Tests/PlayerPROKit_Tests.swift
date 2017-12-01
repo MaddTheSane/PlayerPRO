@@ -81,7 +81,7 @@ class PlayerPROKit_Tests: XCTestCase {
 			XCTFail()
 		} catch MADErr.fileNotSupportedByThisPlug {
 			XCTAssert(true)
-		} catch {
+		} catch let error as NSError {
 			XCTFail("unknown error, \(error)")
 		}
 	}
@@ -96,9 +96,7 @@ class PlayerPROKit_Tests: XCTestCase {
 	}
 	
 	func testLoadingUnloadingMusicFromDriver() {
-		//var drivSettings = MADDriverSettings.new()
-		var drivSettings = MADDriverSettings()
-		MADGetBestDriver(&drivSettings)
+		var drivSettings = MADDriverSettings.new()
 		//drivSettings.driverMode = .NoHardwareDriver
 		do {
 			let driver = try PPDriver(library: ourLib!, settings: &drivSettings)

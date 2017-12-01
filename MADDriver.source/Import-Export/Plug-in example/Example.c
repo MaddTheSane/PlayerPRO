@@ -365,7 +365,7 @@ static OSErr PPConvertMod2Mad(Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriver
 			curData->c2spd		= finetune[theMOD->fid[i].fineTune&0xf];
 			curData->loopType	= 0;
 			curData->amp		= 8;
-			curData->relNote	= 0;
+			curData->realNote	= 0;
 			//	for (x = 0; x < 22; x++) curData->name[x] = theMOD->fid[i].Filename[x];
 			
 			
@@ -740,7 +740,7 @@ static Ptr PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *Ptr
 					if (aCmd->ins != 0)
 					{
 						if (theMAD->fid[aCmd->ins-1].numSamples > 0)
-							curNote = aCmd->note + theMAD->sample[(aCmd->ins-1)*MAXSAMPLE + 0]->relNote;
+							curNote = aCmd->note + theMAD->sample[(aCmd->ins-1)*MAXSAMPLE + 0]->realNote;
 						else 	curNote = aCmd->note;
 					}
 					else curNote = aCmd->note;

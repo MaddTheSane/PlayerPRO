@@ -33,16 +33,16 @@ public func ==(lhs: PPFXSetObject, rhs: FXSets) -> Bool {
 	return lhs.theSet == rhs
 }
 
-public func getCommand(position: Int16, channel: Int16, aPat: PPPatternObject) -> Cmd {
+public func getCommand(atPosition position: Int16, channel: Int16, aPat: PPPatternObject) -> Cmd {
 	let aCmd = aPat.getCommand(position: position, channel: channel)
 	return aCmd.theCommand
 }
 
-public func ReplaceCmd(position: Int16, channel: Int16, command: Cmd, aPat: PPPatternObject) {
+public func replaceCommand(atPosition position: Int16, channel: Int16, command: Cmd, aPat: PPPatternObject) {
 	aPat.replaceCommand(atPosition: position, channel: channel, cmd: command)
 }
 
-public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObject, commandBlock: @escaping (inout Cmd)-> ()) {
+public func modifyCommand(atPosition position: Int16, channel: Int16, aPat: PPPatternObject, commandBlock: @escaping (inout Cmd)-> ()) {
 	aPat.modifyCommand(atPosition: position, channel: channel, command: { (aCmd) -> Void in
 		var tmpCmd = aCmd.pointee
 		commandBlock(&tmpCmd)
@@ -124,22 +124,38 @@ public func note(from myTT: String) -> Int16? {
 	return Oct
 }
 
-public func octaveName(from octNote: UInt8, letters isUseLetters: Bool = true) -> String? {
-	return octaveName(from: Int16(octNote), letters: isUseLetters)
+/// Converts an octave note from a numerical value to a human-readable string.
+/// - parameter octNote: The note to convert.
+/// - parameter options: A set of options to determine how the notes should be formatted.
+/// - returns: A string denoting the note, such as *"D#4"*, or `nil` if unsuccessful.
+public func octaveName(fromNote octNote: UInt8, options: PPSampleNoteOptions = []) -> String? {
+	return octaveName(fromNote: Int16(octNote), options: options)
 }
 
-public func octaveName(from octNote: Int16, letters isUseLetters: Bool = true) -> String? {
+/// Converts an octave note from a numerical value to a human-readable string.
+/// - parameter octNote: The note to convert.
+/// - parameter options: A set of options to determine how the notes should be formatted.
+/// - returns: A string denoting the note, such as *"D#4"*, or `nil` if unsuccessful.
+public func octaveName(fromNote octNote: Int16, options: PPSampleNoteOptions = []) -> String? {
 	if octNote > 95 || octNote < 0 {
 		return nil
 	}
 	
 	let NNames: [String]
+	let poundSign: Character
 	
-	if isUseLetters {
-		NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
+	if options.contains(.useSharpSymbol) {
+		poundSign = "♯"
 	} else {
-		NNames = ["Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
+		poundSign = "#"
 	}
+	
+	if options.contains(.solfege) {
+		NNames = ["Do", "Do\(poundSign)", "Ré", "Ré\(poundSign)", "Mi", "Fa", "Fa\(poundSign)", "Sol", "Sol\(poundSign)", "La", "La\(poundSign)", "Ti"]
+	} else {
+		NNames = ["C ", "C\(poundSign)", "D ", "D\(poundSign)", "E ", "F ", "F\(poundSign)", "G ", "G\(poundSign)", "A ", "A\(poundSign)", "B "]
+	}
+	
 	return "\(NNames[Int(octNote % 12)])\(octNote / 12)"
 }
 
@@ -299,120 +315,140 @@ extension PPSampleObject {
 		let oneShiftedBy8 = 1 / CGFloat(1 << 8)
 
 		if curData.amplitude == 16 {
-			let theShortSample = (curData.data as NSData).bytes.assumingMemoryBound(to: UInt16.self)
-			let sampleSize = curData.data.count / 2
-			start /= 2
-			
-			var BS = start + (tSS * sampleSize) / larg
-			if isStereo {
-				BS /= 2; BS *= 2;
-				BS += Int(channel)
-			}
-			temp = CGFloat(theShortSample[BS] &+ 0x8000)
-			temp *= CGFloat(high) * oneShiftedBy16
-			ctxRef.move(to: CGPoint(x: CGFloat(trueH) + CGFloat(tSS), y: CGFloat(trueV) + temp))
-			
-			for i in tSS ..< tSE {
-				BS = start + (i * sampleSize) / larg
-				var BE = start + ((i + 1) * sampleSize) / larg
+			curData.data.withUnsafeBytes({ (theShortSample: UnsafePointer<UInt16>) -> Void in
+				let sampleSize = curData.data.count / 2
+				start /= 2
 				
+				var BS = start + (tSS * sampleSize) / larg
 				if isStereo {
 					BS /= 2; BS *= 2;
-					BE /= 2; BE *= 2;
-					
 					BS += Int(channel)
-					BE += Int(channel)
 				}
-				
 				temp = CGFloat(theShortSample[BS] &+ 0x8000)
-				minY = temp; maxY = temp;
 				temp *= CGFloat(high) * oneShiftedBy16
-				ctxRef.addLine(to: CGPoint(x: CGFloat(trueH + i), y: temp + CGFloat(trueV)))
+				ctxRef.move(to: CGPoint(x: CGFloat(trueH) + CGFloat(tSS), y: CGFloat(trueV) + temp))
 				
-				if BS != BE {
-					var x = BS
-					while x < BE {
-						temp = CGFloat(theShortSample[x] &+ 0x8000)
+				for i in tSS ..< tSE {
+					BS = start + (i * sampleSize) / larg
+					var BE = start + ((i + 1) * sampleSize) / larg
+					
+					if isStereo {
+						BS /= 2; BS *= 2;
+						BE /= 2; BE *= 2;
 						
-						maxY = max(temp, maxY)
-						minY = min(temp, minY)
-						
-						if isStereo {
-							x += 1
-						}
-						x += 1
+						BS += Int(channel)
+						BE += Int(channel)
 					}
 					
-					maxY *= CGFloat(high) * oneShiftedBy16
-					minY *= CGFloat(high) * oneShiftedBy16
+					temp = CGFloat(theShortSample[BS] &+ 0x8000)
+					minY = temp; maxY = temp;
+					temp *= CGFloat(high) * oneShiftedBy16
+					ctxRef.addLine(to: CGPoint(x: CGFloat(trueH + i), y: temp + CGFloat(trueV)))
 					
-					ctxRef.move(to: CGPoint(x: CGFloat(trueH + i), y: minY + CGFloat(trueV)))
-					ctxRef.addLine(to: CGPoint(x: CGFloat(trueH + i), y: maxY + CGFloat(trueV)))
+					if BS != BE {
+						var x = BS
+						while x < BE {
+							temp = CGFloat(theShortSample[x] &+ 0x8000)
+							
+							maxY = max(temp, maxY)
+							minY = min(temp, minY)
+							
+							if isStereo {
+								x += 1
+							}
+							x += 1
+						}
+						
+						maxY *= CGFloat(high) * oneShiftedBy16
+						minY *= CGFloat(high) * oneShiftedBy16
+						
+						ctxRef.move(to: CGPoint(x: CGFloat(trueH + i), y: minY + CGFloat(trueV)))
+						ctxRef.addLine(to: CGPoint(x: CGFloat(trueH + i), y: maxY + CGFloat(trueV)))
+					}
 				}
-			}
+			})
 		} else {
 			let sampleSize = curData.data.count
-			let theSample = (curData.data as NSData).bytes.assumingMemoryBound(to: UInt8.self)
-
-			var BS = start + (tSS * sampleSize) / larg
-			if isStereo {
-				BS /= 2; BS *= 2;
-				BS += Int(channel)
-			}
-			
-			temp = CGFloat(theSample[BS] &- 0x80)
-			temp *= CGFloat(high) * oneShiftedBy8
-			
-			ctxRef.move(to: CGPoint(x: CGFloat(trueH + tSS), y: CGFloat(trueV) + temp))
-			
-			for i in tSS ..< tSE {
-				BS = start + (i * sampleSize) / larg
-				var BE = start + ((i + 1) * sampleSize) / larg
-				
+			curData.data.withUnsafeBytes({ (theSample: UnsafePointer<UInt16>) -> Void in
+				var BS = start + (tSS * sampleSize) / larg
 				if isStereo {
 					BS /= 2; BS *= 2;
-					BE /= 2; BE *= 2;
-					
 					BS += Int(channel)
-					BE += Int(channel)
 				}
 				
 				temp = CGFloat(theSample[BS] &- 0x80)
-				minY = temp; maxY = temp;
 				temp *= CGFloat(high) * oneShiftedBy8
-				ctxRef.addLine(to: CGPoint(x: CGFloat(trueH + i), y: temp + CGFloat(trueV)))
 				
-				if BS != BE {
-					var x = BS
-					while x < BE {
-						temp = CGFloat(theSample[x] &- 0x80)
+				ctxRef.move(to: CGPoint(x: CGFloat(trueH + tSS), y: CGFloat(trueV) + temp))
+				
+				for i in tSS ..< tSE {
+					BS = start + (i * sampleSize) / larg
+					var BE = start + ((i + 1) * sampleSize) / larg
+					
+					if isStereo {
+						BS /= 2; BS *= 2;
+						BE /= 2; BE *= 2;
 						
-						maxY = max(temp, maxY)
-						minY = min(temp, minY)
-						
-						if isStereo {
+						BS += Int(channel)
+						BE += Int(channel)
+					}
+					
+					temp = CGFloat(theSample[BS] &- 0x80)
+					minY = temp; maxY = temp;
+					temp *= CGFloat(high) * oneShiftedBy8
+					ctxRef.addLine(to: CGPoint(x: CGFloat(trueH + i), y: temp + CGFloat(trueV)))
+					
+					if BS != BE {
+						var x = BS
+						while x < BE {
+							temp = CGFloat(theSample[x] &- 0x80)
+							
+							maxY = max(temp, maxY)
+							minY = min(temp, minY)
+							
+							if isStereo {
+								x += 1
+							}
 							x += 1
 						}
-						x += 1
+						maxY *= CGFloat(high) * oneShiftedBy8
+						minY *= CGFloat(high) * oneShiftedBy8
+						
+						ctxRef.move(to: CGPoint(x: CGFloat(trueH) + CGFloat(i), y: minY + CGFloat(trueV)))
+						ctxRef.addLine(to: CGPoint(x: CGFloat(trueH) + CGFloat(i), y: maxY + CGFloat(trueV)))
 					}
-					maxY *= CGFloat(high) * oneShiftedBy8
-					minY *= CGFloat(high) * oneShiftedBy8
-					
-					ctxRef.move(to: CGPoint(x: CGFloat(trueH) + CGFloat(i), y: minY + CGFloat(trueV)))
-					ctxRef.addLine(to: CGPoint(x: CGFloat(trueH) + CGFloat(i), y: maxY + CGFloat(trueV)))
 				}
-			}
+			})
 		}
 		ctxRef.closePath()
 		ctxRef.strokePath()
 	}
 	
-	@objc(octaveNameFromNote:) final public class func octaveName(from octNote: Int16) -> String {
-		return PlayerPROKit.octaveName(from: octNote) ?? "---"
+	/// Converts an octave note from a numerical value to a human-readable string.
+	/// - parameter octNote: The note to convert.
+	/// - returns: A string denoting the note, such as `"D#4"`, or `"---"` if unsuccessful.
+	@objc(octaveNameFromNote:)
+	final public class func octaveName(fromNote octNote: Int16) -> String {
+		return PlayerPROKit.octaveName(fromNote: octNote) ?? "---"
 	}
 
-	@objc(octaveNameFromNote:usingSingularLetter:) final public class func octaveName(from octNote: Int16, usingSingularLetter: Bool) -> String {
-		return PlayerPROKit.octaveName(from: octNote, letters: usingSingularLetter) ?? "---"
+	/// Converts an octave note from a numerical value to a human-readable string.
+	/// - parameter octNote: The note to convert.
+	/// - parameter usingSingularLetter: If `true`/`YES`, the note will be generated with the alphabetical
+	/// value of the note, otherwise they will be solfège of the *fixed do* scale.
+	/// - returns: A string denoting the note, such as `"D#4"`, or `"---"` if unsuccessful.
+	@objc(octaveNameFromNote:usingSingularLetter:) @available(*, deprecated)
+	final public class func octaveName(fromNote octNote: Int16, usingSingularLetter: Bool) -> String {
+		return PlayerPROKit.octaveName(fromNote: octNote, options: usingSingularLetter ? [] : .solfege) ?? "---"
+	}
+	
+	/// Converts an octave note from a numerical value to a human-readable string.
+	/// - parameter octNote: The note to convert.
+	/// - parameter options: A set of options to determine how the notes should be formatted.
+	/// - returns: A string denoting the note, such as `"D#4"`, or `"---"` if unsuccessful.
+	@objc(octaveNameFromNote:options:)
+	final public class func octaveName(fromNote octNote: Int16, options: PPSampleNoteOptions) -> String {
+		return PlayerPROKit.octaveName(fromNote: octNote, options: options) ?? "---"
 	}
 
 	@objc(noteFromString:) final public class func note(from myTT: String) -> Int16 {

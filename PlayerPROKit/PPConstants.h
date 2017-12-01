@@ -16,7 +16,8 @@ __BEGIN_DECLS
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark PPLibrary info keys
-typedef NSString *PPLibraryInfoKeys NS_STRING_ENUM;
+//! PPLibrary dictionary info keys.
+typedef NSString *PPLibraryInfoKeys NS_TYPED_ENUM;
 
 /// The total number of patterns. Type is <code>NSNumber</code>.
 extern PPLibraryInfoKeys const kPPTotalPatterns;
@@ -38,6 +39,14 @@ extern PPLibraryInfoKeys const kPPTotalInstruments;
 extern PPLibraryInfoKeys const kPPInternalFileName;
 /// The description of the tracker. Type is <code>NSString</code>.
 extern PPLibraryInfoKeys const kPPFormatDescription;
+
+//! The options for converting a numerical note to a string.
+typedef NS_OPTIONS(NSUInteger, PPSampleNoteOptions) {
+	//! Use solfège of the <em>fixed do</em> scale instead of single letters.
+	PPSampleNoteOptionSolfege = 1 << 0,
+	//! Use the unicode sharp symbol instead of the pound sign.
+	PPSampleNoteOptionUseSharpSymbol = 1 << 1,
+};
 
 NS_ASSUME_NONNULL_END
 

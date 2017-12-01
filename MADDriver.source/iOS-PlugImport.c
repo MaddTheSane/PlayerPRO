@@ -59,7 +59,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.dmf"), NULL},
 	},
 	//Disabled on iOS because it isn't playing correctly
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 	{
 		.IOPlug = mainIT,
 		.MenuName = CFSTR("ImpulseTracker Files"),
@@ -230,9 +230,8 @@ static void MovePluginInfoOver(const iPlugInfo *src, PlugInfo *dst)
 	CFMutableArrayRef tmpArray = CFArrayCreateMutable(kCFAllocatorDefault, 5, &kCFTypeArrayCallBacks);
 	int i = 0;
 	while (src->UTITypes[i]) {
-		CFStringRef tmpStr = CFStringCreateCopy(kCFAllocatorDefault, src->UTITypes[i++]);
+		CFStringRef tmpStr = src->UTITypes[i++];
 		CFArrayAppendValue(tmpArray, tmpStr);
-		CFRelease(tmpStr);
 	}
 	dst->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, tmpArray);
 	CFRelease(tmpArray);

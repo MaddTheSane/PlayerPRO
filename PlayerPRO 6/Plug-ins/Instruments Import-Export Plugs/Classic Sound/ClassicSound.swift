@@ -26,7 +26,7 @@ public final class ClassicSound: NSObject, PPSampleImportPlugin {
 	
 	public func canImportSample(at AlienFileURL: URL) -> Bool {
 		do {
-			let fileRef = try FileHandle(forUpdating: AlienFileURL)
+			let fileRef = try FileHandle(forReadingFrom: AlienFileURL)
 			let data = fileRef.readData(ofLength: 128)
 			return canOpenData(data)
 		} catch _ {

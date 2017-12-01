@@ -282,7 +282,7 @@ extension sData32 {
 		self.c2spd = noFineTune
 		self.loopType = .classic
 		self.amp = 8
-		self.relNote = 0
+		self.realNote = 0
 		self.name = BlankNameChar32
 		self.stereo = false
 		self.data = 0
@@ -304,7 +304,7 @@ extension sData32 {
 		c2spd = fromSData32.c2spd
 		loopType = fromSData32.loopType
 		amp = fromSData32.amp
-		relNote = fromSData32.relNote
+		realNote = fromSData32.realNote
 		name = fromSData32.name
 		stereo = fromSData32.stereo
 		data = 0
@@ -328,7 +328,7 @@ extension sData {
 		c2spd = fromSData32.c2spd
 		loopType = fromSData32.loopType
 		amp = fromSData32.amp
-		relNote = fromSData32.relNote
+		realNote = fromSData32.realNote
 		name = fromSData32.name
 		stereo = fromSData32.stereo
 		data = nil
@@ -342,7 +342,7 @@ extension sData {
 		self.c2spd = noFineTune
 		self.loopType = .classic
 		self.amp = 8
-		self.relNote = 0
+		self.realNote = 0
 		self.name = BlankNameChar32
 		self.stereo = false
 		self.data = nil
@@ -438,11 +438,7 @@ extension IntPcmd: CommandIterator, Equatable {
 		return length
 	}
 	
-	public var commandTracks: Int16 {
-		return tracks
-	}
-	
-	private func getCommandIndex(row arow: Int16, track atrack: Int16) -> Int {
+	private func getCommandIndex(atRow arow: Int16, track atrack: Int16) -> Int {
 		var row = arow
 		var track = atrack
 		if row < 0 {
@@ -460,20 +456,20 @@ extension IntPcmd: CommandIterator, Equatable {
 		return Int(length) * Int(track) + Int(row)
 	}
 	
-	public func getCommand(row: Int16, track: Int16) -> Cmd {
-		let ourAddr = getCommandIndex(row: row, track: track)
+	public func getCommand(atRow row: Int16, track: Int16) -> Cmd {
+		let ourAddr = getCommandIndex(atRow: row, track: track)
 		
 		return myCmd[ourAddr]
 	}
 	
-	public mutating func modifyCommand(row: Int16, track: Int16, commandBlock: (inout Cmd) -> ()) {
-		let ourAddr = getCommandIndex(row: row, track: track)
+	public mutating func modifyCommand(atRow row: Int16, track: Int16, commandBlock: (inout Cmd) -> ()) {
+		let ourAddr = getCommandIndex(atRow: row, track: track)
 		
 		commandBlock(&myCmd[ourAddr])
 	}
 	
-	public mutating func replaceCommand(row: Int16, track: Int16, with command: Cmd) {
-		modifyCommand(row: row, track: track, commandBlock: {( aCmd: inout Cmd) -> () in
+	public mutating func replaceCommand(atRow row: Int16, track: Int16, with command: Cmd) {
+		modifyCommand(atRow: row, track: track, commandBlock: {( aCmd: inout Cmd) -> () in
 			aCmd = command
 		})
 	}

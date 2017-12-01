@@ -12,12 +12,12 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/MADPlug.h>
 #import <Foundation/Foundation.h>
+#import <AppKit/NSWindow.h>
 
-@class PPSampleObject;
-@class PPInstrumentObject;
-@class PPMusicObject;
+#import <PlayerPROKit/PPSampleObject.h>
+#import <PlayerPROKit/PPInstrumentObject.h>
+#import <PlayerPROKit/PPMusicObject.h>
 @class PPDriver;
-@class NSWindow;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,16 +25,19 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *	@param		inMus
  *				The music object that was imported. Should be \c nil if
- *				\c inErr is <code>MADNoErr</code>.
+ *				\c inErr isn't <code>nil</code>.
  *	@param		inErr
- *				The \c MADErr returned by the plug-in, or \c MADNoErr on success.
+ *				The \c NSError returned by the plug-in, or \c nil on success.
+ *				If the user pressed cancel, pass \c NSError with the \c errorDomain
+ *				of \c PPMADErrorDomain and \c code of <code>MADUserCancelledErr</code>.
  *	@abstract	This block is passed to complex plug-ins.
  */
 typedef void (^PPComplexImportHandler)(PPMusicObject* __nullable inMus, NSError *__nullable inErr);
+
 /**
  *
  *	@param		error
- *				The \c MADErr returned by the plug-in, or \c MADNoErr on success.
+ *				The \c NSError returned by the plug-in, or \c nil on success.
  *	@abstract	This block is passed to plug-ins that need a UI for user interaction.
  */
 typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
@@ -98,7 +101,8 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
  *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
  *				the plug-in.
- *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
+ *	@discussion	If the error is \c MADParametersErr in the \c PPMADErrorDomain and the plug-in
+ *				doesn't implement
  *				<code>beginRunWithPcmd:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
  *				as a failure.
@@ -149,7 +153,8 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
  *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
  *				the plug-in.
- *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
+ *	@discussion	If the error is \c MADParametersErr in the \c PPMADErrorDomain and the plug-in
+ *				doesn't implement
  *				<code>beginRunWithData:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
  *				as a failure.
@@ -174,6 +179,8 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				The window to have the sheet come out of.
  *	@param		handler
  *				The block passed in. Should be called when the window is done.
+ *				If the user pressed cancel, pass \c NSError with the \c errorDomain
+ *				of \c PPMADErrorDomain and \c code of <code>MADUserCancelledErr</code>.
  *	@discussion	This is useful if there needs to be more options for modifying the sample.
  *	@sa			runWithData:selectionRange:onlyCurrentChannel:driver:
  */
@@ -212,7 +219,8 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
  *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
  *				the plug-in.
- *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
+ *	@discussion	If the error is \c MADParametersErr in the \c PPMADErrorDomain and the plug-in
+ *				doesn't implement
  *				<code>beginImportSampleAtURL:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it 
  *				as an error.
@@ -233,7 +241,7 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				The window to have the sheet come out of.
  *	@param		handler
  *				The handler passed in. On error, set the \c error parameter to the error, and 
- *				\c sample to <code>nil</code>. On success, set \c error to \c MADNoErr and the 
+ *				\c sample to <code>nil</code>. On success, set \c error to \c nil and the
  *				\c sample to the created sample.
  *	@discussion	This is useful if there needs to be more options for importing a specific sample.
  *	@sa			importSampleAtURL:sample:driver:
@@ -275,7 +283,8 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
  *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
  *				the plug-in.
- *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
+ *	@discussion	If the error is \c MADParametersErr in the \c PPMADErrorDomain and the plug-in
+ *				doesn't implement
  *				<code>beginRunWithPcmd:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
  *				as a failure.
@@ -298,6 +307,8 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				The window to have the sheet come out of.
  *	@param		handler
  *				The block passed in. Should be called when the window is done.
+ *				If the user pressed cancel, pass \c NSError with the \c errorDomain
+ *				of \c PPMADErrorDomain and \c code of <code>MADUserCancelledErr</code>.
  *	@discussion	This is useful if there needs to be more options for exporting a specific sample.
  *	@sa			exportSample:toURL:driver:
  */
@@ -335,7 +346,8 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
  *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
  *				the plug-in.
- *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
+ *	@discussion	If the error is \c MADParametersErr in the \c PPMADErrorDomain and the plug-in
+ *				doesn't implement
  *				<code>beginRunWithPcmd:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
  *				as a failure.
@@ -368,10 +380,12 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				The window to have the sheet come out of.
  *	@param		handler
  *				The block passed in. Should be called when the window is done.<br>
- *				On failure, pass the \c MADErr closest to the error that occured to 
+ *				On failure, pass an \c NSError closest to the error that occured to
  *				<code>error</code>, and \c nil for <code>sample</code>.
- *				Otherwise, pass \c MADNoErr for \c error and the created instrument to
+ *				Otherwise, pass \c nil for \c error and the created instrument to
  *				<code>sample</code>.
+ *				If the user pressed cancel, pass \c NSError with the \c errorDomain
+ *				of \c PPMADErrorDomain and \c code of <code>MADUserCancelledErr</code>.
  *	@discussion	This is useful if there needs to be more options for
  *				importing a specific instrument.
  *	@sa			importInstrumentAtURL:instrument:driver:
@@ -400,7 +414,8 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *	@return		\c NO on failure, \c YES on succes, or \c NO with \c error
  *				set to \c MADParametersErr in the \c PPMADErrorDomain if a UI is needed by
  *				the plug-in.
- *	@discussion	If this returns \c MADParametersErr and the plug-in doesn't implement
+ *	@discussion	If the error is \c MADParametersErr in the \c PPMADErrorDomain and the plug-in
+ *				doesn't implement
  *				<code>beginExportInstrument:toURL:driver:parentWindow:handler:</code>,
  *				PlayerPRO 6 will not attempt to call the UI function and will treat it
  *				as a failure.
@@ -423,6 +438,8 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				The window to have the sheet come out of.
  *	@param		handler
  *				The block passed in. Should be called when the window is done.
+ *				If the user pressed cancel, pass \c NSError with the \c errorDomain
+ *				of \c PPMADErrorDomain and \c code of <code>MADUserCancelledErr</code>.
  *	@discussion	This is useful if there needs to be more options for
  *				exporting a specific instrument.
  *	@sa			exportInstrument:toURL:driver:
@@ -456,6 +473,8 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *				The file URL to import.
  *	@param		handler
  *				The block passed in. Should be called when the window is closed.
+ *				If the user pressed cancel, pass \c NSError with the \c errorDomain
+ *				of \c PPMADErrorDomain and \c code of <code>MADUserCancelledErr</code>.
  */
 - (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler;
 @end

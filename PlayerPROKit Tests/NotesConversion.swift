@@ -27,7 +27,7 @@ class NotesConversion: XCTestCase {
 	func getNotesWithLetters(useLetters: Bool) -> [String] {
 		var noteNames = [String]()
 		for i in Int16(0)..<96 {
-			if let aNote = octaveName(from: i, letters: useLetters) {
+			if let aNote = octaveName(fromNote: i, options: useLetters ? [] : .solfege) {
 				noteNames.append(aNote)
 			}
 		}
@@ -84,6 +84,16 @@ class NotesConversion: XCTestCase {
 		}
 	}
 	
+	func testRoundRobbinNotes() {
+		let note = getNotesWithLetters(useLetters: true)
+		let hi = note.map { (aStr) -> Int16 in
+			return PlayerPROKit.note(from: aStr)!
+		}
+		if hi != Array(Int16(0)..<96) {
+			XCTFail()
+		}
+	}
+	
 	func testInvalidNotesFromString() {
 		let invalidStrs = ["", "  ", "c", "C", "---", "B75", "adda5", "♯2", "b9"]
 		for aStr in invalidStrs {
@@ -96,7 +106,7 @@ class NotesConversion: XCTestCase {
 	func testInvalidStringsFromNotes() {
 		let invalidNums: [Int16] = [-1, 96, 100, 0xFF, 0xFE]
 		for i in invalidNums {
-			if let aStr = octaveName(from: i) {
+			if let aStr = octaveName(fromNote: i) {
 				XCTFail("Accidentally got a number back, \(i) got converted to \(aStr)")
 			}
 		}

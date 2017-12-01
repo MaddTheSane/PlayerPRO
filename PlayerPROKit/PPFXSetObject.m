@@ -6,8 +6,9 @@
 //
 //
 
+#include <PlayerPROCore/PlayerPROCore.h>
 #import "PPFXSetObject.h"
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 #import "PPPasteboardHandling.h"
 #endif
 
@@ -27,7 +28,7 @@
 @synthesize theSet;
 @synthesize name = _name;
 
-#if !(TARGET_OS_IPHONE || TARGET_OS_TV)
+#if TARGET_OS_OSX
 NSString * const kPPKFXSetPasteboardUTI = @"net.sourceforge.playerpro.FXSet";
 
 static NSArray *UTIArray;

@@ -58,7 +58,7 @@ extern NSError* __nullable PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr
  *				The \c NSError object to check.
  *	@return		\c YES if the value was user cancelled, \c NO otherwise.
  *	@discussion	Checks if the error sent to it is a user cancelled error.
- *				This checks for \c MADUserCanceledErr in the <code>PPMADErrorDomain</code>,
+ *				This checks for \c MADUserCancelledErr in the <code>PPMADErrorDomain</code>,
  *				\c NSUserCancelledError in the <code>NSCocoaErrorDomain</code>, and \c userCanceledErr
  *				in the <code>NSOSStatusErrorDomain</code>.
 */

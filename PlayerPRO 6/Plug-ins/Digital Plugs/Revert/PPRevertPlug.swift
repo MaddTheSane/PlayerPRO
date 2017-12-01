@@ -28,7 +28,7 @@ public final class Revert: NSObject, PPDigitalPlugin {
 		
 		for track in 0 ..< srcCmd.tracks {
 			for row in 0 ... maxLenth {
-				let myCmdsrc = getCommand(row: maxLenth - row, track: track, aIntPcmd: srcCmd)
+				let myCmdsrc = getCommand(atRow: maxLenth - row, track: track, aIntPcmd: srcCmd)
 				replaceCommand(row: row, track: track, command: myCmdsrc, aPcmd: myPcmd)
 			}
 		}

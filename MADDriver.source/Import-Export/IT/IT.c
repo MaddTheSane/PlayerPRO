@@ -930,14 +930,14 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 							}
 							
 							
-							curData->relNote	= ((MADByte) ITinfo.insdata[i].keyMap[zz].note) -zz;// - 12;
+							curData->realNote	= ((MADByte) ITinfo.insdata[i].keyMap[zz].note) -zz;// - 12;
 							
 							/*
 							 if (((MADByte) ITinfo.insdata[i].keyMap[zz].note))
 							 {
-							 curData->relNote	= ((MADByte) ITinfo.insdata[i].keyMap[zz].note) - zz;
+							 curData->realNote	= ((MADByte) ITinfo.insdata[i].keyMap[zz].note) - zz;
 							 }
-							 else curData->relNote = -12;*/
+							 else curData->realNote = -12;*/
 							
 							for (z = 0; z < 26; z++)
 								curData->name[z] = ITinfo.sampdata[prevSamp].SampName[z];
@@ -1065,7 +1065,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 					curData->loopSize 	*= 2;
 				}
 				
-				curData->relNote	= 0;
+				curData->realNote	= 0;
 				for (x = 0; x < 26; x++)
 					curIns->name[x] = ITinfo.sampdata[i].SampName[x];
 				

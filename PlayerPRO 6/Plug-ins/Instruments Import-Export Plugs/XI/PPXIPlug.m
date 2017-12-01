@@ -176,7 +176,7 @@ static const int finetune[16] = {
 				}
 				
 				//curData->panning	= wh->panning;
-				curData.relativeNote	= wh->relnote;
+				curData.realNote	= wh->realNote;
 				curData.name			= [[NSString alloc] initWithBytes:wh->samplename length:strnlen(wh->samplename, 22) encoding:NSASCIIStringEncoding];
 				[tmpSamples addObject:@{@"Sample": curData,
 										@"DataLen": @(wh->length)}];
@@ -352,7 +352,7 @@ static NSData *startData()
 				wh.type |= 0x3;
 			
 			//	wh.panning = curData->panning;
-			wh.relnote = curData.relativeNote;
+			wh.realNote = curData.realNote;
 			{
 				NSData *nameData = [curData.name dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 				char tempSampName[22] = {0};
