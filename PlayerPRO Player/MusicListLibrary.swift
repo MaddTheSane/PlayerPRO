@@ -31,11 +31,11 @@ class MusicListLibrary: NSObject {
 		}
 	}
 	
-	var allMusicObjects: [MusicListObject]
-	var allLists: [MusicList]
+	private(set) var allMusicObjects: Set<MusicListObject>
+	private(set) var allLists: [MusicList]
 
 	override init() {
-		allMusicObjects = [MusicListObject]()
+		allMusicObjects = Set<MusicListObject>()
 		allLists = [MusicList]()
 		super.init()
 	}
@@ -80,11 +80,23 @@ class MusicListLibrary: NSObject {
 	}
 	#endif
 	
+	func add(list: MusicList) {
+		list.resolveObjects(against: self)
+		list.delegate = self
+		allLists.append(list)
+	}
+	
+	func add(music object: MusicListObject) {
+		if !allMusicObjects.contains(object) {
+			allMusicObjects.insert(object)
+		}
+	}
+	
 	// MARK: - codable
 	required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		
-		let allMusicObjects = try values.decode(Array<MusicListObject>.self, forKey: .allMusicObjects)
+		let allMusicObjects = try values.decode(Set<MusicListObject>.self, forKey: .allMusicObjects)
 		let convLists = try values.decode(Array<ListWrapper>.self, forKey: .allLists)
 		self.allMusicObjects = allMusicObjects
 		allLists = convLists.map { (wrapped) -> MusicList in
@@ -119,6 +131,10 @@ class MusicListLibrary: NSObject {
 			return newList
 		}
 		super.init()
+		
+		allLists.forEach { (ml) in
+			ml.delegate = self
+		}
 	}
 }
 
@@ -136,4 +152,34 @@ extension MusicListLibrary: Codable {
 		try container.encode(allMusicObjects, forKey: .allMusicObjects)
 		try container.encode(convList, forKey: .allLists)
 	}
+}
+
+extension MusicListLibrary: MusicListDelegate {
+	func musicList(_ list: MusicList, willAdd object: MusicListObject) -> MusicListObject {
+		let newUUID = object.uuid
+		let newURL = object.musicURL
+		if let aObj = allMusicObjects.first(where: { (mlo) -> Bool in
+			mlo.uuid == newUUID
+		}) {
+			return aObj
+		} else if let aObj = allMusicObjects.first(where: { (mlo) -> Bool in
+			return URLsPointingToTheSameFile(mlo.musicURL, newURL)
+		}) {
+			return aObj
+		}
+
+		return object
+	}
+	
+	func musicList(_ list: MusicList, didAdd object: MusicListObject) {
+		if !allMusicObjects.contains(object) {
+			allMusicObjects.insert(object)
+		}
+	}
+	
+	func musicList(_ list: MusicList, willRemove object: MusicListObject) {
+		// Nothing for now
+	}
+	
+	
 }

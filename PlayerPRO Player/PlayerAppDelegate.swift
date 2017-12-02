@@ -688,7 +688,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				do {
 				let newList = try MusicList.from(contentsOf: theURL)
 					// Add to list
-					_ = newList
+					musicLibrary.add(list: newList)
 					return true
 				} catch {
 					NSApp.presentError(error)
@@ -700,13 +700,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					// Add to list
 
 					self.selMusFromList = self.musicList.selectedMusic
-					self.didChangeValue(forKey: kMusicListKVO)
 					if let theErr = theErr {
 						NSApp.presentError(theErr)
 					}
 					if let newList = newList {
-						self.musicLibrary.allLists.append(newList)
-						newList.resolveObjects(against: self.musicLibrary)
+						self.musicLibrary.add(list: newList)
 					}
 				})
 				return true
@@ -828,7 +826,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		tableView.registerForDraggedTypes([.PPMLDCUTI, NSPasteboard.PasteboardType(rawValue: kUTTypeFileURL as String)])
 		//tableView.register(forDraggedTypes: [PPMLDCUTI, kUTTypeFileURL as String]);
 		//self.paused = YES;
-		willChangeValue(forKey: kMusicListKVO)
+		//willChangeValue(forKey: kMusicListKVO)
 		do {
 			musicLibrary = try MusicListLibrary.load()
 		} catch {
@@ -843,8 +841,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		//if UserDefaults.standard.bool(forKey: PPRememberMusicList) {
 		//	musicList.loadApplicationMusicList()
 		//}
+		musicList = musicLibrary.allLists[0]
+		willChangeValue(forKey: "musicList.musicList")
 		let selMus = musicList.selectedMusic
-		didChangeValue(forKey: kMusicListKVO)
+		didChangeValue(forKey: "musicList.musicList")
+		//didChangeValue(forKey: kMusicListKVO)
 		
 		
 		tableView.doubleAction = #selector(PlayerAppDelegate.doubleClickMusicList)

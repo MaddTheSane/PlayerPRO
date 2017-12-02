@@ -38,6 +38,12 @@ let kPlayerList = "Player List"
 	let PPPPath = (try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)).appendingPathComponent("Playlists", isDirectory: true)
 #endif
 
+protocol MusicListDelegate: class {
+	func musicList(_ list: MusicList, willAdd object: MusicListObject) -> MusicListObject
+	func musicList(_ list: MusicList, didAdd object: MusicListObject)
+	func musicList(_ list: MusicList, willRemove object: MusicListObject)
+}
+
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, Collection {
 	@objc private(set)	dynamic var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount: UInt
@@ -46,6 +52,7 @@ let kPlayerList = "Player List"
 	#if os(iOS)
 	private(set)	var fileUUID = UUID()
 	#endif
+	weak var delegate: MusicListDelegate?
 	
 	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
@@ -233,7 +240,7 @@ let kPlayerList = "Player List"
 				}
 			}
 			if !wasFound {
-				against.allMusicObjects.append(obj)
+				against.add(music: obj)
 			}
 		}
 	}
@@ -345,6 +352,11 @@ let kPlayerList = "Player List"
 		guard let newList = MusicList(coder: keyedUnarc) else {
 			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError)
 		}
+		if newList.name == "New Music List",
+			let values = try? url.resourceValues(forKeys: [URLResourceKey.localizedNameKey]),
+			let fileName = values.localizedName {
+			newList.name = fileName
+		}
 		return newList
 	}
 	
@@ -364,7 +376,9 @@ let kPlayerList = "Player List"
 	@objc(addMusicListObject:)
 	func add(_ object: MusicListObject) {
 		if !musicList.contains(object) {
-			musicList.append(object)
+			let newObj = delegate?.musicList(self, willAdd: object) ?? object
+			musicList.append(newObj)
+			delegate?.musicList(self, didAdd: newObj)
 		}
 	}
 	
@@ -375,7 +389,9 @@ let kPlayerList = "Player List"
 	
 	@objc(replaceObjectInMusicListAtIndex:withObject:)
 	func replaceObjectInMusicList(at index: Int, with object: MusicListObject) {
-		musicList[index] = object
+		let newObj = delegate?.musicList(self, willAdd: object) ?? object
+		musicList[index] = newObj
+		delegate?.musicList(self, didAdd: newObj)
 	}
 	
 	@objc(objectInMusicListAtIndex:)
@@ -391,6 +407,7 @@ let kPlayerList = "Player List"
 			selectedMusic -= idxSet.count(in: 0..<selectedMusic)
 		}
 		
+		//delegate?.musicList(self, willRemove: object)
 		musicList.remove(indexes: idxSet)
 	}
 	
@@ -401,12 +418,15 @@ let kPlayerList = "Player List"
 		} else if selectedMusic > atIndex {
 			selectedMusic -= 1
 		}
+		delegate?.musicList(self, willRemove: musicList[atIndex])
 		musicList.remove(at: atIndex)
 	}
 	
 	@objc(insertObject:inMusicListAtIndex:)
 	func insert(_ object: MusicListObject, at index: Int) {
-		musicList.insert(object, at: index)
+		let newObj = delegate?.musicList(self, willAdd: object) ?? object
+		musicList.insert(newObj, at: index)
+		delegate?.musicList(self, didAdd: newObj)
 	}
 	
 	@objc(arrayOfObjectsInMusicListAtIndexes:)
@@ -424,7 +444,9 @@ let kPlayerList = "Player List"
 	func insertMusicLists(_ anObj: [MusicListObject], at indexes: IndexSet) {
 		
 		for (i, idx) in zip(indexes, anObj).reversed() {
-			musicList.insert(idx, at: i)
+			let newObj = delegate?.musicList(self, willAdd: idx) ?? idx
+			musicList.insert(newObj, at: i)
+			delegate?.musicList(self, didAdd: newObj)
 		}
 	}
 	
