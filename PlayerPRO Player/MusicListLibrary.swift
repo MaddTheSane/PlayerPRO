@@ -41,6 +41,30 @@ class MusicListLibrary: NSObject {
 		try dat.write(to: PPMusicLib)
 	}
 	
+	@discardableResult
+	func loadOldLibrary(at url: URL) throws -> MusicList {
+		let data = try Data(contentsOf: url)
+		guard let list = NSKeyedUnarchiver.unarchiveObject(with: data) as? MusicList else {
+			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: nil)
+		}
+		list.resolveObjects(against: self)
+		if let props = try? url.resourceValues(forKeys: [URLResourceKey.localizedNameKey]),
+			let locName = props.localizedName {
+			list.name = locName
+		} else {
+			list.name = NSLocalizedString("Untitled Imported List", comment: "An imported list that the name couldn't be found")
+		}
+		return list
+	}
+	
+	#if os(OSX)
+	func migrateOldLibrary() throws {
+		let oldPath = PPPPath.appendingPathComponent(kPlayerList, isDirectory: false)
+		let oldList = try loadOldLibrary(at: oldPath)
+		//try FileManager.default.removeItem(at: oldPath)
+		oldList.name = "Migrated Music List"
+	}
+	#endif
 	
 	// MARK: - codable
 	required init(from decoder: Decoder) throws {

@@ -93,7 +93,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	@IBOutlet var exportSettingsBox: NSBox!
 	var exportController: SoundSettingsViewController!
 	
-	@objc dynamic let musicList = MusicList()
+	@objc dynamic var musicList = MusicList()
+	@objc dynamic var musicLibrary: MusicListLibrary!
 	let preferences = Preferences.newPreferenceController()
 	var plugInInfos = [PlugInInfo]()
 	
@@ -692,13 +693,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				}
 			}
 		} else if sharedWorkspace.type(theUTI, conformsToType: PPOldMusicListUTI) {
-				musicList.beginLoadingOfOldMusicList(at: theURL, completionHandle: { (newList, theErr) -> Void in
+				MusicList.beginLoadingOfOldMusicList(at: theURL, completionHandle: { (newList, theErr) -> Void in
 					// Add to list
 
 					self.selMusFromList = self.musicList.selectedMusic
 					self.didChangeValue(forKey: kMusicListKVO)
 					if let theErr = theErr {
-						NSAlert(error: theErr).runModal()
+						NSApp.presentError(theErr)
 					}
 				})
 				return true
@@ -821,11 +822,17 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		//tableView.register(forDraggedTypes: [PPMLDCUTI, kUTTypeFileURL as String]);
 		//self.paused = YES;
 		willChangeValue(forKey: kMusicListKVO)
-		if UserDefaults.standard.bool(forKey: PPRememberMusicList) {
-			musicList.loadApplicationMusicList()
+		do {
+			musicLibrary = try MusicListLibrary.load()
+		} catch {
+			musicLibrary = MusicListLibrary()
 		}
+		//if UserDefaults.standard.bool(forKey: PPRememberMusicList) {
+		//	musicList.loadApplicationMusicList()
+		//}
 		let selMus = musicList.selectedMusic
 		didChangeValue(forKey: kMusicListKVO)
+		
 		
 		tableView.doubleAction = #selector(PlayerAppDelegate.doubleClickMusicList)
 		
@@ -911,6 +918,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	func applicationWillTerminate(_ notification: Notification) {
 		timeChecker.invalidate()
+		
+		do {
+			try musicLibrary.save()
+		} catch let error as NSError {
+			NSLog("Failed to save music library, %@", error)
+		}
 		
 		madDriver.stopDriver()
 		musicList.selectedMusic = selectedIndex.index

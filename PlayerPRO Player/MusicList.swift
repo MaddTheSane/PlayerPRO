@@ -20,10 +20,10 @@ private let kMusicListKey4 = "Music List Key 4"
 private let kMusicListLocation4 = "Music Key Location 4"
 private let kMusicListName4 = "Music List Name 4"
 
-private let kPlayerList = "Player List"
+let kPlayerList = "Player List"
 
 #if os(OSX)
-	private let PPPPath: URL = {
+	let PPPPath: URL = {
 		do {
 			var retURL = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 			retURL.appendPathComponent("PlayerPRO")
@@ -34,8 +34,8 @@ private let kPlayerList = "Player List"
 		}
 	}()
 #elseif os(iOS)
-	private let listExtension = "pplist"
-	private let PPPPath = (try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)).appendingPathComponent("Playlists", isDirectory: true)
+	let listExtension = "pplist"
+	let PPPPath = (try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)).appendingPathComponent("Playlists", isDirectory: true)
 #endif
 
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, Collection, Codable {
@@ -218,7 +218,23 @@ private let kPlayerList = "Player List"
 	#endif
 	
 	func resolveObjects(against: MusicListLibrary) {
-		
+		let oldList = musicList
+		for (i, obj) in oldList.enumerated() {
+			let allLists = against.allMusicObjects
+			for obj2 in allLists {
+				if obj.uuid == obj2.uuid {
+					musicList[i] = obj2
+					continue
+				}
+				if URLsPointingToTheSameFile(obj.musicURL, obj2.musicURL) {
+					musicList[i] = obj2
+					continue
+				} else {
+					against.allMusicObjects.append(obj)
+				}
+			}
+			//obj.uuid
+		}
 	}
 	
 	// MARK: - NSCoding
@@ -432,7 +448,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	#if os(OSX)
-	func beginLoadingOfOldMusicList(at toOpen: URL, completionHandle theHandle: @escaping (_ newList: MusicList?, _ theErr: Error?) -> Void) {
+	static func beginLoadingOfOldMusicList(at toOpen: URL, completionHandle theHandle: @escaping (_ newList: MusicList?, _ theErr: Error?) -> Void) {
 		let modDate: Date? = {
 			do {
 				var values = try toOpen.resourceValues(forKeys: [.contentModificationDateKey])

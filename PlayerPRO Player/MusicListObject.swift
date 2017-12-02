@@ -26,7 +26,7 @@ internal var homeURL: URL {
 	}
 #endif
 
-private func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
+internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 	var dat1: (NSCopying & NSSecureCoding & NSObjectProtocol)? = nil
 	var dat2: (NSCopying & NSSecureCoding & NSObjectProtocol)? = nil
 	var bothAreValid = true
