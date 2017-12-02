@@ -17,6 +17,8 @@ import SwiftAudioAdditions
 private let kUnresolvableFile = "Unresolvable files"
 private let kUnresolvableFileDescription = "There were %lu file(s) that were unable to be resolved."
 
+private let OldListWasLoaded = "Old List was loaded?"
+
 private func cocoaDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
 	let swiftFile = FileManager.default.string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
 	let swiftText = String(validatingUTF8: text!)!
@@ -195,6 +197,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			PPSaveModList: true,
 			PPLoadMusicAtMusicLoad: false,
 			PPLoopMusicWhenDone: false,
+			OldListWasLoaded: false,
 			
 			PPSoundOutBits: 16,
 			PPSoundOutRate: 44100,
@@ -701,6 +704,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					if let theErr = theErr {
 						NSApp.presentError(theErr)
 					}
+					if let newList = newList {
+						self.musicLibrary.allLists.append(newList)
+						newList.resolveObjects(against: self.musicLibrary)
+					}
 				})
 				return true
 		} else {
@@ -826,6 +833,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			musicLibrary = try MusicListLibrary.load()
 		} catch {
 			musicLibrary = MusicListLibrary()
+		}
+		if !(UserDefaults.standard[OldListWasLoaded]!) {
+			do {
+				try musicLibrary.migrateOldLibrary()
+				UserDefaults.standard[OldListWasLoaded] = true
+			} catch _ {}
 		}
 		//if UserDefaults.standard.bool(forKey: PPRememberMusicList) {
 		//	musicList.loadApplicationMusicList()

@@ -275,14 +275,14 @@ extension MusicListObject: Codable {
 
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(uuid, forKey: .uuid)
+		try container.encode(musicURL, forKey: .musicURL)
+		try container.encode(addedDate, forKey: .dateAdded)
 		#if os(OSX)
 			if let bookmark = try? musicURL.bookmarkData(includingResourceValuesForKeys: [.volumeURLKey, .volumeUUIDStringKey, .volumeURLForRemountingKey], relativeTo: homeURL) {
 				try container.encode(bookmark, forKey: .bookmarkData)
 			}
 		#endif
-		try container.encode(musicURL, forKey: .musicURL)
-		try container.encode(addedDate, forKey: .dateAdded)
-		try container.encode(uuid, forKey: .uuid)
 	}
 	
 	convenience init(from decoder: Decoder) throws {
@@ -303,10 +303,7 @@ extension MusicListObject: Codable {
 		if url == nil {
 			url = try values.decode(URL.self, forKey: .musicURL)
 		}
-		if let aUUID = try values.decodeIfPresent(UUID.self, forKey: .uuid) {
-			self.init(url: url!, date: dateAdded, uuid: aUUID)
-		} else {
-			self.init(url: url!, date: dateAdded)
-		}
+		let aUUID = try values.decode(UUID.self, forKey: .uuid)
+		self.init(url: url!, date: dateAdded, uuid: aUUID)
 	}
 }

@@ -38,7 +38,7 @@ let kPlayerList = "Player List"
 	let PPPPath = (try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)).appendingPathComponent("Playlists", isDirectory: true)
 #endif
 
-@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, Collection, Codable {
+@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, Collection {
 	@objc private(set)	dynamic var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount: UInt
 	@objc dynamic var		selectedMusic: Int
@@ -221,19 +221,20 @@ let kPlayerList = "Player List"
 		let oldList = musicList
 		for (i, obj) in oldList.enumerated() {
 			let allLists = against.allMusicObjects
+			var wasFound = false
 			for obj2 in allLists {
 				if obj.uuid == obj2.uuid {
 					musicList[i] = obj2
-					continue
+					wasFound = true
 				}
 				if URLsPointingToTheSameFile(obj.musicURL, obj2.musicURL) {
 					musicList[i] = obj2
-					continue
-				} else {
-					against.allMusicObjects.append(obj)
+					wasFound = true
 				}
 			}
-			//obj.uuid
+			if !wasFound {
+				against.allMusicObjects.append(obj)
+			}
 		}
 	}
 	

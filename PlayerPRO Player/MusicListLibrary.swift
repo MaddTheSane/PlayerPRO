@@ -18,6 +18,19 @@ private let PPMusicLib: URL = {
 }()
 
 class MusicListLibrary: NSObject {
+	/// Basic wrapper around Music List Objects, so we don't encode the same MusicList twice.
+	private struct ListWrapper: Codable {
+		var name: String
+		var selectedIndex: Int
+		var musicUUIDs: [UUID]
+		
+		init(musicList: MusicList) {
+			name = musicList.name
+			selectedIndex = musicList.selectedMusic
+			musicUUIDs = musicList.musicList.map({$0.uuid})
+		}
+	}
+	
 	var allMusicObjects: [MusicListObject]
 	var allLists: [MusicList]
 
@@ -34,7 +47,7 @@ class MusicListLibrary: NSObject {
 	}
 	
 	func save() throws {
-		if (try? PPMusicBase.checkResourceIsReachable()) ?? false {
+		if !((try? PPMusicBase.checkResourceIsReachable()) ?? false) {
 			try FileManager.default.createDirectory(at: PPMusicBase, withIntermediateDirectories: true, attributes: nil)
 		}
 		let dat = try JSONEncoder().encode(self)
@@ -54,6 +67,7 @@ class MusicListLibrary: NSObject {
 		} else {
 			list.name = NSLocalizedString("Untitled Imported List", comment: "An imported list that the name couldn't be found")
 		}
+		allLists.append(list)
 		return list
 	}
 	
@@ -69,12 +83,42 @@ class MusicListLibrary: NSObject {
 	// MARK: - codable
 	required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		allMusicObjects = try values.decode(Array<MusicListObject>.self, forKey: .allMusicObjects)
-		allLists = try values.decode(Array<MusicList>.self, forKey: .allLists)
-		super.init()
-		for list in allLists {
-			list.resolveObjects(against: self)
+		
+		let allMusicObjects = try values.decode(Array<MusicListObject>.self, forKey: .allMusicObjects)
+		let convLists = try values.decode(Array<ListWrapper>.self, forKey: .allLists)
+		self.allMusicObjects = allMusicObjects
+		allLists = convLists.map { (wrapped) -> MusicList in
+			let newList = MusicList()
+			newList.name = wrapped.name
+			var selectedMusic = wrapped.selectedIndex
+			
+			let musics = wrapped.musicUUIDs.map({ (uuid) -> MusicListObject? in
+				allMusicObjects.first(where: { (mlo) -> Bool in
+					mlo.uuid == uuid
+				})
+			})
+			
+			//let badIdxs
+			
+			for (i, mus) in musics.enumerated() {
+				if let mus = mus {
+					newList.add(mus)
+				} else {
+					if selectedMusic == -1 {
+						//Do nothing
+					} else if selectedMusic == i + 1 {
+						selectedMusic = -1
+					} else if selectedMusic > i + 1 {
+						selectedMusic -= 1
+					}
+				}
+			}
+			
+			newList.selectedMusic = selectedMusic
+			
+			return newList
 		}
+		super.init()
 	}
 }
 
@@ -87,7 +131,9 @@ extension MusicListLibrary: Codable {
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		
+		let convList = allLists.map({ListWrapper(musicList: $0)})
+		
 		try container.encode(allMusicObjects, forKey: .allMusicObjects)
-		try container.encode(allLists, forKey: .allLists)
+		try container.encode(convList, forKey: .allLists)
 	}
 }
