@@ -57,6 +57,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	@IBOutlet var musicExportMenu: NSMenu!
 	
+	@IBOutlet weak var infoPanel: NSPanel!
 	@IBOutlet var fileName: NSTextField!
 	@IBOutlet var internalName: NSTextField!
 	@IBOutlet var fileSize: NSTextField!
