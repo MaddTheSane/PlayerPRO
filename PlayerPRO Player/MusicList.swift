@@ -180,7 +180,9 @@ protocol MusicListDelegate: class {
 		
 		let theIndex = IndexSet(integer: musicList.count)
 		self.willChange(.insertion, valuesAt: theIndex, forKey: kMusicListKVO)
-		musicList.append(obj)
+		let obj2 = delegate?.musicList(self, willAdd: obj) ?? obj
+		musicList.append(obj2)
+		delegate?.musicList(self, didAdd: obj2)
 		self.didChange(.insertion, valuesAt: theIndex, forKey: kMusicListKVO)
 		return .success
 	}

@@ -20,6 +20,12 @@ private let PPMusicLib: URL = {
 class MusicListLibrary: NSObject {
 	/// Basic wrapper around Music List Objects, so we don't encode the same MusicList twice.
 	private struct ListWrapper: Codable {
+		enum CodingKeys: String, CodingKey {
+			case name
+			case selectedIndex = "selected_index"
+			case musicUUIDs = "music_uuids"
+		}
+
 		var name: String
 		var selectedIndex: Int
 		var musicUUIDs: [UUID]
@@ -110,19 +116,21 @@ class MusicListLibrary: NSObject {
 				})
 			})
 			
-			//let badIdxs
+			var badIdxs = IndexSet()
 			
 			for (i, mus) in musics.enumerated() {
 				if let mus = mus {
 					newList.add(mus)
 				} else {
-					if selectedMusic == -1 {
-						//Do nothing
-					} else if selectedMusic == i + 1 {
-						selectedMusic = -1
-					} else if selectedMusic > i + 1 {
-						selectedMusic -= 1
-					}
+					badIdxs.insert(i)
+				}
+			}
+			
+			if badIdxs.count != 0 {
+				if badIdxs.contains(selectedMusic) {
+					selectedMusic = -1
+				} else if selectedMusic != -1 {
+					selectedMusic -= badIdxs.count(in: 0 ..< selectedMusic)
 				}
 			}
 			

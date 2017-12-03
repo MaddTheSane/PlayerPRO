@@ -268,7 +268,7 @@ extension MusicListObject: Codable {
 	enum CodingKeys: String, CodingKey {
 		case musicURL = "url"
 		case dateAdded = "date_added"
-		case uuid = "uuid"
+		case uuid
 		
 		case bookmarkData = "bookmark_data"
 	}
