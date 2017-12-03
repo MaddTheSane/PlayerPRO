@@ -67,8 +67,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	@IBOutlet var fileLocation: NSTextField!
 	
 	@IBOutlet var tableView: NSTableView!
+	@IBOutlet var playlistsView: NSTableView!
 	@IBOutlet var musicListController: NSArrayController!
-	@IBOutlet weak var playlistsController: NSTreeController!
+	@IBOutlet weak var playlistsController: NSArrayController!
 	@IBOutlet var exportWindow: NSWindow!
 	@IBOutlet var pauseDockMenuItem: NSMenuItem!
 	@objc dynamic var music: PPMusicObject?
