@@ -61,7 +61,7 @@ class MusicListLibrary: NSObject {
 	}
 	
 	@discardableResult
-	func loadOldLibrary(at url: URL) throws -> MusicList {
+	func loadList(at url: URL) throws -> MusicList {
 		let data = try Data(contentsOf: url)
 		guard let list = NSKeyedUnarchiver.unarchiveObject(with: data) as? MusicList else {
 			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: nil)
@@ -71,7 +71,7 @@ class MusicListLibrary: NSObject {
 			let locName = props.localizedName {
 			list.name = locName
 		} else {
-			list.name = NSLocalizedString("Untitled Imported List", comment: "An imported list that the name couldn't be found")
+			list.name = NSLocalizedString("Untitled Imported List", comment: "An imported list where the name couldn't be found")
 		}
 		allLists.append(list)
 		return list
@@ -80,7 +80,7 @@ class MusicListLibrary: NSObject {
 	#if os(OSX)
 	func migrateOldLibrary() throws {
 		let oldPath = PPPPath.appendingPathComponent(kPlayerList, isDirectory: false)
-		let oldList = try loadOldLibrary(at: oldPath)
+		let oldList = try loadList(at: oldPath)
 		//try FileManager.default.removeItem(at: oldPath)
 		oldList.name = "Migrated Music List"
 	}
@@ -188,6 +188,4 @@ extension MusicListLibrary: MusicListDelegate {
 	func musicList(_ list: MusicList, willRemove object: MusicListObject) {
 		// Nothing for now
 	}
-	
-	
 }

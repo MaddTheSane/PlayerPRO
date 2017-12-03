@@ -718,6 +718,8 @@
 		55D64A8C1AA805020017158E /* MusicListPreferenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D64A8B1AA805020017158E /* MusicListPreferenceController.swift */; };
 		55D8E1911C4EC0BB00C2B397 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55D8E1961C4EC12900C2B397 /* ITv2.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D8E1881C4EC0A600C2B397 /* ITv2.c */; };
+		55DBFB8D1FD48913002B80E8 /* PPSTKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DBFB8C1FD48913002B80E8 /* PPSTKeys.m */; };
+		55DBFB8E1FD48913002B80E8 /* PPSTKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DBFB8C1FD48913002B80E8 /* PPSTKeys.m */; };
 		55DC597919A2E6B100212DD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597819A2E6B100212DD0 /* AppDelegate.swift */; };
 		55DC597B19A2FA9A00212DD0 /* SwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */; };
 		55DE87BC187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */; };
@@ -2836,6 +2838,7 @@
 		55D8E1891C4EC0A600C2B397 /* ITv2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ITv2.h; sourceTree = "<group>"; };
 		55D8E1951C4EC0BC00C2B397 /* ITv2.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ITv2.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		55D8E1971C4EC65C00C2B397 /* IT Info.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "IT Info.txt"; sourceTree = "<group>"; };
+		55DBFB8C1FD48913002B80E8 /* PPSTKeys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPSTKeys.m; sourceTree = "<group>"; };
 		55DC597819A2E6B100212DD0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
 		55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PlayerPROKitAdditions.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -4531,6 +4534,7 @@
 				55680A2619045F0A00F7616D /* main.m */,
 				55680A3819046D9800F7616D /* PPSTImporter.h */,
 				55680A3919046D9800F7616D /* PPSTImporter.m */,
+				55DBFB8C1FD48913002B80E8 /* PPSTKeys.m */,
 				55680A2019045F0A00F7616D /* Supporting Files */,
 			);
 			name = StcfImporter;
@@ -7665,6 +7669,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55DBFB8E1FD48913002B80E8 /* PPSTKeys.m in Sources */,
 				55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */,
 				55680A2719045F0A00F7616D /* main.m in Sources */,
 			);
@@ -7719,6 +7724,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5582BDEC1AD748E70087F4D0 /* PlayerAppDelegate.swift in Sources */,
+				55DBFB8D1FD48913002B80E8 /* PPSTKeys.m in Sources */,
 				5533C8FB19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
 				555C0F8D19829663003B9347 /* CurrentlyPlayingIndex.swift in Sources */,
 				55F4C3E519763FDD000997BE /* MusicListObject.swift in Sources */,

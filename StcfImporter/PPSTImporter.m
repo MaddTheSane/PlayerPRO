@@ -161,9 +161,9 @@ static NSString *pascalStringToNSString(StringPtr aStr, CFStringEncoding encodin
 	
 	selectedMusic = (location <= [newArray count]) ? location : -1;
 	
-	*outDict = @{@"MusicPaths":		[newArray copy],
-				 @"SelectedMusic":	@(selectedMusic),
-				 @"lostMusicCount":	@(lostMusicCount)};
+	*outDict = @{PPSTKeyURLs:		[newArray copy],
+				 PPSTKeySelected:	@(selectedMusic),
+				 PPSTKeyLostCount:	@(lostMusicCount)};
 	
 	return noErr;
 }

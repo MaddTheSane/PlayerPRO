@@ -480,12 +480,12 @@ protocol MusicListDelegate: class {
 	
 	#if os(OSX)
 	static func beginLoadingOfOldMusicList(at toOpen: URL, completionHandle theHandle: @escaping (_ newList: MusicList?, _ theErr: Error?) -> Void) {
-		let modDate: Date? = {
+		let (modDate, fileName): (Date?, String?) = {
 			do {
-				var values = try toOpen.resourceValues(forKeys: [.contentModificationDateKey])
-				return values.contentModificationDate
+				var values = try toOpen.resourceValues(forKeys: [.contentModificationDateKey, .localizedNameKey])
+				return (values.contentModificationDate, values.localizedName)
 			} catch _ {
-				return nil
+				return (nil, nil)
 			}
 		}()
 		
@@ -494,7 +494,7 @@ protocol MusicListDelegate: class {
 		
 		conn.resume()
 		
-		(conn.remoteObjectProxy as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData: [String : Any]?, error: Error?) -> Void in
+		(conn.remoteObjectProxy as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData: [PPSTKeys : Any]?, error: Error?) -> Void in
 			OperationQueue.main.addOperation({
 				defer {
 					conn.invalidate()
@@ -503,9 +503,9 @@ protocol MusicListDelegate: class {
 					theHandle(nil, error)
 					return
 				} else {
-					guard let invalidAny = bookmarkData?["lostMusicCount"] as? UInt,
-						let selectedAny = bookmarkData?["SelectedMusic"] as? Int,
-						let pathsAny = bookmarkData?["MusicPaths"] as? NSArray as? [URL] else {
+					guard let invalidAny = bookmarkData?[.lostCount] as? UInt,
+						let selectedAny = bookmarkData?[.selected] as? Int,
+						let pathsAny = bookmarkData?[.urls] as? NSArray as? [URL] else {
 							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Invalid data returned from helper", comment: "Invalid data returned from helper")])
 							theHandle(nil, lolwut)
 							return
@@ -520,7 +520,7 @@ protocol MusicListDelegate: class {
 					newList.musicList = pathsURL
 					newList.lostMusicCount = invalidAny
 					newList.selectedMusic = selectedAny
-					newList.name = toOpen.lastPathComponent
+					newList.name = fileName ?? toOpen.lastPathComponent
 					
 					theHandle(newList, nil)
 				}

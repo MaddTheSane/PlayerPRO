@@ -10,15 +10,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NSString *PPSTKeys NS_STRING_ENUM;
+
+extern PPSTKeys const PPSTKeyURLs NS_SWIFT_NAME(PPSTKeys.urls);
+extern PPSTKeys const PPSTKeySelected NS_SWIFT_NAME(PPSTKeys.selected);
+extern PPSTKeys const PPSTKeyLostCount NS_SWIFT_NAME(PPSTKeys.lostCount);
+
 @protocol PPSTImporterHelper <NSObject>
 
-- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary<NSString*, id>* __nullable bookmarkData, NSError * __nullable error))reply;
+- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary<PPSTKeys, id>* __nullable bookmarkData, NSError * __nullable error))reply;
 
 @end
 
 @interface PPSTImporter : NSObject <NSXPCListenerDelegate, PPSTImporterHelper>
 
-+ (instancetype)sharedImporter;
++ (PPSTImporter *)sharedImporter;
 
 @end
 
