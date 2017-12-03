@@ -826,12 +826,12 @@ Gw
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CJa-v1-73Z">
                                 <rect key="frame" x="64" y="5" width="28" height="30"/>
-                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="PPPlay" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sks-ab-yRa">
+                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="PPPlay" imagePosition="only" alignment="center" alternateImage="PPPause" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sks-ab-yRa">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="playButtonPressed:" target="494" id="MyB-S3-ca1"/>
+                                    <action selector="pauseButtonPressed:" target="494" id="RmJ-HD-Y7G"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3B0-rG-i8Q">
@@ -845,11 +845,11 @@ Gw
                                 </connections>
                             </button>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="558">
-                                <rect key="frame" x="308" y="11" width="100" height="19"/>
+                                <rect key="frame" x="310" y="13" width="96" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="r3H-RL-0NZ"/>
                                 </constraints>
-                                <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="618"/>
+                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="618"/>
                                 <connections>
                                     <action selector="sliderChanged:" target="494" id="895"/>
                                 </connections>
@@ -914,7 +914,7 @@ Gw
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="" width="116" minWidth="40" maxWidth="1000" id="7b8-Hl-F4S">
+                                                <tableColumn identifier="" width="240" minWidth="40" maxWidth="1000" id="7b8-Hl-F4S">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -928,11 +928,11 @@ Gw
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="ecc-8q-uYd">
-                                                            <rect key="frame" x="1" y="1" width="116" height="17"/>
+                                                            <rect key="frame" x="1" y="1" width="246" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9VH-AB-ZwO">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="116" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="246" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="ZYn-U0-UTI">
                                                                         <font key="font" metaFont="system"/>
@@ -959,6 +959,7 @@ Gw
                                                 </tableColumn>
                                             </tableColumns>
                                             <connections>
+                                                <binding destination="IzC-rB-H3E" name="content" keyPath="arrangedObjects" id="jYN-Y0-0bi"/>
                                                 <outlet property="dataSource" destination="494" id="czz-Vm-AV6"/>
                                                 <outlet property="delegate" destination="494" id="Kid-wZ-xVz"/>
                                             </connections>
@@ -966,7 +967,7 @@ Gw
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="fXh-va-UMF">
-                                    <rect key="frame" x="1" y="278" width="177" height="16"/>
+                                    <rect key="frame" x="1" y="278" width="246" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="dXg-Bo-5ly">
@@ -981,7 +982,7 @@ Gw
                                     <rect key="frame" x="1" y="0.0" width="465" height="294"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="reverseSequential" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" autosaveName="MusicListColumnInfo" headerView="F6Y-TG-a0s" id="733">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="reverseSequential" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" autosaveName="MusicListColumnInfo" rowSizeStyle="automatic" headerView="F6Y-TG-a0s" viewBased="YES" id="733">
                                             <rect key="frame" x="0.0" y="0.0" width="465" height="271"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -995,9 +996,25 @@ Gw
                                                         <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                                     </tableHeaderCell>
                                                     <imageCell key="dataCell" lineBreakMode="truncatingTail" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="1lr-rA-xvy"/>
-                                                    <connections>
-                                                        <binding destination="536" name="value" keyPath="arrangedObjects.fileIcon" id="46z-do-JzH"/>
-                                                    </connections>
+                                                    <prototypeCellViews>
+                                                        <tableCellView id="9wr-H1-9Tf">
+                                                            <rect key="frame" x="1" y="1" width="20" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xqp-Wt-eF0">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="iDP-bH-W4Z"/>
+                                                                    <connections>
+                                                                        <binding destination="9wr-H1-9Tf" name="value" keyPath="objectValue.fileIcon" id="Nke-bw-Ca9"/>
+                                                                    </connections>
+                                                                </imageView>
+                                                            </subviews>
+                                                            <connections>
+                                                                <outlet property="imageView" destination="xqp-Wt-eF0" id="dBb-hd-Tsa"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                    </prototypeCellViews>
                                                 </tableColumn>
                                                 <tableColumn identifier="MusicListNameColumn" editable="NO" width="339" minWidth="10" maxWidth="3.4028234663852886e+38" id="NKI-PH-Tz3">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
@@ -1012,9 +1029,29 @@ Gw
                                                     </textFieldCell>
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="localizedStandardCompare:" sortKey="fileName"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                    <connections>
-                                                        <binding destination="536" name="value" keyPath="arrangedObjects.fileName" id="wtd-fk-Rb4"/>
-                                                    </connections>
+                                                    <prototypeCellViews>
+                                                        <tableCellView id="Q7t-oy-vtK">
+                                                            <rect key="frame" x="24" y="1" width="339" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Dq-bz-saM">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="339" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Cfg-yI-aSh">
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                        <connections>
+                                                                            <binding destination="Q7t-oy-vtK" name="value" keyPath="objectValue.fileName" id="KiK-lC-QfU"/>
+                                                                        </connections>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                            </subviews>
+                                                            <connections>
+                                                                <outlet property="textField" destination="2Dq-bz-saM" id="A1T-f8-nQO"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                    </prototypeCellViews>
                                                 </tableColumn>
                                                 <tableColumn identifier="MusicListSizeColumn" editable="NO" width="97" minWidth="10" maxWidth="3.4028234663852886e+38" id="C10-5a-0pU">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Size">
@@ -1023,23 +1060,40 @@ Gw
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
                                                     <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="YwG-uR-ufR">
-                                                        <byteCountFormatter key="formatter" id="QmJ-vZ-VtG"/>
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="fileSize"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                    <connections>
-                                                        <binding destination="536" name="value" keyPath="arrangedObjects.fileSize" id="uV9-Le-DQQ">
-                                                            <dictionary key="options">
-                                                                <bool key="NSConditionallySetsEditable" value="YES"/>
-                                                            </dictionary>
-                                                        </binding>
-                                                    </connections>
+                                                    <prototypeCellViews>
+                                                        <tableCellView id="jLh-ew-J9c">
+                                                            <rect key="frame" x="366" y="1" width="97" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZFL-Dp-bO6">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="97" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="hBa-Ku-dK7">
+                                                                        <byteCountFormatter key="formatter" id="QmJ-vZ-VtG"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                    <connections>
+                                                                        <binding destination="jLh-ew-J9c" name="value" keyPath="objectValue.fileSize" id="Ef0-ur-lrH"/>
+                                                                    </connections>
+                                                                </textField>
+                                                            </subviews>
+                                                            <connections>
+                                                                <outlet property="textField" destination="ZFL-Dp-bO6" id="xU9-3A-UdA"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                    </prototypeCellViews>
                                                 </tableColumn>
                                             </tableColumns>
                                             <connections>
+                                                <binding destination="536" name="content" keyPath="arrangedObjects" id="JB3-g7-glH"/>
                                                 <outlet property="dataSource" destination="494" id="yMq-mc-Ebc"/>
                                                 <outlet property="delegate" destination="494" id="929"/>
                                             </connections>
@@ -1081,6 +1135,7 @@ Gw
     </objects>
     <resources>
         <image name="PPNextTrack" width="26" height="26"/>
+        <image name="PPPause" width="26" height="26"/>
         <image name="PPPlay" width="26" height="26"/>
         <image name="PPPrevTrack" width="26" height="26"/>
     </resources>
