@@ -62,18 +62,8 @@ class MusicListLibrary: NSObject {
 	
 	@discardableResult
 	func loadList(at url: URL) throws -> MusicList {
-		let data = try Data(contentsOf: url)
-		guard let list = NSKeyedUnarchiver.unarchiveObject(with: data) as? MusicList else {
-			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: nil)
-		}
-		list.resolveObjects(against: self)
-		if let props = try? url.resourceValues(forKeys: [URLResourceKey.localizedNameKey]),
-			let locName = props.localizedName {
-			list.name = locName
-		} else {
-			list.name = NSLocalizedString("Untitled Imported List", comment: "An imported list where the name couldn't be found")
-		}
-		allLists.append(list)
+		let list = try MusicList.from(contentsOf: url)
+		add(list: list)
 		return list
 	}
 	
@@ -188,4 +178,19 @@ extension MusicListLibrary: MusicListDelegate {
 	func musicList(_ list: MusicList, willRemove object: MusicListObject) {
 		// Nothing for now
 	}
+}
+
+// KVO/KVC for allLists
+extension MusicListLibrary {
+	
+	@objc var countOfAllLists: Int {
+		return allLists.count
+	}
+
+	@objc(objectInAllListsAtIndex:)
+	func objectInAllLists(at index: Int) -> MusicList {
+		return allLists[index]
+	}
+
+	//valueforall
 }

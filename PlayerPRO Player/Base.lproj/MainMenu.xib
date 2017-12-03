@@ -693,9 +693,12 @@
                 <outlet property="window" destination="OBw-Gl-YYB" id="idZ-VH-ZDT"/>
             </connections>
         </customObject>
-        <arrayController id="IzC-rB-H3E" userLabel="Music Library">
+        <arrayController objectClassName="NSMutableArray" id="IzC-rB-H3E" userLabel="Music Library">
+            <declaredKeys>
+                <string>name</string>
+            </declaredKeys>
             <connections>
-                <binding destination="494" name="contentArray" keyPath="self.musicLibrary" id="US1-fh-bLA"/>
+                <binding destination="494" name="contentArray" keyPath="self.musicLibrary.allLists" id="Avd-go-HKS"/>
             </connections>
         </arrayController>
         <arrayController objectClassName="NSMutableArray" automaticallyRearrangesObjects="YES" id="536" userLabel="Music List">
@@ -935,6 +938,13 @@ Gw
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                        <connections>
+                                                                            <binding destination="ecc-8q-uYd" name="displayPatternValue1" keyPath="objectValue.name" id="GVA-Hu-XkJ">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSDisplayPattern">%{value1}@</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                        </connections>
                                                                     </textFieldCell>
                                                                     <connections>
                                                                         <binding destination="IzC-rB-H3E" name="value" keyPath="arrangedObjects.name" id="uxe-AT-zxb"/>

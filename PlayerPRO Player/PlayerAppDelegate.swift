@@ -833,6 +833,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		} catch {
 			musicLibrary = MusicListLibrary()
 		}
+		playlistsView.reloadData()
 		if !(UserDefaults.standard[OldListWasLoaded]!) {
 			do {
 				try musicLibrary.migrateOldLibrary()
@@ -1692,6 +1693,23 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		})
 		atableView.reloadData()
 		musicListContentsDidMove()
+	}
+	
+	func numberOfRows(in tableView: NSTableView) -> Int {
+		if tableView === self.tableView {
+			return musicList.countOfMusicList
+		} else if tableView === playlistsView {
+			return musicLibrary?.allLists.count ?? 0
+		} else {
+			return 0
+		}
+	}
+	
+	func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+		if tableView === playlistsView {
+			return musicLibrary?.allLists[row]
+		}
+		return nil
 	}
 }
 

@@ -55,17 +55,13 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		return false
 	}
 	
-	if lhs.addedDate != rhs.addedDate {
-		return false
-	}
-	
 	return true
 }
 
 @objc(PPMusicListObject) final class MusicListObject: NSObject, NSCopying, NSSecureCoding {
 	let musicURL: URL
-	let addedDate: Date
-	let uuid: UUID
+	@objc let addedDate: Date
+	@objc let uuid: UUID
 
 	#if os(OSX)
 	@objc private(set) lazy var fileIcon: NSImage = {
@@ -189,7 +185,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	///
 	///- parameter other: The other `MusicListObject` to compare to.
 	///- returns: How this object compares to the other one.
-	func localizedStandardCompareFileName(_ other: MusicListObject) -> ComparisonResult {
+	@objc func localizedStandardCompareFileName(_ other: MusicListObject) -> ComparisonResult {
 		return fileName.localizedStandardCompare(other.fileName)
 	}
 	
@@ -197,7 +193,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	///
 	///- parameter other: The other `MusicListObject` to compare to.
 	///- returns: How this object compares to the other one.
-	func compareByFileSize(_ other: MusicListObject) -> ComparisonResult {
+	@objc func compareByFileSize(_ other: MusicListObject) -> ComparisonResult {
 		let otherSize = other.fileSize
 		if fileSize > otherSize {
 			return .orderedAscending
@@ -213,7 +209,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	///
 	///- parameter other: The other `MusicListObject` to compare to.
 	///- returns: How this object compares to the other one.
-	func compareByAddedDate(_ other: MusicListObject) -> ComparisonResult {
+	@objc func compareByAddedDate(_ other: MusicListObject) -> ComparisonResult {
 		return addedDate.compare(other.addedDate)
 	}
 	
