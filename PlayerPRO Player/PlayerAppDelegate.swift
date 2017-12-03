@@ -1203,8 +1203,14 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					
 					DispatchQueue.global().async() {
 						do {
-							try self.saveMusic(AIFFToURL: savePanel.url!, theSett: &self.exportSettings)
-							self.madDriver.endExport()
+							do {
+								defer {
+									self.madDriver.endExport()
+								}
+								try autoreleasepool() {
+									try self.saveMusic(AIFFToURL: savePanel.url!, theSett: &self.exportSettings)
+								}
+							}
 							DispatchQueue.main.async() {
 								if self.isQuitting {
 									NSApplication.shared.reply(toApplicationShouldTerminate: true)
@@ -1261,41 +1267,59 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						let metadataInfo: [AVMetadataItem] = {
 							var toRet = [AVMetadataItem]()
 							
-							let titleName = AVMutableMetadataItem()
-							titleName.keySpace = AVMetadataKeySpace.common
-							titleName.key = AVMetadataKey.commonKeyTitle as NSString
-							titleName.value = oldMusicName as NSString
+							do {
+								let titleName = AVMutableMetadataItem()
+								titleName.keySpace = .common
+								titleName.key = AVMetadataKey.commonKeyTitle as NSString
+								titleName.value = oldMusicName as NSString
+								toRet.append(titleName)
+							}
 							
-							let dataInfo = AVMutableMetadataItem()
-							dataInfo.keySpace = AVMetadataKeySpace.quickTimeUserData
-							dataInfo.key = AVMetadataKey.quickTimeUserDataKeySoftware as NSString
-							dataInfo.value = "PlayerPRO Player" as NSString
-							dataInfo.locale = Locale(identifier: "en")
+							do {
+								let dataInfo = AVMutableMetadataItem()
+								dataInfo.keySpace = .quickTimeUserData
+								dataInfo.key = AVMetadataKey.quickTimeUserDataKeySoftware as NSString
+								dataInfo.value = "PlayerPRO Player" as NSString
+								dataInfo.locale = Locale(identifier: "en")
+								toRet.append(dataInfo)
+							}
 							
-							let musicInfoQTUser = AVMutableMetadataItem()
-							musicInfoQTUser.keySpace = AVMetadataKeySpace.quickTimeUserData
-							musicInfoQTUser.key = AVMetadataKey.quickTimeUserDataKeyInformation as NSString
-							musicInfoQTUser.value = oldMusicInfo as NSString
-							musicInfoQTUser.locale = Locale.current
+							do {
+								let musicInfoQTUser = AVMutableMetadataItem()
+								musicInfoQTUser.keySpace = .quickTimeUserData
+								musicInfoQTUser.key = AVMetadataKey.quickTimeUserDataKeyInformation as NSString
+								musicInfoQTUser.value = oldMusicInfo as NSString
+								musicInfoQTUser.locale = Locale.current
+								toRet.append(musicInfoQTUser)
+							}
 							
-							let musicNameQTUser = AVMutableMetadataItem()
-							musicNameQTUser.keySpace = AVMetadataKeySpace.quickTimeUserData
-							musicNameQTUser.key = AVMetadataKey.quickTimeUserDataKeyFullName as NSString
-							musicNameQTUser.value = oldMusicName as NSString
-							musicNameQTUser.locale = Locale.current
+							do {
+								let musicNameQTUser = AVMutableMetadataItem()
+								musicNameQTUser.keySpace = .quickTimeUserData
+								musicNameQTUser.key = AVMetadataKey.quickTimeUserDataKeyFullName as NSString
+								musicNameQTUser.value = oldMusicName as NSString
+								musicNameQTUser.locale = Locale.current
+								toRet.append(musicNameQTUser)
+							}
 							
-							let musicInfoiTunes = AVMutableMetadataItem()
-							musicInfoiTunes.keySpace = AVMetadataKeySpace.iTunes
-							musicInfoiTunes.key = AVMetadataKey.iTunesMetadataKeyUserComment as NSString
-							musicInfoiTunes.value = oldMusicInfo as NSString
+							do {
+								let musicInfoiTunes = AVMutableMetadataItem()
+								musicInfoiTunes.keySpace = .iTunes
+								musicInfoiTunes.key = AVMetadataKey.iTunesMetadataKeyUserComment as NSString
+								musicInfoiTunes.value = oldMusicInfo as NSString
+								toRet.append(musicInfoiTunes)
+							}
 							
-							let musicInfoQTMeta = AVMutableMetadataItem()
-							musicInfoQTMeta.keySpace = .quickTimeMetadata
-							musicInfoQTMeta.key = AVMetadataKey.quickTimeMetadataKeyInformation as NSString
-							musicInfoQTMeta.value = oldMusicInfo as NSString
-							musicInfoQTMeta.locale = Locale.current
+							do {
+								let musicInfoQTMeta = AVMutableMetadataItem()
+								musicInfoQTMeta.keySpace = .quickTimeMetadata
+								musicInfoQTMeta.key = AVMetadataKey.quickTimeMetadataKeyInformation as NSString
+								musicInfoQTMeta.value = oldMusicInfo as NSString
+								musicInfoQTMeta.locale = Locale.current
+								toRet.append(musicInfoQTMeta)
+							}
 							
-							return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser]
+							return toRet
 						}()
 						
 						let tmpName = oldMusicName != "" ? oldMusicName : "untitled"
@@ -1370,7 +1394,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			savePanel.allowedFileTypes = [AVFileType.wav.rawValue]
 			savePanel.title = "Export as Wave Audio"
 			savePanel.beginSheetModal(for: window, completionHandler: { (result) -> Void in
-				if result.rawValue != NSFileHandlingPanelOKButton {
+				guard result.rawValue == NSFileHandlingPanelOKButton else {
 					self.madDriver.endExport()
 					return
 				}
@@ -1386,8 +1410,14 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					DispatchQueue.global().async() {
 						autoreleasepool {
 							do {
-								try self.saveMusic(waveToURL: savePanel.url!, theSett: &self.exportSettings)
-								self.madDriver.endExport()
+								do {
+									defer {
+										self.madDriver.endExport()
+									}
+									try autoreleasepool() {
+										try self.saveMusic(waveToURL: savePanel.url!, theSett: &self.exportSettings)
+									}
+								}
 								DispatchQueue.main.async() {
 									if self.isQuitting {
 										NSApplication.shared.reply(toApplicationShouldTerminate: true)
