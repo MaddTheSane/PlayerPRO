@@ -21,6 +21,7 @@ private let kMusicListLocation4 = "Music Key Location 4"
 private let kMusicListName4 = "Music List Name 4"
 
 let kPlayerList = "Player List"
+let kUntitledMusicList = "Untitled player LiST"
 
 #if os(OSX)
 	let PPPPath: URL = {
@@ -253,6 +254,8 @@ protocol MusicListDelegate: class {
 			selectedMusic = aDecoder.decodeInteger(forKey: kMusicListLocation4)
 			if let aName = aDecoder.decodeObject(forKey: kMusicListName4) as? String {
 				name = aName
+			} else {
+				name = kUntitledMusicList
 			}
 			for book in BookmarkArray {
 				if !((try? book.checkIsReachable()) ?? false) {
@@ -272,6 +275,7 @@ protocol MusicListDelegate: class {
 			selectedMusic = aDecoder.decodeInteger(forKey: kMusicListLocation3)
 			// Have all the new MusicListObjects use the same date
 			let currentDate = Date()
+			name = kUntitledMusicList
 			for bookURL in bookmarkArray {
 				if !bookURL.checkResourceIsReachableAndReturnError(nil) {
 					if selectedMusic == -1 {
@@ -288,6 +292,7 @@ protocol MusicListDelegate: class {
 				musicList.append(obj)
 			}
 		} else if let bookmarkArray = aDecoder.decodeObject(forKey: kMusicListKey2) as? [Data] {
+			name = kUntitledMusicList
 			if let curSel = aDecoder.decodeObject(forKey: kMusicListLocation2) as? Int {
 				selectedMusic = curSel
 			} else {
@@ -311,6 +316,7 @@ protocol MusicListDelegate: class {
 				}
 			}
 		} else if let bookmarkArray = aDecoder.decodeObject(forKey: kMusicListKey1) as? [Data] {
+			name = kUntitledMusicList
 			// Have all the new MusicListObjects use the same date
 			let currentDate = Date()
 			for bookData in bookmarkArray {
@@ -352,7 +358,7 @@ protocol MusicListDelegate: class {
 		guard let newList = MusicList(coder: keyedUnarc) else {
 			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError)
 		}
-		if newList.name == "New Music List",
+		if newList.name == kUntitledMusicList,
 			let values = try? url.resourceValues(forKeys: [URLResourceKey.localizedNameKey]),
 			let fileName = values.localizedName {
 			newList.name = fileName
