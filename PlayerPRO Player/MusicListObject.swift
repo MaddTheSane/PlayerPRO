@@ -17,6 +17,11 @@ private let kMusicListDateAddedKey	= "DateAdded"
 private let MusicListUUIDKey		= "UUID"
 
 #if os(OSX)
+
+private var bookGenOpts: Set<URLResourceKey> {
+	return [.volumeURLKey, .volumeUUIDStringKey, .volumeURLForRemountingKey]
+}
+	
 internal var homeURL: URL {
 	return URL(fileURLWithPath: NSHomeDirectory())
 }
@@ -59,9 +64,12 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 }
 
 @objc(PPMusicListObject) final class MusicListObject: NSObject, NSCopying, NSSecureCoding {
-	let musicURL: URL
+	@objc private(set) var musicURL: URL
 	@objc let addedDate: Date
 	@objc let uuid: UUID
+	#if os(OSX)
+	private var bookData: Data?
+	#endif
 
 	#if os(OSX)
 	@objc private(set) lazy var fileIcon: NSImage = {
@@ -122,6 +130,9 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 			throw NSError(domain: NSCocoaErrorDomain, code: NSFileNoSuchFileError)
 		}
 		self.init(url: resolvedURL, date: date ?? Date())
+		#if os(OSX)
+			bookData = Data(bookmarkData)
+		#endif
 	}
 	
 	func checkIsReachableAndReturnError(error: NSErrorPointer) -> Bool {
@@ -225,11 +236,26 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	
 	func encode(with aCoder: NSCoder) {
 		#if os(OSX)
-		if let bookmark = try? musicURL.bookmarkData(options: [], includingResourceValuesForKeys: [.volumeURLKey, .volumeUUIDStringKey, .volumeURLForRemountingKey], relativeTo: homeURL) {
-			aCoder.encode(bookmark, forKey: kMusicListURLBookmark)
-		}
+			var derefURL = musicURL
+			// Verify the location of the URL hasn't changed
+			// ...but only if we can track it.
+			// If some part of the process fails, just use the (possibly bad) URL.
+			// If no bookmark data, just generate the data as usual.
+			if let data = bookData {
+				var stale = false
+				if let url2 = try? URL(resolvingBookmarkData: data, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale), stale, let url1 = url2 {
+					derefURL = url1
+				}
+			}
+			
+			aCoder.encode(derefURL, forKey: kMusicListURLKey)
+			if let bookmark = try? derefURL.bookmarkData(includingResourceValuesForKeys: bookGenOpts, relativeTo: homeURL) {
+				aCoder.encode(bookmark, forKey: kMusicListURLBookmark)
+			}
+		#else
+			aCoder.encode(musicURL, forKey: kMusicListURLKey)
 		#endif
-		aCoder.encode(musicURL, forKey: kMusicListURLKey)
+
 		aCoder.encode(addedDate, forKey: kMusicListDateAddedKey)
 		aCoder.encode(uuid, forKey: MusicListUUIDKey)
 	}
@@ -238,10 +264,19 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		var fileURL: URL?
 		
 		#if os(OSX)
+			var data: Data? = nil
 		if let bookmarkData = aDecoder.decodeObject(forKey: kMusicListURLBookmark) as? Data {
-			var unusedStale: Bool = false
-			if let hi = try? URL(resolvingBookmarkData: bookmarkData, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &unusedStale) {
+			var stale: Bool = false
+			if let hi = try? URL(resolvingBookmarkData: bookmarkData, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale) {
 				fileURL = hi
+				if stale {
+					// Regenerate bookmark data
+					if let dat2 = try? hi?.bookmarkData(includingResourceValuesForKeys: bookGenOpts, relativeTo: homeURL) {
+						data = dat2
+					}
+				} else {
+					data = bookmarkData
+				}
 			}
 		}
 		#endif
@@ -257,7 +292,33 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		let aUUID = (aDecoder.decodeObject(forKey: MusicListUUIDKey) as? UUID) ?? UUID()
 		
 		self.init(url: aURL, date: aaddedDate, uuid: aUUID)
+		#if os(OSX)
+			if let data = data {
+				bookData = data
+			}
+		#endif
 	}
+	
+	#if os(OSX)
+	/// - returns: `true` if the URL needed updating, `false` otherwise, `nil` if it can't be validated.
+	func validateURL() throws -> Bool {
+		guard let bookData = bookData else {
+			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
+		}
+		var stale = false
+		if let url2 = try URL(resolvingBookmarkData: bookData, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale), stale {
+			musicURL = url2
+			
+			// Regenerate bookmark data
+			let dat2 = try url2.bookmarkData(includingResourceValuesForKeys: bookGenOpts, relativeTo: homeURL)
+			self.bookData = dat2
+			
+			return true
+		}
+
+		return false
+	}
+	#endif
 }
 
 extension MusicListObject: Codable {
@@ -272,12 +333,26 @@ extension MusicListObject: Codable {
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(uuid, forKey: .uuid)
-		try container.encode(musicURL, forKey: .musicURL)
 		try container.encode(addedDate, forKey: .dateAdded)
 		#if os(OSX)
-			if let bookmark = try? musicURL.bookmarkData(includingResourceValuesForKeys: [.volumeURLKey, .volumeUUIDStringKey, .volumeURLForRemountingKey], relativeTo: homeURL) {
+			var derefURL = musicURL
+			// Verify the location of the URL hasn't changed
+			// ...but only if we can track it.
+			// If some part of the process fails, just use the (possibly bad) URL.
+			// If no bookmark data, just generate the data as usual.
+			if let data = bookData {
+				var stale = false
+				if let url2 = try? URL(resolvingBookmarkData: data, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale), stale, let url1 = url2 {
+					derefURL = url1
+				}
+			}
+			
+			try container.encode(derefURL, forKey: .musicURL)
+			if let bookmark = try? derefURL.bookmarkData(includingResourceValuesForKeys: bookGenOpts, relativeTo: homeURL) {
 				try container.encode(bookmark, forKey: .bookmarkData)
 			}
+		#else
+			try container.encode(musicURL, forKey: .musicURL)
 		#endif
 	}
 	
@@ -287,13 +362,22 @@ extension MusicListObject: Codable {
 		var url: URL?
 		
 		#if os(OSX)
-		do {
-			var unusedStale = false
-			if let bookDat = try values.decodeIfPresent(Data.self, forKey: .bookmarkData),
-				let url2 = try? URL(resolvingBookmarkData: bookDat, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &unusedStale) {
-				url = url2
+			var data: Data? = nil
+			do {
+				var stale = false
+				if let bookDat = try values.decodeIfPresent(Data.self, forKey: .bookmarkData),
+					let url2 = try? URL(resolvingBookmarkData: bookDat, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale) {
+					url = url2
+					if stale {
+						// Regenerate bookmark data
+						if let dat2 = try? url?.bookmarkData(includingResourceValuesForKeys: bookGenOpts, relativeTo: homeURL) {
+							data = dat2
+						}
+					} else {
+						data = bookDat
+					}
+				}
 			}
-		}
 		#endif
 		
 		if url == nil {
@@ -301,5 +385,10 @@ extension MusicListObject: Codable {
 		}
 		let aUUID = try values.decode(UUID.self, forKey: .uuid)
 		self.init(url: url!, date: dateAdded, uuid: aUUID)
+		#if os(OSX)
+			if let data = data {
+				bookData = data
+			}
+		#endif
 	}
 }

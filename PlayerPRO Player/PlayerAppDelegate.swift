@@ -936,14 +936,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	func applicationWillTerminate(_ notification: Notification) {
 		timeChecker.invalidate()
 		
+		madDriver.stopDriver()
+		musicList.selectedMusic = selectedIndex.index
 		do {
 			try musicLibrary.save()
 		} catch let error as NSError {
 			NSLog("Failed to save music library, %@", error)
 		}
-		
-		madDriver.stopDriver()
-		musicList.selectedMusic = selectedIndex.index
 		
 		NotificationCenter.default.removeObserver(self)
 	}
@@ -1569,7 +1568,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		}
 		
 		let obj = musicList.objectInMusicList(at: selected.last!)
-		let musicURL = obj.musicURL
+		var musicURL = obj.musicURL
+		do {
+			if !((try? obj.musicURL.checkResourceIsReachable()) ?? false) {
+				_=try obj.validateURL()
+				musicURL = obj.musicURL
+			}
+		} catch _ { }
 		var aPPInfo: PPLibrary.MusicFileInfo? = nil
 		
 		func badValues() {
