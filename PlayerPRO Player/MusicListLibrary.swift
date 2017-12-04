@@ -14,7 +14,7 @@ private let PPMusicBase: URL = {
 }()
 
 private let PPMusicLib: URL = {
-	return PPMusicBase.appendingPathComponent("PlayerPRO Library.pplib")
+	return PPMusicBase.appendingPathComponent("PlayerPRO Library.pplib", isDirectory: false)
 }()
 
 class MusicListLibrary: NSObject {

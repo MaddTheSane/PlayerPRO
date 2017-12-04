@@ -287,7 +287,7 @@ extension MusicListObject: Codable {
 		var url: URL?
 		
 		#if os(OSX)
-		if values.contains(.bookmarkData) {
+		do {
 			var unusedStale = false
 			if let bookDat = try values.decodeIfPresent(Data.self, forKey: .bookmarkData),
 				let url2 = try? URL(resolvingBookmarkData: bookDat, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &unusedStale) {
