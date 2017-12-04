@@ -245,7 +245,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		// clear sort descriptors, so added files don't get sorted incorrectly.
 		tableView.sortDescriptors = []
 		willChangeValue(forKey: kMusicListKVO)
-		let okayMusic = musicList.addMusicURL(theURL, force: false)
+		let okayMusic = musicList.add(music: theURL, force: false)
 		didChangeValue(forKey: kMusicListKVO)
 		switch okayMusic {
 		case .failure:
@@ -269,7 +269,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			
 			switch alertSelect {
 			case .alertFirstButtonReturn:
-				_ = musicList.addMusicURL(theURL, force: true)
+				_ = musicList.add(music: theURL, force: true)
 				if load && UserDefaults.standard.bool(forKey: PPLoadMusicAtMusicLoad) {
 					self.selectedIndex.index = musicList.countOfMusicList - 1
 					//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
@@ -631,7 +631,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		savePanel.canCreateDirectories = true
 		savePanel.canSelectHiddenExtension = true
 		savePanel.beginSheetModal(for: self.window, completionHandler: { (result) -> Void in
-			if result.rawValue == NSFileHandlingPanelOKButton {
+			if result == NSApplication.ModalResponse.OK {
 				do {
 					try self.musicList.saveMusicList(to: savePanel.url!)
 				} catch {
@@ -742,7 +742,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			av.setupDefaults()
 			av.allowsMultipleSelectionOfTrackers = true
 			av.beginOpenPanel(window, completionHandler: { (result) -> Void in
-				if result.rawValue != NSFileHandlingPanelOKButton {
+				if result != NSApplication.ModalResponse.OK {
 					return
 				}
 				let ws = NSWorkspace.shared
@@ -783,7 +783,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		}
 		
 		savePanel.beginSheetModal(for: window) { (result) -> Void in
-			if result.rawValue == NSFileHandlingPanelOKButton {
+			if result == NSApplication.ModalResponse.OK {
 				let saveURL = savePanel.url!
 				self.saveMusic(to: saveURL)
 				self.addMusicToMusicList(saveURL, loadIfPreferencesAllow: false)
@@ -1192,7 +1192,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			savePanel.allowedFileTypes = [AVFileType.aiff.rawValue]
 			savePanel.title = "Export as AIFF audio"
 			savePanel.beginSheetModal(for: self.window, completionHandler: { (result) -> Void in
-				guard result.rawValue == NSFileHandlingPanelOKButton else {
+				guard result == NSApplication.ModalResponse.OK else {
 					self.madDriver.endExport()
 					return
 				}
@@ -1240,7 +1240,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			savePanel.allowedFileTypes = [AVFileType.m4a.rawValue]
 			savePanel.title = "Export as MPEG-4 Audio"
 			savePanel.beginSheetModal(for: self.window, completionHandler: {(result) -> Void in
-				if result.rawValue != NSFileHandlingPanelOKButton {
+				guard result == NSApplication.ModalResponse.OK else {
 					self.madDriver.endExport()
 					return
 				}
@@ -1396,7 +1396,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			savePanel.allowedFileTypes = [AVFileType.wav.rawValue]
 			savePanel.title = "Export as Wave Audio"
 			savePanel.beginSheetModal(for: window, completionHandler: { (result) -> Void in
-				guard result.rawValue == NSFileHandlingPanelOKButton else {
+				guard result == NSApplication.ModalResponse.OK else {
 					self.madDriver.endExport()
 					return
 				}
@@ -1463,7 +1463,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				defer {
 					self.madDriver.endExport()
 				}
-				guard result.rawValue == NSFileHandlingPanelOKButton else {
+				guard result == NSApplication.ModalResponse.OK else {
 					return
 				}
 				
@@ -1534,7 +1534,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			av.setupDefaults()
 			av.allowsMultipleSelectionOfTrackers = true
 			av.beginOpenPanel(self.window, completionHandler: { (result) -> Void in
-				if (result.rawValue == NSFileHandlingPanelOKButton) {
+				if result == NSApplication.ModalResponse.OK {
 					self.addMusics(toMusicList: panel.urls)
 				}
 			})

@@ -76,6 +76,14 @@
             argument = "/Users/cwbetts/Music/Mod\ music/&quot;sea of fantasy.madk&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/Users/cwbetts/Music/Mod\ music/READY\ copy.madk"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/Users/cwbetts/Music/Mod\ music/MADK\ translated/Sosaria.madk"
+            isEnabled = "YES">
+         </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>

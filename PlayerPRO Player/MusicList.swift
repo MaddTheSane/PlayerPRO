@@ -141,7 +141,7 @@ protocol MusicListDelegate: class {
 		self.didChangeValue(forKey: kMusicListKVO)
 	}
 	
-	func sortMusicListByName() {
+	@objc func sortMusicListByName() {
 		self.willChangeValue(forKey: kMusicListKVO)
 		musicList.sort(by: { (var1, var2) -> Bool in
 			let result = var1.fileName.localizedStandardCompare(var2.fileName)
@@ -162,7 +162,7 @@ protocol MusicListDelegate: class {
 		case similarURL
 	}
 	
-	func addMusicURL(_ theURL: URL?, force: Bool = false) -> AddMusicStatus {
+	func add(music theURL: URL?, force: Bool = false) -> AddMusicStatus {
 		guard let theURL = theURL else {
 			return .failure
 		}
