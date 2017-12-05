@@ -43,7 +43,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 	}
 	
 	public func importSample(at url: URL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) throws {
-		let fileRef1 = try ExtAudioFile(openURL: url)
+		let fileRef1 = try ExtAudioFile(open: url)
 		let newSample = PPSampleObject()
 
 		if var mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) as NSData? as Data? {
@@ -128,7 +128,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [.signedInteger, .packed], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
 		let realFormat = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
 		
-		let audOut = try ExtAudioFile(createURL: sampleURL, fileType: .WAVE, streamDescription: &asbd, flags: [.eraseFile])
+		let audOut = try ExtAudioFile(create: sampleURL, fileType: .WAVE, streamDescription: &asbd, flags: [.eraseFile])
 		audOut.clientDataFormat = realFormat
 		
 		try sample.data.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in

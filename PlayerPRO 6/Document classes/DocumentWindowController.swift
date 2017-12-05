@@ -160,7 +160,7 @@ class DocumentWindowController: NSWindowController {
 			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 			var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 			
-			audioFile = try ExtAudioFile(createURL: theURL, fileType: .WAVE, streamDescription: &asbd, flags: .eraseFile)
+			audioFile = try ExtAudioFile(create: theURL, fileType: .WAVE, streamDescription: &asbd, flags: .eraseFile)
 			
 			audioFile.clientDataFormat = realFormat
 			
@@ -207,7 +207,7 @@ class DocumentWindowController: NSWindowController {
 			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 			var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 			
-			let audioFile = try ExtAudioFile(createURL: theURL, fileType: .AIFF, streamDescription: &asbd, flags: .eraseFile)
+			let audioFile = try ExtAudioFile(create: theURL, fileType: .AIFF, streamDescription: &asbd, flags: .eraseFile)
 			
 			audioFile.clientDataFormat = realFormat
 			

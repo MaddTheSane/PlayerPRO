@@ -16,7 +16,7 @@ import SwiftAudioAdditions
 private let kSrcBufSize: UInt32 = 32768;
 
 internal func readAIFF(at url: URL) throws -> PPSampleObject {
-	guard let fileRef = try? ExtAudioFile(openURL: url) else {
+	guard let fileRef = try? ExtAudioFile(open: url) else {
 		throw MADErr.readingErr
 	}
 	
