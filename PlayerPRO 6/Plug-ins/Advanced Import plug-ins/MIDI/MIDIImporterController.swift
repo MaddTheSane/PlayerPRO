@@ -62,6 +62,6 @@ class MIDIImporterController: NSWindowController {
 
 	@IBAction func cancelButtonPressed(sender: AnyObject) {
 		NSApplication.shared.endModalSession(modalSession)
-		handler(nil, MADErr.userCanceledErr)
+		handler(nil, MADErr.userCancelledErr)
 	}
 }
