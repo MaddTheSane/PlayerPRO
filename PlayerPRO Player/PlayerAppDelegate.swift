@@ -23,14 +23,15 @@ private func cocoaDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: Unsafe
 	let swiftFile = FileManager.default.string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
 	let swiftText = String(validatingUTF8: text!)!
 	print("\(swiftFile):\(line), error text: \(swiftText)")
-	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
-	let mainStr = String(format: NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display"), text!)
-	let quitStr = NSLocalizedString("MyDebugStr_Quit", comment: "Quit")
-	let contStr = NSLocalizedString("MyDebugStr_Continue", comment: "Continue")
-	let debuStr = NSLocalizedString("MyDebugStr_Debug", comment: "Debug")
+	let alert = NSAlert()
+	alert.alertStyle = .critical
+	alert.messageText = NSLocalizedString("MyDebugStr_Error", comment: "Error")
+	alert.informativeText = String(format: NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display"), text!)
+	alert.addButton(withTitle: NSLocalizedString("MyDebugStr_Quit", comment: "Quit"))
+	alert.addButton(withTitle: NSLocalizedString("MyDebugStr_Continue", comment: "Continue"))
+	alert.addButton(withTitle: NSLocalizedString("MyDebugStr_Debug", comment: "Debug"))
 	
-	let alert = PPRunCriticalAlertPanel(title: errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr)
-	switch (alert) {
+	switch (alert.runModal()) {
 	case NSApplication.ModalResponse.alertSecondButtonReturn:
 		break
 		
@@ -144,7 +145,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
 			} catch let err {
-				NSAlert(error: err).runModal()
+				NSApp.presentError(err)
 			}
 		} else if selMusFromList != -1 {
 			selectMusic(at: selMusFromList)
@@ -399,7 +400,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		do {
 			try loadMusicFromCurrentlyPlayingIndex()
 		} catch {
-			NSAlert(error: error).runModal()
+			NSApp.presentError(error)
 		}
 	}
 	
@@ -767,7 +768,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		do {
 			try music!.saveMusic(to: tosave, compress: false)
 		} catch {
-			NSAlert(error: error).runModal()
+			NSApp.presentError(error)
 		}
 	}
 	
@@ -983,7 +984,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
 			} catch let err {
-				NSAlert(error: err).runModal()
+				NSApp.presentError(err)
 			}
 		} else if UserDefaults.standard.bool(forKey: PPLoopMusicWhenDone) {
 			selectedIndex.index = 0
@@ -991,7 +992,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
 			} catch let err {
-				NSAlert(error: err).runModal()
+				NSApp.presentError(err)
 			}
 		} else {
 			NSSound.beep()
@@ -1032,7 +1033,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
 			} catch let err {
-				NSAlert(error: err).runModal()
+				NSApp.presentError(err)
 			}
 		} else {
 			NSSound.beep()
@@ -1482,7 +1483,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					if self.isQuitting {
 						NSApp.reply(toApplicationShouldTerminate: true)
 					} else {
-						NSAlert(error: error).runModal()
+						NSApp.presentError(error)
 					}
 				}
 			})
@@ -1500,6 +1501,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	@IBAction func toggleInfo(_ sender: AnyObject?) {
+		infoPanel.makeKeyAndOrderFront(sender)
 	}
 	
 	@IBAction func sortMusicList(_ sender: AnyObject?) {
@@ -1514,7 +1516,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		do {
 			try loadMusicFromCurrentlyPlayingIndex()
 		} catch let err {
-			NSAlert(error: err).runModal()
+			NSApp.presentError(err)
 		}
 	}
 	
