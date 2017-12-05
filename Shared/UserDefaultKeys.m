@@ -24,7 +24,7 @@ NSString * const PPMusicDidChangeNotification = @"PP Music changed";
 NSString * const PPDriverDidChangeNotification = @"PlayerPRO Driver did change";
 
 NSString * const kMusicListKVO = @"musicList";
-NSString * const PPDoubleDash = @"--";
+NSString * const PPDoubleDash = @"–";
 
 NSString * const MADNativeUTI = @"com.quadmation.playerpro.madk";
 NSString * const MADGenericUTI = @"com.quadmation.playerpro.mad";

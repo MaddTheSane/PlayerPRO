@@ -32,7 +32,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [AudioFormatFlag.signedInteger, .packed, .bigEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
 		let realFormat = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .linearPCM, formatFlags: [AudioFormatFlag.signedInteger, .packed, .nativeEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: numChannels)
 		
-		let audOut = try ExtAudioFile(createURL: sampleURL, fileType: .AIFF, streamDescription: &asbd, flags: [.eraseFile])
+		let audOut = try ExtAudioFile(create: sampleURL, fileType: .AIFF, streamDescription: &asbd, flags: [.eraseFile])
 		audOut.clientDataFormat = realFormat
 		
 		try sample.data.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
