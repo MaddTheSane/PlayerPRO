@@ -239,6 +239,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		if (self.selectedIndex.index >= 0) {
 			//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
 			selectMusic(at: selectedIndex.index)
+			selectList(selectedIndex.currentList!)
 		}
 	}
 	
@@ -396,6 +397,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	@objc private func doubleClickMusicList() {
+		let playSel = playlistsView.selectedRow
+		if playSel != -1 {
+			self.selectedIndex.currentList = musicLibrary.allLists[playSel]
+		}
 		self.selectedIndex.index = tableView.selectedRow
 		do {
 			try loadMusicFromCurrentlyPlayingIndex()
@@ -605,6 +610,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		let idx = IndexSet(integer: anIdx)
 		tableView.selectRowIndexes(idx, byExtendingSelection: false)
 		tableView.scrollRowToVisible(anIdx)
+	}
+	
+	private func selectList(_ list: MusicList) {
+		playlistsController.setSelectedObjects([list])
 	}
 	
 	@IBAction func clearMusicList(_ sender: AnyObject?) {
@@ -890,6 +899,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				try loadMusic(at: musicList.url(at: selMus), autoPlay: false)
 				selectedIndex.index = selMus
 				selectedIndex.playbackURL = musicList.url(at: selMus)
+				selectedIndex.currentList = musicList
 				playingIndex = selectedIndex
 			} catch let error1 {
 				NSApp.presentError(error1)

@@ -11,6 +11,7 @@ import Foundation
 struct CurrentlyPlayingIndex: CustomDebugStringConvertible, CustomStringConvertible {
 	var index = -1
 	var playbackURL: URL? = nil
+	var currentList: MusicList? = nil
 	
 	var description: String {
 		return "Index: \(index) URL: \(playbackURL?.relativePath ?? "none")"

@@ -152,6 +152,8 @@ extension MusicListLibrary: Codable {
 	}
 }
 
+// MARK: -
+
 extension MusicListLibrary: MusicListDelegate {
 	func musicList(_ list: MusicList, willAdd object: MusicListObject) -> MusicListObject {
 		let newUUID = object.uuid
@@ -180,7 +182,7 @@ extension MusicListLibrary: MusicListDelegate {
 	}
 }
 
-// KVO/KVC for allLists
+// MARK: KVO/KVC for allLists
 extension MusicListLibrary {
 	
 	@objc var countOfAllLists: Int {
@@ -191,6 +193,25 @@ extension MusicListLibrary {
 	func objectInAllLists(at index: Int) -> MusicList {
 		return allLists[index]
 	}
-
-	//valueforall
+	
+	@objc(insertObject:inAllListsAtIndex:)
+	func insert(_ list: MusicList, at index: Int) {
+		list.resolveObjects(against: self)
+		list.delegate = self
+		allLists.insert(list, at: index)
+	}
+	
+	@objc
+	func newAllListsObject() -> Any {
+		let newVal = MusicList()
+		newVal.delegate = self
+		allLists.append(newVal)
+		return newVal
+	}
+	
+	//removeObjectFromTransactionsAtIndex
+	@objc(removeObjectFromAllListsAtIndex:)
+	func removeFromAllLists(at index: Int) {
+		allLists.remove(at: index)
+	}
 }
