@@ -64,6 +64,8 @@ extern NSError* __nullable PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr
 */
 extern BOOL PPErrorIsUserCancelled(NSError * __nonnull theErr);
 
+extern NSString * __nullable PPLocalizedStringForKeyAndError(NSErrorUserInfoKey __nonnull userInfoKey, MADErr errCode);
+
 __END_DECLS
 
 #endif

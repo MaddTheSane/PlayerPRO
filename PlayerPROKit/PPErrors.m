@@ -23,7 +23,7 @@ NSString * const PPMADErrorDomain = @"net.sourceforge.playerpro.PlayerPROKit.Err
 
 #define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", PPKBundle, theKey, comment)
 
-static NSString *stringForKeyAndError(NSString *userInfoKey, MADErr errCode)
+NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr errCode)
 {
 	static NSBundle *PPKBundle;
 	static dispatch_once_t errorOnceToken;
@@ -233,7 +233,7 @@ __private_extern @interface PPPrivateErrorLoading : NSObject
 {
 	if ([[NSError class] respondsToSelector:@selector(setUserInfoValueProviderForDomain:provider:)]) {
 		[NSError setUserInfoValueProviderForDomain:PPMADErrorDomain provider:^id (NSError *err, NSString *userInfoKey) {
-			return stringForKeyAndError(userInfoKey, err.code);
+			return PPLocalizedStringForKeyAndError(userInfoKey, err.code);
 		}];
 	}
 }
@@ -248,9 +248,9 @@ NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 
 NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa)
 {
-	NSString *ErrorDescription = stringForKeyAndError(NSLocalizedDescriptionKey, theErr);
-	NSString *errorReason = stringForKeyAndError(NSLocalizedFailureReasonErrorKey, theErr);
-	NSString *recoverySuggestion = stringForKeyAndError(NSLocalizedRecoverySuggestionErrorKey, theErr);
+	NSString *ErrorDescription = PPLocalizedStringForKeyAndError(NSLocalizedDescriptionKey, theErr);
+	NSString *errorReason = PPLocalizedStringForKeyAndError(NSLocalizedFailureReasonErrorKey, theErr);
+	NSString *recoverySuggestion = PPLocalizedStringForKeyAndError(NSLocalizedRecoverySuggestionErrorKey, theErr);
 	NSDictionary *userInfo;
 	if (!ErrorDescription) {
 		userInfo = nil;

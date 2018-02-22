@@ -10,7 +10,7 @@ import Foundation
 import PlayerPROCore
 import SwiftAdditions
 
-extension MADErr: CustomNSError {
+extension MADErr: CustomNSError, LocalizedError {
 	/// PlayerPROKit's `PPMADErrorDomain`
 	public static var errorDomain: String {
 		return PPMADErrorDomain
@@ -19,6 +19,17 @@ extension MADErr: CustomNSError {
 	/// PlayerPROCore's `MADErr` raw value
 	public var errorCode: Int {
 		return Int(rawValue)
+	}
+	
+	public var errorDescription: String? {
+		return PPLocalizedStringForKeyAndError(NSLocalizedDescriptionKey, self)
+	}
+	public var failureReason: String? {
+		return PPLocalizedStringForKeyAndError(NSLocalizedFailureReasonErrorKey, self)
+	}
+
+	public var recoverySuggestion: String? {
+		return PPLocalizedStringForKeyAndError(NSLocalizedRecoverySuggestionErrorKey, self)
 	}
 	
 	/// Throws `self` if `self` is anything other than `.NoErr`.
