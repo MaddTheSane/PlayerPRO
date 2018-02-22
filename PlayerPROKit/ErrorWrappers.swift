@@ -10,14 +10,14 @@ import Foundation
 import PlayerPROCore
 import SwiftAdditions
 
-extension MADErr: Error {
+extension MADErr: CustomNSError {
 	/// PlayerPROKit's `PPMADErrorDomain`
-	public var _domain: String {
+	public static var errorDomain: String {
 		return PPMADErrorDomain
 	}
 	
 	/// PlayerPROCore's `MADErr` raw value
-	public var _code: Int {
+	public var errorCode: Int {
 		return Int(rawValue)
 	}
 	
