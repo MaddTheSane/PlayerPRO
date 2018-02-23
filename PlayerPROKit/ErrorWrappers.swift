@@ -10,15 +10,26 @@ import Foundation
 import PlayerPROCore
 import SwiftAdditions
 
-extension MADErr: Error {
+extension MADErr: CustomNSError, LocalizedError {
 	/// PlayerPROKit's `PPMADErrorDomain`
-	public var _domain: String {
+	public static var errorDomain: String {
 		return PPMADErrorDomain
 	}
 	
 	/// PlayerPROCore's `MADErr` raw value
-	public var _code: Int {
+	public var errorCode: Int {
 		return Int(rawValue)
+	}
+	
+	public var errorDescription: String? {
+		return PPLocalizedStringForKeyAndError(NSLocalizedDescriptionKey, self)
+	}
+	public var failureReason: String? {
+		return PPLocalizedStringForKeyAndError(NSLocalizedFailureReasonErrorKey, self)
+	}
+
+	public var recoverySuggestion: String? {
+		return PPLocalizedStringForKeyAndError(NSLocalizedRecoverySuggestionErrorKey, self)
 	}
 	
 	/// Throws `self` if `self` is anything other than `.NoErr`.
@@ -85,6 +96,64 @@ extension MADErr: Error {
 		}
 		
 		self = errVal
+	}
+}
+
+extension MADErr: CustomStringConvertible, CustomDebugStringConvertible {
+	public var description: String {
+		switch self {
+		case .noErr:
+			return "MADErr.noErr"
+			
+		case .needMemory:
+			return "MADErr.needMemory"
+			
+		case .readingErr:
+			return "MADErr.readingErr"
+			
+		case .incompatibleFile:
+			return "MADErr.incompatibleFile"
+			
+		case .libraryNotInitialized:
+			return "MADErr.libraryNotInitialized"
+			
+		case .parametersErr:
+			return "MADErr.parametersErr"
+			
+		case .unknownErr:
+			return "MADErr.unknownErr"
+			
+		case .soundManagerErr:
+			return "MADErr.soundManagerErr"
+			
+		case .orderNotImplemented:
+			return "MADErr.orderNotImplemented"
+			
+		case .fileNotSupportedByThisPlug:
+			return "MADErr.fileNotSupportedByThisPlug"
+			
+		case .cannotFindPlug:
+			return "MADErr.cannotFindPlug"
+			
+		case .musicHasNoDriver:
+			return "MADErr.musicHasNoDriver"
+			
+		case .driverHasNoMusic:
+			return "MADErr.driverHasNoMusic"
+			
+		case .soundSystemUnavailable:
+			return "MADErr.soundSystemUnavailable"
+			
+		case .writingErr:
+			return "MADErr.writingErr"
+			
+		case .userCancelledErr:
+			return "MADErr.userCancelledErr"
+		}
+	}
+	
+	public var debugDescription: String {
+		return "\(description), (\(rawValue))"
 	}
 }
 
