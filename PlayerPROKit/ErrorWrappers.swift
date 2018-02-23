@@ -99,6 +99,64 @@ extension MADErr: CustomNSError, LocalizedError {
 	}
 }
 
+extension MADErr: CustomStringConvertible, CustomDebugStringConvertible {
+	public var description: String {
+		switch self {
+		case .noErr:
+			return "MADErr.noErr"
+			
+		case .needMemory:
+			return "MADErr.needMemory"
+			
+		case .readingErr:
+			return "MADErr.readingErr"
+			
+		case .incompatibleFile:
+			return "MADErr.incompatibleFile"
+			
+		case .libraryNotInitialized:
+			return "MADErr.libraryNotInitialized"
+			
+		case .parametersErr:
+			return "MADErr.parametersErr"
+			
+		case .unknownErr:
+			return "MADErr.unknownErr"
+			
+		case .soundManagerErr:
+			return "MADErr.soundManagerErr"
+			
+		case .orderNotImplemented:
+			return "MADErr.orderNotImplemented"
+			
+		case .fileNotSupportedByThisPlug:
+			return "MADErr.fileNotSupportedByThisPlug"
+			
+		case .cannotFindPlug:
+			return "MADErr.cannotFindPlug"
+			
+		case .musicHasNoDriver:
+			return "MADErr.musicHasNoDriver"
+			
+		case .driverHasNoMusic:
+			return "MADErr.driverHasNoMusic"
+			
+		case .soundSystemUnavailable:
+			return "MADErr.soundSystemUnavailable"
+			
+		case .writingErr:
+			return "MADErr.writingErr"
+			
+		case .userCancelledErr:
+			return "MADErr.userCancelledErr"
+		}
+	}
+	
+	public var debugDescription: String {
+		return "\(description), (\(rawValue))"
+	}
+}
+
 /// Creates an `NSError` from a `MADErr`, optionally converting the error type to an error in the Cocoa error domain.
 ///
 /// - parameter theErr: The `MADErr` to convert to an `NSError`
