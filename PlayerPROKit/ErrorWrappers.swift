@@ -16,6 +16,10 @@ extension MADErr: CustomNSError, LocalizedError {
 		return PPMADErrorDomain
 	}
 	
+	public var _domain: String {
+		return MADErr.errorDomain
+	}
+	
 	/// PlayerPROCore's `MADErr` raw value
 	public var errorCode: Int {
 		return Int(rawValue)
