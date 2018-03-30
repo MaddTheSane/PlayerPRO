@@ -377,21 +377,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	@objc(loadMusicFromCurrentlyPlayingIndexAndReturnError:)
 	func loadMusicFromCurrentlyPlayingIndex() throws {
-		var theErr: Error! = NSError(domain: "Migrator", code: 0, userInfo: nil)
 		selectedIndex.playbackURL = musicList.url(at: selectedIndex.index)
-		let isGood: Bool
-		do {
-			try loadMusic(at: selectedIndex.playbackURL!)
-			isGood = true
-			playingIndex = selectedIndex
-		} catch let error {
-			theErr = error
-			isGood = false
-		}
-		if isGood {
-			return
-		}
-		throw theErr
+		try loadMusic(at: selectedIndex.playbackURL!)
+		playingIndex = selectedIndex
 	}
 	
 	@objc private func doubleClickMusicList() {

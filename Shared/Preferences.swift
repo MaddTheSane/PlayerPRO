@@ -11,8 +11,7 @@ import MASPreferences
 
 extension TagCoupling {
 	init(_ theAmount: Int32, _ theTag: Int) {
-		amount = theAmount
-		tag = theTag
+		self.init(amount: theAmount, tag: theTag)
 	}
 }
 

@@ -275,17 +275,7 @@ private var BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, In
 
 extension sData32 {
 	private init() {
-		self.size = 0
-		self.loopBeg = 0
-		self.loopSize = 0
-		self.vol = maximumVolume
-		self.c2spd = noFineTune
-		self.loopType = .classic
-		self.amp = 8
-		self.realNote = 0
-		self.name = BlankNameChar32
-		self.stereo = false
-		self.data = 0
+		self.init(size: 0, loopBeg: 0, loopSize: 0, vol: maximumVolume, c2spd: noFineTune, loopType: .classic, amp: 8, realNote: 0, name: BlankNameChar32, stereo: false, data: 0)
 	}
 	
 	public static func new() -> sData32 {
@@ -297,17 +287,7 @@ extension sData32 {
 	}
 	
 	public init(_ fromSData32: sData) {
-		size = fromSData32.size
-		loopBeg = fromSData32.loopBeg
-		loopSize = fromSData32.loopSize
-		vol = fromSData32.vol
-		c2spd = fromSData32.c2spd
-		loopType = fromSData32.loopType
-		amp = fromSData32.amp
-		realNote = fromSData32.realNote
-		name = fromSData32.name
-		stereo = fromSData32.stereo
-		data = 0
+		self.init(size: fromSData32.size, loopBeg: fromSData32.loopBeg, loopSize: fromSData32.loopSize, vol: fromSData32.vol, c2spd: fromSData32.c2spd, loopType: fromSData32.loopType, amp: fromSData32.amp, realNote: fromSData32.realNote, name: fromSData32.name, stereo: fromSData32.stereo, data: 0)
 	}
 }
 
@@ -321,31 +301,11 @@ extension sData {
 	}
 	
 	public init(_ fromSData32: sData32) {
-		size = fromSData32.size
-		loopBeg = fromSData32.loopBeg
-		loopSize = fromSData32.loopSize
-		vol = fromSData32.vol
-		c2spd = fromSData32.c2spd
-		loopType = fromSData32.loopType
-		amp = fromSData32.amp
-		realNote = fromSData32.realNote
-		name = fromSData32.name
-		stereo = fromSData32.stereo
-		data = nil
+		self.init(size: fromSData32.size, loopBeg: fromSData32.loopBeg, loopSize: fromSData32.loopSize, vol: fromSData32.vol, c2spd: fromSData32.c2spd, loopType: fromSData32.loopType, amp: fromSData32.amp, realNote: fromSData32.realNote, name: fromSData32.name, stereo: fromSData32.stereo, data: nil)
 	}
 	
 	private init() {
-		self.size = 0
-		self.loopBeg = 0
-		self.loopSize = 0
-		self.vol = maximumVolume
-		self.c2spd = noFineTune
-		self.loopType = .classic
-		self.amp = 8
-		self.realNote = 0
-		self.name = BlankNameChar32
-		self.stereo = false
-		self.data = nil
+		self.init(size: 0, loopBeg: 0, loopSize: 0, vol: maximumVolume, c2spd: noFineTune, loopType: .classic, amp: 8, realNote: 0, name: BlankNameChar32, stereo: false, data: nil)
 	}
 }
 
@@ -373,12 +333,7 @@ extension FXSets: Equatable {
 
 extension Cmd: Equatable {
 	private init() {
-		ins = 0
-		note = 0xFF
-		cmd = .arpeggio
-		arg = 0
-		vol = 0xFF
-		unused = 0
+		self.init(ins: 0, note: 0xFF, cmd: .arpeggio, arg: 0, vol: 0xFF, unused: 0)
 	}
 	
 	/// Returns a `Cmd` with all bytes to zero, except `note`
@@ -507,20 +462,28 @@ extension MADBool: ExpressibleByBooleanLiteral {
 	}
 }
 
-extension MADBool: CustomPlaygroundQuickLookable, CustomReflectable, Equatable {
+extension MADBool: CustomPlaygroundQuickLookable {
 	public var customPlaygroundQuickLook: PlaygroundQuickLook {
 		return .bool(self.boolValue)
 	}
-	
+}
+
+extension MADBool: CustomReflectable, Equatable {
 	public var customMirror: Mirror {
 		return Mirror(reflecting: boolValue)
 	}
+	
+	static public func ==(lhs: MADBool, rhs: MADBool) -> Bool {
+		return lhs.boolValue == rhs.boolValue
+	}
+
 }
 
-public func ==(lhs: MADBool, rhs: MADBool) -> Bool {
-	return lhs.boolValue == rhs.boolValue
+extension MADBool: CustomPlaygroundDisplayConvertible {
+	public var playgroundDescription: Any {
+		return self.boolValue
+	}
 }
-
 
 // MARK: MADFourChar
 // TODO: find out how Apple does this with CGFloat...
