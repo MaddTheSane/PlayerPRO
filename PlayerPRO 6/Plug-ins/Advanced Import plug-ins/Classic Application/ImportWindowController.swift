@@ -73,7 +73,7 @@ class ImportWindowController: NSWindowController {
 				
 				guard errVal == .noErr else {
 					// The importers *should* have cleaned up after themselves...
-					madMusic.deallocate(capacity: 1)
+					madMusic.deallocate()
 					NSApplication.shared.endModalSession(modalSession)
 					currentBlock(nil, errVal)
 					
