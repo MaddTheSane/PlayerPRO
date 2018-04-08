@@ -211,19 +211,9 @@ protocol MusicListDelegate: class {
 		return toRetUUIDs
 	}
 	
-	convenience init?(uuid: UUID) {
-		let path = PPPPath.appendingPathComponent(uuid.uuidString).appendingPathExtension(listExtension)
-		self.init()
-		fileUUID = uuid
-		if !loadMusicList(from: path) {
-			return nil
-		}
-	}
-	
-	@discardableResult
-	func save() -> Bool {
+	func save() throws {
 		let saveURL = PPPPath.appendingPathComponent(fileUUID.uuidString).appendingPathExtension(listExtension)
-		return saveMusicList(to: saveURL)
+		try saveMusicList(to: saveURL)
 	}
 	#endif
 	

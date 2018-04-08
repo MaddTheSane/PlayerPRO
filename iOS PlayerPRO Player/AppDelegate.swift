@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 	var window: UIWindow?
 	let madLib = try! PPLibrary()
 	var madDriver: PPDriver!
-	var musicLists = [MusicList]()
+	var musicLibrary = MusicListLibrary()
 	var musicFiles = [MusicListObject]()
 	weak var currentMusicList: MusicList!
 
@@ -72,22 +72,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 		navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
 		splitViewController.delegate = self
 		
-		for uuid in MusicList.availablePlaylistUUIDs()! {
-			if let newMusList = MusicList(uuid: uuid) {
-				musicLists.append(newMusList)
-			}
-			//musicLists
+		do {
+			musicLibrary = try MusicListLibrary.load()
+		} catch {
+			
 		}
 		
-		if musicLists.count == 0 {
-			musicLists.append(MusicList())
+		
+		if musicLibrary.allLists.count == 0 {
+			let newList = MusicList()
+			newList.name = "New List"
+			musicLibrary.add(list: newList)
 		} else {
 			
 		}
 		
 		//TODO: Select music list from preferences.
 		if currentMusicList == nil {
-			currentMusicList = musicLists[0]
+			currentMusicList = musicLibrary.allLists[0]
 		}
 		
 		return true
@@ -101,8 +103,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 	func applicationDidEnterBackground(_ application: UIApplication) {
 		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-		for musiclist in musicLists {
-			musiclist.save()
+		do {
+			try musicLibrary.save()
+		} catch {
+			
 		}
 		
 		if let selMusLis = currentMusicList {
