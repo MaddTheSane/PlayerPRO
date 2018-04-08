@@ -635,6 +635,8 @@
 		55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55B2D4B7207A855600451B51 /* MusicListLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555DA4CE1FD1F33900133544 /* MusicListLibrary.swift */; };
+		55B2D4D7207A9C4D00451B51 /* MADErrsObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B2D4D6207A9C4D00451B51 /* MADErrsObjcTests.m */; };
+		55B2D4D8207A9C4D00451B51 /* MADErrsObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B2D4D6207A9C4D00451B51 /* MADErrsObjcTests.m */; };
 		55B5DF0419A259370042E062 /* PPMIDIImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0319A259370042E062 /* PPMIDIImporter.swift */; };
 		55B6784C1A0DC96B00445927 /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		55B777A418E779ED001E5104 /* InstrumentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B777A318E77998001E5104 /* InstrumentInfoView.xib */; };
@@ -2785,6 +2787,7 @@
 		55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicObject_PPKPrivate.h; sourceTree = "<group>"; };
 		55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDriverCarbon.h; sourceTree = "<group>"; };
 		55B23D111687D22700DCE923 /* MainDriverCarbon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MainDriverCarbon.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		55B2D4D6207A9C4D00451B51 /* MADErrsObjcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MADErrsObjcTests.m; sourceTree = "<group>"; };
 		55B5C80918AEC899004041FA /* PPQuickView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPQuickView.h; sourceTree = "<group>"; };
 		55B5DF0219A259350042E062 /* MIDI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MIDI-Bridging-Header.h"; sourceTree = "<group>"; };
 		55B5DF0319A259370042E062 /* PPMIDIImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPMIDIImporter.swift; sourceTree = "<group>"; };
@@ -4754,6 +4757,7 @@
 		55ADD23B19B4F858005588B5 /* PlayerPROKit Tests */ = {
 			isa = PBXGroup;
 			children = (
+				55B2D4D6207A9C4D00451B51 /* MADErrsObjcTests.m */,
 				55C9191C1A000BFB0049F4E4 /* tmpHeader.h */,
 				5528D1321A115AF9001E30CF /* NotesConversion.swift */,
 				55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */,
@@ -7619,6 +7623,7 @@
 				5528D1341A115AF9001E30CF /* NotesConversion.swift in Sources */,
 				5522FB051AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift in Sources */,
 				557DC6C21AB6034F0091649A /* MADDebugStr_Tests.swift in Sources */,
+				55B2D4D8207A9C4D00451B51 /* MADErrsObjcTests.m in Sources */,
 				55C9191D1A000C3F0049F4E4 /* PlayerPROKit_Tests.swift in Sources */,
 				5579D7E11A648F3300401D75 /* CppIncludeTest.mm in Sources */,
 				55C9191E1A000C3F0049F4E4 /* PPKPcmd_Tests.swift in Sources */,
@@ -8080,6 +8085,7 @@
 				5528D1331A115AF9001E30CF /* NotesConversion.swift in Sources */,
 				5522FB041AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift in Sources */,
 				557DC6C11AB6034F0091649A /* MADDebugStr_Tests.swift in Sources */,
+				55B2D4D7207A9C4D00451B51 /* MADErrsObjcTests.m in Sources */,
 				55ADD23F19B4F858005588B5 /* PlayerPROKit_Tests.swift in Sources */,
 				5579D7E01A648F3300401D75 /* CppIncludeTest.mm in Sources */,
 				555272551A0001CE008B8616 /* PPKPcmd_Tests.swift in Sources */,

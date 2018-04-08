@@ -60,4 +60,111 @@ class MADErrs_Tests: XCTestCase {
 		}
 
 	}
+	
+	func testConvertToCocoa() {
+		let errs: [MADErr] = [.needMemory, .readingErr, .incompatibleFile,
+							  .parametersErr,
+							  .fileNotSupportedByThisPlug, 
+							  .writingErr, .userCancelledErr]
+		
+		errs.forEach { (err) in
+			if let val = err.toNSError(convertToCocoa: true) {
+				XCTAssertNotEqual(val.domain, PPMADErrorDomain, "\(err), (\(err.rawValue)) resulted in a MADErr domain")
+			} else {
+				XCTFail("\(err), (\(err.rawValue)) resulted in a nil value!")
+			}
+		}
+	}
+
+	func testAttemptToConvertToCocoa() {
+		let errs: [MADErr] = [.needMemory, .readingErr, .incompatibleFile, .libraryNotInitialized,
+							  .parametersErr, .unknownErr, .soundManagerErr, .orderNotImplemented,
+							  .fileNotSupportedByThisPlug, .cannotFindPlug, .musicHasNoDriver,
+							  .driverHasNoMusic, .soundSystemUnavailable, .writingErr, .userCancelledErr]
+		
+		errs.forEach { (err) in
+			let val = err.toNSError(convertToCocoa: true)
+			XCTAssertNotNil(val, "\(err), (\(err.rawValue)) resulted in a nil value!")
+		}
+	}
+	
+	func testAllErrors() {
+		do {
+			throw MADErr.needMemory
+		} catch {
+			
+		}
+		
+		do {
+			throw MADErr.readingErr
+		} catch {
+			
+		}
+		do {
+			throw MADErr.incompatibleFile
+		} catch {
+			
+		}
+		do {
+			throw MADErr.libraryNotInitialized
+		} catch {
+			
+		}
+		do {
+			throw MADErr.parametersErr
+		} catch {
+			
+		}
+		do {
+			throw MADErr.unknownErr
+		} catch {
+			
+		}
+		do {
+			throw MADErr.soundManagerErr
+		} catch {
+			
+		}
+		do {
+			throw MADErr.orderNotImplemented
+		} catch {
+			
+		}
+		do {
+			throw MADErr.fileNotSupportedByThisPlug
+		} catch {
+			
+		}
+		do {
+			throw MADErr.cannotFindPlug
+		} catch {
+			
+		}
+		do {
+			throw MADErr.musicHasNoDriver
+		} catch {
+			
+		}
+		do {
+			throw MADErr.driverHasNoMusic
+		} catch {
+			
+		}
+		do {
+			throw MADErr.soundSystemUnavailable
+		} catch {
+			
+		}
+		do {
+			throw MADErr.writingErr
+		} catch {
+			
+		}
+		do {
+			throw MADErr.userCancelledErr
+		} catch {
+			
+		}
+
+	}
 }
