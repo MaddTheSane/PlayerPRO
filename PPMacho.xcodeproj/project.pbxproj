@@ -770,7 +770,7 @@
 		55F013E5187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F013EB1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
 		55F1BDAE1975C8EE00AD2C03 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */; };
-		55F1BDAF1975C8EE00AD2C03 /* PlayerPROCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55F1BDAF1975C8EE00AD2C03 /* PlayerPROCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55F1BDB31975C9E100AD2C03 /* embeddedPlugs.h in Headers */ = {isa = PBXBuildFile; fileRef = 550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */; };
 		55F1BDB41975C9E100AD2C03 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		55F1BDB61975C9E100AD2C03 /* MADDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* MADDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -810,7 +810,7 @@
 		55F1BDDC1975CB1200AD2C03 /* XM.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410310BB5368005208D1 /* XM.c */; };
 		55F1BDDD1975CB6800AD2C03 /* MED.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E910BB5368005208D1 /* MED.c */; };
 		55F1BDF81975CBFF00AD2C03 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BDE31975CBFE00AD2C03 /* PlayerPROKit.framework */; };
-		55F1BDF91975CBFF00AD2C03 /* PlayerPROKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BDE31975CBFE00AD2C03 /* PlayerPROKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55F1BDF91975CBFF00AD2C03 /* PlayerPROKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BDE31975CBFE00AD2C03 /* PlayerPROKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55F1BE041975CD2E00AD2C03 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */; };
 		55F1BE051975CD7200AD2C03 /* PlayerPROKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292E5163DD68500C2C639 /* PlayerPROKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F1BE061975CD7200AD2C03 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
