@@ -1,13 +1,15 @@
 {
   "images" : [
     {
-      "idiom" : "ipad",
       "size" : "20x20",
+      "idiom" : "ipad",
+      "filename" : "notification_ipad_20x20.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "ipad",
       "size" : "20x20",
+      "idiom" : "ipad",
+      "filename" : "notification_ipad_20x20@2x.png",
       "scale" : "2x"
     },
     {
@@ -43,7 +45,7 @@
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "main-icon-app-76@2.png",
+      "filename" : "main-icon-app-76@2x.png",
       "scale" : "2x"
     },
     {
@@ -53,8 +55,9 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "ios-marketing",
       "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "main-icon-app-store.png",
       "scale" : "1x"
     },
     {
@@ -66,7 +69,7 @@
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "icon_32x32-1.png",
+      "filename" : "icon_16x16@2x.png",
       "scale" : "2x"
     },
     {
