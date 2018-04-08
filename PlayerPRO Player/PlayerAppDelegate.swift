@@ -31,14 +31,14 @@ private func cocoaDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: Unsafe
 	alert.addButton(withTitle: NSLocalizedString("MyDebugStr_Continue", comment: "Continue"))
 	alert.addButton(withTitle: NSLocalizedString("MyDebugStr_Debug", comment: "Debug"))
 	
-	switch (alert.runModal()) {
-	case NSApplication.ModalResponse.alertSecondButtonReturn:
+	switch alert.runModal() {
+	case .alertSecondButtonReturn:
 		break
 		
-	case NSApplication.ModalResponse.alertThirdButtonReturn:
+	case .alertThirdButtonReturn:
 		assert(false, "Chose to go to debugger.")
 		
-	case NSApplication.ModalResponse.alertFirstButtonReturn:
+	case .alertFirstButtonReturn:
 		print("Choosing to fail!")
 		fallthrough
 	default:
