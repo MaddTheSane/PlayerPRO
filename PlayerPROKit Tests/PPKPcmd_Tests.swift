@@ -37,7 +37,7 @@ class PPKPcmd_Tests: XCTestCase {
 		
 		let otherCmd = ourPcmd.getCommand(atRow: 2, track: 2)
 		
-		XCTAssert(ourCmd == otherCmd, "Row added unsuccessfully")
+		XCTAssertEqual(ourCmd, otherCmd, "Row added unsuccessfully")
 	}
 	
 	func testAddTrack() {
@@ -56,6 +56,7 @@ class PPKPcmd_Tests: XCTestCase {
 		
 		let otherCmd = ourPcmd.getCommand(atRow: 2, track: 2)
 		let otherCmd5 = ourPcmd.getCommand(atRow: 4, track: 4)
-		XCTAssert(ourCmd == otherCmd && ourCmd5 == otherCmd5, "Track added unsuccessfully")
+		XCTAssertEqual(ourCmd, otherCmd, "Track added unsuccessfully")
+		XCTAssertEqual(ourCmd5, otherCmd5, "Track added unsuccessfully")
 	}
 }
