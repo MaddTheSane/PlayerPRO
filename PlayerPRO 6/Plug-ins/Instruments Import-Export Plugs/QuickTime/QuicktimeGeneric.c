@@ -196,6 +196,12 @@ static OSErr mainQTInst(void					*unused,
 					myErr = FSpOpenDF(&tmpSpec, fsCurPerm, &iFileRefI);
 				
 				if (myErr == noErr) {
+#ifdef __LITTLE_ENDIAN__
+					if (curData->amp == 16) {
+						compType = 'sowt';
+					}
+#endif
+
 					inOutBytes 	= curData->size;
 					rate		= curData->c2spd;
 					
