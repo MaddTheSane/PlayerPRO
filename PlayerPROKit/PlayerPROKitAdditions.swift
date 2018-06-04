@@ -163,12 +163,12 @@ extension PPSampleObject {
 
 #if os(OSX)
 	@objc(waveformImageUsingView:)
-	final public func waveformImage(view: NSView) -> NSImage? {
-		return PPSampleObject.waveFormImage(sample: self, view: view)
+	final public func waveformImage(using view: NSView) -> NSImage? {
+		return PPSampleObject.waveFormImage(from: self, using: view)
 	}
 	
 	@objc(waveformImageFromSample:usingView:)
-	final public class func waveFormImage(sample theDat: PPSampleObject, view: NSView) -> NSImage? {
+	final public class func waveFormImage(from theDat: PPSampleObject, using view: NSView) -> NSImage? {
 		let imageSize: NSSize = {
 			var aimageSize = view.convertToBacking(view.frame.size)
 			aimageSize.height *= 2
@@ -221,12 +221,12 @@ extension PPSampleObject {
 	}
 #elseif os(iOS) || os(tvOS)
 	@objc(waveformImageUsingView:)
-	final public func waveformImage(view: UIView) -> UIImage? {
-		return PPSampleObject.waveFormImage(sample: self, view: view)
+	final public func waveformImage(using view: UIView) -> UIImage? {
+		return PPSampleObject.waveFormImage(from: self, using: view)
 	}
 	
 	@objc(waveformImageFromSample:usingView:)
-	final public class func waveFormImage(sample theDat: PPSampleObject, view: UIView) -> UIImage? {
+	final public class func waveFormImage(from theDat: PPSampleObject, using view: UIView) -> UIImage? {
 		let scale = view.contentScaleFactor
 		let imageSize: CGSize = {
 			var viewSize = view.bounds.size

@@ -86,7 +86,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 			instrumentNote!.stringValue = octaveName(fromNote: UInt8(bitPattern: sampleObj.realNote), options: [.useSharpSymbol]) ?? "None"
 			instrumentBits!.stringValue = "\(sampleObj.amplitude)-bit"
 			instrumentMode!.stringValue = sampleObj.loopType == .pingPong ? "Ping-Pong" : "Classic"
-			let sampImage = sampleObj.waveformImage(view: waveFormImage!)
+			let sampImage = sampleObj.waveformImage(using: waveFormImage!)
 			waveFormImage!.image = sampImage
 		} else {
 			instrumentSize!.stringValue = PPDoubleDash
