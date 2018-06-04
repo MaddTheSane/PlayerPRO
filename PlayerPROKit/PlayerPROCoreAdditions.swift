@@ -462,12 +462,6 @@ extension MADBool: ExpressibleByBooleanLiteral {
 	}
 }
 
-extension MADBool: CustomPlaygroundQuickLookable {
-	public var customPlaygroundQuickLook: PlaygroundQuickLook {
-		return .bool(self.boolValue)
-	}
-}
-
 extension MADBool: CustomReflectable, Equatable {
 	public var customMirror: Mirror {
 		return Mirror(reflecting: boolValue)
@@ -476,7 +470,6 @@ extension MADBool: CustomReflectable, Equatable {
 	static public func ==(lhs: MADBool, rhs: MADBool) -> Bool {
 		return lhs.boolValue == rhs.boolValue
 	}
-
 }
 
 extension MADBool: CustomPlaygroundDisplayConvertible {
