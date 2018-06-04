@@ -94,7 +94,7 @@ extension MADErr: CustomNSError, LocalizedError {
 	/// the error code isn't in `MADErr`.
 	public init?(error anErr: NSError) {
 		guard anErr.domain == PPMADErrorDomain,
-			let exact = Int16(exactly: anErr.code),
+			let exact = MADErr.RawValue(exactly: anErr.code),
 			let errVal = MADErr(rawValue: exact) else {
 				return nil
 		}
