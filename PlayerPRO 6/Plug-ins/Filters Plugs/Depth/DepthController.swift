@@ -81,7 +81,7 @@ class DepthController: NSWindowController {
 			}
 			
 		default:
-			NSBeep()
+			NSSound.beep()
 			parentWindow.endSheet(window!)
 			currentBlock(MADErr.parametersErr)
 			return

@@ -71,7 +71,7 @@ class ComplexFadeController: NSWindowController {
 	
 	@IBAction func okay(_ sender: AnyObject!) {
 		func invalidSettings() {
-			NSBeep()
+			NSSound.beep()
 			let badSettings = NSAlert()
 			badSettings.messageText = "Invalid Value";
 			badSettings.informativeText = "There is one or more invalid value.";
