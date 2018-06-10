@@ -95,3 +95,11 @@
 
 /* Fatal sound driver error */
 "Unable to create the PlayerPRO sound driver due to error type %ld. Sound preferences will be reset.\n\nPlayerPRO will now close." = "Unable to create the PlayerPRO sound driver due to error type %ld. Sound preferences will be reset.\n\nPlayerPRO will now close.";
+
+
+"Invalid data returned from helper" = "Invalid data returned from helper";
+
+/* Tracker plug-in name */
+"TrackerPlugName" = "Tracker Plug-in";
+
+"Untitled Imported List" = "Imported List";

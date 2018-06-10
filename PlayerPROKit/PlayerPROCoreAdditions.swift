@@ -309,29 +309,81 @@ extension sData {
 	}
 }
 
-extension EnvRec: Hashable {
-	public var hashValue: Int {
-		var aHi = UInt(pos)
-		aHi |= UInt(val) << 16
+extension sData: Hashable {
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(size)
+		hasher.combine(loopBeg)
+		hasher.combine(loopSize)
+		hasher.combine(vol)
+		hasher.combine(c2spd)
+		hasher.combine(loopType)
+		hasher.combine(amp)
+		hasher.combine(realNote)
+		hasher.combine(stereo)
+		let dat = UnsafeRawPointer(data)
+		let datLen = UnsafeRawBufferPointer(start: dat, count: Int(size))
+		hasher.combine(bytes: datLen)
+	}
+	
+	public static func ==(_ lhs: sData, _ rhs: sData) -> Bool {
+		guard lhs.amp == rhs.amp else {
+			return false
+		}
 		
-		return Int(bitPattern: aHi)
+		guard lhs.size == rhs.size else {
+			return false
+		}
+		
+		guard lhs.loopBeg == rhs.loopBeg else {
+			return false
+		}
+		guard lhs.loopSize == rhs.loopSize else {
+			return false
+		}
+		guard lhs.loopType == rhs.loopType else {
+			return false
+		}
+		guard lhs.vol == rhs.vol else {
+			return false
+		}
+		guard lhs.c2spd == rhs.c2spd else {
+			return false
+		}
+		guard lhs.realNote == rhs.realNote else {
+			return false
+		}
+		guard lhs.stereo == rhs.stereo else {
+			return false
+		}
+		let lName = Array(UnsafeBufferPointer(start: lhs.data, count:Int(lhs.size)))
+		let rName = Array(UnsafeBufferPointer(start: rhs.data, count:Int(rhs.size)))
+		guard rName == lName else {
+			return false
+		}
+		
+		return true
+	}
+}
+
+extension EnvRec: Hashable {
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(pos)
+		hasher.combine(val)
 	}
 }
 
 extension FXBus: Hashable {
-	public var hashValue: Int {
-		var aVar = Int(copyId)
-		aVar |= Active.boolValue ? 1 << 16 : 0
-		aVar |= ByPass.boolValue ? 1 << 17 : 0
-		
-		return aVar
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(copyId)
+		hasher.combine(Active)
+		hasher.combine(ByPass)
 	}
 }
 
 extension FXSets: Equatable {
 }
 
-extension Cmd: Equatable {
+extension Cmd: Hashable {
 	private init() {
 		self.init(ins: 0, note: 0xFF, cmd: .arpeggio, arg: 0, vol: 0xFF, unused: 0)
 	}
@@ -351,6 +403,14 @@ extension Cmd: Equatable {
 	/// Reset the command
 	public mutating func kill() {
 		MADKillCmd(&self)
+	}
+	
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(ins)
+		hasher.combine(note)
+		hasher.combine(cmd)
+		hasher.combine(arg)
+		hasher.combine(vol)
 	}
 }
 
