@@ -431,7 +431,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	madInfo = nil;
 	// Prefer Mac OS Roman for backwards compatibility.
 	NSData *outMacRoman = [newInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:NO];
-	if (!outMacRoman || outMacRoman.length == 0) {
+	if (newInfo.length != 0 && (!outMacRoman || outMacRoman.length == 0)) {
 		NSMutableData *utf8BOM = [NSMutableData dataWithBytes:"\xEF\xBB\xBF" length:3];
 		NSData *outUTF8 = [[newInfo precomposedStringWithCanonicalMapping] dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 		[utf8BOM appendData:outUTF8];
