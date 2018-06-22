@@ -83,6 +83,34 @@ static const char *typeBasedOnUTI(NSString* theUTI, MADLibrary *theLib) {
 	return "!!!!";
 }
 
+static MADDriverRec	*MADDriver = NULL;
+static MADLibrary	*MADLib = NULL;
+
+
+void SetupMADLib(void) __attribute__((constructor));
+void SetupMADLib(void)
+{
+	MADDriverSettings	init = {0};
+	
+	MADGetBestDriver(&init);
+	init.driverMode = NoHardwareDriver;
+	
+	if (MADInitLibrary(NULL, &MADLib) != MADNoErr) {
+		abort();
+	} else if (MADCreateDriver(&init, MADLib, &MADDriver) != MADNoErr) {
+		MADDisposeLibrary(MADLib);
+		abort();
+	}
+}
+
+void closeMADLib(void) __attribute__((destructor));
+void closeMADLib(void)
+{
+	MADStopDriver(MADDriver);				// Stop driver interrupt function
+	MADDisposeDriver(MADDriver);			// Dispose music driver
+	MADDisposeLibrary(MADLib);				// Close music library
+}
+
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
    
@@ -105,21 +133,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			}
 		}
 		
-		MADDriverRec		*MADDriver = NULL;
 		MADMusic			*MADMusic1 = NULL;
-		MADLibrary			*MADLib = NULL;
-		MADDriverSettings	init = {0};
-		
-		MADGetBestDriver(&init);
-		init.driverMode = NoHardwareDriver;
-		
-		if (MADInitLibrary(NULL, &MADLib) != MADNoErr) {
-			return FALSE;
-		} else if (MADCreateDriver(&init, MADLib, &MADDriver) != MADNoErr) {
-			MADDisposeLibrary(MADLib);
-			return FALSE;
-		}
-		
 		NSMutableDictionary *NSattribs = (__bridge NSMutableDictionary*)attributes;
 
 		{
@@ -279,14 +293,10 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		MADCleanDriver(MADDriver);
 		MADDisposeMusic(&MADMusic1, MADDriver);		// Dispose the current music
 		MADStopDriver(MADDriver);					// Stop driver interrupt function
-		MADDisposeDriver(MADDriver);				// Dispose music driver
-		MADDisposeLibrary(MADLib);					// Close music library
 		return TRUE;
 		
 	fail1:
 		MADStopDriver(MADDriver);				// Stop driver interrupt function
-		MADDisposeDriver(MADDriver);			// Dispose music driver
-		MADDisposeLibrary(MADLib);				// Close music library
 		
 		return FALSE;
 	}
