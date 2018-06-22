@@ -127,7 +127,7 @@ class DocumentWindowController: NSWindowController {
 	
 	func rawSoundData(_ settings: inout MADDriverSettings, handler: (Data) throws -> Void) throws {
 		var settings = settings
-		let theRec =  try PPDriver(library: globalMadLib, settings: &settings)
+		let theRec = try PPDriver(library: globalMadLib, settings: &settings)
 		theRec.cleanDriver()
 		theRec.currentMusic = currentDocument.theMusic
 		theRec.play()
