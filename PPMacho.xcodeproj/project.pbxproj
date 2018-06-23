@@ -6566,7 +6566,7 @@
 				LastUpgradeCheck = 0930;
 				TargetAttributes = {
 					550FFADF17CEA4570003A2F3 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					551292D7163DD68500C2C639 = {
 						LastSwiftMigration = 0900;
@@ -6593,7 +6593,7 @@
 						LastSwiftMigration = 0800;
 					};
 					554E122210D6F3E600BB619C = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					5557769E17EBF8FD0019D008 = {
 						SystemCapabilities = {
@@ -6618,13 +6618,13 @@
 						ProvisioningStyle = Automatic;
 					};
 					557DE61410E0884100177B4C = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					557DE65710E0885C00177B4C = {
 						LastSwiftMigration = 0800;
 					};
 					557DE69810E0886400177B4C = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					557DE6D910E0886A00177B4C = {
 						LastSwiftMigration = 0800;
@@ -6636,7 +6636,7 @@
 						LastSwiftMigration = 0800;
 					};
 					557DE83410E08D9E00177B4C = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					557DE8BA10E08DA800177B4C = {
 						LastSwiftMigration = 0800;
@@ -6676,7 +6676,7 @@
 						TestTargetID = 55CBF9A511EB77760028C6BB;
 					};
 					55B797DB10D6E6C40073E379 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					55CBF9A511EB77760028C6BB = {
 						LastSwiftMigration = 0800;
@@ -9528,7 +9528,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9552,7 +9552,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10047,7 +10047,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10067,7 +10067,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10741,7 +10741,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10761,7 +10761,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10817,7 +10817,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10837,7 +10837,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10965,7 +10965,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10985,7 +10985,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -11770,7 +11770,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -11791,7 +11791,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;

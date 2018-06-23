@@ -167,6 +167,20 @@ PPEXPORT void	iClose(UNFILE iFileRefI);
  */
 PPINLINE void MADByteSwap32(void *msg_buf)
 {
+	// Make sure it's properly aligned.
+	if ((((uintptr_t)msg_buf) & 3) != 0) {
+		// If not, do some hackery
+		unsigned char *msg_buf_bytes = (unsigned char *)msg_buf;
+		unsigned char byte1 = msg_buf_bytes[0];
+		unsigned char byte2 = msg_buf_bytes[1];
+		unsigned char byte3 = msg_buf_bytes[2];
+		unsigned char byte4 = msg_buf_bytes[3];
+		msg_buf_bytes[0] = byte4;
+		msg_buf_bytes[1] = byte3;
+		msg_buf_bytes[2] = byte2;
+		msg_buf_bytes[3] = byte1;
+		return;
+	}
 	uint32_t temp = *((uint32_t*)msg_buf);
 #if defined(__llvm__)
 	*((uint32_t*)msg_buf) = __builtin_bswap32(temp);
@@ -189,6 +203,16 @@ PPINLINE void MADByteSwap32(void *msg_buf)
  */
 PPINLINE void MADByteSwap16(void *msg_buf)
 {
+	// Make sure it's properly aligned.
+	if ((((uintptr_t)msg_buf) & 1) != 0) {
+		// If not, do some hackery
+		unsigned char *msg_buf_bytes = (unsigned char *)msg_buf;
+		unsigned char byte1 = msg_buf_bytes[0];
+		unsigned char byte2 = msg_buf_bytes[1];
+		msg_buf_bytes[0] = byte1;
+		msg_buf_bytes[1] = byte2;
+		return;
+	}
 	uint16_t buf = *((uint16_t*)msg_buf);
 #if defined(__llvm__)
 	*((uint16_t*)msg_buf) = __builtin_bswap16(buf);

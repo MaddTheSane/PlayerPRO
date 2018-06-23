@@ -83,18 +83,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property Byte vibratoDepth;
 @property Byte vibratoRate;
 
+//! Volume type.
 @property (readwrite) EFType volumeType;
 @property (getter = isVolumeTypeOn) BOOL volumeTypeOn;
 @property (getter = isVolumeTypeSustain) BOOL volumeTypeSustain;
 @property (getter = isVolumeTypeLoop) BOOL volumeTypeLoop;
 @property (getter = isVolumeTypeNote) BOOL volumeTypeNote;
 
+//! Panning type.
 @property (readwrite) EFType panningType;
 @property (getter = isPanningTypeOn) BOOL panningTypeOn;
 @property (getter = isPanningTypeSustain) BOOL panningTypeSustain;
 @property (getter = isPanningTypeLoop) BOOL panningTypeLoop;
 @property (getter = isPanningTypeNote) BOOL panningTypeNote;
 
+//! An instrument is blank if the name is empty and any samples present are considered blank.
 @property (readonly, getter=isBlankInstrument) BOOL blankInstrument;
 
 - (void)addSampleObject:(PPSampleObject *)object;
