@@ -68,10 +68,18 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "${HOME}/Music/Mod\ music/Energy.xm"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/cwbetts/Music/Mod\ music/&quot;sea of fantasy.madk&quot;"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/Users/cwbetts/Music/PlayerPRO/Trackers/Boom/&quot;BOOM Music 8&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/Users/cwbetts/Music/PlayerPRO/Trackers/MODs/&quot;JUNGLEWA copy.MED&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
