@@ -98,7 +98,9 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 			
 			var fileTypes = theOpenables.map { UTGetOSTypeFromString($0 as NSString) }
 			
-			fileTypes.insert(OSType(tupleType), at: 0)
+			if !fileTypes.contains(OSType(tupleType)) {
+				fileTypes.insert(OSType(tupleType), at: 0)
+			}
 			
 			return fileTypes
 		}
@@ -353,7 +355,11 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		guard aRet == .noErr else {
 			throw PPMADError(madErr: aRet, userInfo: [NSURLErrorKey: apath])
 		}
-		return sRet!
+		if let sRetB = sRet {
+			return sRetB
+		} else {
+			throw CocoaError(.fileReadInapplicableStringEncoding, userInfo: [NSURLErrorKey: apath, NSStringEncodingErrorKey: String.Encoding.macOSRoman.rawValue])
+		}
 	}
 	
 	/// Attempts to identify the file passed to it.
@@ -382,6 +388,8 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 			return .noErr
 		} catch let anErr as PPMADError {
 			return anErr.code.madErr
+		} catch CocoaError.fileReadInapplicableStringEncoding {
+			return .parametersErr
 		} catch _ { }
 		
 		return .unknownErr
@@ -402,6 +410,8 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 			return .noErr
 		} catch let anErr as PPMADError {
 			return anErr.code.madErr
+		} catch CocoaError.fileReadInapplicableStringEncoding {
+			return .parametersErr
 		} catch _ { }
 		
 		return .unknownErr
@@ -428,7 +438,9 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - throws: A `MADErr` wrapped in an `NSError`.
 	public func information(from apath: URL, type: String) throws -> MusicFileInfo {
 		guard let cStrType = type.cString(using: .macOSRoman) else {
-			throw PPMADError(.parameters)
+			throw PPMADError(.parameters, userInfo:
+				[NSURLErrorKey: apath,
+				 NSStringEncodingErrorKey: String.Encoding.macOSRoman.rawValue])
 		}
 		
 		let filInfo = try information(from: apath, cType: cStrType)
@@ -523,7 +535,9 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	@nonobjc
 	public func testFile(at url: URL, as type: String) throws {
 		guard var cStrType = type.cString(using: String.Encoding.macOSRoman) else {
-			throw PPMADError(.parameters)
+			throw PPMADError(.parameters, userInfo:
+				[NSURLErrorKey: url,
+				 NSStringEncodingErrorKey: String.Encoding.macOSRoman.rawValue])
 		}
 		
 		let anErr = MADMusicTestCFURL(theLibrary, &cStrType, url as NSURL)
@@ -607,11 +621,7 @@ extension PPLibrary {
 			return .noErr
 		} catch let anErr as PPMADError {
 			return anErr.code.madErr
-		} catch let anErr as NSError {
-			if let errVal = MADErr(error: anErr) {
-				return errVal
-			}
-		}
+		} catch _ { }
 		
 		return .unknownErr
 	}
@@ -627,12 +637,14 @@ extension PPLibrary {
 		do {
 			let aRet = try identifyFile(at: apath)
 			guard let typeStr = aRet.cString(using: String.Encoding.macOSRoman) else {
-				throw PPMADError(.parameters, userInfo: [NSStringEncodingErrorKey: String.Encoding.macOSRoman.rawValue])
+				throw PPMADError(.parameters)
 			}
 			strncpy(type, typeStr, 4)
 			return .noErr
 		} catch let anErr as PPMADError {
 			return anErr.code.madErr
+		} catch CocoaError.fileReadInapplicableStringEncoding {
+			return .parametersErr
 		} catch _ { }
 		
 		return .unknownErr
@@ -649,17 +661,15 @@ extension PPLibrary {
 		do {
 			let aStr = try identifyFile(atPath: apath)
 			guard let typeStr = aStr.cString(using: String.Encoding.macOSRoman) else {
-				throw PPMADError(.parameters, userInfo: [NSStringEncodingErrorKey: String.Encoding.macOSRoman.rawValue])
+				throw PPMADError(.parameters)
 			}
 			strncpy(type, typeStr, 4)
 			return .noErr
 		} catch let anErr as PPMADError {
 			return anErr.code.madErr
-		} catch let anErr as NSError {
-			if let errVal = MADErr(error: anErr) {
-				return errVal
-			}
-		}
+		} catch CocoaError.fileReadInapplicableStringEncoding {
+			return .parametersErr
+		} catch _ { }
 		
 		return .unknownErr
 	}

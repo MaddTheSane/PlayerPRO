@@ -235,7 +235,7 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 		do {
 			inData = try Data(contentsOf: sampleURL)
 		} catch {
-			throw NSError(domain: PPMADErrorDomain, code: Int(MADErr.readingErr.rawValue), userInfo: [NSUnderlyingErrorKey : error])
+			throw PPMADError(.reading, userInfo: [NSUnderlyingErrorKey : error])
 		}
 		if let ourIns = PPInstrumentObject() as PPInstrumentObject? {
 			ourIns.resetInstrument()

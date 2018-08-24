@@ -78,8 +78,8 @@ class PlayerPROKit_Tests: XCTestCase {
 		let musicPath = ourBundle!.url(forResource: "TestS3M", withExtension: "s3m")!
 		do {
 			_ = try ourLib!.information(from: musicPath, type: "MADK")
-			XCTFail()
-		} catch MADErr.fileNotSupportedByThisPlug {
+			XCTFail("Unexpected success")
+		} catch PPMADError.fileNotSupportedByThisPlug {
 			XCTAssert(true)
 		} catch let error as NSError {
 			XCTFail("unknown error, \(error)")
