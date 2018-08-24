@@ -27,11 +27,11 @@ class PlayerPROKit_Tests: XCTestCase {
 		MADRegisterDebugFunc(cXTCFail)
 		
 		ourBundle = Bundle(for: PlayerPROKit_Tests.self)
-			if let ourPlugPath = ourBundle?.builtInPlugInsURL, ((try? ourPlugPath.checkResourceIsReachable()) ?? false) {
-				ourLib = try! PPLibrary(plugInURL: ourPlugPath)
-			} else {
-				ourLib = try! PPLibrary()
-			}
+		if let ourPlugPath = ourBundle?.builtInPlugInsURL, ((try? ourPlugPath.checkResourceIsReachable()) ?? false) {
+			ourLib = try! PPLibrary(plugInURL: ourPlugPath)
+		} else {
+			ourLib = try! PPLibrary()
+		}
 	}
 	
 	override func tearDown() {
@@ -101,13 +101,16 @@ class PlayerPROKit_Tests: XCTestCase {
 		do {
 			let driver = try PPDriver(library: ourLib!, settings: &drivSettings)
 			let musicPath = ourBundle!.url(forResource: "TestMADK", withExtension: "madk")!
-			var mus: PPMusicObject? = try PPMusicObject(url: musicPath)
-			driver.currentMusic = mus
-			driver.play()
-			sleep(10)
-			driver.stop()
-			mus = nil
-			driver.currentMusic = nil
+			var mus: PPMusicObject?
+			try autoreleasepool { () -> Void in
+				mus = try PPMusicObject(url: musicPath)
+				driver.currentMusic = mus
+				driver.play()
+				sleep(10)
+				driver.stop()
+				mus = nil
+				driver.currentMusic = nil
+			}
 			mus = try PPMusicObject(url: musicPath)
 			driver.currentMusic = mus
 			mus = nil

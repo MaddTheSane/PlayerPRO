@@ -666,7 +666,7 @@ extern "C" {
  *	@param		text
  *				Developer text that is used to help debug the issue. <b>It cannot be null</b>,
  *				although an empty string is fine.
- *	@discussion <b>Normally</b> it is never called, only when a FATAL error has occured. <br>
+ *	@discussion \b Normally it is never called, only when a FATAL error has occured. <br>
  *				This function is usually invoked using the macros \c __LINE__ and
  *				\c __FILE__ for the line and file paramaters.
  */

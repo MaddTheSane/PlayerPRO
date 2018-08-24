@@ -45,7 +45,7 @@ public final class ClassicSound: NSObject, PPSampleImportPlugin {
 		}
 		
 		let aSamp = try readAIFF(at: tmpURL)
-		aSamp.name = (sampleURL.lastPathComponent as NSString).deletingPathExtension
+		aSamp.name = sampleURL.deletingPathExtension().lastPathComponent
 		sample.pointee = aSamp
 	}
 }
