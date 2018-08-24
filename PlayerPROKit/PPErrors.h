@@ -18,6 +18,46 @@ __BEGIN_DECLS
 extern NSErrorDomain __nonnull const PPMADErrorDomain;
 
 /*!
+ *	@enum		PPMADError
+ *	@abstract	Swift-friendly way of implementing \c MADErr
+ */
+typedef NS_ERROR_ENUM(PPMADErrorDomain, PPMADError) {
+	/// No error was encountered
+	PPMADErrorNone = MADNoErr,
+	/// There isn't enough memory to execute the command.
+	PPMADErrorNeedsMemory = MADNeedMemory,
+	/// An error occured when trying to reading a file.
+	PPMADErrorReading = MADReadingErr,
+	/// The file isn't compatible with PlayerPROCore.
+	PPMADErrorIncompatibleFile = MADIncompatibleFile,
+	/// A library function was called without an initialized library.
+	PPMADErrorLibraryNotInitialized = MADLibraryNotInitialized,
+	/// Bad paramaters were sent to a function.
+	PPMADErrorParameters = MADParametersErr,
+	/// An unknown error occured.
+	PPMADErrorUnknown = MADUnknownErr,
+	/// An error occured when trying to initialize the sound system.
+	PPMADErrorSoundManager = MADSoundManagerErr,
+	/// The plug-in doesn't implement the order specified.
+	PPMADErrorOrderNotImplemented = MADOrderNotImplemented,
+	/// The file that a plug-in attempted to load was incompatible
+	/// with said plug-in
+	PPMADErrorFileNotSupportedByThisPlug = MADFileNotSupportedByThisPlug,
+	/// PlayerPRO couldn't find the plug-in specified.
+	PPMADErrorCannotFindPlug = MADCannotFindPlug,
+	/// Attempted to use a music function that wasn't attached to a driver.
+	PPMADErrorMusicHasNoDriver = MADMusicHasNoDriver,
+	/// Attempted to use a driver function that requires the use of a loaded music file.
+	PPMADErrorDriverHasNoMusic = MADDriverHasNoMusic,
+	/// The sound system requested isn't available for the current architecture.
+	PPMADErrorSoundSystemUnavailable = MADSoundSystemUnavailable,
+	/// An error occured when trying to write to a file
+	PPMADErrorWriting = MADWritingErr,
+	/// The user cancelled an action. This shouldn't be seen by the user.
+	PPMADErrorUserCancelled = MADUserCancelledErr,
+};
+
+/*!
  *	@function	PPCreateErrorFromMADErrorType
  *	@abstract	Create an \c NSError object encapulating a PlayerPROCore's \c MADErr
  *	@param		theErr

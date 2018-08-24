@@ -23,7 +23,7 @@ public final class ComplexFade: NSObject, PPDigitalPlugin {
 	}
 	
 	public func run(with aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver) throws {
-		throw MADErr.orderNotImplemented
+		throw PPMADError(.orderNotImplemented)
 	}
 	
 	public func beginRun(with aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentWindow window: NSWindow, handler: @escaping PPPlugErrorBlock) {

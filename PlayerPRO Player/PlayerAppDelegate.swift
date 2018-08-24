@@ -1548,7 +1548,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			if let info = madLib.typeFromUTI(fileUTI) {
 				aPPInfo = try madLib.information(from: musicURL, type: info)
 			} else {
-				throw MADErr.noErr
+				throw PPMADError(.none)
 			}
 		} catch _ {
 			badValues()
