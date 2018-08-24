@@ -702,8 +702,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					self.selMusFromList = self.musicList.selectedMusic
 					if let theErr = theErr {
 						NSApp.presentError(theErr)
-					}
-					if let newList = newList {
+					} else if let newList = newList {
 						self.musicLibrary.add(list: newList)
 					}
 				})

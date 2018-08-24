@@ -152,8 +152,10 @@ protocol MusicListDelegate: class {
 	
 	@objc(sortMusicListUsingDescriptors:)
 	func sortMusicList(using descriptors: [NSSortDescriptor]) {
+		self.willChangeValue(forKey: kMusicListKVO)
 		let anArray = musicList.sorted(using: descriptors)
 		musicList = anArray
+		self.didChangeValue(forKey: kMusicListKVO)
 	}
 	
 	enum AddMusicStatus {
@@ -348,7 +350,7 @@ protocol MusicListDelegate: class {
 		let wrappedData = try Data(contentsOf: url)
 		let keyedUnarc = NSKeyedUnarchiver(forReadingWith: wrappedData)
 		guard let newList = MusicList(coder: keyedUnarc) else {
-			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError)
+			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: [NSURLErrorKey: url])
 		}
 		if newList.name == kUntitledMusicList,
 			let values = try? url.resourceValues(forKeys: [URLResourceKey.localizedNameKey]),
