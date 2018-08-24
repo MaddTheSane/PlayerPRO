@@ -35,7 +35,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
 		insHeader.resetInstrument()
 		
 		if PATHeader.pointee.InsNo != 1 {
-			throw MADErr.fileNotSupportedByThisPlug;
+			throw PPMADError(.fileNotSupportedByThisPlug)
 		}
 		
 		let sampleCount = Int(PATHeader.pointee.Samp.littleEndian)
@@ -243,7 +243,7 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 			try importPAT(ourIns, data: inData)
 			InsHeader.pointee = ourIns
 		} else {
-			throw MADErr.needMemory
+			throw PPMADError(.needsMemory)
 		}
 	}
 }

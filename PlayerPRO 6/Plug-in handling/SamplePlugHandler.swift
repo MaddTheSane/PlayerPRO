@@ -82,7 +82,7 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 		if let plug = aPlug {
 			plug.beginExportSample(sample, to: url, driver: driver, parentDocument: document, handler: handler)
 		} else {
-			handler(MADErr.cannotFindPlug)
+			handler(PPMADError(.cannotFindPlug))
 		}
 	}
 	
@@ -99,7 +99,7 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 		if let plug = aPlug {
 			plug.beginImportSample(at: url, driver: driver, parentDocument: document, handler: handler)
 		} else {
-			handler(MADErr.cannotFindPlug, nil)
+			handler(PPMADError(.cannotFindPlug), nil)
 		}
 	}
 	
@@ -109,12 +109,12 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 				if plug.canImportFile(at: toTest) {
 					return
 				} else {
-					throw MADErr.fileNotSupportedByThisPlug
+					throw PPMADError(.fileNotSupportedByThisPlug)
 				}
 			}
 		}
 
-		throw MADErr.cannotFindPlug
+		throw PPMADError(.cannotFindPlug)
 	}
 	
 	func isPlugAvailable(_ kind: OSType) -> Bool {
@@ -133,7 +133,7 @@ final class SamplePlugHandler: NSObject, Collection, NSFastEnumeration {
 			}
 		}
 		
-		throw MADErr.cannotFindPlug
+		throw PPMADError(.cannotFindPlug)
 	}
 	
 	func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {

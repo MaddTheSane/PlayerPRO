@@ -522,22 +522,22 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 	}
 	
 	func importSample(from theURL: URL, makeUserSelectSample: Bool = false) throws {
-		throw MADErr.orderNotImplemented
+		throw PPMADError(.orderNotImplemented)
 		
 	}
 	
 	func importInstrument(from theURL: URL, makeUserSelectInstrument: Bool = false) throws {
-		throw MADErr.orderNotImplemented
+		throw PPMADError(.orderNotImplemented)
 		
 	}
 
 	func importPcmd(from url: URL) throws {
-		throw MADErr.orderNotImplemented
+		throw PPMADError(.orderNotImplemented)
 		
 	}
 	
 	func importInstrumentList(from url: URL) throws {
-		throw MADErr.orderNotImplemented
+		throw PPMADError(.orderNotImplemented)
 		
 	}
 	

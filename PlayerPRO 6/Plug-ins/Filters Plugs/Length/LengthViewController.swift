@@ -21,8 +21,8 @@ class LengthViewController: NSViewController {
         // Do view setup here.
     }
 	
-	override var nibName: String {
-		return "LengthViewController"
+	override var nibName: NSNib.Name? {
+		return NSNib.Name(rawValue: "LengthViewController")
 	}
 	
 }

@@ -51,7 +51,7 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 						let asset = try assetForSND(data)
 						let asample = try readAIFF(at: asset)
 						
-						asample.name = (sampleURL.lastPathComponent as NSString).deletingPathExtension
+						asample.name = sampleURL.deletingPathExtension().lastPathComponent
 						sample.pointee = asample
 						do {
 							try FileManager.default.removeItem(at: asset)
@@ -64,6 +64,6 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 				}
 			}
 		}
-		throw MADErr.fileNotSupportedByThisPlug
+		throw PPMADError(.fileNotSupportedByThisPlug)
 	}
 }

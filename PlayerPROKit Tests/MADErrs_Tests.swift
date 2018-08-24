@@ -39,7 +39,7 @@ class MADErrs_Tests: XCTestCase {
 	
 	func testSwiftMADErrErrorType() {
 		do {
-			throw MADErr.needMemory
+			throw PPMADError(.needsMemory)
 		} catch let error as NSError {
 			guard let anErr = __PPCreateErrorFromMADErrorType(.needMemory) else {
 				XCTFail("huh!?")
@@ -90,78 +90,78 @@ class MADErrs_Tests: XCTestCase {
 	
 	func testAllErrors() {
 		do {
-			throw MADErr.needMemory
+			throw PPMADError(.needsMemory)
 		} catch {
 			
 		}
 		
 		do {
-			throw MADErr.readingErr
+			throw PPMADError(.reading)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.incompatibleFile
+			throw PPMADError(.incompatibleFile)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.libraryNotInitialized
+			throw PPMADError(.libraryNotInitialized)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.parametersErr
+			throw PPMADError(.parameters)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.unknownErr
+			throw PPMADError(.unknown)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.soundManagerErr
+			throw PPMADError(.soundManager)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.orderNotImplemented
+			throw PPMADError(.orderNotImplemented)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.fileNotSupportedByThisPlug
+			throw PPMADError(.fileNotSupportedByThisPlug)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.cannotFindPlug
+			throw PPMADError(.cannotFindPlug)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.musicHasNoDriver
+			throw PPMADError(.musicHasNoDriver)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.driverHasNoMusic
+			throw PPMADError(.driverHasNoMusic)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.soundSystemUnavailable
+			throw PPMADError(.soundSystemUnavailable)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.writingErr
+			throw PPMADError(.writing)
 		} catch {
 			
 		}
 		do {
-			throw MADErr.userCancelledErr
+			throw PPMADError(.userCancelled)
 		} catch {
 			
 		}

@@ -70,7 +70,7 @@ final class ExportObject: NSObject {
 					self.delegate?.exportObject(self, errorCode: errVal, errorString: bStr)
 					return
 				})
-				self.status = .encounteredError(errVal)
+				self.status = .encounteredError(PPMADError(madErr: errVal))
 			}
 		})
 	}

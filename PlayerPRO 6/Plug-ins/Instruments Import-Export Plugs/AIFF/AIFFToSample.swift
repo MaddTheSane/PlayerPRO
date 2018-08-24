@@ -17,7 +17,7 @@ private let kSrcBufSize: UInt32 = 32768;
 
 internal func readAIFF(at url: URL) throws -> PPSampleObject {
 	guard let fileRef = try? ExtAudioFile(open: url) else {
-		throw MADErr.readingErr
+		throw PPMADError(.reading)
 	}
 	
 	let realFormat = fileRef.fileDataFormat
@@ -73,7 +73,7 @@ internal func readAIFF(at url: URL) throws -> PPSampleObject {
 			tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
 			mutableData.append(tmpMutDat as Data)
 		} else {
-			throw MADErr.needMemory
+			throw PPMADError(.needsMemory)
 		}
 	}
 	
