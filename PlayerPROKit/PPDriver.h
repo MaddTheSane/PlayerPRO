@@ -133,7 +133,7 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 
 __BEGIN_DECLS
-extern NSDictionary<PPLibraryInfoKeys,id> * __nonnull PPInfoRecToDictionary(MADInfoRec infoRec);
+extern NSDictionary<PPLibraryInfoKeys,id> * __nonnull PPMADInfoRecToDictionary(MADInfoRec infoRec);
 __END_DECLS
 
 

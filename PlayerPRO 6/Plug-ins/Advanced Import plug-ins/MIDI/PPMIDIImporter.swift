@@ -38,7 +38,7 @@ private let headerData: Data = {
 		if fileData == headerData {
 			return
 		} else {
-			throw MADErr.fileNotSupportedByThisPlug
+			throw PPMADError(.fileNotSupportedByThisPlug, userInfo: [NSURLErrorKey: theURL])
 		}
 	}
 }

@@ -65,10 +65,10 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 			if res != noErr {
 				myErr = .fileNotSupportedByThisPlug;
 			} else {
-				AudioFileClose(audioFile!);
+				AudioFileClose(audioFile!)
 			}
 		} else {
-			AudioFileClose(audioFile!);
+			AudioFileClose(audioFile!)
 		}
 		
 		return myErr == .noErr
@@ -76,7 +76,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 	
 	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) throws {
 		let aSamp = try readAIFF(at: sampleURL)
-		aSamp.name = (sampleURL.lastPathComponent as NSString).deletingPathExtension
+		aSamp.name = sampleURL.deletingPathExtension().lastPathComponent
 		sample.pointee = aSamp
 	}
 }

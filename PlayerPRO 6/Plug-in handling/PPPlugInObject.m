@@ -13,7 +13,7 @@ NSArray *DefaultPlugInLocations()
 {
 	static NSArray *immPlugLocs;
 	if (immPlugLocs == nil) {
-		NSMutableArray *plugLocs = [[NSMutableArray alloc] initWithCapacity:4];
+		NSMutableArray *plugLocs = [[NSMutableArray alloc] initWithCapacity:5];
 		[plugLocs addObject:[[NSBundle mainBundle] builtInPlugInsURL]];
 		// Disregard files in the system domain: We wouldn't install anything there.
 		NSArray *fmLocs = [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSAllDomainsMask & ~NSSystemDomainMask];

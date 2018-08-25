@@ -254,7 +254,7 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	let createStatus = ExtAudioFileCreate(url: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile1)
 	if createStatus != noErr {
 		errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")
-		throw MADErr.writingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(createStatus))], convertToCocoa: false)!
+		throw PPMADError(.writing, userInfo: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(createStatus))])
 	}
 	guard let audioFile = audioFile1 else {
 		throw PPMADError(.writing)

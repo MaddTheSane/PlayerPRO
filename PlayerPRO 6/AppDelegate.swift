@@ -452,7 +452,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 								self.addDocument(aPPDoc)
 								aPPDoc.makeWindowControllers()
 								aPPDoc.showWindows()
-								aPPDoc.displayName = ((theURL1.lastPathComponent as NSString).deletingPathExtension)
+								aPPDoc.displayName = theURL1.deletingPathExtension().lastPathComponent
 							} else {
 								fatalError("Either ourObject or anErr should be nil, not both!")
 							}

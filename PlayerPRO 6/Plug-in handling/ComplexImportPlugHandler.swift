@@ -58,7 +58,7 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, Collection {
 		return plugIns.count
 	}
 	
-	var plugInCount: Int {
+	@objc var plugInCount: Int {
 		return self.count
 	}
 	
