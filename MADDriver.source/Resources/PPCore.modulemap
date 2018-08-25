@@ -1,4 +1,4 @@
-framework module PlayerPROCore {
+framework module PlayerPROCore [extern_c] {
 	umbrella header "PlayerPROCore.h"
 	
 	module Defines {

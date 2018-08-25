@@ -81,9 +81,9 @@ class DepthController: NSWindowController {
 			}
 			
 		default:
-			NSBeep()
+			NSSound.beep()
 			parentWindow.endSheet(window!)
-			currentBlock(MADErr.parametersErr)
+			currentBlock(PPMADError(.parameters))
 			return
 			
 		}
@@ -95,7 +95,7 @@ class DepthController: NSWindowController {
 	
 	@IBAction func cancel(_ sender: AnyObject!) {
 		parentWindow.endSheet(window!)
-		currentBlock(MADErr.userCancelledErr);
+		currentBlock(PPMADError(.userCancelled))
 	}
 
 }

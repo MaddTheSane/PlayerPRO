@@ -36,7 +36,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			}
 			
 			guard aRet.count > 0 else {
-				handler(nil, MADErr.fileNotSupportedByThisPlug)
+				handler(nil, PPMADError(.fileNotSupportedByThisPlug))
 				return
 			}
 			
@@ -62,6 +62,6 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			}
 		}
 		
-		throw MADErr.fileNotSupportedByThisPlug
+		throw PPMADError(.fileNotSupportedByThisPlug)
 	}
 }

@@ -102,7 +102,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 					tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
 					mutableData.append(tmpMutDat as Data)
 				} else {
-					throw MADErr.needMemory
+					throw PPMADError(.needsMemory)
 				}
 			}
 			
@@ -116,7 +116,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			
 			asample.pointee = newSample
 		} else {
-			throw MADErr.needMemory
+			throw PPMADError(.needsMemory)
 		}
 	}
 	

@@ -51,18 +51,6 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 	return theSame
 }
 
-func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
-	if lhs === rhs {
-		return true
-	}
-	
-	if !URLsPointingToTheSameFile(lhs.musicURL, rhs.musicURL) {
-		return false
-	}
-	
-	return true
-}
-
 @objc(PPMusicListObject) final class MusicListObject: NSObject, NSCopying, NSSecureCoding {
 	@objc private(set) var musicURL: URL
 	@objc let addedDate: Date
@@ -71,6 +59,18 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	private var bookData: Data?
 	#endif
 
+	static func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
+		if lhs === rhs {
+			return true
+		}
+		
+		if !URLsPointingToTheSameFile(lhs.musicURL, rhs.musicURL) {
+			return false
+		}
+		
+		return true
+	}
+	
 	#if os(OSX)
 	@objc private(set) lazy var fileIcon: NSImage = {
 		let image = NSWorkspace.shared.icon(forFile: self.musicURL.path)
@@ -300,7 +300,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}
 	
 	#if os(OSX)
-	/// - returns: `true` if the URL needed updating, `false` otherwise, `nil` if it can't be validated.
+	/// - returns: `true` if the URL needed updating, `false` otherwise, throws if it can't be validated.
 	func validateURL() throws -> Bool {
 		guard let bookData = bookData else {
 			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
@@ -387,7 +387,7 @@ extension MusicListObject: Codable {
 		self.init(url: url!, date: dateAdded, uuid: aUUID)
 		#if os(OSX)
 			if let data = data {
-				bookData = data
+				bookData = Data(data)
 			}
 		#endif
 	}

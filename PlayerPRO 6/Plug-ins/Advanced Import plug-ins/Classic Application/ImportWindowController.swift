@@ -48,7 +48,7 @@ class ImportWindowController: NSWindowController {
 				
 			default:
 				NSApplication.shared.endModalSession(modalSession)
-				currentBlock(nil, MADErr.parametersErr)
+				currentBlock(nil, PPMADError(.parameters))
 				
 				return
 			}
@@ -60,7 +60,7 @@ class ImportWindowController: NSWindowController {
 				
 				if errVal != .noErr {
 					NSApplication.shared.endModalSession(modalSession)
-					currentBlock(nil, errVal)
+					currentBlock(nil, PPMADError(madErr: errVal))
 					
 					return
 				}
@@ -75,7 +75,7 @@ class ImportWindowController: NSWindowController {
 					// The importers *should* have cleaned up after themselves...
 					madMusic.deallocate()
 					NSApplication.shared.endModalSession(modalSession)
-					currentBlock(nil, errVal)
+					currentBlock(nil, PPMADError(madErr: errVal))
 					
 					return
 				}
@@ -86,13 +86,13 @@ class ImportWindowController: NSWindowController {
 				currentBlock(ppMusic, nil)
 			} else {
 				NSApplication.shared.endModalSession(modalSession)
-				currentBlock(nil, MADErr.readingErr)
+				currentBlock(nil, PPMADError(.reading))
 
 				return
 			}
 		} else {
 			NSApplication.shared.endModalSession(modalSession)
-			currentBlock(nil, MADErr.unknownErr)
+			currentBlock(nil, PPMADError(.unknown))
 			
 			return
 		}
@@ -100,7 +100,7 @@ class ImportWindowController: NSWindowController {
 	
 	@IBAction func cancelImport(_ sender: AnyObject?) {
 		NSApplication.shared.endModalSession(modalSession)
-		currentBlock(nil, MADErr.userCancelledErr)
+		currentBlock(nil, PPMADError(.userCancelled))
 	}
 
 	func addResourceDictionary(_ theDict: [String: [FVResource]]) {

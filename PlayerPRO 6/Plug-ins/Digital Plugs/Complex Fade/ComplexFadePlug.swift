@@ -23,11 +23,11 @@ public final class ComplexFade: NSObject, PPDigitalPlugin {
 	}
 	
 	public func run(with aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver) throws {
-		throw MADErr.orderNotImplemented
+		throw PPMADError(.orderNotImplemented)
 	}
 	
 	public func beginRun(with aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentWindow window: NSWindow, handler: @escaping PPPlugErrorBlock) {
-		let controller = ComplexFadeController(windowNibName: "ComplexFadeController")
+		let controller = ComplexFadeController(windowNibName: NSNib.Name(rawValue: "ComplexFadeController"))
 		controller.thePcmd = aPcmd;
 		controller.fadeType = .instrument;
 		controller.currentBlock = handler

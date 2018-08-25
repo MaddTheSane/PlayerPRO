@@ -260,6 +260,11 @@
 		5547DA5619A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
 		5547DA5719A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
 		5547DA5919A570820014A620 /* SoundSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5819A570820014A620 /* SoundSettingsViewController.swift */; };
+		5547DFB321309AA200ABE441 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		5547DFB421309AA200ABE441 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		5547DFB521309AA200ABE441 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5547DFC821309B3B00ABE441 /* PPMix.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547DFC721309B3B00ABE441 /* PPMix.m */; };
+		5547DFC921309C4900ABE441 /* MixWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C443317DFE84700AFCB5C /* MixWindowController.xib */; };
 		5549F2C719D09C250072FB25 /* PPMINsPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 556BC18819CF5F2400508F49 /* PPMINsPlug.m */; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
@@ -1093,6 +1098,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 557168421AF06F5600B5DAD9;
 			remoteInfo = ResourceFork;
+		};
+		5547DFA821309AA200ABE441 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		5547DFAA21309AA200ABE441 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
 		};
 		554E10F510D6F09500BB619C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2514,6 +2533,9 @@
 		554703D81834368F008E5B9B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPSoundSettingsViewController.strings; sourceTree = "<group>"; };
 		5547DA5519A5690E0014A620 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		5547DA5819A570820014A620 /* SoundSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundSettingsViewController.swift; sourceTree = "<group>"; };
+		5547DFB921309AA200ABE441 /* Mix.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Mix.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		5547DFC621309B3B00ABE441 /* PPMix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPMix.h; sourceTree = "<group>"; };
+		5547DFC721309B3B00ABE441 /* PPMix.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPMix.m; sourceTree = "<group>"; };
 		554E0FF310D6C79D00BB619C /* Read-Me */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read-Me"; sourceTree = "<group>"; };
 		554E101210D6C79E00BB619C /* Length.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Length.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101310D6C79E00BB619C /* Length.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Length.r; sourceTree = "<group>"; };
@@ -3012,6 +3034,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				55B7E665161D1DD1000D988C /* PlayerPROCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5547DFB221309AA200ABE441 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5547DFB321309AA200ABE441 /* CoreFoundation.framework in Frameworks */,
+				5547DFB421309AA200ABE441 /* Cocoa.framework in Frameworks */,
+				5547DFB521309AA200ABE441 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3804,6 +3836,8 @@
 				552C443117DFE84700AFCB5C /* MixWindowController.h */,
 				552C443217DFE84700AFCB5C /* MixWindowController.m */,
 				552C443317DFE84700AFCB5C /* MixWindowController.xib */,
+				5547DFC621309B3B00ABE441 /* PPMix.h */,
+				5547DFC721309B3B00ABE441 /* PPMix.m */,
 			);
 			path = Mix;
 			sourceTree = "<group>";
@@ -5145,6 +5179,7 @@
 				55D5E9581B01466D00EB2C84 /* System 7.plugin */,
 				55D8E1951C4EC0BC00C2B397 /* ITv2.ppimpexp */,
 				556BC4011FAFEB9E0015C622 /* Old Classic Sound.plugin */,
+				5547DFB921309AA200ABE441 /* Mix.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5458,6 +5493,25 @@
 			name = IT;
 			productName = MOD;
 			productReference = 553341FC10BB600A005208D1 /* IT.ppimpexp */;
+			productType = "com.apple.product-type.bundle";
+		};
+		5547DFA621309AA200ABE441 /* Mix */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5547DFB621309AA200ABE441 /* Build configuration list for PBXNativeTarget "Mix" */;
+			buildPhases = (
+				5547DFAB21309AA200ABE441 /* Resources */,
+				5547DFAE21309AA200ABE441 /* Sources */,
+				5547DFB221309AA200ABE441 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5547DFA721309AA200ABE441 /* PBXTargetDependency */,
+				5547DFA921309AA200ABE441 /* PBXTargetDependency */,
+			);
+			name = Mix;
+			productName = "Complex Fade";
+			productReference = 5547DFB921309AA200ABE441 /* Mix.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		554E10F710D6F09F00BB619C /* Fade Note */ = {
@@ -6545,7 +6599,7 @@
 				LastUpgradeCheck = 0930;
 				TargetAttributes = {
 					550FFADF17CEA4570003A2F3 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					551292D7163DD68500C2C639 = {
 						LastSwiftMigration = 0900;
@@ -6572,7 +6626,7 @@
 						LastSwiftMigration = 0800;
 					};
 					554E122210D6F3E600BB619C = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					5557769E17EBF8FD0019D008 = {
 						SystemCapabilities = {
@@ -6597,13 +6651,13 @@
 						ProvisioningStyle = Automatic;
 					};
 					557DE61410E0884100177B4C = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					557DE65710E0885C00177B4C = {
 						LastSwiftMigration = 0800;
 					};
 					557DE69810E0886400177B4C = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					557DE6D910E0886A00177B4C = {
 						LastSwiftMigration = 0800;
@@ -6615,7 +6669,7 @@
 						LastSwiftMigration = 0800;
 					};
 					557DE83410E08D9E00177B4C = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					557DE8BA10E08DA800177B4C = {
 						LastSwiftMigration = 0800;
@@ -6655,7 +6709,7 @@
 						TestTargetID = 55CBF9A511EB77760028C6BB;
 					};
 					55B797DB10D6E6C40073E379 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 					};
 					55CBF9A511EB77760028C6BB = {
 						LastSwiftMigration = 0800;
@@ -6768,6 +6822,7 @@
 				557DE7AE10E08D8300177B4C /* Fade */,
 				557DE7F110E08D8900177B4C /* Invert */,
 				557DE83410E08D9E00177B4C /* Length */,
+				5547DFA621309AA200ABE441 /* Mix */,
 				557DE8BA10E08DA800177B4C /* Normalize */,
 				557DE8FD10E08DAC00177B4C /* Sampling Rate */,
 				557DE90D10E08DB000177B4C /* Silence */,
@@ -6950,6 +7005,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5547DFAB21309AA200ABE441 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5547DFC921309C4900ABE441 /* MixWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7547,6 +7610,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5533422410BB6675005208D1 /* IT.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5547DFAE21309AA200ABE441 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5547DFC821309B3B00ABE441 /* PPMix.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8404,6 +8475,16 @@
 			isa = PBXTargetDependency;
 			name = ResourceFork;
 			targetProxy = 55379CB61D64191100387CF3 /* PBXContainerItemProxy */;
+		};
+		5547DFA721309AA200ABE441 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 5547DFA821309AA200ABE441 /* PBXContainerItemProxy */;
+		};
+		5547DFA921309AA200ABE441 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 5547DFAA21309AA200ABE441 /* PBXContainerItemProxy */;
 		};
 		554E10F610D6F09500BB619C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9496,7 +9577,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9520,7 +9601,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9856,6 +9937,48 @@
 			};
 			name = Debug;
 		};
+		5547DFB721309AA200ABE441 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		5547DFB821309AA200ABE441 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
 		554E110310D6F09F00BB619C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -10015,7 +10138,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10035,7 +10158,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10709,7 +10832,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10729,7 +10852,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10785,7 +10908,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10805,7 +10928,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10933,7 +11056,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10953,7 +11076,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -11738,7 +11861,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -11759,7 +11882,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -12233,6 +12356,15 @@
 			buildConfigurations = (
 				553341F910BB600A005208D1 /* Release */,
 				553341FA10BB600A005208D1 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5547DFB621309AA200ABE441 /* Build configuration list for PBXNativeTarget "Mix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5547DFB721309AA200ABE441 /* Release */,
+				5547DFB821309AA200ABE441 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

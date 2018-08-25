@@ -13,10 +13,12 @@ import SwiftAdditions
 	import MobileCoreServices
 #endif
 
-private let kPlayerPROMADKUTI = "com.quadmation.playerpro.madk"
-private var MadIDString: String {
-	return OSTypeToString(MadID)!
+private var kPlayerPROMADKUTI: String {
+	return "com.quadmation.playerpro.madk"
 }
+private let MadIDString: String = {
+	return OSTypeToString(MadID)!
+}()
 
 private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	let aArray: [Int8] = try! arrayFromObject(reflecting: infoRec.internalFileName, appendLastObject: 0)
@@ -96,7 +98,9 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 			
 			var fileTypes = theOpenables.map { UTGetOSTypeFromString($0 as NSString) }
 			
-			fileTypes.insert(OSType(tupleType), at: 0)
+			if !fileTypes.contains(OSType(tupleType)) {
+				fileTypes.insert(OSType(tupleType), at: 0)
+			}
 			
 			return fileTypes
 		}
@@ -295,12 +299,12 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 					MADDisposeLibrary(theLib)
 				}
 				
-				throw errVal
+				throw PPMADError(madErr: errVal)
 			}
 			if let theLib = theLib {
 				return theLib
 			} else {
-				throw MADErr.libraryNotInitialized
+				throw PPMADError(.libraryNotInitialized)
 			}
 		}()
 		
@@ -349,9 +353,13 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		let sRet = String(cString: cType, encoding: .macOSRoman)
 		
 		guard aRet == .noErr else {
-			throw aRet
+			throw PPMADError(madErr: aRet, userInfo: [NSURLErrorKey: apath])
 		}
-		return sRet!
+		if let sRetB = sRet {
+			return sRetB
+		} else {
+			throw CocoaError(.fileReadInapplicableStringEncoding, userInfo: [NSURLErrorKey: apath, NSStringEncodingErrorKey: String.Encoding.macOSRoman.rawValue])
+		}
 	}
 	
 	/// Attempts to identify the file passed to it.
@@ -378,13 +386,11 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		do {
 			type.pointee = try identifyFile(at: apath) as NSString
 			return .noErr
-		} catch let anErr as MADErr {
-			return anErr
-		} catch let anErr as NSError {
-			if let errVal = MADErr(error: anErr) {
-				return errVal
-			}
-		}
+		} catch let anErr as PPMADError {
+			return anErr.code.madErr
+		} catch CocoaError.fileReadInapplicableStringEncoding {
+			return .parametersErr
+		} catch _ { }
 		
 		return .unknownErr
 	}
@@ -402,13 +408,11 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		do {
 			type.pointee = try identifyFile(atPath: apath) as NSString
 			return .noErr
-		} catch let anErr as MADErr {
-			return anErr
-		} catch let anErr as NSError {
-			if let errVal = MADErr(error: anErr) {
-				return errVal
-			}
-		}
+		} catch let anErr as PPMADError {
+			return anErr.code.madErr
+		} catch CocoaError.fileReadInapplicableStringEncoding {
+			return .parametersErr
+		} catch _ { }
 		
 		return .unknownErr
 	}
@@ -419,7 +423,9 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 
 		let anErr = MADMusicInfoCFURL(theLibrary, &cStrType, URL as NSURL, &infoRec)
 		
-		try anErr.throwIfNotNoErr()
+		if anErr != .noErr {
+			throw PPMADError(madErr: anErr, userInfo: [NSURLErrorKey: URL])
+		}
 		
 		return infoRec
 	}
@@ -432,7 +438,9 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - throws: A `MADErr` wrapped in an `NSError`.
 	public func information(from apath: URL, type: String) throws -> MusicFileInfo {
 		guard let cStrType = type.cString(using: .macOSRoman) else {
-			throw MADErr.parametersErr
+			throw PPMADError(.parameters, userInfo:
+				[NSURLErrorKey: apath,
+				 NSStringEncodingErrorKey: String.Encoding.macOSRoman.rawValue])
 		}
 		
 		let filInfo = try information(from: apath, cType: cStrType)
@@ -470,13 +478,9 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 			let tmpDict = toDictionary(infoRec: aRet)
 			info.pointee = tmpDict as NSDictionary
 			return .noErr
-		} catch let anErr as MADErr {
-			return anErr
-		} catch let anErr as NSError {
-			if let errVal = MADErr(error: anErr) {
-				return errVal
-			}
-		}
+		} catch let anErr as PPMADError {
+			return anErr.code.madErr
+		} catch _ { }
 		
 		return .unknownErr
 	}
@@ -505,13 +509,9 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		do {
 			try testFile(at: url, as: type)
 			return .noErr
-		} catch let anErr as MADErr {
-			return anErr
-		} catch let anErr as NSError {
-			if let errVal = MADErr(error: anErr) {
-				return errVal
-			}
-		}
+		} catch let anErr as PPMADError {
+			return anErr.code.madErr
+		} catch _ { }
 		
 		return .unknownErr
 	}
@@ -535,10 +535,16 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	@nonobjc
 	public func testFile(at url: URL, as type: String) throws {
 		guard var cStrType = type.cString(using: String.Encoding.macOSRoman) else {
-			throw MADErr.parametersErr
+			throw PPMADError(.parameters, userInfo:
+				[NSURLErrorKey: url,
+				 NSStringEncodingErrorKey: String.Encoding.macOSRoman.rawValue])
 		}
 		
-		try MADMusicTestCFURL(theLibrary, &cStrType, url as NSURL).throwIfNotNoErr()
+		let anErr = MADMusicTestCFURL(theLibrary, &cStrType, url as NSURL)
+		
+		if anErr != .noErr {
+			throw PPMADError(madErr: anErr, userInfo: [NSURLErrorKey: url])
+		}
 	}
 	
 	/// Gets a plug-in type from a UTI
@@ -613,13 +619,9 @@ extension PPLibrary {
 			let tmpDict = toDictionary(infoRec: aRet)
 			info.pointee = tmpDict as NSDictionary
 			return .noErr
-		} catch let anErr as MADErr {
-			return anErr
-		} catch let anErr as NSError {
-			if let errVal = MADErr(error: anErr) {
-				return errVal
-			}
-		}
+		} catch let anErr as PPMADError {
+			return anErr.code.madErr
+		} catch _ { }
 		
 		return .unknownErr
 	}
@@ -635,17 +637,15 @@ extension PPLibrary {
 		do {
 			let aRet = try identifyFile(at: apath)
 			guard let typeStr = aRet.cString(using: String.Encoding.macOSRoman) else {
-				throw MADErr.parametersErr
+				throw PPMADError(.parameters)
 			}
 			strncpy(type, typeStr, 4)
 			return .noErr
-		} catch let anErr as MADErr {
-			return anErr
-		} catch let anErr as NSError {
-			if let errVal = MADErr(error: anErr) {
-				return errVal
-			}
-		}
+		} catch let anErr as PPMADError {
+			return anErr.code.madErr
+		} catch CocoaError.fileReadInapplicableStringEncoding {
+			return .parametersErr
+		} catch _ { }
 		
 		return .unknownErr
 	}
@@ -661,17 +661,15 @@ extension PPLibrary {
 		do {
 			let aStr = try identifyFile(atPath: apath)
 			guard let typeStr = aStr.cString(using: String.Encoding.macOSRoman) else {
-				throw MADErr.parametersErr
+				throw PPMADError(.parameters)
 			}
 			strncpy(type, typeStr, 4)
 			return .noErr
-		} catch let anErr as MADErr {
-			return anErr
-		} catch let anErr as NSError {
-			if let errVal = MADErr(error: anErr) {
-				return errVal
-			}
-		}
+		} catch let anErr as PPMADError {
+			return anErr.code.madErr
+		} catch CocoaError.fileReadInapplicableStringEncoding {
+			return .parametersErr
+		} catch _ { }
 		
 		return .unknownErr
 	}

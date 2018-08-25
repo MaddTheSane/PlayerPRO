@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PPSamplePlugObject ()
-@property (readwrite, copy) NSArray *UTITypes;
+@property (readwrite, copy) NSArray<NSString*> *UTITypes;
 @property (readwrite) BOOL canImport;
 @property (readwrite) BOOL canExport;
 

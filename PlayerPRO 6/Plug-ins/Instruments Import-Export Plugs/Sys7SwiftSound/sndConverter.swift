@@ -10,6 +10,7 @@ import Foundation
 import AudioToolbox
 import SwiftAudioAdditions
 import PlayerPROCore.Defines
+import PlayerPROKit.PPErrors
 import ResourceFork
 
 private func fixedToFloat(_ a: UInt32) -> Double {
@@ -150,7 +151,7 @@ internal func assetForSND(_ data: Data) throws -> URL {
 			!reader.readUInt16(endian: .big, &modifierPart.modNumber) ||
 			!reader.readInt32(endian: .big, &modifierPart.modInit) {
 			errmsg("Missing header")
-			throw MADErr.fileNotSupportedByThisPlug
+			throw PPMADError(.fileNotSupportedByThisPlug)
 		}
 		if numModifiers != 1 {
 			errmsg("Bad header")
@@ -176,7 +177,7 @@ internal func assetForSND(_ data: Data) throws -> URL {
 		}
 	} else {
 		errmsg("Unknown format \(format)")
-		throw MADErr.fileNotSupportedByThisPlug
+		throw PPMADError(.fileNotSupportedByThisPlug)
 	}
 	
 	// Read SndCommands
@@ -241,7 +242,7 @@ internal func assetForSND(_ data: Data) throws -> URL {
 			errmsg(String(format: "Unknown encoding 0x%02X", header.encode))
 			throw SndAssetErrors.unknownEncoding(enc: header.encode)
 		}
-		throw MADErr.fileNotSupportedByThisPlug
+		throw PPMADError(.fileNotSupportedByThisPlug)
 	}
 	
 	// Generate an AudioStreamBasicDescription for conversion
@@ -253,10 +254,10 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	let createStatus = ExtAudioFileCreate(url: url, fileType: .AIFF, streamDescription: &stream, flags: .eraseFile, audioFile: &audioFile1)
 	if createStatus != noErr {
 		errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")
-		throw MADErr.writingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(createStatus))], convertToCocoa: false)!
+		throw PPMADError(.writing, userInfo: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(createStatus))])
 	}
 	guard let audioFile = audioFile1 else {
-		throw MADErr.writingErr
+		throw PPMADError(.writing)
 	}
 	defer {
 		// Finish up
@@ -280,7 +281,7 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	let writeStatus = ExtAudioFileWrite(audioFile, header.length, &bufferList)
 	if writeStatus != noErr {
 		errmsg("ExtAudioFileWrite failed with status \(writeStatus)")
-		throw MADErr.writingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey:NSError(domain: NSOSStatusErrorDomain, code: Int(writeStatus))], convertToCocoa: false)!
+		throw PPMADError(.writing, userInfo: [NSUnderlyingErrorKey: NSError(domain: NSOSStatusErrorDomain, code: Int(writeStatus))])
 	}
 	
 	return url

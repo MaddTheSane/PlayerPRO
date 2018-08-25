@@ -84,7 +84,7 @@ class LengthWindowController: NSWindowController {
 	
 	@IBAction func cancel(_ sender: AnyObject?) {
 		parentWindow?.endSheet(self.window!)
-		currentBlock(MADErr.userCancelledErr)
+		currentBlock(PPMADError(.userCancelled))
 	}
 	
 	private func convertSample(size destinationSize: Int) -> NSMutableData? {

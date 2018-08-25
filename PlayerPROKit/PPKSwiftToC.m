@@ -39,7 +39,7 @@ NSString *PPStringFromNote(short note)
 	return [PPSampleObject octaveNameFromNote:note];
 }
 
-NSDictionary *PPInfoRecToDictionary(MADInfoRec infoRec)
+NSDictionary *PPMADInfoRecToDictionary(MADInfoRec infoRec)
 {
 	return @{kPPTotalPatterns:		@(infoRec.totalPatterns),
 			 kPPPartitionLength:	@(infoRec.partitionLength),

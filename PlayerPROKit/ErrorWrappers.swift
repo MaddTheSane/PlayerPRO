@@ -10,43 +10,35 @@ import Foundation
 import PlayerPROCore
 import SwiftAdditions
 
-extension MADErr: CustomNSError, LocalizedError {
-	/// PlayerPROKit's `PPMADErrorDomain`
-	public static var errorDomain: String {
-		return PPMADErrorDomain
+extension PPMADError {
+	public init(madErr: MADErr, userInfo: [String: Any] = [:]) {
+		self.init(PPMADError.Code(madErr), userInfo: userInfo)
 	}
-	
-	public var _domain: String {
-		return MADErr.errorDomain
-	}
-	
-	/// PlayerPROCore's `MADErr` raw value
-	public var errorCode: Int {
-		return Int(rawValue)
-	}
-	
-	public var errorDescription: String? {
-		return PPLocalizedStringForKeyAndError(NSLocalizedDescriptionKey, self)
-	}
-	public var failureReason: String? {
-		return PPLocalizedStringForKeyAndError(NSLocalizedFailureReasonErrorKey, self)
+}
+
+extension PPMADError.Code {
+	public init(_ madErr: MADErr) {
+		self = PPMADError.Code(rawValue: Int(madErr.rawValue))!
 	}
 
-	public var recoverySuggestion: String? {
-		return PPLocalizedStringForKeyAndError(NSLocalizedRecoverySuggestionErrorKey, self)
+	public var madErr: MADErr {
+		return MADErr(rawValue: Int16(rawValue))!
 	}
-	
+}
+
+extension MADErr {
 	/// Throws `self` if `self` is anything other than `.NoErr`.
+	@available(*, deprecated, message: "Wrap in PPMADError, then throw")
 	public func throwIfNotNoErr() throws {
 		if self != .noErr {
-			throw self
+			throw PPMADError(madErr: self)
 		}
 	}
 	
 	/// Converts to an error to one in the built-in Cocoa error domains, if possible.
 	public func convertToCocoaType() -> Error {
 		guard let anErr = __PPCreateErrorFromMADErrorTypeConvertingToCocoa(self, true) else {
-			return NSError(domain: PPMADErrorDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Throwing MADNoErr! This shouldn't happen!"])
+			return PPMADError(.none, userInfo: [NSLocalizedDescriptionKey: "Throwing MADNoErr! This shouldn't happen!"])
 		}
 		return anErr
 	}
@@ -86,12 +78,13 @@ extension MADErr: CustomNSError, LocalizedError {
 			return populate(error: cocoaErr as NSError)
 		}
 		
-		return populate(error: self as NSError)
+		return populate(error: PPMADError(madErr: self) as NSError)
 	}
 	
 	/// Creates a `MADErr` from the provided `NSError`.
 	/// Is `nil` if the error isn't in the `PPMADErrorDomain` or
 	/// the error code isn't in `MADErr`.
+	@available(*, deprecated, message: "Use `catch let error as PPMADError` instead")
 	public init?(error anErr: NSError) {
 		guard anErr.domain == PPMADErrorDomain,
 			let exact = MADErr.RawValue(exactly: anErr.code),
@@ -102,6 +95,7 @@ extension MADErr: CustomNSError, LocalizedError {
 		self = errVal
 	}
 }
+
 
 extension MADErr: CustomStringConvertible, CustomDebugStringConvertible {
 	public var description: String {

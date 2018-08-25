@@ -23,8 +23,8 @@ public final class Crop: NSObject, PPFilterPlugin {
 	}
 	
 	public func run(withData theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver) throws {
-		guard var ourData = theData.data, let selSwiftRange = selRange.toRange() else {
-			throw MADErr.parametersErr
+		guard var ourData = theData.data, let selSwiftRange = Range(selRange), ourData.count >= selSwiftRange.upperBound else {
+			throw PPMADError(.parameters)
 		}
 		ourData.replaceSubrange(selSwiftRange, with: Data())
 		theData.data = ourData

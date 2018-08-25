@@ -10,6 +10,8 @@ import Cocoa
 import PlayerPROKit
 import SwiftAdditions
 
+private let BYTESWAP_STRIDE = 8
+
 private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
 	try data.withUnsafeBytes { (PATData1: UnsafePointer<UInt8>) -> Void in
 		var PATHeader: UnsafePointer<PatchHeader>
@@ -35,7 +37,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
 		insHeader.resetInstrument()
 		
 		if PATHeader.pointee.InsNo != 1 {
-			throw MADErr.fileNotSupportedByThisPlug;
+			throw PPMADError(.fileNotSupportedByThisPlug)
 		}
 		
 		let sampleCount = Int(PATHeader.pointee.Samp.littleEndian)
@@ -153,8 +155,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
 			var dat2 = Data(bytes: UnsafeRawPointer(PATData), count: Int(sampSize))
 			
 			//if aData != nil {
-			let BYTESWAP_STRIDE = 8
-			if (curData.amplitude == 16) {
+			if curData.amplitude == 16 {
 				dat2.withUnsafeMutableBytes({ (tt: UnsafeMutablePointer<UInt16>) -> Void in
 					DispatchQueue.concurrentPerform(iterations: Int(sampSize / 2) / BYTESWAP_STRIDE, execute: { (tL) -> Void in
 						for j in 0 ..< BYTESWAP_STRIDE {
@@ -221,10 +222,10 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 	
 	public func canImportInstrument(at url: URL) -> Bool {
 		do {
-			let aHandle = try FileHandle(forReadingFrom:url)
+			let aHandle = try FileHandle(forReadingFrom: url)
 			let fileData = aHandle.readData(ofLength: headerData.count)
 			
-			return (fileData == headerData)
+			return fileData == headerData
 		} catch _ {
 			return false
 		}
@@ -235,7 +236,7 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 		do {
 			inData = try Data(contentsOf: sampleURL)
 		} catch {
-			throw NSError(domain: PPMADErrorDomain, code: Int(MADErr.readingErr.rawValue), userInfo: [NSUnderlyingErrorKey : error])
+			throw PPMADError(.reading, userInfo: [NSUnderlyingErrorKey : error])
 		}
 		if let ourIns = PPInstrumentObject() as PPInstrumentObject? {
 			ourIns.resetInstrument()
@@ -243,7 +244,7 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 			try importPAT(ourIns, data: inData)
 			InsHeader.pointee = ourIns
 		} else {
-			throw MADErr.needMemory
+			throw PPMADError(.needsMemory)
 		}
 	}
 }

@@ -16,14 +16,17 @@ import SwiftAudioAdditions
 private let kSrcBufSize: UInt32 = 32768;
 
 internal func readAIFF(at url: URL) throws -> PPSampleObject {
-	guard let fileRef = try? ExtAudioFile(open: url) else {
-		throw MADErr.readingErr
+	let fileRef: ExtAudioFile
+	do {
+		fileRef = try ExtAudioFile(open: url)
+	} catch {
+		throw PPMADError(.reading, userInfo: [NSUnderlyingErrorKey: error])
 	}
 	
 	let realFormat = fileRef.fileDataFormat
 	
 	fileRef.clientDataFormat = {
-		let sampRate = clamp(ceil(realFormat.mSampleRate), minimum: 5000, maximum: 44100)
+		let sampRate = clamp(ceil(realFormat.mSampleRate.rounded()), minimum: 5000, maximum: 44100)
 		let bytesPerSamp: UInt32
 		switch realFormat.mBitsPerChannel {
 		case 1...8:
@@ -46,6 +49,8 @@ internal func readAIFF(at url: URL) throws -> PPSampleObject {
 		return AudioStreamBasicDescription(sampleRate: sampRate, formatID: .linearPCM, formatFlags: [.nativeEndian, .packed, .signedInteger], bitsPerChannel: bytesPerSamp, channelsPerFrame: chanPerFr)
 	}()
 	
+	let clientFormat = fileRef.clientDataFormat
+	
 	var mutableData = Data(capacity: Int(kSrcBufSize) * 8)
 	readLoop: while true {
 		if let tmpMutDat = NSMutableData(length: Int(kSrcBufSize)) {
@@ -53,13 +58,13 @@ internal func readAIFF(at url: URL) throws -> PPSampleObject {
 			defer {
 				free(fillBufList.unsafeMutablePointer)
 			}
-			fillBufList[0].mNumberChannels = realFormat.mChannelsPerFrame
+			fillBufList[0].mNumberChannels = clientFormat.mChannelsPerFrame
 			fillBufList[0].mDataByteSize = kSrcBufSize
 			fillBufList[0].mData = tmpMutDat.mutableBytes
 			
 			// client format is always linear PCM - so here we determine how many frames of lpcm
 			// we can read/write given our buffer size
-			var numFrames = (kSrcBufSize / realFormat.mBytesPerFrame);
+			var numFrames = kSrcBufSize / clientFormat.mBytesPerFrame
 			
 			// printf("test %d\n", numFrames);
 			
@@ -70,21 +75,21 @@ internal func readAIFF(at url: URL) throws -> PPSampleObject {
 				break readLoop
 			}
 			
-			tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
+			tmpMutDat.length = Int(numFrames * clientFormat.mBytesPerFrame)
 			mutableData.append(tmpMutDat as Data)
 		} else {
-			throw MADErr.needMemory
+			throw PPMADError(.needsMemory)
 		}
 	}
 	
 	let sample = PPSampleObject()
 	
 	sample.volume = 64
-	sample.c2spd = UInt16(realFormat.mSampleRate)
+	sample.c2spd = UInt16(clientFormat.mSampleRate)
 	sample.loopType = .classic
 	sample.realNote = 0
-	sample.amplitude = MADByte(realFormat.mBitsPerChannel)
-	sample.isStereo = realFormat.mChannelsPerFrame == 2
+	sample.amplitude = MADByte(clientFormat.mBitsPerChannel)
+	sample.isStereo = clientFormat.mChannelsPerFrame == 2
 	sample.data = mutableData
 	
 	return sample

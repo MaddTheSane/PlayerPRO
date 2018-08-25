@@ -90,10 +90,11 @@ static inline OSErr TestMINS(const InstrData *CC)
 
 -(BOOL)importInstrumentAtURL:(NSURL *)sampleURL instrument:(out PPInstrumentObject *__autoreleasing *)outHeader driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nonnull)error
 {
-	NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingFromURL:sampleURL error:NULL];
+	NSError *otherErr = nil;
+	NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingFromURL:sampleURL error:&otherErr];
 	if (!readHandle) {
 		if (error) {
-			*error = [NSError errorWithDomain:PPMADErrorDomain code:MADReadingErr userInfo:nil];
+			*error = [NSError errorWithDomain:PPMADErrorDomain code:MADReadingErr userInfo:@{NSUnderlyingErrorKey: otherErr}];
 		}
 		
 		return NO;
@@ -103,6 +104,13 @@ static inline OSErr TestMINS(const InstrData *CC)
 	[InsHeader resetInstrument];
 	size_t inOutCount = sizeof(InstrData);
 	NSMutableData *aHeader = [[readHandle readDataOfLength:inOutCount] mutableCopy];
+	if (aHeader.length != inOutCount) {
+		if (error) {
+			*error = [NSError errorWithDomain:PPMADErrorDomain code:MADIncompatibleFile userInfo:nil];
+		}
+		
+		return NO;
+	}
 	ByteswapInstrument(aHeader.mutableBytes);
 	const InstrData *ourData = aHeader.bytes;
 	{
@@ -168,12 +176,28 @@ static inline OSErr TestMINS(const InstrData *CC)
 		sData *curData = MADCreateSampleRaw();
 		inOutCount = sizeof(sData32);
 		aHeader = [[readHandle readDataOfLength:inOutCount] mutableCopy];
+		if (aHeader.length != inOutCount) {
+			if (error) {
+				*error = [NSError errorWithDomain:PPMADErrorDomain code:MADIncompatibleFile userInfo:nil];
+			}
+			
+			return NO;
+		}
 		ByteswapsData(aHeader.mutableBytes);
 		memcpy(curData, aHeader.bytes, inOutCount);
 		
 		inOutCount = curData->size;
+		// Don't leak.
+		free(curData->data); curData->data = NULL;
 		curData->data = malloc(inOutCount);
 		NSData *sampData = [readHandle readDataOfLength:inOutCount];
+		if (sampData.length != inOutCount) {
+			if (error) {
+				*error = [NSError errorWithDomain:PPMADErrorDomain code:MADIncompatibleFile userInfo:nil];
+			}
+			
+			return NO;
+		}
 		memcpy(curData->data, sampData.bytes, inOutCount);
 #if __LITTLE_ENDIAN__
 		if (curData->amp == 16) {
@@ -207,10 +231,11 @@ static inline OSErr TestMINS(const InstrData *CC)
 
 - (BOOL)exportInstrument:(PPInstrumentObject *)InsHeader toURL:(NSURL *)sampleURL driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nonnull)error
 {
-	NSFileHandle *fileHand = [NSFileHandle fileHandleForWritingToURL:sampleURL error:NULL];
+	NSError *otherErr = nil;
+	NSFileHandle *fileHand = [NSFileHandle fileHandleForWritingToURL:sampleURL error:&otherErr];
 	if (fileHand == nil) {
 		if (error) {
-			*error = [NSError errorWithDomain:PPMADErrorDomain code:MADWritingErr userInfo:nil];
+			*error = [NSError errorWithDomain:PPMADErrorDomain code:MADWritingErr userInfo:@{NSUnderlyingErrorKey: otherErr}];
 		}
 		
 		return NO;

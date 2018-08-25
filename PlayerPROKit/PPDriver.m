@@ -34,7 +34,7 @@
 			MADErr iErr = MADAttachDriverToMusic(theRec, currentMusic._currentMusic, NULL);
 			if (iErr != MADNoErr) {
 				NSError *err = PPCreateErrorFromMADErrorType(iErr);
-				[[[NSException alloc] initWithName:@"MADAttachDriverToMusic err" reason:@"MADAttachDriverToMusic returned failure state" userInfo:err.userInfo] raise];
+				[[[NSException alloc] initWithName:@"MADAttachDriverToMusic err" reason:@"MADAttachDriverToMusic returned failure state" userInfo:@{NSUnderlyingErrorKey: err}] raise];
 			}
 		}
 		tmpMus = nil;
@@ -251,16 +251,11 @@
 			break;
 	}
 
-	void* thePtr = malloc(aSize);
-	NSData *ourData = nil;
-	if (MADDirectSave(thePtr, NULL, theRec)) {
-		ourData = [[NSData alloc] initWithBytesNoCopy:thePtr length:aSize];
+	NSMutableData *ourData = [[NSMutableData alloc] initWithLength:aSize];
+	if (!MADDirectSave(ourData.mutableBytes, NULL, theRec)) {
+		ourData = nil;
 	}
-	// Prevent leak if MADDirectSave didn't populate thePtr.
-	if (ourData == nil) {
-		free(thePtr);
-	}
- 
+	
 	return ourData;
 }
 

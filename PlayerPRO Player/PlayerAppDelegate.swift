@@ -702,8 +702,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 					self.selMusFromList = self.musicList.selectedMusic
 					if let theErr = theErr {
 						NSApp.presentError(theErr)
-					}
-					if let newList = newList {
+					} else if let newList = newList {
 						self.musicLibrary.add(list: newList)
 					}
 				})
@@ -1591,7 +1590,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			if let info = madLib.typeFromUTI(fileUTI) {
 				aPPInfo = try madLib.information(from: musicURL, type: info)
 			} else {
-				throw MADErr.noErr
+				throw PPMADError(.none)
 			}
 		} catch _ {
 			badValues()

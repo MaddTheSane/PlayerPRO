@@ -11,7 +11,7 @@ import XCTest
 @testable import PlayerPROCore
 @testable import PlayerPROKit
 
-private func GlobalDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
+private func globalDebugFunction(line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
 	let manager = FileManager.default
 	let fileStr = manager.string(withFileSystemRepresentation: file!, length: Int(strlen(file!)))
 	let textStr = String(validatingUTF8: text!)!
@@ -37,7 +37,7 @@ class MADDebugStr_Tests: XCTestCase {
 		super.tearDown()
 	}
 	
-	private func classDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
+	private func classDebugMethod(line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
 		let manager = FileManager.default
 		let fileStr = manager.string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
 		XCTAssertEqual(fileStr, #file, "files aren't equal...")
@@ -60,22 +60,22 @@ class MADDebugStr_Tests: XCTestCase {
 	}
 	
 	func testSwiftCDebugFunc() {
-		MADRegisterDebugFunc(GlobalDebugStr)
+		MADRegisterDebugFunc(globalDebugFunction)
 		MADDebug(string: "Swift Test")
 		MADDebugStr(#line, #file, "C-Style test")
 	}
 	
 	func testGlobalDebugBlock() {
-		MADRegisterDebugBlock(GlobalDebugStr)
+		MADRegisterDebugBlock(globalDebugFunction)
 		MADDebug(string: "Swift Test")
 		MADDebugStr(#line, #file, "C-Style test")
-		PPLibrary.registerDebugBlock(GlobalDebugStr)
+		PPLibrary.registerDebugBlock(globalDebugFunction)
 		MADDebug(string: "Swift Test")
 		MADDebugStr(#line, #file, "C-Style test")
 	}
 	
 	func testClassDebugBlock() {
-		MADRegisterDebugBlock(classDebugStr)
+		MADRegisterDebugBlock(classDebugMethod)
 		MADDebug(string: "Swift Test")
 		MADDebugStr(#line, #file, "C-Style test")
 		exampleVar = "Variable 1"
@@ -86,8 +86,8 @@ class MADDebugStr_Tests: XCTestCase {
 		MADDebugStr(#line, #file, "C-Style test")
 	}
 	
-	func testPPClassDebugBlock() {
-		PPLibrary.registerDebugBlock(classDebugStr)
+	func testPPKClassDebugBlock() {
+		PPLibrary.registerDebugBlock(classDebugMethod)
 		MADDebug(string: "Swift Test")
 		MADDebugStr(#line, #file, "C-Style test")
 		exampleVar = "Variable 1"
@@ -98,14 +98,14 @@ class MADDebugStr_Tests: XCTestCase {
 		MADDebugStr(#line, #file, "C-Style test")
 	}
 
-	func testPPClassCDebugFunc() {
+	func testPPKClassCDebugFunc() {
 		PPLibrary.registerDebugFunction(cDebugFunc)
 		MADDebug(string: "Swift Test")
 		MADDebugStr(#line, #file, "C-Style test")
 	}
 	
-	func testPPClassSwiftCDebugFunc() {
-		PPLibrary.registerDebugFunction(GlobalDebugStr)
+	func testPPKClassSwiftCDebugFunc() {
+		PPLibrary.registerDebugFunction(globalDebugFunction)
 		MADDebug(string: "Swift Test")
 		MADDebugStr(#line, #file, "C-Style test")
 	}

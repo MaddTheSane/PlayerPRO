@@ -63,7 +63,7 @@ final class DigitalPlugHandler: NSObject, NSFastEnumeration, Collection {
 		}
 	}
 	
-	var plugInCount: Int {
+	@objc var plugInCount: Int {
 		return self.count
 	}
 	
