@@ -11,151 +11,6 @@ import Foundation
 import PlayerPROCore.PlugIns
 import SwiftAdditions
 
-public func ==(lhs: Cmd, rhs: Cmd) -> Bool {
-	// Don't worry about the "unused" variable for now
-	if lhs.ins != rhs.ins {
-		return false
-	}
-	if lhs.note != rhs.note {
-		return false
-	}
-	if lhs.cmd != rhs.cmd {
-		return false
-	}
-	if lhs.arg != rhs.arg {
-		return false
-	}
-	if lhs.vol != rhs.vol {
-		return false
-	}
-	
-	return true
-}
-
-public func ==(lhs: IntPcmd, rhs: IntPcmd) -> Bool {
-	if lhs.tracks != rhs.tracks {
-		return false
-	} else if lhs.length != rhs.length {
-		return false
-	} else if lhs.trackStart != rhs.trackStart {
-		return false
-	} else if lhs.posStart != rhs.posStart {
-		return false
-	} else if lhs.cmdCount != rhs.cmdCount {
-		return false
-	} else {
-		let lhsCmds = UnsafeMutableBufferPointer(start: lhs.myCmd, count: Int(lhs.cmdCount))
-		let rhsCmds = UnsafeMutableBufferPointer(start: rhs.myCmd, count: Int(rhs.cmdCount))
-		for (lhsCmd, rhsCmd) in zip(lhsCmds, rhsCmds) {
-			if lhsCmd != rhsCmd {
-				return false
-			}
-		}
-	}
-
-	return true
-}
-
-public func ==(lhs: EnvRec, rhs: EnvRec) -> Bool {
-	if lhs.pos != rhs.pos {
-		return false
-	}
-	if lhs.val != rhs.val {
-		return false
-	}
-	
-	return true
-}
-
-public func ==(lhs: FXBus, rhs: FXBus) -> Bool {
-	if lhs.Active != rhs.Active {
-		return false
-	}
-	if lhs.ByPass != rhs.ByPass {
-		return false
-	}
-	if lhs.copyId != rhs.copyId {
-		return false
-	}
-	
-	return true
-}
-
-public func ==(lhs: MADDriverSettings, rhs: MADDriverSettings) -> Bool {
-	if lhs.driverMode != rhs.driverMode {
-		return false
-	}
-	if lhs.numChn != rhs.numChn {
-		return false
-	}
-	if lhs.outPutBits != rhs.outPutBits {
-		return false
-	}
-	if lhs.outPutMode != rhs.outPutMode {
-		return false
-	}
-	if lhs.outPutRate != rhs.outPutRate {
-		return false
-	}
-	if lhs.MicroDelaySize != rhs.MicroDelaySize {
-		return false
-	}
-	if lhs.ReverbSize != rhs.ReverbSize {
-		return false
-	}
-	if lhs.ReverbStrength != rhs.ReverbStrength {
-		return false
-	}
-	if lhs.oversampling != rhs.oversampling {
-		return false
-	}
-	if lhs.TickRemover != rhs.TickRemover {
-		return false
-	}
-	if lhs.surround != rhs.surround {
-		return false
-	}
-	if lhs.Reverb != rhs.Reverb {
-		return false
-	}
-	if lhs.repeatMusic != rhs.repeatMusic {
-		return false
-	}
-	
-	return true
-}
-
-public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
-	if lhs.track != rhs.track {
-		return false
-	}
-	if lhs.id != rhs.id {
-		return false
-	}
-	if lhs.FXID != rhs.FXID {
-		return false
-	}
-	if lhs.noArg != rhs.noArg {
-		return false
-	}
-	let lhsName = String(pascalString: lhs.name) ?? ""
-	let rhsName = String(pascalString: rhs.name) ?? ""
-	if lhsName != rhsName {
-		return false
-	}
-	
-	let lhsValuesArray: [Float] = try! arrayFromObject(reflecting: lhs.values)
-	let rhsValuesArray: [Float] = try! arrayFromObject(reflecting: rhs.values)
-	// Ignore values that aren't accessed
-	for i in 0..<Int(lhs.noArg) {
-		if lhsValuesArray[i] != rhsValuesArray[i] {
-			return false
-		}
-	}
-
-	return true
-}
-
 public let MadID = toOSType(string: "MADK")
 
 // MARK: PlayerPRO MAD data types
@@ -244,6 +99,50 @@ extension MADDriverSettings: CustomDebugStringConvertible, Equatable {
 		let onVal = "on"
 		let offVal = "off"
 		return "Driver Mode: \(driverMode.description), output mode: \(outPutMode.description.capitalized); Channel count: \(numChn), output Rate: \(outPutRate), surround: \(surround == true ? onVal : offVal); micro-delay size: \(MicroDelaySize), reverb, is \(Reverb == true ? onVal: offVal), size: \(ReverbSize), strength: \(ReverbStrength); oversampling \(oversampling); repeat music: \(repeatMusic == true ? onVal : offVal); "
+	}
+	
+	public static func ==(lhs: MADDriverSettings, rhs: MADDriverSettings) -> Bool {
+		if lhs.driverMode != rhs.driverMode {
+			return false
+		}
+		if lhs.numChn != rhs.numChn {
+			return false
+		}
+		if lhs.outPutBits != rhs.outPutBits {
+			return false
+		}
+		if lhs.outPutMode != rhs.outPutMode {
+			return false
+		}
+		if lhs.outPutRate != rhs.outPutRate {
+			return false
+		}
+		if lhs.MicroDelaySize != rhs.MicroDelaySize {
+			return false
+		}
+		if lhs.ReverbSize != rhs.ReverbSize {
+			return false
+		}
+		if lhs.ReverbStrength != rhs.ReverbStrength {
+			return false
+		}
+		if lhs.oversampling != rhs.oversampling {
+			return false
+		}
+		if lhs.TickRemover != rhs.TickRemover {
+			return false
+		}
+		if lhs.surround != rhs.surround {
+			return false
+		}
+		if lhs.Reverb != rhs.Reverb {
+			return false
+		}
+		if lhs.repeatMusic != rhs.repeatMusic {
+			return false
+		}
+		
+		return true
 	}
 }
 
@@ -381,6 +280,17 @@ extension EnvRec: Hashable {
 		return Int(bitPattern: aHi)
 	}
 	#endif
+	
+	public static func ==(lhs: EnvRec, rhs: EnvRec) -> Bool {
+		if lhs.pos != rhs.pos {
+			return false
+		}
+		if lhs.val != rhs.val {
+			return false
+		}
+		
+		return true
+	}
 }
 
 extension FXBus: Hashable {
@@ -399,9 +309,54 @@ extension FXBus: Hashable {
 		return aVar
 	}
 	#endif
+	
+	public static func ==(lhs: FXBus, rhs: FXBus) -> Bool {
+		if lhs.Active != rhs.Active {
+			return false
+		}
+		if lhs.ByPass != rhs.ByPass {
+			return false
+		}
+		if lhs.copyId != rhs.copyId {
+			return false
+		}
+		
+		return true
+	}
+
 }
 
 extension FXSets: Equatable {
+	public static func ==(lhs: FXSets, rhs: FXSets) -> Bool {
+		if lhs.track != rhs.track {
+			return false
+		}
+		if lhs.id != rhs.id {
+			return false
+		}
+		if lhs.FXID != rhs.FXID {
+			return false
+		}
+		if lhs.noArg != rhs.noArg {
+			return false
+		}
+		let lhsName = String(pascalString: lhs.name) ?? ""
+		let rhsName = String(pascalString: rhs.name) ?? ""
+		if lhsName != rhsName {
+			return false
+		}
+		
+		let lhsValuesArray: [Float] = try! arrayFromObject(reflecting: lhs.values)
+		let rhsValuesArray: [Float] = try! arrayFromObject(reflecting: rhs.values)
+		// Ignore values that aren't accessed
+		for i in 0..<Int(lhs.noArg) {
+			if lhsValuesArray[i] != rhsValuesArray[i] {
+				return false
+			}
+		}
+		
+		return true
+	}
 }
 
 extension Cmd: Equatable {
@@ -424,6 +379,27 @@ extension Cmd: Equatable {
 	/// Reset the command
 	public mutating func kill() {
 		MADKillCmd(&self)
+	}
+	
+	public static func ==(lhs: Cmd, rhs: Cmd) -> Bool {
+		// Don't worry about the "unused" variable for now
+		if lhs.ins != rhs.ins {
+			return false
+		}
+		if lhs.note != rhs.note {
+			return false
+		}
+		if lhs.cmd != rhs.cmd {
+			return false
+		}
+		if lhs.arg != rhs.arg {
+			return false
+		}
+		if lhs.vol != rhs.vol {
+			return false
+		}
+		
+		return true
 	}
 }
 
@@ -512,6 +488,30 @@ extension IntPcmd: CommandIterator, Equatable {
 		modifyCommand(atRow: row, track: track, commandBlock: {( aCmd: inout Cmd) -> () in
 			aCmd = command
 		})
+	}
+	
+	public static func ==(lhs: IntPcmd, rhs: IntPcmd) -> Bool {
+		if lhs.tracks != rhs.tracks {
+			return false
+		} else if lhs.length != rhs.length {
+			return false
+		} else if lhs.trackStart != rhs.trackStart {
+			return false
+		} else if lhs.posStart != rhs.posStart {
+			return false
+		} else if lhs.cmdCount != rhs.cmdCount {
+			return false
+		} else {
+			let lhsCmds = UnsafeMutableBufferPointer(start: lhs.myCmd, count: Int(lhs.cmdCount))
+			let rhsCmds = UnsafeMutableBufferPointer(start: rhs.myCmd, count: Int(rhs.cmdCount))
+			for (lhsCmd, rhsCmd) in zip(lhsCmds, rhsCmds) {
+				if lhsCmd != rhsCmd {
+					return false
+				}
+			}
+		}
+		
+		return true
 	}
 }
 
