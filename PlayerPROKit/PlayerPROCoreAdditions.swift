@@ -79,7 +79,7 @@ extension MADSoundOutput: CustomStringConvertible {
 		return self.stringValue
 	}
 	
-	public var available: Bool {
+	public var isAvailable: Bool {
 		return MADSoundDriverIsAvalable(self)
 	}
 }
@@ -208,23 +208,7 @@ extension sData {
 	}
 }
 
-#if swift(>=4.1.50)
-extension sData: Hashable {
-	public func hash(into hasher: inout Hasher) {
-		hasher.combine(size)
-		hasher.combine(loopBeg)
-		hasher.combine(loopSize)
-		hasher.combine(vol)
-		hasher.combine(c2spd)
-		hasher.combine(loopType)
-		hasher.combine(amp)
-		hasher.combine(realNote)
-		hasher.combine(stereo)
-		let dat = UnsafeRawPointer(data)
-		let datLen = UnsafeRawBufferPointer(start: dat, count: Int(size))
-		hasher.combine(bytes: datLen)
-	}
-
+extension sData: Equatable {
 	public static func ==(_ lhs: sData, _ rhs: sData) -> Bool {
 		guard lhs.amp == rhs.amp else {
 			return false
@@ -262,6 +246,24 @@ extension sData: Hashable {
 		}
 		
 		return true
+	}
+}
+
+#if swift(>=4.1.50)
+extension sData: Hashable {
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(size)
+		hasher.combine(loopBeg)
+		hasher.combine(loopSize)
+		hasher.combine(vol)
+		hasher.combine(c2spd)
+		hasher.combine(loopType)
+		hasher.combine(amp)
+		hasher.combine(realNote)
+		hasher.combine(stereo)
+		let dat = UnsafeRawPointer(data)
+		let datLen = UnsafeRawBufferPointer(start: dat, count: Int(size))
+		hasher.combine(bytes: datLen)
 	}
 }
 #endif
@@ -323,7 +325,6 @@ extension FXBus: Hashable {
 		
 		return true
 	}
-
 }
 
 extension FXSets: Equatable {
