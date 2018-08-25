@@ -309,6 +309,7 @@ extension sData {
 	}
 }
 
+#if swift(>=4.2)
 extension sData: Hashable {
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(size)
@@ -324,7 +325,7 @@ extension sData: Hashable {
 		let datLen = UnsafeRawBufferPointer(start: dat, count: Int(size))
 		hasher.combine(bytes: datLen)
 	}
-	
+
 	public static func ==(_ lhs: sData, _ rhs: sData) -> Bool {
 		guard lhs.amp == rhs.amp else {
 			return false
@@ -364,26 +365,46 @@ extension sData: Hashable {
 		return true
 	}
 }
+#endif
 
 extension EnvRec: Hashable {
+	#if swift(>=4.2)
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(pos)
 		hasher.combine(val)
 	}
+	#else
+	public var hashValue: Int {
+		var aHi = UInt(pos)
+		aHi |= UInt(val) << 16
+		
+		return Int(bitPattern: aHi)
+	}
+	#endif
 }
 
 extension FXBus: Hashable {
+	#if swift(>=4.2)
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(copyId)
 		hasher.combine(Active)
 		hasher.combine(ByPass)
 	}
+	#else
+	public var hashValue: Int {
+		var aVar = Int(copyId)
+		aVar |= Active.boolValue ? 1 << 16 : 0
+		aVar |= ByPass.boolValue ? 1 << 17 : 0
+		
+		return aVar
+	}
+	#endif
 }
 
 extension FXSets: Equatable {
 }
 
-extension Cmd: Hashable {
+extension Cmd: Equatable {
 	private init() {
 		self.init(ins: 0, note: 0xFF, cmd: .arpeggio, arg: 0, vol: 0xFF, unused: 0)
 	}
@@ -404,7 +425,10 @@ extension Cmd: Hashable {
 	public mutating func kill() {
 		MADKillCmd(&self)
 	}
-	
+}
+
+#if swift(>=4.2)
+extension Cmd: Hashable {
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(ins)
 		hasher.combine(note)
@@ -413,6 +437,7 @@ extension Cmd: Hashable {
 		hasher.combine(vol)
 	}
 }
+#endif
 
 public func getCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> Cmd {
 	return getCommand(position: position, channel: channel, aPat: aPat).pointee
