@@ -217,7 +217,7 @@ static const dispatch_block_t initUTIArray = ^{
 	self.commands[(self.patternSize * TrackIdX) + PosX] = [aCmd copy];
 }
 
-- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX commandBlock:(void (^)(Cmd*))block
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX commandBlock:(void (NS_NOESCAPE^)(Cmd*))block
 {
 	PPMadCommandObject *tmpMCmd = [self getCommandFromPosition:PosX channel:TrackIdX];
 	Cmd tmpCmd = tmpMCmd.theCommand;
@@ -225,7 +225,7 @@ static const dispatch_block_t initUTIArray = ^{
 	[self replaceCommandAtPosition:PosX channel:TrackIdX cmd:tmpCmd];
 }
 
-- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX madCommandBlock:(void (^)(PPMadCommandObject*))block
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX madCommandBlock:(void (NS_NOESCAPE^)(PPMadCommandObject*))block
 {
 	PPMadCommandObject *tmpMCmd = [self getCommandFromPosition:PosX channel:TrackIdX];
 	block(tmpMCmd);
