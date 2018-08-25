@@ -180,8 +180,8 @@ class DocumentWindowController: NSWindowController {
 			
 			try rawSoundData(&theSett, handler: handler)
 			applyMetadata(to: audioFile)
-		} catch let error as MADErr {
-			return error
+		} catch let error as PPMADError {
+			return error.code.madErr
 		} catch {
 			return MADErr.writingErr
 		}
@@ -227,8 +227,8 @@ class DocumentWindowController: NSWindowController {
 			
 			try rawSoundData(&theSett, handler: handler)
 			applyMetadata(to: audioFile)
-		} catch let error as MADErr {
-			return error
+		} catch let error as PPMADError {
+			return error.code.madErr
 		} catch {
 			return MADErr.writingErr
 		}
@@ -406,8 +406,8 @@ class DocumentWindowController: NSWindowController {
 			
 		default:
 			
-			if (tag > Int(globalMadLib.pluginCount) || tag < 0) {
-				NSSound.beep();
+			guard (0..<globalMadLib.pluginCount).contains(tag) else {
+				NSSound.beep()
 				self.currentDocument.theDriver.endExport()
 				
 				return;
@@ -418,14 +418,14 @@ class DocumentWindowController: NSWindowController {
 			savePanel.title = "Export as \(tmpObj.menuName)"
 			
 			savePanel.beginSheetModal(for: self.currentDocument.windowForSheet!, completionHandler: { (result) -> Void in
-				if result.rawValue == NSFileHandlingPanelOKButton {
+				if result == .OK {
 					let expObj = ExportObject(destination: savePanel.url!, exportBlock: { (theURL, errStr) -> MADErr in
 						var theErr = MADErr.noErr
 						do {
 						try self.currentDocument.theMusic.exportMusic(to: theURL, format: tmpObj.type, library: globalMadLib)
 						} catch {
-							if let error = error as? MADErr {
-								theErr = error
+							if let error = error as? PPMADError {
+								theErr = error.code.madErr
 							} else {
 								theErr = .unknownErr
 							}
