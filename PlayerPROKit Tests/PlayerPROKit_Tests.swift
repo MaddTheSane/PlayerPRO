@@ -122,6 +122,5 @@ class PlayerPROKit_Tests: XCTestCase {
 		} catch let iErr as NSError {
 			XCTFail("error thrown: \(iErr)")
 		}
-		
 	}
 }

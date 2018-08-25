@@ -28,7 +28,7 @@ extension MADOutputChannel: CustomStringConvertible {
 			return "deluxe stereo"
 			
 		case .PolyPhonic:
-			return "Polyphonic"
+			return "polyphonic"
 		}
 	}
 	
@@ -161,7 +161,7 @@ public let equalizerPacketElements = 512
 ///
 /// **Normally** it is never called, only when a FATAL error has occured. <br>
 /// This function is automatically invoked using the macros `#line` and
-/// `#file` for the `line` and `file` paramaters.
+/// `#file` for the `line` and `file` paramaters, respectively.
 public func MADDebug(string text: String, line: UInt = #line, file: StaticString = #file) {
 	MADDebugStr(Int16(line), (String(describing: file) as NSString).fileSystemRepresentation, text)
 }
