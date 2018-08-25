@@ -309,7 +309,7 @@ extension sData {
 	}
 }
 
-#if swift(>=4.2)
+#if swift(>=4.1.50)
 extension sData: Hashable {
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(size)
@@ -368,7 +368,7 @@ extension sData: Hashable {
 #endif
 
 extension EnvRec: Hashable {
-	#if swift(>=4.2)
+	#if swift(>=4.1.50)
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(pos)
 		hasher.combine(val)
@@ -384,7 +384,7 @@ extension EnvRec: Hashable {
 }
 
 extension FXBus: Hashable {
-	#if swift(>=4.2)
+	#if swift(>=4.1.50)
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(copyId)
 		hasher.combine(Active)
@@ -427,7 +427,7 @@ extension Cmd: Equatable {
 	}
 }
 
-#if swift(>=4.2)
+#if swift(>=4.1.50)
 extension Cmd: Hashable {
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(ins)

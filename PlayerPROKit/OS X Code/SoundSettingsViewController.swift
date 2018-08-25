@@ -215,7 +215,7 @@ open class SoundSettingsViewController: NSViewController {
 	}
 	
 	open class func newSoundSettingWindow() -> Self? {
-		return self.init(nibName: NSNib.Name(rawValue: "PPSoundSettingsViewController"), bundle: Bundle(for: SoundSettingsViewController.self))
+		return self.init(nibName: NSNib.Name("PPSoundSettingsViewController"), bundle: Bundle(for: SoundSettingsViewController.self))
 	}
 
 	public func settingsFromDriverSettings(_ sett: MADDriverSettings) {

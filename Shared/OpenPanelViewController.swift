@@ -352,7 +352,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			})
 		
 		utiObjects = tmpUTIs
-		super.init(nibName: NSNib.Name(rawValue: "PPOpenPanel"), bundle: nil)
+		super.init(nibName: NSNib.Name("PPOpenPanel"), bundle: nil)
 		
 		openPanel.delegate = self
 	}

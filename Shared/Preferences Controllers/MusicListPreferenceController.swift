@@ -39,11 +39,11 @@ final class MusicListPreferenceController: NSViewController, MASPreferencesViewC
 	}
 	
 	var toolbarItemImage: NSImage? {
-		return NSImage(named: NSImage.Name(rawValue: "List"))
+		return NSImage(named: NSImage.Name("List"))
 	}
 	
 	static func newPreferenceView() -> MusicListPreferenceController? {
-		let aCont = MusicListPreferenceController(nibName:NSNib.Name(rawValue: "MusicListPrefs"), bundle:nil)
+		let aCont = MusicListPreferenceController(nibName:NSNib.Name("MusicListPrefs"), bundle:nil)
 		aCont.title = NSLocalizedString("Music List", tableName: "PreferenceNames", comment: "Music List")
 		return aCont
 	}
