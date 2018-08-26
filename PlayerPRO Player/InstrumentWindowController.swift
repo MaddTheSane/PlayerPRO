@@ -29,7 +29,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	}
 	
 	class func newInstrumentWindow() -> Self {
-		let ourself = self.init(windowNibName: NSNib.Name(rawValue: "InstrumentWindow"))
+		let ourself = self.init(windowNibName: NSNib.Name("InstrumentWindow"))
 		
 		(NSApplication.shared.delegate as! PlayerAppDelegate).addObserver(ourself, forKeyPath: "music", options: .new, context: nil)
 		

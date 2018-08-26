@@ -17,7 +17,7 @@ final class MiscPreferenceController: NSViewController, MASPreferencesViewContro
 	@IBOutlet weak var oscDrawLines: NSButton!
 	
 	class func newPreferenceView() -> MiscPreferenceController? {
-		let aCont = MiscPreferenceController(nibName:NSNib.Name(rawValue: "MiscPrefs"), bundle:nil)
+		let aCont = MiscPreferenceController(nibName: NSNib.Name("MiscPrefs"), bundle: nil)
 		aCont.title = NSLocalizedString("Misc.", tableName: "PreferenceNames", comment: "Misc.")
 		return aCont
 	}
