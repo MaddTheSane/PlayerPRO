@@ -223,8 +223,8 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 {
 	NSMutableArray<PPInstrumentObject*>	*_instruments;
 }
-@property (readwrite, strong, nonatomic) NSMutableArray *patterns;
-@property (readwrite, strong, nonatomic) NSMutableArray *buses;
+@property (readwrite, strong, nonatomic) NSMutableArray<PPPatternObject*> *patterns;
+@property (readwrite, strong, nonatomic) NSMutableArray<PPFXBusObject*> *buses;
 @end
 
 @implementation PPMusicObject
@@ -673,7 +673,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 }
 #endif
 
-- (NSArray *)sDatas {
+- (NSArray *)samples {
 	NSMutableArray *ourArray = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU * MAXSAMPLE];
 	for (PPInstrumentObject *instrument in self.instruments) {
 		for (PPSampleObject *sample in instrument.samples) {
@@ -830,7 +830,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return [NSSet setWithObjects:@"title", @"information", @"usesLinearPitcchTable", @"limitPitchToMODTable", @"showsCopyright", @"newPitch", @"newSpeed", @"generalPitch", @"generalSpeed", @"generalVolume", @"instruments", @"patterns", @"buses", nil];
 }
 
-+ (NSSet*)keyPathsForValuesAffectingSDatas
++ (NSSet*)keyPathsForValuesAffectingSamples
 {
 	return [NSSet setWithObject:@"instruments"];
 }

@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSInteger countOfPatterns;
 @property (readonly) NSInteger lengthOfPartitions;
 @property (readonly) NSInteger totalTracks;
-@property (readonly, strong, nonatomic) NSArray<PPSampleObject*> *sDatas;
+@property (readonly, strong, nonatomic) NSArray<PPSampleObject*> *samples;
 @property (readonly, strong, nonatomic) NSArray<PPInstrumentObject*> *instruments;
 @property (readonly, strong, nonatomic) NSMutableArray<PPPatternObject*> *patterns;
 @property (readonly, strong, nonatomic) NSMutableArray<PPFXBusObject*> *buses;

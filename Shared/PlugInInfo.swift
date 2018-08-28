@@ -8,22 +8,6 @@
 
 import Cocoa
 
-func ==(lhs: PlugInInfo, rhs: PlugInInfo) -> Bool {
-	if lhs === rhs {
-		return true
-	}
-	
-	if lhs.plugName != rhs.plugName {
-		return false
-	} else if lhs.authorName != rhs.authorName {
-		return false
-	} else if lhs.plugType != rhs.plugType {
-		return false
-	} else {
-		return true
-	}
-}
-
 final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConvertible {
 	let plugName: String
 	let authorName: String
@@ -41,10 +25,6 @@ final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 		} else {
 			plugCopyright = "No copyright info available"
 		}
-	}
-	
-	var hash: Int {
-		return self.hashValue
 	}
 	
 	var hashValue: Int {
@@ -72,6 +52,22 @@ final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 			return self == unwrapped
 		} else {
 			return false
+		}
+	}
+	
+	static func ==(lhs: PlugInInfo, rhs: PlugInInfo) -> Bool {
+		if lhs === rhs {
+			return true
+		}
+		
+		if lhs.plugName != rhs.plugName {
+			return false
+		} else if lhs.authorName != rhs.authorName {
+			return false
+		} else if lhs.plugType != rhs.plugType {
+			return false
+		} else {
+			return true
 		}
 	}
 }
