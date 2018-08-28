@@ -182,7 +182,7 @@ PPINLINE void MADByteSwap32(void *msg_buf)
 		return;
 	}
 	uint32_t temp = *((uint32_t*)msg_buf);
-#if defined(__llvm__)
+#if defined(__llvm__) || __has_builtin(__builtin_bswap32)
 	*((uint32_t*)msg_buf) = __builtin_bswap32(temp);
 #elif defined(_MAC_H)
 	*((uint32_t*)msg_buf) = CFSwapInt32(temp);
@@ -214,7 +214,7 @@ PPINLINE void MADByteSwap16(void *msg_buf)
 		return;
 	}
 	uint16_t buf = *((uint16_t*)msg_buf);
-#if defined(__llvm__)
+#if defined(__llvm__) || __has_builtin(__builtin_bswap16)
 	*((uint16_t*)msg_buf) = __builtin_bswap16(buf);
 #elif defined(_MAC_H)
 	*((uint16_t*)msg_buf) = CFSwapInt16(buf);

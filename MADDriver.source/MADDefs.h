@@ -50,6 +50,9 @@
 #ifndef __has_extension
 #define __has_extension(x) 0
 #endif
+#ifndef __has_builtin
+#define __has_builtin(x) 0
+#endif
 #define __MADENUM_GET_MACRO(_1, _2, NAME, ...) NAME
 #if (__cplusplus && __cplusplus >= 201103L && (__has_extension(cxx_strong_enums) || __has_feature(objc_fixed_enum))) || (!__cplusplus && __has_feature(objc_fixed_enum))
 #define __MADNAMEDENUM(_type, _name)     enum _name : _type _name; enum _name : _type
@@ -155,6 +158,9 @@
 #define PPINLINE static __inline
 #elif TARGET_OS_WIN32
 #define PPINLINE static __inline__
+#else
+#warning unknown compiler
+#define PPINLINE static
 #endif
 
 #if !defined(_MAC_H)

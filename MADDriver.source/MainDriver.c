@@ -548,8 +548,9 @@ MADErr MADCreateMicroDelay(MADDriverRec *intDriver)
 
 void MADDisposeReverb(MADDriverRec *intDriver)
 {
-	if (intDriver->DriverSettings.Reverb)
+	if (intDriver->DriverSettings.Reverb) {
 		free(intDriver->ReverbPtr);
+	}
 	intDriver->ReverbPtr = NULL;
 }
 
@@ -727,8 +728,9 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 	int				i;
 	MADDriverRec*	MDriver;
 	
-	if (DriverInitParam == NULL || lib == NULL || returnDriver == NULL)
+	if (DriverInitParam == NULL || lib == NULL || returnDriver == NULL) {
 		return MADParametersErr;
+	}
 	*returnDriver = NULL;
 	
 	/*************************/
@@ -1062,8 +1064,9 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 
 MADErr MADDisposeDriver(MADDriverRec* MDriver)
 {
-	if (MDriver->IntDataPtr == NULL)
+	if (MDriver->IntDataPtr == NULL) {
 		return MADNoErr;
+	}
 	
 	MDriver->base.Reading = false;
 	
@@ -1130,13 +1133,15 @@ MADErr MADInitLibrary(const char *PlugsFolderName, MADLibrary **lib)
 		1712*16, 1616*16, 1524*16, 1440*16, 1356*16, 1280*16,
 		1208*16, 1140*16, 1076*16, 1016*16, 960*16, 907*16
 	};
-	if (lib == NULL)
+	if (lib == NULL) {
 		return MADParametersErr;
+	}
 	
 	*lib = (MADLibrary*)calloc(sizeof(MADLibrary), 1);
 	
-	if (*lib == NULL)
+	if (*lib == NULL) {
 		return MADNeedMemory;
+	}
 	
 	(*lib)->IDType = 'MADD';
 	

@@ -155,7 +155,7 @@ public let maximumArpeggio: Int32 = 3
 public let equalizerPacketElements = 512
 
 /// PlayerPROCore's internal debugger function, wrapped to include the line and file in Swift.
-/// - parameter text: Developer text that is used to help debug the issue. **Cannot be NULL**, but may be an empty string.
+/// - parameter text: Developer text that is used to help debug the issue. **Cannot be nil**, but may be an empty string.
 /// - parameter file: The file that has the problem.
 /// - parameter line: the line of the source file that's having a problem.
 ///
@@ -239,8 +239,8 @@ extension sData: Equatable {
 		guard lhs.stereo == rhs.stereo else {
 			return false
 		}
-		let lName = Array(UnsafeBufferPointer(start: lhs.data, count:Int(lhs.size)))
-		let rName = Array(UnsafeBufferPointer(start: rhs.data, count:Int(rhs.size)))
+		let lName = Array(UnsafeBufferPointer(start: lhs.data, count: Int(lhs.size)))
+		let rName = Array(UnsafeBufferPointer(start: rhs.data, count: Int(rhs.size)))
 		guard rName == lName else {
 			return false
 		}
