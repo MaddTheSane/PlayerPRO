@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -299,9 +299,9 @@ Gw
                                                     <rect key="frame" x="1" y="1" width="435" height="115"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="199">
-                                                            <rect key="frame" x="6" y="95" width="90" height="17"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Mode:" id="200">
+                                                        <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="199">
+                                                            <rect key="frame" x="9" y="95" width="87" height="17"/>
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Mode:" id="200">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -352,9 +352,9 @@ Gw
                                                                 </menu>
                                                             </popUpButtonCell>
                                                         </popUpButton>
-                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="223">
-                                                            <rect key="frame" x="6" y="64" width="90" height="17"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Amplitude:" id="224">
+                                                        <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="223">
+                                                            <rect key="frame" x="9" y="64" width="87" height="17"/>
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Amplitude:" id="224">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -386,9 +386,9 @@ Gw
                                                                 </menu>
                                                             </popUpButtonCell>
                                                         </popUpButton>
-                                                        <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="240">
-                                                            <rect key="frame" x="6" y="33" width="89" height="17"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Rate (c4spd):" id="241">
+                                                        <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="240">
+                                                            <rect key="frame" x="9" y="33" width="87" height="17"/>
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Rate (c4spd):" id="241">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -407,9 +407,9 @@ Gw
                                                                 <outlet property="delegate" destination="198" id="457"/>
                                                             </connections>
                                                         </comboBox>
-                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="260">
+                                                        <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="260">
                                                             <rect key="frame" x="186" y="95" width="72" height="17"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="261">
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="261">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -426,19 +426,16 @@ Gw
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="276">
+                                                        <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="276">
                                                             <rect key="frame" x="186" y="64" width="72" height="17"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Loop Start:" id="277">
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Loop Start:" id="277">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="283">
-                                                            <rect key="frame" x="264" y="61" width="46" height="22"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="46" id="436"/>
-                                                            </constraints>
+                                                            <rect key="frame" x="264" y="61" width="45" height="22"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="284">
                                                                 <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#,##0" negativeFormat="#,##0" numberStyle="decimal" allowsFloats="NO" paddingCharacter="*" roundingMode="floor" minimumIntegerDigits="1" maximumIntegerDigits="309" decimalSeparator="." groupingSeparator="," currencyDecimalSeparator="." plusSign="+" minusSign="-" notANumberSymbol="NaN" perMillSymbol="‰" percentSymbol="%" exponentSymbol="E" positivePrefix="" positiveSuffix="" negativePrefix="-" negativeSuffix="" id="471">
                                                                     <real key="minimum" value="0.0"/>
@@ -448,19 +445,16 @@ Gw
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="293">
-                                                            <rect key="frame" x="316" y="64" width="69" height="17"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Loop Size:" id="294">
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="293">
+                                                            <rect key="frame" x="315" y="64" width="67" height="17"/>
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Loop Size:" id="294">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="309">
-                                                            <rect key="frame" x="386" y="61" width="46" height="22"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="46" id="433"/>
-                                                            </constraints>
+                                                            <rect key="frame" x="388" y="61" width="44" height="22"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="310">
                                                                 <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#,##0" negativeFormat="#,##0" numberStyle="decimal" allowsFloats="NO" paddingCharacter="*" roundingMode="floor" minimumIntegerDigits="1" maximumIntegerDigits="309" decimalSeparator="." groupingSeparator="," currencyDecimalSeparator="." plusSign="+" minusSign="-" notANumberSymbol="NaN" perMillSymbol="‰" percentSymbol="%" exponentSymbol="E" positivePrefix="" positiveSuffix="" negativePrefix="-" negativeSuffix="" id="472">
                                                                     <real key="minimum" value="0.0"/>
@@ -470,19 +464,16 @@ Gw
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="320">
-                                                            <rect key="frame" x="185" y="33" width="73" height="17"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Loop Type:" id="321">
+                                                        <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="320">
+                                                            <rect key="frame" x="186" y="33" width="72" height="17"/>
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Loop Type:" id="321">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
                                                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="346">
-                                                            <rect key="frame" x="262" y="27" width="99" height="26"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="94" id="352"/>
-                                                            </constraints>
+                                                            <rect key="frame" x="262" y="27" width="101" height="26"/>
                                                             <popUpButtonCell key="cell" type="push" title="Ping-pong" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="2" imageScaling="proportionallyDown" inset="2" selectedItem="350" id="347">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="menu"/>
@@ -504,9 +495,9 @@ Gw
                                                                 </menu>
                                                             </popUpButtonCell>
                                                         </popUpButton>
-                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="356">
-                                                            <rect key="frame" x="6" y="6" width="90" height="17"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Base Volume:" id="357">
+                                                        <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="356">
+                                                            <rect key="frame" x="9" y="6" width="87" height="17"/>
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Base Volume:" id="357">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -524,9 +515,9 @@ Gw
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="370">
+                                                        <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="370">
                                                             <rect key="frame" x="186" y="6" width="72" height="17"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Rel. Note:" id="371">
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Real Note:" id="371">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -548,7 +539,7 @@ Gw
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="404">
-                                                            <rect key="frame" x="304" y="6" width="56" height="17"/>
+                                                            <rect key="frame" x="306" y="6" width="56" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="52" id="445"/>
                                                             </constraints>
@@ -598,10 +589,10 @@ Gw
                                                         <constraint firstItem="395" firstAttribute="leading" secondItem="370" secondAttribute="trailing" constant="8" symbolic="YES" id="402"/>
                                                         <constraint firstItem="404" firstAttribute="baseline" secondItem="370" secondAttribute="baseline" id="407"/>
                                                         <constraint firstItem="408" firstAttribute="baseline" secondItem="404" secondAttribute="baseline" id="411"/>
-                                                        <constraint firstItem="370" firstAttribute="leading" secondItem="364" secondAttribute="trailing" constant="8" symbolic="YES" id="426"/>
+                                                        <constraint firstItem="370" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="364" secondAttribute="trailing" constant="8" symbolic="YES" id="426"/>
                                                         <constraint firstItem="320" firstAttribute="leading" secondItem="249" secondAttribute="trailing" constant="8" symbolic="YES" id="427"/>
-                                                        <constraint firstItem="260" firstAttribute="leading" secondItem="211" secondAttribute="trailing" constant="8" symbolic="YES" id="428"/>
-                                                        <constraint firstItem="276" firstAttribute="leading" secondItem="229" secondAttribute="trailing" constant="8" symbolic="YES" id="429"/>
+                                                        <constraint firstItem="260" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="211" secondAttribute="trailing" constant="8" symbolic="YES" id="428"/>
+                                                        <constraint firstItem="276" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="229" secondAttribute="trailing" constant="8" symbolic="YES" id="429"/>
                                                         <constraint firstItem="293" firstAttribute="leading" secondItem="283" secondAttribute="trailing" constant="8" symbolic="YES" id="439"/>
                                                         <constraint firstItem="309" firstAttribute="baseline" secondItem="293" secondAttribute="baseline" id="440"/>
                                                         <constraint firstAttribute="trailing" secondItem="309" secondAttribute="trailing" constant="3" id="441"/>
@@ -610,21 +601,24 @@ Gw
                                                         <constraint firstAttribute="trailing" secondItem="408" secondAttribute="trailing" constant="3" id="447"/>
                                                         <constraint firstItem="229" firstAttribute="leading" secondItem="223" secondAttribute="trailing" constant="8" symbolic="YES" id="464"/>
                                                         <constraint firstAttribute="bottom" secondItem="395" secondAttribute="bottom" constant="3" id="477"/>
-                                                        <constraint firstItem="240" firstAttribute="leading" secondItem="198" secondAttribute="leading" constant="8" id="04A-ii-oFd"/>
+                                                        <constraint firstItem="240" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="198" secondAttribute="leading" constant="8" id="04A-ii-oFd"/>
                                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="395" secondAttribute="bottom" constant="3" id="10K-gB-xQM"/>
                                                         <constraint firstItem="408" firstAttribute="trailing" secondItem="268" secondAttribute="trailing" id="5Uz-zR-dyp"/>
                                                         <constraint firstItem="356" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="198" secondAttribute="leading" constant="8" id="B5O-tg-vbN"/>
                                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="309" secondAttribute="trailing" constant="3" id="EMA-cg-hHC"/>
-                                                        <constraint firstItem="199" firstAttribute="leading" secondItem="198" secondAttribute="leading" constant="8" id="HKg-Oq-bw9"/>
+                                                        <constraint firstItem="199" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="198" secondAttribute="leading" constant="8" id="HKg-Oq-bw9"/>
                                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="268" secondAttribute="trailing" constant="3" id="HMG-tr-qw7"/>
+                                                        <constraint firstItem="309" firstAttribute="width" secondItem="283" secondAttribute="width" id="LVy-LB-WBY"/>
                                                         <constraint firstItem="211" firstAttribute="top" secondItem="198" secondAttribute="top" constant="3" id="P0U-ig-Ac6"/>
                                                         <constraint firstItem="240" firstAttribute="trailing" secondItem="199" secondAttribute="trailing" id="Pwl-Gs-myQ"/>
                                                         <constraint firstItem="240" firstAttribute="trailing" secondItem="223" secondAttribute="trailing" id="QPC-3v-K99"/>
                                                         <constraint firstItem="320" firstAttribute="trailing" secondItem="260" secondAttribute="trailing" id="RYZ-pT-Gab"/>
-                                                        <constraint firstItem="223" firstAttribute="leading" secondItem="198" secondAttribute="leading" constant="8" id="TOj-MV-IO0"/>
+                                                        <constraint firstItem="223" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="198" secondAttribute="leading" constant="8" id="TOj-MV-IO0"/>
                                                         <constraint firstItem="223" firstAttribute="baseline" secondItem="229" secondAttribute="baseline" id="USb-ya-oNh"/>
                                                         <constraint firstAttribute="bottom" secondItem="364" secondAttribute="bottom" constant="3" id="WO2-Gp-2rz"/>
+                                                        <constraint firstItem="408" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="404" secondAttribute="trailing" constant="8" symbolic="YES" id="WUo-RS-5ys"/>
                                                         <constraint firstItem="249" firstAttribute="top" secondItem="229" secondAttribute="bottom" constant="8" symbolic="YES" id="Wdw-CF-hQc"/>
+                                                        <constraint firstItem="309" firstAttribute="leading" secondItem="293" secondAttribute="trailing" constant="8" symbolic="YES" id="Zo8-qV-y6d"/>
                                                         <constraint firstItem="395" firstAttribute="baseline" secondItem="370" secondAttribute="baseline" id="ZtR-zC-dzT"/>
                                                         <constraint firstItem="356" firstAttribute="baseline" secondItem="364" secondAttribute="baseline" id="bQg-eu-NHH"/>
                                                         <constraint firstItem="249" firstAttribute="trailing" secondItem="229" secondAttribute="trailing" id="c5f-td-GFd"/>
@@ -671,7 +665,7 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="159">
-                            <rect key="frame" x="423" y="1" width="16" height="114"/>
+                            <rect key="frame" x="423" y="1" width="16" height="113"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
@@ -703,11 +697,13 @@ Gw
                     <constraint firstAttribute="centerX" secondItem="32" secondAttribute="centerX" id="i9T-hR-ted"/>
                     <constraint firstItem="5" firstAttribute="baseline" secondItem="9" secondAttribute="baseline" id="qhx-2K-f8m"/>
                     <constraint firstItem="18" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="sbF-pz-Bp9"/>
+                    <constraint firstItem="9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="x6d-cV-HQn"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="4"/>
             </connections>
+            <point key="canvasLocation" x="139" y="161.5"/>
         </window>
     </objects>
 </document>
