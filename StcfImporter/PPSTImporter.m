@@ -178,7 +178,8 @@ static NSString *pascalStringToNSString(StringPtr aStr, CFStringEncoding encodin
 	NSDictionary *myDict;
 	OSErr myErr = [self loadOldMusicListAtURL:theURL toDictionary:&myDict];
 	if (myErr != noErr) {
-		NSError *nsErr = [NSError errorWithDomain:NSOSStatusErrorDomain code:myErr userInfo:nil];
+		NSError *nsErr = [NSError errorWithDomain:NSOSStatusErrorDomain code:myErr userInfo:
+						  @{NSURLErrorDomain: theURL}];
 		reply(nil, nsErr);
 	} else {
 		reply(myDict, nil);

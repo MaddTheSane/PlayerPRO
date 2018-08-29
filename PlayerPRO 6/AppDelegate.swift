@@ -68,6 +68,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", value: "MADK Tracker", comment: "MADK Tracker")
 		let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
 		var tmpTrackerDict: [String: [String]] = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]]
+		tmpTrackerDict.reserveCapacity(self.madLib.count + 2)
 		
 		for obj in self.madLib {
 			tmpTrackerDict[obj.menuName] = obj.UTITypes
@@ -78,6 +79,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 	
 	private(set) lazy var importDict: [String: [String]] = {
 		var tmpTrackerDict = self.trackerDict
+		tmpTrackerDict.reserveCapacity(self.trackerDict.count + self.complexImport.count)
 		
 		for obj in self.complexImport {
 			tmpTrackerDict[obj.menuName] = obj.utiTypes
@@ -88,12 +90,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 
 	
 	private(set) lazy var trackerUTIs: [String] = {
-		let arrayOfUTIs = self.trackerDict.values
-		var toAddUTI = [String]()
-		for anArray in arrayOfUTIs {
-			toAddUTI += anArray
-		}
-		return toAddUTI
+		let arrayOfUTIs = self.trackerDict.values.flatMap({ $0 })
+		return arrayOfUTIs
 		}()
 	
 	class func globalMADLibrary() -> PPLibrary {
@@ -107,8 +105,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 
 	@IBAction func showPlugInInfo(_ sender: AnyObject?) {
 		let tag = (sender as? NSMenuItem)?.tag ?? -1
-		if tag < 0 || tag >= plugInInfos.count {
-			return;
+		guard (0..<plugInInfos.count).contains(tag) else {
+			NSSound.beep()
+			return
 		}
 		let inf = plugInInfos[tag]
 		

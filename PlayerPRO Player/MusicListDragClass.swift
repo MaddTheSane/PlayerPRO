@@ -62,7 +62,7 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	static let supportsSecureCoding: Bool = true
 	
 	func encode(with aCoder: NSCoder) {
-		aCoder.encode(theIndexSet, forKey: NSPasteboard.PasteboardType.PPMLDCUTI.rawValue)
+		aCoder.encode(theIndexSet as NSIndexSet, forKey: NSPasteboard.PasteboardType.PPMLDCUTI.rawValue)
 	}
 	
 	convenience required init?(coder aDecoder: NSCoder) {

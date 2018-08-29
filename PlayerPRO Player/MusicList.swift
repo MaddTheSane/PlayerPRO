@@ -498,7 +498,9 @@ protocol MusicListDelegate: class {
 					guard let invalidAny = bookmarkData?[.lostCount] as? UInt,
 						let selectedAny = bookmarkData?[.selected] as? Int,
 						let pathsAny = bookmarkData?[.urls] as? NSArray as? [URL] else {
-							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Invalid data returned from helper", comment: "Invalid data returned from helper")])
+							let lolwut = CocoaError(.xpcConnectionInterrupted, userInfo:
+								[NSLocalizedDescriptionKey: NSLocalizedString("Invalid data returned from helper", comment: "Invalid data returned from helper"),
+								 NSURLErrorKey: toOpen])
 							theHandle(nil, lolwut)
 							return
 					}

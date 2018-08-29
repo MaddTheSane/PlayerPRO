@@ -21,7 +21,7 @@ private let OldListWasLoaded = "Old List was loaded?"
 
 private func cocoaDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
 	let swiftFile = FileManager.default.string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
-	let swiftText = String(validatingUTF8: text!)!
+	let swiftText = String(cString: text!)
 	print("\(swiftFile):\(line), error text: \(swiftText)")
 	let alert = NSAlert()
 	alert.alertStyle = .critical
@@ -106,14 +106,15 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	private var selectedIndex	= CurrentlyPlayingIndex()
 	private var playingIndex	= CurrentlyPlayingIndex()
 	
-	@objc private dynamic var musicName = ""
-	@objc private dynamic var musicInfo = ""
+	@objc dynamic var musicName = ""
+	@objc dynamic var musicInfo = ""
 	private var selMusFromList = -1
 	
 	private(set) lazy var trackerDict: [String: [String]] = {
 		let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", value: "MADK Tracker", comment: "MADK Tracker")
 		let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
 		var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]]
+		tmpTrackerDict.reserveCapacity(self.madLib.count + 2)
 		
 		for obj in self.madLib {
 			tmpTrackerDict[obj.menuName] = obj.UTITypes
@@ -124,7 +125,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	private(set) lazy var trackerUTIs: [String] = {
 		let anArray = self.trackerDict.values.flatMap({$0})
-		return Array(anArray)
+		return anArray
 		}()
 	
 	
@@ -1612,9 +1613,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	
 	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
 		let dragPB = info.draggingPasteboard()
-		if let tmpArray = dragPB.readObjects(forClasses: [MusicListDragClass.self], options: nil) , tmpArray.count != 0 {
+		if let tmpArray = dragPB.readObjects(forClasses: [MusicListDragClass.self], options: nil),
+			tmpArray.count != 0,
+			let dragClass = tmpArray.first as? MusicListDragClass {
 			var minRow = 0
-			let dragClass = (tmpArray[0]) as! MusicListDragClass
 			let dragIndexSet = dragClass.theIndexSet
 			
 			for currentIndex in dragIndexSet {
@@ -1662,8 +1664,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			//list the file type UTIs we want to accept
 			let acceptedTypes = trackerUTIs
 			
-			if let urls = pb.readObjects(forClasses: [NSURL.self], options: [NSPasteboard.ReadingOptionKey.urlReadingFileURLsOnly : true,
-			                                                                 NSPasteboard.ReadingOptionKey.urlReadingContentsConformToTypes : acceptedTypes]) {
+			if let urls = pb.readObjects(forClasses: [NSURL.self], options:
+				[.urlReadingFileURLsOnly: true,
+				 .urlReadingContentsConformToTypes: acceptedTypes]) {
 					if urls.count > 0 {
 						result = .copy
 						tableView1.setDropRow(row, dropOperation: .above)
@@ -1675,7 +1678,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	func tableView(_ tableView: NSTableView, toolTipFor cell: NSCell, rect: NSRectPointer, tableColumn: NSTableColumn?, row: Int, mouseLocation: NSPoint) -> String {
-		if row >= 0 || row <= musicList.countOfMusicList {
+		guard (0 ..< musicList.countOfMusicList).contains(row) else {
 			return ""
 		}
 		return musicList.url(at: row).path

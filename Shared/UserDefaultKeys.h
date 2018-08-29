@@ -38,6 +38,7 @@ extern NSString * const PPGenericInstrumentUTI;
 extern NSString * const PPInstrumentListUTI;
 #if TARGET_OS_OSX
 //! The drag UTI for music list objects
+//!
 //! Stands for PlayerPRO Music List Drag Class UTI.
 extern NSPasteboardType const PPMLDCUTI;
 #endif
