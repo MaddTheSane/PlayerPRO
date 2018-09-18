@@ -2330,7 +2330,7 @@
 
 /* Begin PBXFileReference section */
 		5501BEC618ABFFEB00602206 /* APPL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPL.h; sourceTree = "<group>"; };
-		5501BECB18AC560E00602206 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5501BECB18AC560E00602206 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		550312F619E7883B00064DDD /* SpotlightPrefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotlightPrefix.pch; sourceTree = "<group>"; };
 		55080A8D1AEAAAAD009E9422 /* PAT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PAT-Bridging-Header.h"; sourceTree = "<group>"; };
 		55080A8E1AEAAAAF009E9422 /* FortePatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FortePatch.swift; sourceTree = "<group>"; };
@@ -2349,7 +2349,7 @@
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
 		550B011310BA1E1C004FC5D7 /* MADPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MADPrivate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		550D005218CB808E00FD0F17 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPErrors.strings; sourceTree = "<group>"; };
+		550D005218CB808E00FD0F17 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPErrors.strings; sourceTree = "<group>"; };
 		550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentCellView.h; sourceTree = "<group>"; };
 		550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentCellView.m; sourceTree = "<group>"; };
 		550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject.h; sourceTree = "<group>"; };
@@ -2363,13 +2363,13 @@
 		55113CBA133688D60008C2AF /* Win-DirectSound.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "Win-DirectSound.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55113CBB133688D60008C2AF /* FileUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = FileUtils.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55113CBC133688D60008C2AF /* Win-PlugImport.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "Win-PlugImport.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		5511F05A19B04EB10033A252 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5511F05A19B04EB10033A252 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		551292D8163DD68500C2C639 /* PlayerPROKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		551292DB163DD68500C2C639 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		551292DC163DD68500C2C639 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		551292E0163DD68500C2C639 /* PlayerPROKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPROKit-Info.plist"; sourceTree = "<group>"; };
-		551292E2163DD68500C2C639 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		551292E2163DD68500C2C639 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		551292E4163DD68500C2C639 /* PlayerPROKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPROKit-Prefix.pch"; sourceTree = "<group>"; };
 		551292E5163DD68500C2C639 /* PlayerPROKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerPROKit.h; sourceTree = "<group>"; };
 		55149C3C1832CC64009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PPSoundSettingsViewController.xib; sourceTree = "<group>"; };
@@ -2667,7 +2667,7 @@
 		55771DE61873858500AED8DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SamplingRateWindowController.strings; sourceTree = "<group>"; };
 		5578C48117D9E8560057D11B /* PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C48517D9E8560057D11B /* PlayerPRO Player-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plist"; sourceTree = "<group>"; };
-		5578C48717D9E8560057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5578C48717D9E8560057D11B /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5578C48D17D9E8560057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		5578C52F17DB94A50057D11B /* PPImport.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPImport.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C53017DB94A60057D11B /* PPImport-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPImport-Info.plist"; sourceTree = "<group>"; };
@@ -2784,7 +2784,7 @@
 		559C419B183EB4AB004A073C /* PPQuickView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PPQuickView-Prefix.pch"; sourceTree = "<group>"; };
 		559EA1571C288A0700969B41 /* MADErrs_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MADErrs_Tests.swift; sourceTree = "<group>"; };
 		55A3CD4319A6DC8B00957845 /* PPDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPDocument.swift; sourceTree = "<group>"; };
-		55A6201C18A6EFEC003B29B5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PreferenceNames.strings; sourceTree = "<group>"; };
+		55A6201C18A6EFEC003B29B5 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PreferenceNames.strings; sourceTree = "<group>"; };
 		55A9351817F28F9700493DC5 /* Shared.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Shared.xcassets; sourceTree = "<group>"; };
 		55ABE82B1A081546006B6AF9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PlayerPROCore-OSX.pch"; path = "../PlayerPROCore-OSX.pch"; sourceTree = "<group>"; };
