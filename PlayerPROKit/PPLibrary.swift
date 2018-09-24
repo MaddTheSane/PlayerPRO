@@ -86,17 +86,17 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		#if os(OSX)
 		/// the File Type `OSType` associated with this plug-in.
 		@objc public var fileTypeCodes: [OSType]? {
-			var theOpenables = [String]()
+			var theOpenables = [NSString]()
 			for anUTI in UTITypes {
 				guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassOSType)?.takeRetainedValue() as NSArray?,
-					let anArr = unPreArr as? [String] else {
+					let anArr = unPreArr as? [NSString] else {
 						continue
 				}
 				
 				theOpenables += anArr
 			}
 			
-			var fileTypes = theOpenables.map { UTGetOSTypeFromString($0 as NSString) }
+			var fileTypes = theOpenables.map { UTGetOSTypeFromString($0) }
 			
 			if !fileTypes.contains(OSType(tupleType)) {
 				fileTypes.insert(OSType(tupleType), at: 0)
@@ -438,7 +438,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - throws: A `MADErr` wrapped in an `NSError`.
 	public func information(from apath: URL, type: String) throws -> MusicFileInfo {
 		guard let cStrType = type.cString(using: .macOSRoman) else {
-			throw PPMADError(.parameters, userInfo:
+			throw CocoaError(.fileReadInapplicableStringEncoding, userInfo:
 				[NSURLErrorKey: apath,
 				 NSStringEncodingErrorKey: String.Encoding.macOSRoman.rawValue])
 		}
@@ -480,6 +480,8 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 			return .noErr
 		} catch let anErr as PPMADError {
 			return anErr.code.madErr
+		} catch CocoaError.fileReadInapplicableStringEncoding {
+			return .parametersErr
 		} catch _ { }
 		
 		return .unknownErr
@@ -511,6 +513,8 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 			return .noErr
 		} catch let anErr as PPMADError {
 			return anErr.code.madErr
+		} catch CocoaError.fileReadInapplicableStringEncoding {
+			return .parametersErr
 		} catch _ { }
 		
 		return .unknownErr
@@ -535,7 +539,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	@nonobjc
 	public func testFile(at url: URL, as type: String) throws {
 		guard var cStrType = type.cString(using: String.Encoding.macOSRoman) else {
-			throw PPMADError(.parameters, userInfo:
+			throw CocoaError(.fileReadInapplicableStringEncoding, userInfo:
 				[NSURLErrorKey: url,
 				 NSStringEncodingErrorKey: String.Encoding.macOSRoman.rawValue])
 		}
@@ -621,6 +625,8 @@ extension PPLibrary {
 			return .noErr
 		} catch let anErr as PPMADError {
 			return anErr.code.madErr
+		} catch CocoaError.fileReadInapplicableStringEncoding {
+			return .parametersErr
 		} catch _ { }
 		
 		return .unknownErr
