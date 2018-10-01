@@ -249,7 +249,7 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 			// If no bookmark data, just generate the data as usual.
 			if let data = bookData {
 				var stale = false
-				if let url2 = try? URL(resolvingBookmarkData: data, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale), stale, let url1 = url2 {
+				if let url1 = try? URL(resolvingBookmarkData: data, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale), stale {
 					derefURL = url1
 				}
 			}
@@ -277,7 +277,7 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 				fileURL = hi
 				if stale {
 					// Regenerate bookmark data
-					if let dat2 = try? hi?.bookmarkData(includingResourceValuesForKeys: bookGenOpts, relativeTo: homeURL) {
+					if let dat2 = try? hi.bookmarkData(includingResourceValuesForKeys: bookGenOpts, relativeTo: homeURL) {
 						data = dat2
 					}
 				} else {
@@ -312,7 +312,8 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
 		}
 		var stale = false
-		if let url2 = try URL(resolvingBookmarkData: bookData, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale), stale {
+		let url2 = try URL(resolvingBookmarkData: bookData, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale)
+		if stale {
 			musicURL = url2
 			
 			// Regenerate bookmark data
@@ -348,7 +349,7 @@ extension MusicListObject: Codable {
 			// If no bookmark data, just generate the data as usual.
 			if let data = bookData {
 				var stale = false
-				if let url2 = try? URL(resolvingBookmarkData: data, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale), stale, let url1 = url2 {
+				if let url1 = try? URL(resolvingBookmarkData: data, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale), stale {
 					derefURL = url1
 				}
 			}

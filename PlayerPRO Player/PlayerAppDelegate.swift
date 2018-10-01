@@ -873,7 +873,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		instrumentController = InstrumentWindowController.newInstrumentWindow()
 		
 		timeChecker = Timer(fireAt: Date(), interval: 1.0/8.0, target: self, selector: #selector(PlayerAppDelegate.updateMusicStats(_:)), userInfo: nil, repeats: true)
-		RunLoop.main.add(timeChecker, forMode: RunLoopMode.commonModes)
+		RunLoop.main.add(timeChecker, forMode: RunLoop.Mode.common)
 		let lostCount = musicList.lostMusicCount
 		
 		if lostCount != 0 {
@@ -1612,7 +1612,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
-		let dragPB = info.draggingPasteboard()
+		let dragPB = info.draggingPasteboard
 		if let tmpArray = dragPB.readObjects(forClasses: [MusicListDragClass.self], options: nil),
 			tmpArray.count != 0,
 			let dragClass = tmpArray.first as? MusicListDragClass {
@@ -1654,12 +1654,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	func tableView(_ tableView1: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
 		var result: NSDragOperation = []
 		
-		if info.draggingSource() as AnyObject? === tableView1 {
+		if info.draggingSource as AnyObject? === tableView1 {
 			result = .move
 			//TODO: check for number of indexes that are greater than the drop row.
 			tableView1.setDropRow(row, dropOperation: .above)
 		} else {
-			let pb = info.draggingPasteboard()
+			let pb = info.draggingPasteboard
 			
 			//list the file type UTIs we want to accept
 			let acceptedTypes = trackerUTIs

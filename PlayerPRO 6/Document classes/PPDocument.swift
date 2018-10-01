@@ -83,10 +83,10 @@ import AudioToolbox
 	// MARK: -
 	
 	override func makeWindowControllers() {
-		let docWinCon = DocumentWindowController(windowNibName: NSNib.Name(rawValue: "PPDocument"))
+		let docWinCon = DocumentWindowController(windowNibName: "PPDocument")
 		addWindowController(docWinCon)
 		docWinCon.currentDocument = self
-		instrumentList = InstrumentPanelController(windowNibName: NSNib.Name(rawValue: "InsPanel"))
+		instrumentList = InstrumentPanelController(windowNibName: "InsPanel")
 		addWindowController(instrumentList)
 		instrumentList.currentDocument = self
 		mainViewController = docWinCon

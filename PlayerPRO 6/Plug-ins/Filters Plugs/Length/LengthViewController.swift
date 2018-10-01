@@ -22,7 +22,7 @@ class LengthViewController: NSViewController {
     }
 	
 	override var nibName: NSNib.Name? {
-		return NSNib.Name(rawValue: "LengthViewController")
+		return "LengthViewController"
 	}
 	
 }

@@ -30,7 +30,7 @@ final class SoundOutputController: SoundSettingsViewController, SoundSettingsVie
 		// Try to use system-available image. Because the icon might change in the future
 		if let localAppDir = (try? FileManager.default.url(for: .applicationDirectory, in: .localDomainMask, appropriateFor: nil, create: false))?.appendingPathComponent("Utilities").appendingPathComponent("Audio MIDI Setup.app"),
 			let audMidSetupBundle = Bundle(url: localAppDir),
-			let soundImg = audMidSetupBundle.image(forResource: NSImage.Name("SpeakerIcon")) {
+			let soundImg = audMidSetupBundle.image(forResource: "SpeakerIcon") {
 			return soundImg
 		}
 		// Fall-back to known icon
@@ -38,7 +38,7 @@ final class SoundOutputController: SoundSettingsViewController, SoundSettingsVie
 	}
 	
 	class func newPreferenceView() -> Self? {
-		 let ourself = self.init(nibName: NSNib.Name(rawValue: "PPSoundSettingsViewController"), bundle: Bundle(for: SoundSettingsViewController.self))
+		 let ourself = self.init(nibName: "PPSoundSettingsViewController", bundle: Bundle(for: SoundSettingsViewController.self))
 		ourself.delegate = (ourself as SoundOutputController)
 		let aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
 		ourself.title = aTitle
@@ -47,7 +47,7 @@ final class SoundOutputController: SoundSettingsViewController, SoundSettingsVie
 	}
 	
 	override class func newSoundSettingWindow() -> Self? {
-		 let ourself = self.init(nibName: NSNib.Name(rawValue: "PPSoundSettingsViewController"), bundle: Bundle(for: SoundSettingsViewController.self)) 
+		 let ourself = self.init(nibName: "PPSoundSettingsViewController", bundle: Bundle(for: SoundSettingsViewController.self)) 
 		ourself.delegate = (ourself as SoundOutputController)
 		let aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
 		ourself.title = aTitle

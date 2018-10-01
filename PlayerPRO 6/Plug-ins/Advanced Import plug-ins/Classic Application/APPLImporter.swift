@@ -40,7 +40,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 				return
 			}
 			
-			let controller = ImportWindowController(windowNibName: NSNib.Name(rawValue: "PPAPPLImporter"))
+			let controller = ImportWindowController(windowNibName: "PPAPPLImporter")
 			controller.currentBlock = handler
 			controller.resourceFile = resFile
 			controller.addResourceDictionary(aRet)
