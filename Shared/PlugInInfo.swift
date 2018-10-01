@@ -27,8 +27,11 @@ final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 		}
 	}
 	
-	var hashValue: Int {
-		return plugName.hashValue ^ plugType.hashValue ^ authorName.hashValue ^ plugCopyright.hashValue
+	func hash(into hasher: inout Hasher) {
+		plugName.hash(into: &hasher)
+		plugType.hash(into: &hasher)
+		authorName.hash(into: &hasher)
+		plugCopyright.hash(into: &hasher)
 	}
 	
 	var debugDescription: String {

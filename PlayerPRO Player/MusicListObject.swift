@@ -155,15 +155,12 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 	}
 	
 	override var hash: Int {
-		return musicURL.absoluteString.hashValue ^ addedDate.hashValue
+		var hasher = Hasher()
+		musicURL.absoluteString.hash(into: &hasher)
+		addedDate.hash(into: &hasher)
+		return hasher.finalize()
 	}
 	
-	#if !swift(>=4.1.50)
-	override var hashValue: Int {
-		return self.hash
-	}
-	#endif
-
 	override var description: String {
 		return "\(musicURL.path): '\(fileName)'"
 	}

@@ -30,8 +30,8 @@ private func allOpenableTypes(uti anUTI: String) -> [String] {
 			theOpenables += anArr
 		}
 		if let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassOSType),
-			let anArr = unPreArr.takeRetainedValue() as NSArray as? [String] {
-				let convertedArr = anArr.map({NSFileTypeForHFSTypeCode(UTGetOSTypeFromString($0 as NSString))!})
+			let anArr = unPreArr.takeRetainedValue() as NSArray as? [NSString] {
+				let convertedArr = anArr.map({NSFileTypeForHFSTypeCode(UTGetOSTypeFromString($0))!})
 				theOpenables += convertedArr
 		}
 	} else {
@@ -53,7 +53,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		case otherType = -5
 	}
 	
-	private enum TrackerType: Int, Comparable {
+	private enum TrackerType: Int, Comparable, Hashable {
 		case tracker = 1
 		case playlist
 		case instrument
@@ -91,8 +91,10 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			name = nam
 		}
 		
-		var hashValue: Int {
-			return name.hashValue ^ theUtiType.hashValue ^ utis.count
+		func hash(into hasher: inout Hasher) {
+			name.hash(into: &hasher)
+			theUtiType.hash(into: &hasher)
+			utis.hash(into: &hasher)
 		}
 		
 		var debugDescription: String {
