@@ -50,7 +50,7 @@ import AudioToolbox
 			return readables
 		}
 		
-		let importUTIsArray = globalMadLib.filter({ $0.canImport == true }).map({ $0.UTITypes })
+		let importUTIsArray = globalMadLib.filter({ $0.canImport == true }).map({ $0.utiTypes })
 		let importUTISet: Set<String> = {
 			var toRet = Set<String>()
 			for arr in importUTIsArray {
@@ -74,7 +74,7 @@ import AudioToolbox
 			return writables
 		}
 		
-		var toRet = globalMadLib.filter({ $0.canExport == true }).map({ $0.UTITypes.first! })
+		var toRet = globalMadLib.filter({ $0.canExport == true }).map({ $0.utiTypes.first! })
 		toRet.insert(MADNativeUTI, at: 0)
 		StaticStorage.writables = toRet
 		return toRet

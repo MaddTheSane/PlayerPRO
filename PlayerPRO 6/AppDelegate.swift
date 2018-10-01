@@ -71,7 +71,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate {
 		tmpTrackerDict.reserveCapacity(self.madLib.count + 2)
 		
 		for obj in self.madLib {
-			tmpTrackerDict[obj.menuName] = obj.UTITypes
+			tmpTrackerDict[obj.menuName] = obj.utiTypes
 		}
 		
 		return tmpTrackerDict

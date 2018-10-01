@@ -117,7 +117,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		tmpTrackerDict.reserveCapacity(self.madLib.count + 2)
 		
 		for obj in self.madLib {
-			tmpTrackerDict[obj.menuName] = obj.UTITypes
+			tmpTrackerDict[obj.menuName] = obj.utiTypes
 		}
 		
 		return tmpTrackerDict
@@ -1454,7 +1454,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 				
 				return
 			}
-			savePanel.allowedFileTypes = madLib[tag].UTITypes
+			savePanel.allowedFileTypes = madLib[tag].utiTypes
 			savePanel.title = "Export as \(madLib[tag].menuName)"
 			
 			savePanel.beginSheetModal(for: self.window, completionHandler: {(result) -> Void in

@@ -58,7 +58,13 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		@objc public let type: String
 		
 		/// An array of UTIs that the plug-in can open.
-		@objc public let UTITypes: [String]
+		@available(*, deprecated, renamed: "utiTypes")
+		public var UTITypes: [String] {
+			return utiTypes
+		}
+		
+		/// An array of UTIs that the plug-in can open.
+		@objc(UTITypes) public let utiTypes: [String]
 		
 		/// Can the plug-in export to this tracker type?
 		@objc public let canExport: Bool
@@ -72,7 +78,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		/// The file extensions associated with this plug-in.
 		@objc public var fileExtensions: [String] {
 			var theOpenables = Set<String>()
-			for anUTI in UTITypes {
+			for anUTI in utiTypes {
 				guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassFilenameExtension)?.takeRetainedValue() as NSArray?,
 					let anArr = unPreArr as? [String] else {
 						continue
@@ -87,7 +93,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		/// the File Type `OSType` associated with this plug-in.
 		@objc public var fileTypeCodes: [OSType]? {
 			var theOpenables = [NSString]()
-			for anUTI in UTITypes {
+			for anUTI in utiTypes {
 				guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassOSType)?.takeRetainedValue() as NSArray?,
 					let anArr = unPreArr as? [NSString] else {
 						continue
@@ -132,7 +138,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 			menuName = unwrapped.MenuName.takeUnretainedValue() as String
 			authorString = unwrapped.AuthorString.takeUnretainedValue() as String
 			bundle = Bundle(url: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()) as URL)!
-			UTITypes = unwrapped.UTItypes.takeUnretainedValue() as NSArray as! [String]
+			utiTypes = unwrapped.UTItypes.takeUnretainedValue() as NSArray as! [String]
 			tupleType = unwrapped.type
 			let tmpArray: [CChar] = try! arrayFromObject(reflecting: tupleType)
 			type = String(cString: tmpArray, encoding: String.Encoding.macOSRoman)!
@@ -561,7 +567,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		}
 		
 		for obj in trackerLibraries {
-			for bUTI in obj.UTITypes {
+			for bUTI in obj.utiTypes {
 				if aUTI == bUTI {
 					return obj.type
 				}
@@ -583,7 +589,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		
 		for obj in trackerLibraries {
 			if aType == obj.type {
-				return obj.UTITypes.first!
+				return obj.utiTypes.first!
 			}
 		}
 		

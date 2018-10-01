@@ -414,7 +414,7 @@ class DocumentWindowController: NSWindowController {
 			}
 			let tmpObj = globalMadLib[tag];
 			
-			savePanel.allowedFileTypes = tmpObj.UTITypes
+			savePanel.allowedFileTypes = tmpObj.utiTypes
 			savePanel.title = "Export as \(tmpObj.menuName)"
 			
 			savePanel.beginSheetModal(for: self.currentDocument.windowForSheet!, completionHandler: { (result) -> Void in

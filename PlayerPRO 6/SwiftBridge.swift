@@ -12,12 +12,6 @@ public func ==(lhs: PPPlugInObject, rhs: PPPlugInObject) -> Bool {
 	return lhs.isEqual(rhs)
 }
 
-extension PPPlugInObject {
-	override open var hashValue: Int {
-		return self.hash
-	}
-}
-
 extension PPInstrumentPlugHandler: Sequence {
 	public func makeIterator() -> IndexingIterator<[PPInstrumentImporterObject]> {
 		return (plugInArray).makeIterator();
