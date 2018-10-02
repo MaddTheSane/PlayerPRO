@@ -350,7 +350,7 @@ protocol MusicListDelegate: class {
 		let wrappedData = try Data(contentsOf: url)
 		let keyedUnarc = NSKeyedUnarchiver(forReadingWith: wrappedData)
 		guard let newList = MusicList(coder: keyedUnarc) else {
-			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: [NSURLErrorKey: url])
+			throw CocoaError(.fileReadCorruptFile, userInfo: [NSURLErrorKey: url])
 		}
 		if newList.name == kUntitledMusicList,
 			let values = try? url.resourceValues(forKeys: [URLResourceKey.localizedNameKey]),

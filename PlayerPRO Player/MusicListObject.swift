@@ -126,13 +126,7 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 	
 	convenience init(bookmarkData: Data, resolutionOptions: NSURL.BookmarkResolutionOptions = [], relativeURL: URL? = nil, date: Date? = Date()) throws {
 		var unusedStale = false
-		#if swift(>=4.2)
 		let resolvedURL = try URL(resolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeTo: relativeURL, bookmarkDataIsStale: &unusedStale)
-		#else
-		guard let resolvedURL = try URL(resolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeTo: relativeURL, bookmarkDataIsStale: &unusedStale) else {
-			throw NSError(domain: NSCocoaErrorDomain, code: NSFileNoSuchFileError)
-		}
-		#endif
 		self.init(url: resolvedURL, date: date ?? Date())
 		#if os(OSX)
 			bookData = Data(bookmarkData)

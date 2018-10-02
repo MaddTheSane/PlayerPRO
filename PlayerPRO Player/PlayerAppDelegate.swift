@@ -1341,7 +1341,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 						let exportMov = AVAsset(url: tmpURL)
 						
 						guard let session = AVAssetExportSession(asset: exportMov, presetName: AVAssetExportPresetAppleM4A) else {
-							expErr = NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: nil)
+							expErr = CocoaError(.fileWriteUnknown)
 							NSLog("Init Failed for %@, error: %@", oldMusicName, expErr!.localizedDescription)
 							DispatchQueue.main.async(execute: errBlock)
 							return
