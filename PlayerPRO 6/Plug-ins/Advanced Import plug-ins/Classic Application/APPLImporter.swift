@@ -36,7 +36,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			}
 			
 			guard aRet.count > 0 else {
-				handler(nil, PPMADError(.fileNotSupportedByThisPlug))
+				handler(nil, PPMADError(.fileNotSupportedByThisPlug, userInfo: [NSURLErrorKey: theURL]))
 				return
 			}
 			
@@ -46,7 +46,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			controller.addResourceDictionary(aRet)
 			controller.beginImportModalSession()
 		} catch {
-			handler(nil, MADErr.readingErr.toNSError(customUserDictionary: [NSUnderlyingErrorKey: error], convertToCocoa: false)!)
+			handler(nil, PPMADError(.reading, userInfo: [NSUnderlyingErrorKey: error, NSURLErrorKey: theURL]))
 		}
 	}
 	

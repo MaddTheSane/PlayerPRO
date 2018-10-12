@@ -59,9 +59,9 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		var audioFile: AudioFileID? = nil
 		var res: OSStatus = noErr
 		
-		res = AudioFileOpen(url: AlienFileURL as NSURL, permissions: .readPermission, fileTypeHint: .AIFF, audioFile: &audioFile);
+		res = AudioFileOpen(url: AlienFileURL, permissions: .readPermission, fileTypeHint: .AIFF, audioFile: &audioFile);
 		if res != noErr {
-			res = AudioFileOpen(url: AlienFileURL as NSURL, permissions: .readPermission, fileTypeHint: .AIFC, audioFile: &audioFile);
+			res = AudioFileOpen(url: AlienFileURL, permissions: .readPermission, fileTypeHint: .AIFC, audioFile: &audioFile);
 			if res != noErr {
 				myErr = .fileNotSupportedByThisPlug;
 			} else {
