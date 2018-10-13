@@ -67,7 +67,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "IT  ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.it"), CFSTR("org.videolan.it"), NULL},
+		.UTITypes = (CFStringRef[]){CFSTR("net.on.users.jtlim.ImpulseTracker.it"), CFSTR("org.videolan.it"), NULL},
 	},
 #endif
 	{

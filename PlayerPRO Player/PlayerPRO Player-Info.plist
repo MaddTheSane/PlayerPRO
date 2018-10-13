@@ -314,7 +314,7 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>net.sourceforge.playerpro.it</string>
+				<string>net.on.users.jtlim.ImpulseTracker.it</string>
 				<string>org.videolan.it</string>
 			</array>
 			<key>LSTypeIsPackage</key>

@@ -32,7 +32,7 @@
 	<string>IT  </string>
 	<key>MADPlugUTITypes</key>
 	<array>
-		<string>net.sourceforge.playerpro.it</string>
+		<string>net.on.users.jtlim.ImpulseTracker.it</string>
 		<string>org.videolan.it</string>
 	</array>
 	<key>NSHumanReadableCopyright</key>
