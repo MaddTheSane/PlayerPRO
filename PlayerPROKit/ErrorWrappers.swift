@@ -14,6 +14,30 @@ extension PPMADError {
 	public init(madErr: MADErr, userInfo: [String: Any] = [:]) {
 		self.init(PPMADError.Code(madErr), userInfo: userInfo)
 	}
+	
+	/// Converts to an error to one in the built-in Cocoa error domains, if possible.
+	public func convertToCocoaType() -> Error {
+		let cud = self.errorUserInfo
+		
+		func populate(error: NSError) -> NSError {
+			var errDict: [String: Any] = error.userInfo
+			errDict[NSLocalizedDescriptionKey] = error.localizedDescription
+			if let aFailReason = error.localizedFailureReason {
+				errDict[NSLocalizedFailureReasonErrorKey] = aFailReason
+			}
+			
+			if let aRecoverySuggestion = error.localizedRecoverySuggestion {
+				errDict[NSLocalizedRecoverySuggestionErrorKey] = aRecoverySuggestion
+			}
+			
+			errDict += cud
+			
+			return NSError(domain: error.domain, code: error.code, userInfo: errDict)
+		}
+		
+		let cocoaErr = __PPCreateErrorFromMADErrorTypeConvertingToCocoa(self.code.madErr, true) ?? PPMADError(.none, userInfo: [NSLocalizedDescriptionKey: "Throwing MADNoErr! This shouldn't happen!"])
+		return populate(error: cocoaErr as NSError)
+	}
 }
 
 extension PPMADError.Code {

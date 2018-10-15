@@ -184,7 +184,7 @@ import AudioToolbox
 			do {
 				try theMusic.saveMusic(to: url, compress: UserDefaults.standard.bool(forKey: PPMMadCompression))
 			} catch {
-				if let error = error as? MADErr {
+				if let error = error as? PPMADError {
 					throw error.convertToCocoaType()
 				} else {
 					throw error
