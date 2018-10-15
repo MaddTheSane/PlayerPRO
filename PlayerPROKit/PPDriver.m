@@ -23,6 +23,7 @@
 
 - (void)setCurrentMusic:(PPMusicObject *)curMusic
 {
+	[self willChangeValueForKey:@"paused"];
 	if (curMusic != currentMusic) {
 		NS_VALID_UNTIL_END_OF_SCOPE PPMusicObject *tmpMus = currentMusic;
 		currentMusic = curMusic;
@@ -34,11 +35,13 @@
 			MADErr iErr = MADAttachDriverToMusic(theRec, currentMusic._currentMusic, NULL);
 			if (iErr != MADNoErr) {
 				NSError *err = PPCreateErrorFromMADErrorType(iErr);
+				[self didChangeValueForKey:@"paused"];
 				[[[NSException alloc] initWithName:@"MADAttachDriverToMusic err" reason:@"MADAttachDriverToMusic returned failure state" userInfo:@{NSUnderlyingErrorKey: err}] raise];
 			}
 		}
 		tmpMus = nil;
 	}
+	[self didChangeValueForKey:@"paused"];
 }
 
 - (NSTimeInterval)totalMusicPlaybackTime
