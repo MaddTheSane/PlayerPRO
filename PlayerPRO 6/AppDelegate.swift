@@ -16,7 +16,7 @@ import SwiftAdditions
 }
 
 private func CocoaDebugStr(_ line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
-	let swiftFile = FileManager.default.string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
+	let swiftFile = FileManager.default.string(withFileSystemRepresentation: file!, length: Int(strlen(file!)))
 	let swiftText = String(cString: text!)
 	print("\(swiftFile):\(line), error text: \(swiftText)")
 	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
