@@ -1385,6 +1385,20 @@
 			remoteGlobalIDString = 5578C51B17DB94A50057D11B;
 			remoteInfo = "PPImport-app";
 		};
+		557C2D5F224A840900D74AC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 558DC050217D04830022E081;
+			remoteInfo = QuartzAdditions;
+		};
+		557C2D61224A840900D74AC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 558DC058217D04840022E081;
+			remoteInfo = QuartzAdditionsTests;
+		};
 		557DE42710E06BF200177B4C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -4848,6 +4862,8 @@
 				55D5E9821B01496100EB2C84 /* SwiftAudioAdditionsTests.xctest */,
 				556BC3FA1FAFD6F70015C622 /* CoreTextAdditions.framework */,
 				556BC3FC1FAFD6F70015C622 /* CoreTextAdditionsTests.xctest */,
+				557C2D60224A840900D74AC1 /* QuartzAdditions.framework */,
+				557C2D62224A840900D74AC1 /* QuartzAdditionsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6733,6 +6749,20 @@
 			fileType = wrapper.cfbundle;
 			path = CoreTextAdditionsTests.xctest;
 			remoteRef = 556BC3FB1FAFD6F70015C622 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		557C2D60224A840900D74AC1 /* QuartzAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = QuartzAdditions.framework;
+			remoteRef = 557C2D5F224A840900D74AC1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		557C2D62224A840900D74AC1 /* QuartzAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = QuartzAdditionsTests.xctest;
+			remoteRef = 557C2D61224A840900D74AC1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5593A1411DAC04C20040CACA /* MASPreferences.framework */ = {
@@ -9428,7 +9458,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REEXPORTED_FRAMEWORK_NAMES = PlayerPROCore;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
@@ -9456,7 +9486,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REEXPORTED_FRAMEWORK_NAMES = PlayerPROCore;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
@@ -9987,6 +10017,7 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos iphonesimulator iphoneos";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -10011,6 +10042,7 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos iphonesimulator iphoneos";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -10373,7 +10405,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO Player/PlayerPRO Player-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -10398,7 +10430,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO Player/PlayerPRO Player-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -11452,7 +11484,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -11474,7 +11506,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -11494,6 +11526,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO Player.app/Contents/MacOS/PlayerPRO Player";
 			};
 			name = Release;
@@ -11515,6 +11548,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO Player.app/Contents/MacOS/PlayerPRO Player";
 			};
 			name = Debug;
@@ -11895,6 +11929,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos iphonesimulator iphoneos";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -11929,6 +11964,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos iphonesimulator iphoneos";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";

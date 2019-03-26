@@ -20,7 +20,7 @@ private let kUnresolvableFileDescription = "There were %lu file(s) that were una
 private let OldListWasLoaded = "Old List was loaded?"
 
 private func cocoaDebugStr(line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
-	let swiftFile = FileManager.default.string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
+	let swiftFile = FileManager.default.string(withFileSystemRepresentation: file!, length: Int(strlen(file!)))
 	let swiftText = String(cString: text!)
 	print("\(swiftFile):\(line), error text: \(swiftText)")
 	let alert = NSAlert()
@@ -1112,14 +1112,14 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		audioFile.clientDataFormat = realFormat
 		
 		func handler(data data1: Data) throws {
-			try data1.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
-				let toWriteSize = data1.count
+			try data1.withUnsafeBytes { (toWriteBytes: UnsafeRawBufferPointer) -> Void in
+				let toWriteSize = toWriteBytes.count
 
 				var audBufList = AudioBufferList()
 				audBufList.mNumberBuffers = 1
 				audBufList.mBuffers.mNumberChannels = tmpChannels
 				audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
-				audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
+				audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes.baseAddress!)
 				
 				try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 			}
@@ -1152,14 +1152,14 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 		audioFile.clientDataFormat = realFormat
 		
 		func handler(data data1: Data) throws {
-			try data1.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
-				let toWriteSize = data1.count
+			try data1.withUnsafeBytes { (toWriteBytes: UnsafeRawBufferPointer) -> Void in
+				let toWriteSize = toWriteBytes.count
 				
 				var audBufList = AudioBufferList()
 				audBufList.mNumberBuffers = 1
 				audBufList.mBuffers.mNumberChannels = tmpChannels
 				audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
-				audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
+				audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes.baseAddress!)
 				
 				try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 			}

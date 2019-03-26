@@ -171,6 +171,9 @@ extension MADErr: CustomStringConvertible, CustomDebugStringConvertible {
 			
 		case .userCancelledErr:
 			return "MADErr.userCancelledErr"
+			
+		@unknown default:
+			return "Unknown MADErr \(rawValue)"
 		}
 	}
 	

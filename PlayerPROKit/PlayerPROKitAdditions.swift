@@ -315,9 +315,10 @@ extension PPSampleObject {
 		let oneShiftedBy8 = 1 / CGFloat(1 << 8)
 
 		if curData.amplitude == 16 {
-			curData.data.withUnsafeBytes({ (theShortSample: UnsafePointer<UInt16>) -> Void in
+			start /= 2
+			curData.data.withUnsafeBytes({ (theShortSample1: UnsafeRawBufferPointer) -> Void in
+				let theShortSample = theShortSample1.bindMemory(to: UInt16.self)
 				let sampleSize = curData.data.count / 2
-				start /= 2
 				
 				var BS = start + (tSS * sampleSize) / larg
 				if isStereo {
@@ -369,7 +370,8 @@ extension PPSampleObject {
 			})
 		} else {
 			let sampleSize = curData.data.count
-			curData.data.withUnsafeBytes({ (theSample: UnsafePointer<UInt16>) -> Void in
+			curData.data.withUnsafeBytes({ (theSample1: UnsafeRawBufferPointer) -> Void in
+				let theSample = theSample1.bindMemory(to: UInt8.self)
 				var BS = start + (tSS * sampleSize) / larg
 				if isStereo {
 					BS /= 2; BS *= 2;

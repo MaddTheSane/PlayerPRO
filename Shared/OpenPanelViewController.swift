@@ -366,7 +366,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 	func beginWithCompletionHandler(_ resultHandle: @escaping (_ result: Int) -> Void) {
 		OpenPanelsInUse.append(self)
 		openPanel.begin(completionHandler: { (result) -> Void in
-			if let anInt = OpenPanelsInUse.index(of: self) {
+			if let anInt = OpenPanelsInUse.firstIndex(of: self) {
 				OpenPanelsInUse.remove(at: anInt)
 			}
 			resultHandle(result.rawValue)
@@ -376,7 +376,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 	@objc func beginOpenPanel(_ parentWindow: NSWindow, completionHandler resultHandle: @escaping (_ result: NSApplication.ModalResponse) -> Void) {
 		OpenPanelsInUse.append(self)
 		openPanel.beginSheetModal(for: parentWindow, completionHandler: { (result) -> Void in
-			if let anInt = OpenPanelsInUse.index(of: self) {
+			if let anInt = OpenPanelsInUse.firstIndex(of: self) {
 				OpenPanelsInUse.remove(at: anInt)
 			}
 			resultHandle(result)

@@ -29,6 +29,9 @@ extension MADOutputChannel: CustomStringConvertible {
 			
 		case .PolyPhonic:
 			return "polyphonic"
+			
+		@unknown default:
+			return "Unknown channel layout '\(rawValue)'"
 		}
 	}
 	
@@ -72,6 +75,9 @@ extension MADSoundOutput: CustomStringConvertible {
 			
 		case .NoHardwareDriver:
 			return "none"
+			
+		@unknown default:
+			return "Unknown sound output '\(rawValue)'"
 		}
 	}
 	

@@ -39,7 +39,7 @@ class MADDebugStr_Tests: XCTestCase {
 	
 	private func classDebugMethod(line: Int16, file: UnsafePointer<Int8>?, text: UnsafePointer<Int8>?) {
 		let manager = FileManager.default
-		let fileStr = manager.string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
+		let fileStr = manager.string(withFileSystemRepresentation: file!, length: Int(strlen(file!)))
 		XCTAssertEqual(fileStr, #file, "files aren't equal...")
 		var textStr = String(validatingUTF8: text!)!
 		textStr += ", var: \"\(exampleVar)\""
@@ -50,7 +50,7 @@ class MADDebugStr_Tests: XCTestCase {
 	func testInlineDebugBlock() {
 		MADRegisterDebugBlock { (line, file, text) -> Void in
 			let manager = FileManager.default
-			let fileStr = manager.string(withFileSystemRepresentation: file!, length: Int(strlen(file)))
+			let fileStr = manager.string(withFileSystemRepresentation: file!, length: Int(strlen(file!)))
 			let textStr = String(validatingUTF8: text!)!
 			
 			print("\(fileStr):\(line) Inline Test: \(textStr)")
