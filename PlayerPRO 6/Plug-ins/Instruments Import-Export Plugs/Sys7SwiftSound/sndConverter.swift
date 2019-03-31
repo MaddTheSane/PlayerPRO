@@ -84,15 +84,15 @@ internal func canOpenData(_ data: Data) -> Bool {
 		
 		// Read the SndListResource or Snd2ListResource
 		var format: Int16 = 0
-		if !reader.readInt16(endian: .big, &format) {
+		if !reader.readInt16(.big, &format) {
 			return false
 		}
 		if format == firstSoundFormat {
 			var numModifiers: Int16 = 0
 			var modifierPart = ModRef()
-			if !reader.readInt16(endian: .big, &numModifiers) ||
-				!reader.readUInt16(endian: .big, &modifierPart.modNumber) ||
-				!reader.readInt32(endian: .big, &modifierPart.modInit) {
+			if !reader.readInt16(.big, &numModifiers) ||
+				!reader.readUInt16(.big, &modifierPart.modNumber) ||
+				!reader.readInt32(.big, &modifierPart.modInit) {
 					return false
 			}
 			if numModifiers != 1 {
@@ -109,7 +109,7 @@ internal func canOpenData(_ data: Data) -> Bool {
 			}
 		} else if format == secondSoundFormat {
 			var refCount = Int16()
-			if !reader.readInt16(endian: .big, &refCount) {
+			if !reader.readInt16(.big, &refCount) {
 				return false
 			}
 		} else {
@@ -140,16 +140,16 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	
 	// Read the SndListResource or Snd2ListResource
 	var format = Int16()
-	if !reader.readInt16(endian: .big, &format) {
+	if !reader.readInt16(.big, &format) {
 		errmsg("Missing header")
 		throw SndAssetErrors.missingHeader
 	}
 	if format == firstSoundFormat {
 		var numModifiers = Int16()
 		var modifierPart = ModRef()
-		if !reader.readInt16(endian: .big, &numModifiers) ||
-			!reader.readUInt16(endian: .big, &modifierPart.modNumber) ||
-			!reader.readInt32(endian: .big, &modifierPart.modInit) {
+		if !reader.readInt16(.big, &numModifiers) ||
+			!reader.readUInt16(.big, &modifierPart.modNumber) ||
+			!reader.readInt32(.big, &modifierPart.modInit) {
 			errmsg("Missing header")
 			throw PPMADError(.fileNotSupportedByThisPlug)
 		}
@@ -171,7 +171,7 @@ internal func assetForSND(_ data: Data) throws -> URL {
 		}
 	} else if format == secondSoundFormat {
 		var refCount = Int16()
-		if !reader.readInt16(endian: .big, &refCount) {
+		if !reader.readInt16(.big, &refCount) {
 			errmsg("Missing header")
 			throw SndAssetErrors.missingHeader
 		}
@@ -184,7 +184,7 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	var header_offset = Int()
 	var numCommands = Int16()
 	var commandPart = SndCommand()
-	if !reader.readInt16(endian: .big, &numCommands) {
+	if !reader.readInt16(.big, &numCommands) {
 		errmsg("Missing header")
 		throw SndAssetErrors.missingHeader
 	}
@@ -193,9 +193,9 @@ internal func assetForSND(_ data: Data) throws -> URL {
 		throw SndAssetErrors.badHeader
 	}
 	for _ in Int16(0) ..< numCommands {
-		if !reader.readUInt16(endian: .big, &commandPart.cmd) ||
-			!reader.readInt16(endian: .big, &commandPart.param1) ||
-			!reader.readInt32(endian: .big, &commandPart.param2) {
+		if !reader.readUInt16(.big, &commandPart.cmd) ||
+			!reader.readInt16(.big, &commandPart.param1) ||
+			!reader.readInt32(.big, &commandPart.param2) {
 			throw SndAssetErrors.missingCommand
 		}
 		// "If soundCmd is contained within an 'snd ' resource, the high bit of the command must be set."
@@ -218,11 +218,11 @@ internal func assetForSND(_ data: Data) throws -> URL {
 	
 	// Read SoundHeader
 	var header = SoundHeader()
-	if !reader.readUInt32(endian: .big, &header.samplePtr) ||
-		!reader.readUInt32(endian: .big, &header.length) ||
-		!reader.readUInt32(endian: .big, &header.sampleRate) ||
-		!reader.readUInt32(endian: .big, &header.loopStart) ||
-		!reader.readUInt32(endian: .big, &header.loopEnd) ||
+	if !reader.readUInt32(.big, &header.samplePtr) ||
+		!reader.readUInt32(.big, &header.length) ||
+		!reader.readUInt32(.big, &header.sampleRate) ||
+		!reader.readUInt32(.big, &header.loopStart) ||
+		!reader.readUInt32(.big, &header.loopEnd) ||
 		!reader.readUInt8(&header.encode) ||
 		!reader.readUInt8(&header.baseFrequency) {
 		errmsg("Missing header data")
