@@ -36,7 +36,9 @@
 #define MAXPOINTER			999
 #define MAXTRACK			256
 //#define MAXTRACKMULTI		99
-#define MADID				(MADFourChar)('MADK')
+MADENUM(MADFourChar) {
+	MADID = 'MADK'
+};
 
 #pragma mark Effects ID
 	

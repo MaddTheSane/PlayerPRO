@@ -42,11 +42,11 @@ extension PPMADError {
 
 extension PPMADError.Code {
 	public init(_ madErr: MADErr) {
-		self = PPMADError.Code(rawValue: Int(madErr.rawValue))!
+		self = PPMADError.Code(rawValue: madErr.rawValue)!
 	}
 
 	public var madErr: MADErr {
-		return MADErr(rawValue: Int16(rawValue))!
+		return MADErr(rawValue: rawValue)!
 	}
 }
 

@@ -12,6 +12,19 @@
 #import <Foundation/NSString.h>
 #include <PlayerPROCore/MADDefs.h>
 
+#ifndef MTS_ERROR_ENUM
+#define __MTS_ERROR_ENUM_GET_MACRO(_0, _1, _2, NAME, ...) NAME
+#if ((__cplusplus && __cplusplus >= 201103L && (__has_extension(cxx_strong_enums) || __has_feature(objc_fixed_enum))) || (!__cplusplus && __has_feature(objc_fixed_enum))) && __has_attribute(ns_error_domain)
+#define __MTS_NAMED_ERROR_ENUM(_type, _domain, _name)     enum _name : _type _name; enum __attribute__((ns_error_domain(_domain))) _name : _type
+#define __MTS_ANON_ERROR_ENUM(_type, _domain)             enum __attribute__((ns_error_domain(_domain))) : _type
+#else
+#define __MTS_NAMED_ERROR_ENUM(_type, _domain, _name) NS_ENUM(_type, _name)
+#define __MTS_ANON_ERROR_ENUM(_type, _domain) NS_ENUM(_type)
+#endif
+
+#define MTS_ERROR_ENUM(...) __MTS_ERROR_ENUM_GET_MACRO(__VA_ARGS__, __MTS_NAMED_ERROR_ENUM, __MTS_ANON_ERROR_ENUM)(__VA_ARGS__)
+#endif
+
 __BEGIN_DECLS
 
 //! The error domain of \c MADErr errors in <code>NSError</code>s.
@@ -21,7 +34,7 @@ extern NSErrorDomain __nonnull const PPMADErrorDomain;
  *	@enum		PPMADError
  *	@abstract	Swift-friendly way of implementing \c MADErr
  */
-typedef NS_ERROR_ENUM(PPMADErrorDomain, PPMADError) {
+typedef MTS_ERROR_ENUM(short, PPMADErrorDomain, PPMADError) {
 	/// No error was encountered
 	PPMADErrorNone = MADNoErr,
 	/// There isn't enough memory to execute the command.
