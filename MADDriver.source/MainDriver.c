@@ -1420,7 +1420,7 @@ MADErr MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFUR
 	char *URLcString = NULL;
 	MADErr theErr = MADNoErr;
 	
-	if (!strcmp("MADK", type)) {
+	if (!strncmp("MADK", type, 4)) {
 		CFReadStreamRef tmpDatRef = CFReadStreamCreateWithFile(kCFAllocatorDefault, theRef);
 		
 		theErr = MADReadMAD(music, NULL, MADCFReadStreamType, tmpDatRef, NULL);

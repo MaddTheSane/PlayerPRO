@@ -382,10 +382,10 @@ bool MADPlugAvailable(const MADLibrary *inMADDriver, const char* kindFile)
 {
 	int i;
 	
-	if (!strcmp(kindFile, "MADK"))
+	if (!strncmp(kindFile, "MADK", 4))
 		return TRUE;
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
-		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type))
+		if (!strncmp(kindFile, inMADDriver->ThePlug[i].type, 4))
 			return TRUE;
 	}
 	
@@ -398,7 +398,7 @@ MADErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	MADInfoRec	InfoRec;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
-		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type))
+		if (!strncmp(kindFile, inMADDriver->ThePlug[i].type, 4))
 			return CallImportPlug(inMADDriver, i, MADPlugExport, AlienFile, theNewMAD, &InfoRec);
 	}
 	return MADCannotFindPlug;
