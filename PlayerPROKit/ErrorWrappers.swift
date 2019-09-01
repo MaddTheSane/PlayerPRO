@@ -52,6 +52,8 @@ extension PPMADError.Code {
 
 extension MADErr {
 	/// Throws `self` if `self` is anything other than `.NoErr`.
+	///
+	/// Deprecated: Wrap in PPMADError, then throw
 	@available(*, deprecated, message: "Wrap in PPMADError, then throw")
 	public func throwIfNotNoErr() throws {
 		if self != .noErr {
@@ -108,6 +110,8 @@ extension MADErr {
 	/// Creates a `MADErr` from the provided `NSError`.
 	/// Is `nil` if the error isn't in the `PPMADErrorDomain` or
 	/// the error code isn't in `MADErr`.
+	///
+	/// @deprecated Use `catch let error as PPMADError` instead
 	@available(*, deprecated, message: "Use `catch let error as PPMADError` instead")
 	public init?(error anErr: NSError) {
 		guard anErr.domain == PPMADErrorDomain,
