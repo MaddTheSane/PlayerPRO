@@ -91,6 +91,32 @@ typedef struct InstrHdr {
 	/* Followed by actual data */
 } InstrHdr;
 
+
+typedef struct MMD0exp {
+	uint32_t nextmod;			//!< File offset of next Hdr
+	uint32_t exp_smp;			//!< Pointer to extra instrument data
+	uint16_t s_ext_entries;		//!< Number of extra instrument entries
+	uint16_t s_ext_entrsz;		//!< Size of extra instrument data
+	uint32_t annotxt;
+	uint32_t annolen;
+	uint32_t iinfo;				//!< Instrument names
+	uint16_t i_ext_entries;
+	uint16_t i_ext_entrsz;
+	uint32_t jumpmask;
+	uint32_t rgbtable;
+	uint8_t  channelsplit[4];	//!< Only used if 8ch_conv (extra channel for every nonzero entry)
+	uint32_t n_info;
+	uint32_t songname;			//!< Song name
+	uint32_t songnamelen;
+	uint32_t dumps;
+	uint32_t mmdinfo;
+	uint32_t mmdrexx;
+	uint32_t mmdcmd3x;
+	uint32_t trackinfo_ofs;		//!< ptr to song->numtracks ptrs to tag lists
+	uint32_t effectinfo_ofs;	//!< ptr to group ptrs
+	uint32_t tag_end;
+} MMD0exp;
+
 #pragma pack(pop)
 
 #endif

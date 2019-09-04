@@ -42,6 +42,7 @@ struct MEDInfo {
 	MMD0 		*mh;
 	MMD0song 	*ms;
 	uint32_t 	*ba;
+	MMD0exp		*mi;
 	
 	MMD0NOTE 	*mmd0pat;
 	MMD1NOTE 	*mmd1pat;
@@ -65,6 +66,30 @@ static void byteSwapMMD0(MMD0 *toSwap) {
 	MADBE16(&toSwap->pline);
 	MADBE16(&toSwap->pseqnum);
 	MADBE16(&toSwap->actplayline);
+}
+
+static void byteSwapMMD0exp(MMD0exp *toSwap) {
+	MADBE32(&toSwap->nextmod);
+	MADBE32(&toSwap->exp_smp);
+	MADBE16(&toSwap->s_ext_entries);
+	MADBE16(&toSwap->s_ext_entrsz);
+	MADBE32(&toSwap->annotxt);
+	MADBE32(&toSwap->annolen);
+	MADBE32(&toSwap->iinfo);
+	MADBE16(&toSwap->i_ext_entries);
+	MADBE16(&toSwap->i_ext_entrsz);
+	MADBE32(&toSwap->jumpmask);
+	MADBE32(&toSwap->rgbtable);
+	MADBE32(&toSwap->n_info);
+	MADBE32(&toSwap->songname);
+	MADBE32(&toSwap->songnamelen);
+	MADBE32(&toSwap->dumps);
+	MADBE32(&toSwap->mmdinfo);
+	MADBE32(&toSwap->mmdrexx);
+	MADBE32(&toSwap->mmdcmd3x);
+	MADBE32(&toSwap->trackinfo_ofs);
+	MADBE32(&toSwap->effectinfo_ofs);
+	MADBE32(&toSwap->tag_end);
 }
 
 static void byteSwapMMD0sample(MMD0sample *toSwap) {
@@ -120,6 +145,10 @@ static void MED_Cleanup(struct MEDInfo *medInfo)
 	if (medInfo->ba != NULL) {
 		free(medInfo->ba);
 		medInfo->ba = NULL;
+	}
+	if (medInfo->mi != NULL) {
+		free(medInfo->mi);
+		medInfo->mi = NULL;
 	}
 	
 	if (medInfo->mmd0pat != NULL) {
@@ -424,7 +453,7 @@ static MADErr LoadMMD1Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings
 
 static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSettings *init, struct MEDInfo *medInfo)
 {
-	//TODO: get file name and instrument name
+	//TODO: get file name and instruments names
 	int			t, i;
 	uint32_t	sa[64];
 	InstrHdr	s;
@@ -439,6 +468,17 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	
 	READMEDFILE(medInfo->mh, sizeof(MMD0));
 	byteSwapMMD0(medInfo->mh);
+	
+	/*************************/
+	/** READ MMD0exp struct **/
+	/*************************/
+
+	if (medInfo->mh->MMD0expP && MEDSize >= (sizeof(MMD0exp) + medInfo->mh->MMD0expP)) {
+		medInfo->mi = malloc(sizeof(MMD0exp));
+		medInfo->theMEDRead = theMED + medInfo->mh->MMD0expP;
+		READMEDFILE(medInfo->mi, sizeof(MMD0exp));
+		byteSwapMMD0exp(medInfo->mi);
+	}
 	
 	/**************************/
 	/** READ MMD0song struct **/
