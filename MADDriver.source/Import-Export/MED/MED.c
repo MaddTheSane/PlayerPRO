@@ -122,6 +122,7 @@ static bool MED_Init(MADDriverSettings *init, struct MEDInfo *medInfo)
 	medInfo->mh = NULL;
 	medInfo->ms = NULL;
 	medInfo->ba = NULL;		// blockarr
+	medInfo->mi = NULL;
 	medInfo->mmd0pat = NULL;
 	medInfo->mmd1pat = NULL;
 	
@@ -505,7 +506,7 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	/**    BLOCK PTR ARRAY    **/
 	/***************************/
 	
-	medInfo->ba = (uint32_t*) calloc(medInfo->ms->numblocks * sizeof(uint32_t), 1);
+	medInfo->ba = (uint32_t*) calloc(medInfo->ms->numblocks, sizeof(uint32_t));
 	if (medInfo->ba == NULL) return MADNeedMemory;
 	
 	medInfo->theMEDRead = theMED + medInfo->mh->MMD0BlockPP;
@@ -564,10 +565,10 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	/**      SAMPLES INS      **/
 	/***************************/
 	
-	theMAD->fid = (InstrData*) calloc(sizeof(InstrData) * (long) MAXINSTRU, 1);
+	theMAD->fid = (InstrData*) calloc(sizeof(InstrData), MAXINSTRU);
 	if (!theMAD->fid) return MADNeedMemory;
 	
-	theMAD->sample = (sData**) calloc(sizeof(sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
+	theMAD->sample = (sData**) calloc(sizeof(sData*), (long) MAXINSTRU * (long) MAXSAMPLE);
 	if (!theMAD->sample) return MADNeedMemory;
 	
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
