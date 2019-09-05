@@ -87,7 +87,7 @@ static MADDriverRec	*MADDriver = NULL;
 static MADLibrary	*MADLib = NULL;
 
 
-void SetupMADLib(void) __attribute__((constructor));
+static void SetupMADLib(void) __attribute__((constructor));
 void SetupMADLib(void)
 {
 	MADDriverSettings	init = {0};
@@ -103,7 +103,7 @@ void SetupMADLib(void)
 	}
 }
 
-void closeMADLib(void) __attribute__((destructor));
+static void closeMADLib(void) __attribute__((destructor));
 void closeMADLib(void)
 {
 	MADStopDriver(MADDriver);				// Stop driver interrupt function
