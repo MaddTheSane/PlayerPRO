@@ -1056,13 +1056,6 @@
 			remoteGlobalIDString = 557168431AF06F5600B5DAD9;
 			remoteInfo = ResourceFork;
 		};
-		55379CA61D63E35500387CF3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55379C9C1D63E35500387CF3 /* ForkView.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A5FFD8FE1B0048EA008AB914;
-			remoteInfo = PICTConverter;
-		};
 		55379CB11D63E38100387CF3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 55379C9C1D63E35500387CF3 /* ForkView.xcodeproj */;
@@ -2578,7 +2571,7 @@
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = net.sourceforge.playerpro.StcfImporter.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		55680A2119045F0A00F7616D /* StcfImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StcfImporter-Info.plist"; sourceTree = "<group>"; };
-		55680A2319045F0A00F7616D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55680A2319045F0A00F7616D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		55680A2519045F0A00F7616D /* StcfImporter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StcfImporter-Prefix.pch"; sourceTree = "<group>"; };
 		55680A2619045F0A00F7616D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55680A3819046D9800F7616D /* PPSTImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSTImporter.h; sourceTree = "<group>"; };
@@ -4215,7 +4208,6 @@
 			children = (
 				55379CA31D63E35500387CF3 /* ForkView.app */,
 				55379CA51D63E35500387CF3 /* ResourceFork.framework */,
-				55379CA71D63E35500387CF3 /* PICTConverter.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6728,13 +6720,6 @@
 			fileType = wrapper.framework;
 			path = ResourceFork.framework;
 			remoteRef = 55379CA41D63E35500387CF3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		55379CA71D63E35500387CF3 /* PICTConverter.xpc */ = {
-			isa = PBXReferenceProxy;
-			fileType = "wrapper.xpc-service";
-			path = PICTConverter.xpc;
-			remoteRef = 55379CA61D63E35500387CF3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		556BC3FA1FAFD6F70015C622 /* CoreTextAdditions.framework */ = {
