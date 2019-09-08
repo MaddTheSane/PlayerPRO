@@ -37,6 +37,7 @@
 #endif
 
 #include "MED.h"
+#include <iconv.h>
 
 struct MEDInfo {
 	MMD0 		*mh;
@@ -48,6 +49,18 @@ struct MEDInfo {
 	MMD1NOTE 	*mmd1pat;
 	char		*theMEDRead;
 };
+
+static bool hasHiBit(const char* theStr, size_t len) {
+	int i;
+	bool hiBitPresent = false;
+	for (i = 0; i <= len; i++) {
+		if (theStr[i] < 0) {
+			hiBitPresent = true;
+			break;
+		}
+	}
+	return hiBitPresent;
+}
 
 static void byteSwapMMD0(MMD0 *toSwap) {
 	MADBE32(&toSwap->id);
@@ -529,7 +542,35 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	
 	theMAD->header->MAD = 'MADK';
 	
+	if (medInfo->mh && (medInfo->mi->songname != 0 && medInfo->mi->songnamelen != 0 && MEDSize >= medInfo->mi->songname + medInfo->mi->songnamelen)) {
+		char * songName = calloc(medInfo->mi->songnamelen+1, sizeof(char));
+		medInfo->theMEDRead = theMED + medInfo->mi->songname;
+		READMEDFILE(songName, medInfo->mi->songnamelen);
+		if (hasHiBit(songName, medInfo->mi->songnamelen)) {
+			//todo: iconv
+			strncpy(theMAD->header->name, songName, sizeof(theMAD->header->name));
+		} else {
+			strncpy(theMAD->header->name, songName, sizeof(theMAD->header->name));
+		}
+		free(songName);
+	} else {
+		theMAD->header->name[0] = 0;
+	}
+
+	if (medInfo->mh && (medInfo->mi->annotxt != 0 && medInfo->mi->annolen != 0 && MEDSize >= medInfo->mi->annotxt + medInfo->mi->annolen)) {
+		char * songInfo = calloc(medInfo->mi->annolen+1, sizeof(char));
+		medInfo->theMEDRead = theMED + medInfo->mi->annotxt;
+		READMEDFILE(songInfo, medInfo->mi->annolen);
+		if (hasHiBit(songInfo, medInfo->mi->annolen)) {
+			//todo: iconv
+			strncpy(theMAD->header->infos, songInfo, sizeof(theMAD->header->infos));
+		} else {
+			strncpy(theMAD->header->infos, songInfo, sizeof(theMAD->header->infos));
+		}
+		free(songInfo);
+	} else {
 	strncpy(theMAD->header->infos, "Converted by PlayerPRO MED Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	}
 	
 	theMAD->header->speed			= 	medInfo->ms->tempo2;
 	theMAD->header->tempo			=	(medInfo->ms->deftempo * 125) / 33;
@@ -637,7 +678,7 @@ static MADErr TestMEDFile(char* AlienFile)
 		return MADFileNotSupportedByThisPlug;
 }
 
-static MADErr ExtractMEDInfo(MADInfoRec *info, char* theMED, struct MEDInfo *medInfo)
+static MADErr ExtractMEDInfo(MADInfoRec *info, UNFILE theMED, struct MEDInfo *medInfo)
 {
 	/*long	PatternSize;
 	 short	i;
@@ -646,18 +687,42 @@ static MADErr ExtractMEDInfo(MADInfoRec *info, char* theMED, struct MEDInfo *med
 	 long	inOutCount;*/
 	short totalPats, partLen;
 	
-	medInfo->theMEDRead = theMED;
+#define READMEDFILE2(dst, size)	{iRead(size, dst, theMED);}
 	
-	READMEDFILE(medInfo->mh, sizeof(MMD0));
+	//Use fseek and SEEK_SET as workarounds.
+	fseek(theMED, 0, SEEK_SET);
+	READMEDFILE2(medInfo->mh, sizeof(MMD0));
 	byteSwapMMD0(medInfo->mh);
 	
-	medInfo->theMEDRead = theMED + medInfo->mh->MMD0songP;
-	READMEDFILE(medInfo->ms, sizeof(MMD0song));
+	fseek(theMED, medInfo->mh->MMD0songP, SEEK_SET);
+	READMEDFILE2(medInfo->ms, sizeof(MMD0song));
+	
+	if (medInfo->mh->MMD0expP != 0 && info->fileSize >= (sizeof(MMD0exp) + medInfo->mh->MMD0expP)) {
+		medInfo->mi = malloc(sizeof(MMD0exp));
+		fseek(theMED, medInfo->mh->MMD0expP, SEEK_SET);
+		READMEDFILE2(medInfo->mi, sizeof(MMD0exp));
+		byteSwapMMD0exp(medInfo->mi);
+		
+		if (medInfo->mi->songname != 0 && medInfo->mi->songnamelen != 0 && info->fileSize >= medInfo->mi->songname + medInfo->mi->songnamelen) {
+			// +1 for null termination, just in case.
+			char *songName = calloc(medInfo->mi->songnamelen + 1, sizeof(char));
+			fseek(theMED, medInfo->mi->songname, SEEK_SET);
+			READMEDFILE2(songName, medInfo->mi->songnamelen);
+			if (hasHiBit(songName, medInfo->mi->songnamelen)) {
+				//todo: iconv
+				strncpy(info->internalFileName, songName, sizeof(info->formatDescription));
+			} else {
+				strncpy(info->internalFileName, songName, sizeof(info->formatDescription));
+			}
+			free(songName);
+		} else {
+			info->internalFileName[0] = '\0';
+		}
+	} else {
+		info->internalFileName[0] = '\0';
+	}
 	
 	info->signature = medInfo->mh->id;
-	
-	//strcpy(info->internalFileName, "");
-	info->internalFileName[0] = '\0';
 	
 	totalPats = medInfo->ms->numblocks;
 	partLen = medInfo->ms->songlen;
@@ -721,7 +786,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 					
 					myErr = TestMEDFile(AlienFile);
 					if (myErr == MADNoErr) {
-						myErr = MED_Load(AlienFile,  sndSize, MadFile, init, &medInfo);
+						myErr = MED_Load(AlienFile, sndSize, MadFile, init, &medInfo);
 					}
 					
 					free(AlienFile); AlienFile = NULL;
@@ -754,16 +819,8 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
+				myErr = ExtractMEDInfo(info, iFileRefI, &medInfo);
 				
-				sndSize = 5000;	// Read only 5000 first bytes for optimisation
-				
-				AlienFile = malloc(sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else {
-					iRead(sndSize, AlienFile, iFileRefI);
-					myErr = ExtractMEDInfo(info, AlienFile, &medInfo);
-					free(AlienFile); AlienFile = NULL;
-				}
 				iClose(iFileRefI);
 			} else
 				myErr = MADReadingErr;

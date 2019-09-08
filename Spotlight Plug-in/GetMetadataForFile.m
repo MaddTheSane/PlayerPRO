@@ -210,7 +210,8 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 						char sig[5];
 						OSType2Ptr(rec.signature, sig);
 						NSSig = [[NSString alloc] initWithCString:sig encoding:NSMacOSRomanStringEncoding];
-					} else if (!NSSig) {
+					}
+					if (!NSSig) {
 						NSSig = [[NSString alloc] initWithFormat:@"0x%08X", (unsigned int)rec.signature];
 					}
 					NSattribs[(NSString*)kMDItemCodecs] = @[NSSig];
