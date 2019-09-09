@@ -688,17 +688,11 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 					if (strlen(name) == 0) {
 						continue;
 					}
-					//hacky, hacky hack.
-					if (theMAD->fid[i].numSamples == 0) {
-						theMAD->sample[i*MAXSAMPLE + 0] = calloc(1, sizeof(sData));
-						
-						theMAD->fid[i].numSamples = 1;
-					}
 					if (hasHiBit(name, ientrysz)) {
 						// todo: iconv
-						strncpy(theMAD->sample[i*MAXSAMPLE + 0]->name, name, sizeof(theMAD->sample[i*MAXSAMPLE + 0]->name));
+						strncpy(theMAD->fid[i].name, name, sizeof(theMAD->fid[i].name));
 					} else {
-						strncpy(theMAD->sample[i*MAXSAMPLE + 0]->name, name, sizeof(theMAD->sample[i*MAXSAMPLE + 0]->name));
+						strncpy(theMAD->fid[i].name, name, sizeof(theMAD->fid[i].name));
 					}
 				}
 			}
