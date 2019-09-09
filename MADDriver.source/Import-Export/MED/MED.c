@@ -542,7 +542,7 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	
 	theMAD->header->MAD = 'MADK';
 	
-	if (medInfo->mh && (medInfo->mi->songname != 0 && medInfo->mi->songnamelen != 0 && MEDSize >= medInfo->mi->songname + medInfo->mi->songnamelen)) {
+	if (medInfo->mi && (medInfo->mi->songname != 0 && medInfo->mi->songnamelen != 0 && MEDSize >= medInfo->mi->songname + medInfo->mi->songnamelen)) {
 		char * songName = calloc(medInfo->mi->songnamelen+1, sizeof(char));
 		medInfo->theMEDRead = theMED + medInfo->mi->songname;
 		READMEDFILE(songName, medInfo->mi->songnamelen);
@@ -557,7 +557,7 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 		theMAD->header->name[0] = 0;
 	}
 
-	if (medInfo->mh && (medInfo->mi->annotxt != 0 && medInfo->mi->annolen != 0 && MEDSize >= medInfo->mi->annotxt + medInfo->mi->annolen)) {
+	if (medInfo->mi && (medInfo->mi->annotxt != 0 && medInfo->mi->annolen != 0 && MEDSize >= medInfo->mi->annotxt + medInfo->mi->annolen)) {
 		char * songInfo = calloc(medInfo->mi->annolen+1, sizeof(char));
 		medInfo->theMEDRead = theMED + medInfo->mi->annotxt;
 		READMEDFILE(songInfo, medInfo->mi->annolen);
@@ -644,11 +644,13 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 			
 			curData->realNote	= 0;
 			
-			curData->data 		= (char*)malloc(curData->size);
-			if (curData->data == NULL)
-				return MADNeedMemory;
-			
-			READMEDFILE(curData->data, curData->size);
+			if (curData->size) {
+				curData->data 		= (char*)malloc(curData->size);
+				if (curData->data == NULL)
+					return MADNeedMemory;
+				
+				READMEDFILE(curData->data, curData->size);
+			}
 		}
 		else theMAD->fid[t].numSamples = 0;
 	}
@@ -665,6 +667,42 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 		case 'MMD1':
 			iErr = LoadMMD1Patterns(theMAD, theMED, init, medInfo);
 			break;
+	}
+	
+	if (medInfo->mi) {
+		uint32_t smpinfoex = medInfo->mi->iinfo;
+		//uint32_2 trackinfo_ofs = medInfo->mi->trackinfo_ofs
+		
+		/**************************/
+		/**   READ Sample Names  **/
+		/**************************/
+
+		if (smpinfoex) {
+			uint32_t ientries = medInfo->mi->i_ext_entries;
+			uint32_t ientrysz = medInfo->mi->i_ext_entrsz;
+			
+			if ((ientrysz < 256) && (ientries*ientrysz < MEDSize) && (smpinfoex < MEDSize - ientries*ientrysz)) {
+				const char *psznames = (const char *)(theMED + smpinfoex);
+				for (i=0; i<ientries; i++) if (i < medInfo->ms->numsamples) {
+					const char *name = (psznames + i * ientrysz);
+					if (strlen(name) == 0) {
+						continue;
+					}
+					//hacky, hacky hack.
+					if (theMAD->fid[i].numSamples == 0) {
+						theMAD->sample[i*MAXSAMPLE + 0] = calloc(1, sizeof(sData));
+						
+						theMAD->fid[i].numSamples = 1;
+					}
+					if (hasHiBit(name, ientrysz)) {
+						// todo: iconv
+						strncpy(theMAD->sample[i*MAXSAMPLE + 0]->name, name, sizeof(theMAD->sample[i*MAXSAMPLE + 0]->name));
+					} else {
+						strncpy(theMAD->sample[i*MAXSAMPLE + 0]->name, name, sizeof(theMAD->sample[i*MAXSAMPLE + 0]->name));
+					}
+				}
+			}
+		}
 	}
 	
 	return iErr;
