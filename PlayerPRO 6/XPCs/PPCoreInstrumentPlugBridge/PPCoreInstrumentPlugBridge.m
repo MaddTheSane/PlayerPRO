@@ -90,12 +90,9 @@ void **PPINLoadPlug(CFBundleRef tempBundleRef)
 	return formatPlugA;
 }
 
-static Class strClass;
-static Class numClass;
-
 static inline BOOL getBoolFromId(id NSType)
 {
-	if ([NSType isKindOfClass:numClass] || [NSType isKindOfClass:strClass]) {
+	if ([NSType isKindOfClass:[NSNumber class]] || [NSType isKindOfClass:[NSString class]]) {
 		return [NSType boolValue];
 	} else {
 		return NO;
@@ -197,7 +194,7 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 			DictionaryTemp = [infoPlist valueForKey:BRIDGE(NSString*, kMadPlugModeKey)];
 			if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 				tempRetType = NSStringToOSType(DictionaryTemp);
-			} else if ([DictionaryTemp isKindOfClass:numClass]) {
+			} else if ([DictionaryTemp isKindOfClass:[NSNumber class]]) {
 				tempRetType = [(NSNumber*)DictionaryTemp unsignedIntValue];
 			}
 			
@@ -222,7 +219,7 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 		
 		BOOL isSample = NO;
 		DictionaryTemp = [infoPlist valueForKey:kMadPlugIsSampleKey];
-		if ([DictionaryTemp isKindOfClass:numClass] || [DictionaryTemp isKindOfClass:strClass]) {
+		if ([DictionaryTemp isKindOfClass:[NSNumber class]] || [DictionaryTemp isKindOfClass:[NSString class]]) {
 			isSample = [DictionaryTemp boolValue];
 		}
 		
@@ -243,11 +240,6 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 - (instancetype)init
 {
 	if (self = [super init]) {
-		static dispatch_once_t onceToken;
-		dispatch_once(&onceToken, ^{
-			strClass = [NSString class];
-			numClass = [NSNumber class];
-		});
 		plugIns = [[NSMutableArray alloc] init];
 	}
 	return self;
