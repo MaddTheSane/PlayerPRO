@@ -569,7 +569,7 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 		}
 		free(songInfo);
 	} else {
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO MED Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+		strncpy(theMAD->header->infos, "Converted by PlayerPRO MED Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	}
 	
 	theMAD->header->speed			= 	medInfo->ms->tempo2;

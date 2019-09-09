@@ -1373,9 +1373,15 @@ static inline CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Bool
 {
 	CFStringRef fileString;
 	CFIndex strLength;
+	if (resolveAgainstBase) {
+		theRef = CFURLCopyAbsoluteURL(theRef);
+	} else {
+		CFRetain(theRef);
+	}
 	fileString = CFURLCopyFileSystemPath(theRef, kCFURLPOSIXPathStyle);
 	strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
 	CFRelease(fileString);
+	CFRelease(theRef);
 	
 	return strLength;
 }
