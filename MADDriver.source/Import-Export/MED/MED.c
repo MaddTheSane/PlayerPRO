@@ -50,6 +50,8 @@ struct MEDInfo {
 	char		*theMEDRead;
 };
 
+static bool ConvertString(char *orig, size_t origLen, char *new, size_t newMax, bool UTF8Okay);
+
 static bool hasHiBit(const char* theStr, size_t len) {
 	int i;
 	bool hiBitPresent = false;
@@ -467,7 +469,6 @@ static MADErr LoadMMD1Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings
 
 static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSettings *init, struct MEDInfo *medInfo)
 {
-	//TODO: get file name and instruments names
 	int			t, i;
 	uint32_t	sa[64];
 	InstrHdr	s;
@@ -547,8 +548,10 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 		medInfo->theMEDRead = theMED + medInfo->mi->songname;
 		READMEDFILE(songName, medInfo->mi->songnamelen);
 		if (hasHiBit(songName, medInfo->mi->songnamelen)) {
-			//todo: iconv
-			strncpy(theMAD->header->name, songName, sizeof(theMAD->header->name));
+			if (!ConvertString(songName, medInfo->mi->songnamelen, theMAD->header->name, sizeof(theMAD->header->name), false)) {
+				//fallback if conversion failed
+				strncpy(theMAD->header->name, songName, sizeof(theMAD->header->name));
+			}
 		} else {
 			strncpy(theMAD->header->name, songName, sizeof(theMAD->header->name));
 		}
@@ -562,8 +565,10 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 		medInfo->theMEDRead = theMED + medInfo->mi->annotxt;
 		READMEDFILE(songInfo, medInfo->mi->annolen);
 		if (hasHiBit(songInfo, medInfo->mi->annolen)) {
-			//todo: iconv
-			strncpy(theMAD->header->infos, songInfo, sizeof(theMAD->header->infos));
+			if (!ConvertString(songInfo, medInfo->mi->annolen, theMAD->header->infos, sizeof(theMAD->header->infos), true)) {
+				//fallback if conversion failed
+				strncpy(theMAD->header->infos, songInfo, sizeof(theMAD->header->infos));
+			}
 		} else {
 			strncpy(theMAD->header->infos, songInfo, sizeof(theMAD->header->infos));
 		}
@@ -689,8 +694,10 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 						continue;
 					}
 					if (hasHiBit(name, ientrysz)) {
-						// todo: iconv
-						strncpy(theMAD->fid[i].name, name, sizeof(theMAD->fid[i].name));
+						if (!ConvertString((char*)name, ientrysz, theMAD->fid[i].name, sizeof(theMAD->fid[i].name), false)) {
+						// just copy it over
+							strncpy(theMAD->fid[i].name, name, sizeof(theMAD->fid[i].name));
+						}
 					} else {
 						strncpy(theMAD->fid[i].name, name, sizeof(theMAD->fid[i].name));
 					}
@@ -741,8 +748,10 @@ static MADErr ExtractMEDInfo(MADInfoRec *info, UNFILE theMED, struct MEDInfo *me
 			fseek(theMED, medInfo->mi->songname, SEEK_SET);
 			READMEDFILE2(songName, medInfo->mi->songnamelen);
 			if (hasHiBit(songName, medInfo->mi->songnamelen)) {
-				//todo: iconv
-				strncpy(info->internalFileName, songName, sizeof(info->formatDescription));
+				if (!ConvertString(songName, medInfo->mi->songnamelen, info->internalFileName, sizeof(info->internalFileName), false)) {
+					// just copy it over
+					strncpy(info->internalFileName, songName, sizeof(info->formatDescription));
+				}
 			} else {
 				strncpy(info->internalFileName, songName, sizeof(info->formatDescription));
 			}
@@ -866,4 +875,59 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 	MED_Cleanup(&medInfo);
 	
 	return myErr;
+}
+
+static bool ConvertStringToMacRoman(char *orig, size_t origLen, char *new, size_t newMax);
+static bool ConvertStringToUTF8(char *orig, size_t origLen, char *new, size_t newMax);
+
+static bool ConvertString(char *orig, size_t origLen, char *new, size_t newMax, bool UTF8Okay)
+{
+	bool success = ConvertStringToMacRoman(orig, origLen, new, newMax);
+	if ((!success) && UTF8Okay) {
+		return ConvertStringToUTF8(orig, origLen, new, newMax);
+	}
+	
+	return success;
+}
+
+static bool ConvertStringToMacRoman(char *orig, size_t origLen, char *new, size_t newMax)
+{
+	iconv_t theIconv = iconv_open("MACROMAN", "ISO-8859-1");
+	char *songPtr = orig;
+	size_t songLen = origLen;
+	size_t macRomanSize = newMax;
+	char *macRomanInfoStr = calloc(macRomanSize, sizeof(char));
+	char *macRomanInfoPtr = macRomanInfoStr;
+	size_t lossed = iconv(theIconv, &songPtr, &songLen, &macRomanInfoPtr, &macRomanSize);
+	iconv_close(theIconv);
+	if (songLen == 0 && lossed != (size_t)-1) {
+		strncpy(new, macRomanInfoStr, newMax);
+	}
+	free(macRomanInfoStr);
+	
+	if (songLen == 0 && lossed != (size_t)-1) {
+		return true;
+	}
+	return false;
+}
+
+static bool ConvertStringToUTF8(char *orig, size_t origLen, char *new, size_t newMax)
+{
+	iconv_t theIconv = iconv_open("UTF-8", "ISO-8859-1");
+	char *songPtr = orig;
+	size_t songLen = origLen;
+	size_t macRomanSize = newMax - 3; //Assume we use the UTF-8 BOM
+	char *macRomanInfoStr = calloc(macRomanSize, sizeof(char));
+	char *macRomanInfoPtr = macRomanInfoStr;
+	size_t lossed = iconv(theIconv, &songPtr, &songLen, &macRomanInfoPtr, &macRomanSize);
+	iconv_close(theIconv);
+	if (songLen == 0 && lossed != (size_t)-1) {
+		strncpy(new, macRomanInfoStr, newMax);
+	}
+	free(macRomanInfoStr);
+	
+	if (songLen == 0 && lossed != (size_t)-1) {
+		return true;
+	}
+	return false;
 }

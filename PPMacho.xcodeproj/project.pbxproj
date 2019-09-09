@@ -292,6 +292,8 @@
 		555272601A000263008B8616 /* MED.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586874D10BF5D3700FCC24D /* MED.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		555272611A000264008B8616 /* S3M.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		555272621A000265008B8616 /* XM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5552BB592326F8EA00147483 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5552BB4B2326F8EA00147483 /* libiconv.tbd */; };
+		5552BB5A2326F90500147483 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5552BB4B2326F8EA00147483 /* libiconv.tbd */; };
 		55534ACE1817C387006D6BCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55534AD11817C387006D6BCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55534AD01817C387006D6BCB /* main.m */; };
 		5557769617EBDA740019D008 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5557769517EBDA740019D008 /* Media.xcassets */; };
@@ -2539,6 +2541,7 @@
 		555269EE19CB53C300F8B95B /* ComplexFadeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexFadeController.swift; sourceTree = "<group>"; };
 		5552724F1A0000C8008B8616 /* PlayerPROKit-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PlayerPROKit-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		555272541A0001CE008B8616 /* PPKPcmd_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPKPcmd_Tests.swift; sourceTree = "<group>"; };
+		5552BB4B2326F8EA00147483 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		55534ACD1817C387006D6BCB /* updateInfoPlist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = updateInfoPlist; sourceTree = BUILT_PRODUCTS_DIR; };
 		55534AD01817C387006D6BCB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5557769517EBDA740019D008 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -3159,6 +3162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5552BB592326F8EA00147483 /* libiconv.tbd in Frameworks */,
 				5578C52317DB94A50057D11B /* CoreFoundation.framework in Frameworks */,
 				5578C52417DB94A50057D11B /* CoreServices.framework in Frameworks */,
 				5578C52517DB94A50057D11B /* Foundation.framework in Frameworks */,
@@ -3328,6 +3332,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5552BB5A2326F90500147483 /* libiconv.tbd in Frameworks */,
 				55B7E661161D1DA6000D988C /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5132,6 +5137,7 @@
 		88E0C4950C2F21E500D6C081 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5552BB4B2326F8EA00147483 /* libiconv.tbd */,
 				5573A3ED10B5151700FF8B50 /* Cocoa.framework */,
 				55ABE82B1A081546006B6AF9 /* CoreGraphics.framework */,
 				5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */,
