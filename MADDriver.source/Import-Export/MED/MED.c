@@ -922,7 +922,8 @@ static bool ConvertStringToUTF8(char *orig, size_t origLen, char *new, size_t ne
 	size_t lossed = iconv(theIconv, &songPtr, &songLen, &macRomanInfoPtr, &macRomanSize);
 	iconv_close(theIconv);
 	if (songLen == 0 && lossed != (size_t)-1) {
-		strncpy(new, macRomanInfoStr, newMax);
+		strcpy(new, "\xEF\xBB\xBF");
+		strncat(new, macRomanInfoStr, newMax);
 	}
 	free(macRomanInfoStr);
 	
