@@ -358,7 +358,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 			}
 			
 		case .LoadRandom:
-			self.selectedIndex.index = Int(arc4random_uniform(UInt32(musicList.countOfMusicList)))
+			self.selectedIndex.index = (0..<musicList.countOfMusicList).randomElement()!
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
@@ -1499,7 +1499,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, NSTableViewDelegate, N
 	}
 	
 	@IBAction func toggleInfo(_ sender: AnyObject?) {
-		infoPanel.makeKeyAndOrderFront(sender)
+		if infoPanel.isVisible {
+			infoPanel.orderOut(sender)
+		} else {
+			infoPanel.makeKeyAndOrderFront(sender)
+		}
 	}
 	
 	@IBAction func sortMusicList(_ sender: AnyObject?) {

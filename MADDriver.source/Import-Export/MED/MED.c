@@ -709,7 +709,7 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 					}
 					if (hasHiBit(name, ientrysz)) {
 						if (!ConvertString((char*)name, ientrysz, theMAD->fid[i].name, sizeof(theMAD->fid[i].name), false)) {
-						// just copy it over
+							// just copy it over
 							strncpy(theMAD->fid[i].name, name, sizeof(theMAD->fid[i].name));
 						}
 					} else {

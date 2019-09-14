@@ -22,9 +22,9 @@ private var bookGenOpts: Set<URLResourceKey> {
 	return [.volumeURLKey, .volumeUUIDStringKey, .volumeURLForRemountingKey]
 }
 	
-internal var homeURL: URL {
-	return URL(fileURLWithPath: NSHomeDirectory())
-}
+internal let homeURL: URL = {
+	return FileManager.default.homeDirectoryForCurrentUser
+}()
 #else
 	internal var homeURL: URL? {
 		return nil
