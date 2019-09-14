@@ -138,13 +138,13 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 
 		{
 			char type[5] = {0};
-			OSType info = 0;
 			
 			//first, iterate over the the library UTIs.
 			const char *whutType = typeBasedOnUTI((__bridge NSString *)(contentTypeUTI), MADLib);
 			
 			strcpy(type, whutType);
 			if (strcmp(type, "!!!!") == 0) {
+				OSType info = 0;
 				// We couldn't identify it based off of the UTI that way...
 				// So try via direct UTI access
 				char utiType[5] = {0};
