@@ -646,6 +646,12 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 			curData->c2spd		= NOFINETUNE;
 			curData->loopType	= 0;
 			curData->amp		= 8;
+			if (s.type & 0x10) {
+				curData->amp = 16;
+			}
+			if (s.type & 0x20) {
+				curData->stereo = true;
+			}
 			
 			curData->realNote	= 0;
 			
@@ -655,6 +661,14 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 					return MADNeedMemory;
 				
 				READMEDFILE(curData->data, curData->size);
+#if __LITTLE_ENDIAN__
+				if (curData->amp == 16) {
+					uint16_t *data16 = (uint16_t *)curData->data;
+					for (i = 0; i < (curData->size)/2; i++) {
+						MADBE16(&data16[i]);
+					}
+				}
+#endif
 			}
 		}
 		else theMAD->fid[t].numSamples = 0;
@@ -894,7 +908,7 @@ static bool ConvertStringToMacRoman(char *orig, size_t origLen, char *new, size_
 {
 	iconv_t theIconv = iconv_open("MACROMAN", "ISO-8859-1");
 	char *songPtr = orig;
-	size_t songLen = origLen;
+	size_t songLen = strnlen(orig, origLen);
 	size_t macRomanSize = newMax;
 	char *macRomanInfoStr = calloc(macRomanSize, sizeof(char));
 	char *macRomanInfoPtr = macRomanInfoStr;
@@ -915,7 +929,7 @@ static bool ConvertStringToUTF8(char *orig, size_t origLen, char *new, size_t ne
 {
 	iconv_t theIconv = iconv_open("UTF-8", "ISO-8859-1");
 	char *songPtr = orig;
-	size_t songLen = origLen;
+	size_t songLen = strnlen(orig, origLen);
 	size_t macRomanSize = newMax - 3; //Assume we use the UTF-8 BOM
 	char *macRomanInfoStr = calloc(macRomanSize, sizeof(char));
 	char *macRomanInfoPtr = macRomanInfoStr;

@@ -25,6 +25,12 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#if defined(__APPLE__) && !(defined(EMBEDPLUGS) && EMBEDPLUGS)
+#include <PlayerPROCore/MADDefs.h>
+#else
+#include "MADDefs.h"
+#endif
+
 
 #pragma pack(push, 2)
 
@@ -84,12 +90,54 @@ typedef struct MMD1NOTE{
 	uint8_t a,b,c,d;
 } MMD1NOTE;
 
+typedef MADOPTIONS(int16_t, InstrType) {
+	//! 16 bit (otherwise 8 bit)
+	InstrTypeBits16 = 0x10,
+	//! Stereo (otherwise mono)
+	InstrTypeStereo = 0x20,
+	//! Uses DeltaCode. NOT SUPPORTED!
+	InstrTypeDeltaCode = 0x40,
+	//! Packed data. NOT SUPPORTED!
+	InstrTypePacked = 0x80,
+	//! Synth. NOT SUPPORTED!
+	InstrTypeSynth = -1,
+	//! Hybrid. NOT SUPPORTED!
+	InstrTypeHybrid = -2
+};
+
+typedef MADENUM(uint16_t, InstrPacktype) {
+	InstrPacktypeADPCM = 1
+};
+
+typedef MADENUM(uint16_t, InstrPacksubtypeADPCM) {
+	InstrPacksubtypeADPCMg723_40 = 1,
+	InstrPacksubtypeADPCMg721 = 2,
+	InstrPacksubtypeADPCMg723_24 = 3
+};
 
 typedef struct InstrHdr {
-	uint32_t length;
-	int16_t	 type;
+	uint32_t	length;
+	InstrType	type;
 	/* Followed by actual data */
 } InstrHdr;
+
+typedef struct InstrHdrPacked {
+	//! length of \a one *unpacked* channel in bytes
+	uint32_t		length;
+	InstrType		type;
+	InstrPacktype	packtype;
+	//! Packing subtype
+	uint16_t		subtype;
+	//! flags common to all packtypes (none defined so far)
+	uint8_t  commonflags;
+	//! flags for the specific packtype
+	uint8_t  packerflags;
+	//! packed length of left channel in bytes
+	uint32_t leftchlen;
+	// packed length of right channel in bytes (ONLY PRESENT IN STEREO SAMPLES)
+	//uint32_t rightchlen;
+	/* Followed by actual data */
+} InstrHdrPacked;
 
 
 typedef struct MMD0exp {
