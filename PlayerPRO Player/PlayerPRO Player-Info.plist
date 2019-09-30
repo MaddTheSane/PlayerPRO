@@ -727,7 +727,7 @@
 			<key>UTTypeIconFile</key>
 			<string>IT</string>
 			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.it</string>
+			<string>net.on.users.jtlim.ImpulseTracker.it</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>

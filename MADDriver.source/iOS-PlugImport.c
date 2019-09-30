@@ -67,7 +67,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "IT  ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTITypes = (CFStringRef[]){CFSTR("net.on.users.jtlim.ImpulseTracker.it"), CFSTR("org.videolan.it"), NULL},
+		.UTITypes = (CFStringRef[]){CFSTR("net.on.users.jtlim.ImpulseTracker.it"), CFSTR("org.videolan.it"), CFSTR("net.sourceforge.playerpro.it") /* Just in case... */, NULL},
 	},
 #endif
 	{
@@ -113,7 +113,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "STrk",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImportExport,
-		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.mod"), NULL},
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.mod"), CFSTR("org.videolan.mod"), NULL},
 	},
 	{
 		.IOPlug = mainMTM,
@@ -249,7 +249,7 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 	if (PlugsFolderName) {
 		fprintf(stderr, "PlayerPROCore: Custom plug-in path %s ignored: This configuration cannot load custom binaries.\n", PlugsFolderName);
 	}
-	CFIndex totalInterfaces = sizeof(iOSPlugInfo) / sizeof(iOSPlugInfo[0]);
+	const CFIndex totalInterfaces = sizeof(iOSPlugInfo) / sizeof(iOSPlugInfo[0]);
 	inMADDriver->ThePlug = (PlugInfo*)calloc(sizeof(PlugInfo), totalInterfaces);
 	inMADDriver->TotalPlug = 0;
 	for (CFIndex i = 0; i < totalInterfaces; i++) {
