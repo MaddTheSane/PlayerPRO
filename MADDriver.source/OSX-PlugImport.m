@@ -25,11 +25,6 @@ const CFStringRef kMadPlugDoesImport =		CFSTR("MADCanImport");
 const CFStringRef kMadPlugDoesExport =		CFSTR("MADCanExport");
 const CFStringRef kMadPlugModeKey =			CFSTR("MADPlugMode");
 
-static CFTypeID stringtype;
-static CFTypeID numbertype;
-static CFTypeID arraytype;
-static CFTypeID booleantype;
-
 typedef NS_OPTIONS(unsigned char, MADPlugCapabilities) {
 	PPMADCanDoNothing = 0,
 	PPMADCanImport = 1 << 0,
@@ -40,16 +35,17 @@ typedef NS_OPTIONS(unsigned char, MADPlugCapabilities) {
 static BOOL GetBoolFromType(CFTypeRef theType)
 {
 	CFTypeID theID = CFGetTypeID(theType);
-	if (theID == booleantype) {
+	if (theID == CFBooleanGetTypeID()) {
 		return CFBooleanGetValue(theType);
-	} else if (theID == numbertype) {
+	} else if (theID == CFNumberGetTypeID()) {
 		int theVal = 0;
 		CFNumberGetValue(theType, kCFNumberIntType, &theVal);
 		return theVal != 0;
-	} else if (theID == stringtype) {
+	} else if (theID == CFStringGetTypeID()) {
 		return [(__bridge NSString*)theType boolValue];
-	} else
+	} else {
 		return NO;
+	}
 }
 
 static BOOL fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
@@ -63,7 +59,7 @@ static BOOL fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 			goto badplug;
 		
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
-		if (InfoDictionaryType == stringtype) {
+		if (InfoDictionaryType == CFStringGetTypeID()) {
 			thePlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
 		} else
 			goto badplug;
@@ -73,7 +69,7 @@ static BOOL fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 			thePlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, CFSTR("No Author"));
 		} else {
 			InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
-			if (InfoDictionaryType == stringtype) {
+			if (InfoDictionaryType == CFStringGetTypeID()) {
 				thePlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
 			} else {
 				thePlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, CFSTR("No Author"));
@@ -119,7 +115,7 @@ static BOOL fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 					goto badplug3;
 				
 				InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
-				if (InfoDictionaryType == stringtype) {
+				if (InfoDictionaryType == CFStringGetTypeID()) {
 					char fallbackOSType[20] = {0};
 					const char *thecOSType = NULL;
 					if (CFStringGetCString((CFStringRef)OpaqueDictionaryType, fallbackOSType, sizeof(fallbackOSType), kCFStringEncodingMacRoman))
@@ -128,7 +124,7 @@ static BOOL fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 						goto badplug3;
 					
 					thePlug->mode = Ptr2OSType(thecOSType);
-				} else if (InfoDictionaryType == numbertype) {
+				} else if (InfoDictionaryType == CFNumberGetTypeID()) {
 					OSType theplugType;
 					CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
 					thePlug->mode = theplugType;
@@ -142,9 +138,9 @@ static BOOL fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 			goto badplug3;
 		
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
-		if (InfoDictionaryType == arraytype) {
+		if (InfoDictionaryType == CFArrayGetTypeID()) {
 			thePlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
-		} else if (InfoDictionaryType == stringtype) {
+		} else if (InfoDictionaryType == CFStringGetTypeID()) {
 			NSArray *utiArray = @[[NSString stringWithString:(__bridge NSString*)OpaqueDictionaryType]];
 			thePlug->UTItypes = CFBridgingRetain(utiArray);
 		} else
@@ -170,14 +166,7 @@ badplug:
 
 static BOOL MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
-	static dispatch_once_t typeIDToken;
 	PlugInfo *FillPlug;
-	dispatch_once(&typeIDToken, ^{
-		stringtype = CFStringGetTypeID();
-		numbertype = CFNumberGetTypeID();
-		arraytype = CFArrayGetTypeID();
-		booleantype = CFBooleanGetTypeID();
-	});
 	
 	if (!tempBundle) {
 		return NO;
@@ -201,7 +190,7 @@ static BOOL MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 			goto badplug;
 		}
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
-		if (InfoDictionaryType == stringtype) {
+		if (InfoDictionaryType == CFStringGetTypeID()) {
 			size_t strlength = 0;
 			char fallbackOSType[20] = {0};
 			const char * tempstring = NULL;
@@ -221,7 +210,7 @@ static BOOL MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 					FillPlug->type[i] = tempstring[i];
 			}
 			FillPlug->type[4] = 0;
-		} else if (InfoDictionaryType == numbertype) {
+		} else if (InfoDictionaryType == CFNumberGetTypeID()) {
 			OSType theplugType;
 			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
 			OSType2Ptr(theplugType, FillPlug->type);
