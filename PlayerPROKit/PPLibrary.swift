@@ -102,7 +102,13 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 				theOpenables += anArr
 			}
 			
-			var fileTypes = theOpenables.map { UTGetOSTypeFromString($0) }
+			var fileTypes: [OSType] = theOpenables.compactMap {
+				let type = UTGetOSTypeFromString($0)
+				if type == 0 {
+					return nil
+				}
+				return type
+			}
 			
 			if !fileTypes.contains(OSType(tupleType)) {
 				fileTypes.insert(OSType(tupleType), at: 0)
@@ -156,7 +162,6 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 			default:
 				canImport = true
 				canExport = false
-				
 			}
 			super.init()
 		}
