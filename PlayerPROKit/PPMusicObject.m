@@ -476,7 +476,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		MADErr iErr = MADLoadMusicCFURLFile(NULL, &currentMusic, "MADK", (__bridge CFURLRef)url);
 		if (iErr != MADNoErr) {
 			if (error) {
-				*error = PPCreateErrorFromMADErrorType(iErr);
+				*error = PPCreateErrorFromMADErrorTypeWithDictionary(iErr, @{NSURLErrorKey: url});
 			}
 			return nil;
 		}
@@ -497,7 +497,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	MADErr iErr = MADMusicIdentifyCFURL(theLib.theLibrary, type, (__bridge CFURLRef)(url));
 	if (iErr != MADNoErr) {
 		if (error) {
-			*error = PPCreateErrorFromMADErrorType(iErr);
+			*error = PPCreateErrorFromMADErrorTypeWithDictionary(iErr, @{NSURLErrorKey: url});
 		}
 		return nil;
 	}
@@ -526,7 +526,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		MADErr iErr = MADLoadMusicCFURLFile(theLib.theLibrary, &currentMusic, (char*)type, (__bridge CFURLRef)(url));
 		if (iErr != MADNoErr) {
 			if (error) {
-				*error = PPCreateErrorFromMADErrorType(iErr);
+				*error = PPCreateErrorFromMADErrorTypeWithDictionary(iErr, @{NSURLErrorKey: url});
 			}
 			return nil;
 		}
@@ -610,7 +610,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	}
 	
 	if (retErr != MADNoErr && error) {
-		*error = PPCreateErrorFromMADErrorType(retErr);
+		*error = PPCreateErrorFromMADErrorTypeWithDictionary(retErr, @{NSURLErrorKey: tosave});
 	}
 	
 	return retErr == MADNoErr;
@@ -626,7 +626,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	}
 	
 	if (error) {
-		*error = PPCreateErrorFromMADErrorType(theErr);
+		*error = PPCreateErrorFromMADErrorTypeWithDictionary(theErr, @{NSURLErrorKey: tosave});
 	}
 	
 	return theErr == MADNoErr;
@@ -698,7 +698,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	NSData *fileData = [NSData dataWithContentsOfURL:insURL];
 	if (!fileData) {
 		if (theErr) {
-			*theErr = PPCreateErrorFromMADErrorType(MADReadingErr);
+			*theErr = PPCreateErrorFromMADErrorTypeWithDictionary(MADReadingErr, @{NSURLErrorKey: insURL});
 		}
 		return NO;
 	}
@@ -709,7 +709,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
 		if (tempInstrData == NULL) {
 			if (theErr) {
-				*theErr = PPCreateErrorFromMADErrorType(MADIncompatibleFile);
+				*theErr = PPCreateErrorFromMADErrorTypeWithDictionary(MADIncompatibleFile, @{NSURLErrorKey: insURL});
 			}
 			return NO;
 		}
@@ -718,7 +718,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		inOutCount = sizeof(InstrData) * MAXINSTRU;
 		if ([fileData length] <= inOutCount) {
 			if (theErr) {
-				*theErr = PPCreateErrorFromMADErrorType(MADIncompatibleFile);
+				*theErr = PPCreateErrorFromMADErrorTypeWithDictionary(MADIncompatibleFile, @{NSURLErrorKey: insURL});
 			}
 			free(tempInstrData);
 			return NO;

@@ -32,7 +32,7 @@ extern NSErrorDomain __nonnull const PPMADErrorDomain;
 
 /*!
  *	@enum		PPMADError
- *	@abstract	Swift-friendly way of implementing \c MADErr
+ *	@abstract	Swift-friendly way of wrapping \c MADErr
  */
 typedef MTS_ERROR_ENUM(short, PPMADErrorDomain, PPMADError) {
 	/// No error was encountered
@@ -71,15 +71,40 @@ typedef MTS_ERROR_ENUM(short, PPMADErrorDomain, PPMADError) {
 };
 
 /*!
+ *	@function	PPCreateErrorFromMADErrorTypeConvertingToCocoaWithDictionary
+ *	@abstract	Create an \c NSError object from a PlayerPROCore's \c MADErr
+ *	@param		theErr
+ *				The error to encapsulate or convert.
+ *	@param		convertToCocoa
+ *				If <code>YES</code>, attempts to convert the error value into an error
+ *				value native to Cocoa.
+ *	@param		addlInfo
+ *				Additional info to put into the <code>NSError</code>'s \c userInfo dictionary.
+ *	@return		A retained \c NSError object, or \c nil if passed <code>MADNoErr</code>.
+ *	@discussion	If \c convertToCocoa is <code>YES</code>, Attempts to create an \c NSError
+ *	object in an error domain that is native to the Foundation framework, such as
+ *	<code>NSPOSIXErrorDomain</code>. If there isn't an equivalent, creates an \c NSError
+ *	object in the <code>PPMADErrorDomain</code>. It will also fill out the \c NSError \c userInfo keys: <code>NSLocalizedDescriptionKey</code>,
+ *	<code>NSLocalizedFailureReasonErrorKey</code>, and
+ *	<code>NSLocalizedRecoverySuggestionErrorKey</code>.
+ *
+ *	If the value in \c theErr isn't a value in \c MADErr, it returns an \c NSError in the
+ *	\c NSOSStatusErrorDomain with nothing in the \c userInfo dictionary except what was in
+ *	the \c addlInfo parameter.
+ */
+extern NSError* __nullable PPCreateErrorFromMADErrorTypeConvertingToCocoaWithDictionary(MADErr theErr, BOOL convertToCocoa, NSDictionary<NSErrorUserInfoKey,id>* __nullable addlInfo) NS_RETURNS_RETAINED NS_REFINED_FOR_SWIFT;
+
+/*!
  *	@function	PPCreateErrorFromMADErrorType
  *	@abstract	Create an \c NSError object encapulating a PlayerPROCore's \c MADErr
  *	@param		theErr
- *				The error to encapsulate
+ *				The error to encapsulate.
  *	@return		A retained \c NSError object, or \c nil if passed <code>MADNoErr</code>.
  *	@discussion	Creates an \c NSError object in the \c PPMADErrorDomain with 
  *				\c NSLocalizedDescriptionKey,
  *				\c NSLocalizedFailureReasonErrorKey, and 
- *				\c NSLocalizedRecoverySuggestionErrorKey set.<br>
+ *				\c NSLocalizedRecoverySuggestionErrorKey set.
+ *
  *				If the value in \c theErr isn't a value in <code>MADErr</code>, 
  *				it returns an \c NSError in the \c NSOSStatusErrorDomain with 
  *				nothing in the \c userInfo dictionary.
@@ -90,7 +115,7 @@ extern NSError* __nullable PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETUR
  *	@function	PPCreateErrorFromMADErrorTypeConvertingToCocoa
  *	@abstract	Create an \c NSError object from a PlayerPROCore's \c MADErr
  *	@param		theErr
- *				The error to encapsulate or convert
+ *				The error to encapsulate or convert.
  *	@param		convertToCocoa
  *				If <code>YES</code>, attempts to convert the error value into an error
  *				value native to Cocoa.
@@ -105,18 +130,49 @@ extern NSError* __nullable PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETUR
 extern NSError* __nullable PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa) NS_RETURNS_RETAINED NS_REFINED_FOR_SWIFT;
 
 /*!
+ *	@function	PPCreateErrorFromMADErrorTypeWithDictionary
+ *	@abstract	Create an \c NSError object from a PlayerPROCore's \c MADErr
+ *	@param		theErr
+ *				The error to encapsulate.
+ *	@param		addlInfo
+ *				Additional info to put into the <code>NSError</code>'s \c userInfo dictionary.
+ *	@return		A retained \c NSError object, or \c nil if passed <code>MADNoErr</code>.
+ *	@discussion	Creates an \c NSError object in the \c PPMADErrorDomain with
+ *				<code>NSLocalizedDescriptionKey</code>,
+ *				<code>NSLocalizedFailureReasonErrorKey</code> and
+ *				\c NSLocalizedRecoverySuggestionErrorKey set.
+ *
+ *	If the value in \c theErr isn't a value in <code>MADErr</code>,
+ *	it returns an \c NSError in the \c NSOSStatusErrorDomain with
+ *	nothing in the \c userInfo dictionary except what was in
+ *	the \c addlInfo parameter.
+ */
+extern NSError* __nullable PPCreateErrorFromMADErrorTypeWithDictionary(MADErr theErr, NSDictionary<NSErrorUserInfoKey,id>* __nullable addlInfo) NS_RETURNS_RETAINED NS_REFINED_FOR_SWIFT;
+
+/*!
  *	@function	PPErrorIsUserCancelled
  *	@abstract	Checks to see if the error type was cancelled by the user.
  *	@param		theErr
  *				The \c NSError object to check.
  *	@return		\c YES if the value was user cancelled, \c NO otherwise.
  *	@discussion	Checks if the error sent to it is a user cancelled error.
- *				This checks for \c MADUserCancelledErr in the <code>PPMADErrorDomain</code>,
- *				\c NSUserCancelledError in the <code>NSCocoaErrorDomain</code>, and \c userCanceledErr
- *				in the <code>NSOSStatusErrorDomain</code>.
-*/
+ *
+ *	This checks for \c MADUserCancelledErr in the <code>PPMADErrorDomain</code>,
+ *	\c NSUserCancelledError in the <code>NSCocoaErrorDomain</code>, and \c userCanceledErr
+ *	in the <code>NSOSStatusErrorDomain</code>.
+ */
 extern BOOL PPErrorIsUserCancelled(NSError * __nonnull theErr);
 
+/*!
+ *	@function	PPLocalizedStringForKeyAndError
+ *	@abstract	Returns the localized value of the specified \c NSErrorUserInfoKey from the
+ *	specified \c MADErr
+ *	@param userInfoKey The specified user key to get the localized version.
+ *	@param errCode The \c MADErr to get the localized string from.
+ *	@return A localized value, or \c nil if there isn't a localized value
+ *	@discussion This function gets info from the \c PPErrors.strings file, which it locates
+ *	as being in the same bundle as the \c PPMusicObject class. This is also used by \c NSError \c -setUserInfoValueProviderForDomain:provider
+ */
 extern NSString * __nullable PPLocalizedStringForKeyAndError(NSErrorUserInfoKey __nonnull userInfoKey, MADErr errCode);
 
 __END_DECLS

@@ -75,36 +75,7 @@ extension MADErr {
 	/// - parameter convertToCocoa: Converts `self` into a comparable error in Cocoa's error types. Default is `true`.
 	/// - returns: An `NSError` value, or `nil` if `self` is `.NoErr`
 	public func toNSError(customUserDictionary cud: [String: Any]? = nil, convertToCocoa: Bool = true) -> NSError? {
-		guard self != .noErr else {
-			return nil
-		}
-		
-		func populate(error: NSError) -> NSError {
-			if let cud = cud {
-				var errDict: [String: Any] = error.userInfo
-				errDict[NSLocalizedDescriptionKey] = error.localizedDescription
-				if let aFailReason = error.localizedFailureReason {
-					errDict[NSLocalizedFailureReasonErrorKey] = aFailReason
-				}
-				
-				if let aRecoverySuggestion = error.localizedRecoverySuggestion {
-					errDict[NSLocalizedRecoverySuggestionErrorKey] = aRecoverySuggestion
-				}
-				
-				errDict += cud
-				
-				return NSError(domain: error.domain, code: error.code, userInfo: errDict)
-			} else {
-				return error
-			}
-		}
-		
-		if convertToCocoa {
-			let cocoaErr = __PPCreateErrorFromMADErrorTypeConvertingToCocoa(self, true)!
-			return populate(error: cocoaErr as NSError)
-		}
-		
-		return populate(error: PPMADError(madErr: self) as NSError)
+		return __PPCreateErrorFromMADErrorTypeConvertingToCocoaWithDictionary(self, convertToCocoa, cud) as NSError?
 	}
 	
 	/// Creates a `MADErr` from the provided `NSError`.

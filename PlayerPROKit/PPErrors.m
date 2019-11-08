@@ -243,10 +243,20 @@ __private_extern @interface PPPrivateErrorLoading : NSObject
 
 NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 {
-	return PPCreateErrorFromMADErrorTypeConvertingToCocoa(theErr, NO);
+	return PPCreateErrorFromMADErrorTypeConvertingToCocoaWithDictionary(theErr, NO, nil);
 }
 
 NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa)
+{
+	return PPCreateErrorFromMADErrorTypeConvertingToCocoaWithDictionary(theErr, convertToCocoa, nil);
+}
+
+NSError* __nullable PPCreateErrorFromMADErrorTypeWithDictionary(MADErr theErr, NSDictionary<NSErrorUserInfoKey,id>* addlInfo)
+{
+	return PPCreateErrorFromMADErrorTypeConvertingToCocoaWithDictionary(theErr, NO, addlInfo);
+}
+
+NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoaWithDictionary(MADErr theErr, BOOL convertToCocoa, NSDictionary<NSErrorUserInfoKey,id> *addlInfo)
 {
 	NSString *ErrorDescription = PPLocalizedStringForKeyAndError(NSLocalizedDescriptionKey, theErr);
 	NSString *errorReason = PPLocalizedStringForKeyAndError(NSLocalizedFailureReasonErrorKey, theErr);
@@ -258,6 +268,12 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 		userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
 					 NSLocalizedFailureReasonErrorKey: errorReason,
 					 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
+		// Prefer the programmer-provided error keys, if present.
+		if (addlInfo) {
+			NSMutableDictionary *tmpInfo = [userInfo mutableCopy];
+			[tmpInfo addEntriesFromDictionary:addlInfo];
+			userInfo = [tmpInfo copy];
+		}
 	}
 	NSError *cocoaEquiv;
 	
@@ -333,7 +349,7 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			break;
 			
 		default:
-			return [NSError errorWithDomain:NSOSStatusErrorDomain code:theErr userInfo:nil];
+			return [NSError errorWithDomain:NSOSStatusErrorDomain code:theErr userInfo:addlInfo];
 			break;
 	}
 	
