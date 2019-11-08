@@ -280,37 +280,37 @@ static const dispatch_block_t initUTIArray = ^{
 }
 
 #pragma mark - Pcmd handling
-+ (MADErr)testPcmdFileAtURL:(NSURL*)theURL
++ (BOOL)testPcmdFileAtURL:(NSURL*)theURL error:(NSError *__autoreleasing _Nullable * _Nullable)error
 {
-	MADErr err = MADNoErr;
+	BOOL err = YES;
 	Pcmd thePcmd;
-	NSData *pcmdData = [[NSData alloc] initWithContentsOfURL:theURL];
+	NSData *pcmdData = [[NSData alloc] initWithContentsOfURL:theURL options:0 error:error];
 	if (!pcmdData) {
-		return MADReadingErr;
+		return NO;
 	}
 	[pcmdData getBytes:&thePcmd length:sizeof(thePcmd)];
 	SwapPcmd(&thePcmd);
 	if (thePcmd.structSize != [pcmdData length]) {
-		err = MADIncompatibleFile;
+		if (error) {
+			*error = [NSError errorWithDomain:PPMADErrorDomain code:MADIncompatibleFile userInfo:@{NSURLErrorKey: theURL}];
+		}
+		err = NO;
 	}
 	return err;
 }
 
 - (BOOL)importPcmdFromURL:(NSURL*)theURL error:(NSError * _Nullable __autoreleasing * _Nullable)error
 {
-	MADErr theErr = MADNoErr;
+	BOOL isGood = YES;
 	NSNumber *curNum;
-	theErr = [[self class] testPcmdFileAtURL:theURL];
-	if (theErr) {
-		if (error) {
-			*error = PPCreateErrorFromMADErrorType(theErr);
-		}
+	isGood = [[self class] testPcmdFileAtURL:theURL error:error];
+	if (!isGood) {
 		return NO;
 	}
 	const Pcmd *thePcmd;
 	NSMutableData *pcmdData = [[NSMutableData alloc] initWithContentsOfURL:theURL options:(NSDataReadingOptions)0 error:error];
 	if (!pcmdData) {
-		return false;
+		return NO;
 	}
 	[theURL getResourceValue:&curNum forKey:NSURLFileSizeKey error:NULL];
 	
@@ -459,7 +459,7 @@ static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObj
 	Pcmd *newPcmd = calloc(structSize, 1);
 	memcpy(newPcmd, thePcmd, structSize);
 	SwapPcmd(newPcmd);
-	return [[NSData alloc] initWithBytesNoCopy:newPcmd length:structSize];
+	return [[NSData alloc] initWithBytesNoCopy:newPcmd length:structSize freeWhenDone:YES];
 }
 
 - (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
@@ -498,14 +498,14 @@ static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObj
 		if (error) {
 			*error = PPCreateErrorFromMADErrorType(MADParametersErr);
 		}
-		return false;
+		return NO;
 	}
 	Pcmd *thePcmd = [self newPcmdWithTrackRange:trackRange positionRange:posRange];
 	if (!thePcmd) {
 		if (error) {
 			*error = PPCreateErrorFromMADErrorType(MADNeedMemory);
 		}
-		return false;
+		return NO;
 	}
 	NSInteger theLength = thePcmd->structSize;
 	SwapPcmd(thePcmd);
@@ -513,10 +513,10 @@ static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObj
 	
 	if (![datToWrite writeToURL:theURL options:NSDataWritingAtomic error:error]) {
 		//The Foundation method will fill out the error data for us.
-		return false;
+		return NO;
 	}
 	
-	return true;
+	return YES;
 }
 
 - (BOOL)importPcmdFromPointer:(in const Pcmd*)thePcmd error:(NSError**)error

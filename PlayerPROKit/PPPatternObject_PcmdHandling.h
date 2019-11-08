@@ -15,7 +15,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PPPatternObject (PcmdHandling)
-+ (MADErr)testPcmdFileAtURL:(NSURL*)theURL;
++ (BOOL)testPcmdFileAtURL:(NSURL*)theURL error:(NSError**)error;
 + (NSString *)stringFromPcmdData:(in const Pcmd*)myPcmd;
 + (NSData*)dataFromPcmd:(in const Pcmd*)thePcmd;
 - (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
