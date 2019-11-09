@@ -439,7 +439,7 @@ extension PPSampleObject {
 	/// - parameter usingSingularLetter: If `true`/`YES`, the note will be generated with the alphabetical
 	/// value of the note, otherwise they will be solfège of the *fixed do* scale.
 	/// - returns: A string denoting the note, such as `"D#4"`, or `"---"` if unsuccessful.
-	@objc(octaveNameFromNote:usingSingularLetter:) @available(*, deprecated)
+	@objc(octaveNameFromNote:usingSingularLetter:) @available(*, deprecated, message: "Use octaveName(fromNote:options:) instead")
 	final public class func octaveName(fromNote octNote: Int16, usingSingularLetter: Bool) -> String {
 		return PlayerPROKit.octaveName(fromNote: octNote, options: usingSingularLetter ? [] : .solfege) ?? "---"
 	}

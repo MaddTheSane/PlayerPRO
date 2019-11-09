@@ -165,7 +165,8 @@ public let equalizerPacketElements = 512
 /// - parameter file: The file that has the problem.
 /// - parameter line: the line of the source file that's having a problem.
 ///
-/// **Normally** it is never called, only when a FATAL error has occured. <br>
+/// **Normally** it is never called, only when a FATAL error has occured.
+///
 /// This function is automatically invoked using the macros `#line` and
 /// `#file` for the `line` and `file` paramaters, respectively.
 public func MADDebug(string text: String, line: Int16 = #line, file: StaticString = #file) {

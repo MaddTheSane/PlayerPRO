@@ -509,7 +509,7 @@ static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObj
 	}
 	NSInteger theLength = thePcmd->structSize;
 	SwapPcmd(thePcmd);
-	datToWrite = [[NSData alloc] initWithBytesNoCopy:thePcmd length:theLength];
+	datToWrite = [[NSData alloc] initWithBytesNoCopy:thePcmd length:theLength freeWhenDone:YES];
 	
 	if (![datToWrite writeToURL:theURL options:NSDataWritingAtomic error:error]) {
 		//The Foundation method will fill out the error data for us.

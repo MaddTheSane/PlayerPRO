@@ -53,7 +53,7 @@ extension PPMADError.Code {
 extension MADErr {
 	/// Throws `self` if `self` is anything other than `.NoErr`.
 	///
-	/// Deprecated: Wrap in PPMADError, then throw
+	/// Deprecated: Wrap in `PPMADError`, then throw
 	@available(*, deprecated, message: "Wrap in PPMADError, then throw")
 	public func throwIfNotNoErr() throws {
 		if self != .noErr {
@@ -69,11 +69,14 @@ extension MADErr {
 		return anErr
 	}
 	
-	/// Creates an `NSError` from `self`, optionally converting the error type to an error in the Cocoa error domain.
+	/// Creates an `NSError` from `self`, optionally converting the error type to an error
+	/// in the Cocoa error domain.
 	///
-	/// - parameter customUserDictionary: A dictionary with additional information. May be `nil`, default is `nil`.
-	/// - parameter convertToCocoa: Converts `self` into a comparable error in Cocoa's error types. Default is `true`.
-	/// - returns: An `NSError` value, or `nil` if `self` is `.NoErr`
+	/// - parameter customUserDictionary: A dictionary with additional information. May be
+	/// `nil`, default is `nil`.
+	/// - parameter convertToCocoa: Converts `self` into a comparable error in Cocoa's error
+	/// types. Default is `true`.
+	/// - returns: An `NSError` value, or `nil` if `self` is `.noErr`
 	public func toNSError(customUserDictionary cud: [String: Any]? = nil, convertToCocoa: Bool = true) -> NSError? {
 		return __PPCreateErrorFromMADErrorTypeConvertingToCocoaWithDictionary(self, convertToCocoa, cud) as NSError?
 	}
@@ -82,7 +85,7 @@ extension MADErr {
 	/// Is `nil` if the error isn't in the `PPMADErrorDomain` or
 	/// the error code isn't in `MADErr`.
 	///
-	/// @deprecated Use `catch let error as PPMADError` instead
+	/// Deprecated. Use "`catch let error as PPMADError`" instead
 	@available(*, deprecated, message: "Use `catch let error as PPMADError` instead")
 	public init?(error anErr: NSError) {
 		guard anErr.domain == PPMADErrorDomain,

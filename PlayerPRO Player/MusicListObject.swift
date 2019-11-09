@@ -133,6 +133,7 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 		#endif
 	}
 	
+	@objc(checkIsReachableAndReturnError:)
 	func checkIsReachableAndReturnError(error: NSErrorPointer) -> Bool {
 		do {
 			return try checkIsReachable()

@@ -25,7 +25,7 @@ extern PPLibraryInfoKeys const kPPTotalPatterns;
 extern PPLibraryInfoKeys const kPPPartitionLength;
 /// The size of a file. Type is <code>NSNumber</code>.
 ///
-/// \discussion You can ignore this and just use the system's file APIs to get a more accurate number
+/// \discussion You can ignore this and just use the system's file APIs to get a more accurate number.
 extern PPLibraryInfoKeys const kPPFileSize;
 /// The tracker's signature. Type is <code>NSString</code>.
 ///
