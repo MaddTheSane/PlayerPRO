@@ -54,8 +54,8 @@ class ImportWindowController: NSWindowController {
 			}
 			
 			if let aData = anObject.data {
-				var errVal = aData.withUnsafeBytes({ (rawDat: UnsafePointer<Int8>) -> MADErr in
-					return madTest(rawDat)
+				var errVal = aData.withUnsafeBytes({ (rawDat: UnsafeRawBufferPointer) -> MADErr in
+					return madTest(rawDat.baseAddress!)
 				})
 				
 				if errVal != .noErr {
@@ -67,8 +67,8 @@ class ImportWindowController: NSWindowController {
 				
 				var unusedDriverSettings = MADDriverSettings.new()
 				madMusic = UnsafeMutablePointer<MADMusic>.allocate(capacity: 1)
-				errVal = aData.withUnsafeBytes({ (rawDat: UnsafePointer<Int8>) -> MADErr in
-					return madLoad(rawDat, aData.count, madMusic, &unusedDriverSettings)
+				errVal = aData.withUnsafeBytes({ (rawDat: UnsafeRawBufferPointer) -> MADErr in
+					return madLoad(rawDat.baseAddress!.assumingMemoryBound(to: Int8.self), rawDat.count, madMusic, &unusedDriverSettings)
 				})
 				
 				guard errVal == .noErr else {

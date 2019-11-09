@@ -35,14 +35,14 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		let audOut = try ExtAudioFile(create: sampleURL, fileType: .AIFF, streamDescription: &asbd, flags: [.eraseFile])
 		audOut.clientDataFormat = realFormat
 		
-		try sample.data.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
+		try sample.data.withUnsafeBytes { (toWriteBytes: UnsafeRawBufferPointer) -> Void in
 			let toWriteSize = sample.data.count
 			
 			var audBufList = AudioBufferList()
 			audBufList.mNumberBuffers = 1
 			audBufList.mBuffers.mNumberChannels = numChannels
 			audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
-			audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
+			audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes.baseAddress)
 			
 			try audOut.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 		}

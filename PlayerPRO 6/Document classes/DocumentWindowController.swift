@@ -92,13 +92,13 @@ class DocumentWindowController: NSWindowController {
 				//let aDoc: (DocumentWindowController) = um.prepareWithInvocationTarget(self) as (DocumentWindowController)
 				
 				if self.currentDocument.musicInfo != self.infoInfoField.stringValue {
-					um.registerUndo(withTarget: self.currentDocument, selector: #selector(setter: PPDocument.musicInfo), object: self.currentDocument.musicInfo)
+					um.registerUndo(withTarget: self.currentDocument!, selector: #selector(setter: PPDocument.musicInfo), object: self.currentDocument.musicInfo)
 					//aDoc.musicInfo = self.currentDocument.musicInfo
 					self.currentDocument.musicInfo = self.infoInfoField.stringValue
 				}
 				
 				if self.currentDocument.musicName != self.infoNameField.stringValue {
-					um.registerUndo(withTarget: self.currentDocument, selector: #selector(setter: PPDocument.musicName), object: self.currentDocument.musicName)
+					um.registerUndo(withTarget: self.currentDocument!, selector: #selector(setter: PPDocument.musicName), object: self.currentDocument.musicName)
 
 					//aDoc.musicName = self.currentDocument.musicName
 					self.currentDocument.musicName = self.infoNameField.stringValue
@@ -165,14 +165,14 @@ class DocumentWindowController: NSWindowController {
 			audioFile.clientDataFormat = realFormat
 			
 			func handler(data data1: Data) throws {
-				try data1.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
+				try data1.withUnsafeBytes { (toWriteBytes: UnsafeRawBufferPointer) -> Void in
 					let toWriteSize = data1.count
 					
 					var audBufList = AudioBufferList()
 					audBufList.mNumberBuffers = 1
 					audBufList.mBuffers.mNumberChannels = tmpChannels
 					audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
-					audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
+					audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes.baseAddress)
 					
 					try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 				}
@@ -212,14 +212,14 @@ class DocumentWindowController: NSWindowController {
 			audioFile.clientDataFormat = realFormat
 			
 			func handler(data data1: Data) throws {
-				try data1.withUnsafeBytes { (toWriteBytes: UnsafePointer<UInt8>) -> Void in
+				try data1.withUnsafeBytes { (toWriteBytes: UnsafeRawBufferPointer) -> Void in
 					let toWriteSize = data1.count
 					
 					var audBufList = AudioBufferList()
 					audBufList.mNumberBuffers = 1
 					audBufList.mBuffers.mNumberChannels = tmpChannels
 					audBufList.mBuffers.mDataByteSize = UInt32(toWriteSize)
-					audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes)
+					audBufList.mBuffers.mData = UnsafeMutableRawPointer(mutating: toWriteBytes.baseAddress)
 					
 					try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 				}

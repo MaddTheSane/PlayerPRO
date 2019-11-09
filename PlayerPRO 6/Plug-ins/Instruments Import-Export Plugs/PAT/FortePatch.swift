@@ -13,11 +13,11 @@ import SwiftAdditions
 private let BYTESWAP_STRIDE = 8
 
 private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
-	try data.withUnsafeBytes { (PATData1: UnsafePointer<UInt8>) -> Void in
+	try data.withUnsafeBytes { (PATData1: UnsafeRawBufferPointer) -> Void in
 		var PATHeader: UnsafePointer<PatchHeader>
 		var PATIns: UnsafePointer<PatInsHeader>
 		var PATSamp: UnsafePointer<PatSampHeader>
-		var PATData = PATData1
+		var PATData = PATData1.baseAddress!
 		
 		let scale_table: [Int32] = [
 			16351, 17323, 18354, 19445, 20601, 21826, 23124, 24499, 25956, 27500, 29135, 30867,
@@ -31,7 +31,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
 			4186073, 4434930, 4698645, 4978041, 5274051, 5587663, 5919922, 6271939, 6644889, 7040015, 7458636, 7902150]
 		
 		// PATCH HEADER
-		PATHeader = UnsafeRawPointer(PATData).assumingMemoryBound(to: PatchHeader.self)
+		PATHeader = PATData.assumingMemoryBound(to: PatchHeader.self)
 		PATData += 129
 		
 		insHeader.resetInstrument()
@@ -43,7 +43,7 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
 		let sampleCount = Int(PATHeader.pointee.Samp.littleEndian)
 		
 		// INS HEADER -- Read only the first instrument
-		PATIns = UnsafeRawPointer(PATData).assumingMemoryBound(to: PatInsHeader.self)
+		PATIns = PATData.assumingMemoryBound(to: PatInsHeader.self)
 		
 		//let patSize = PATIns.memory.size.littleEndian
 		PATData = PATData.advanced(by: 63)
@@ -156,8 +156,9 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
 			
 			//if aData != nil {
 			if curData.amplitude == 16 {
-				dat2.withUnsafeMutableBytes({ (tt: UnsafeMutablePointer<UInt16>) -> Void in
-					DispatchQueue.concurrentPerform(iterations: Int(sampSize / 2) / BYTESWAP_STRIDE, execute: { (tL) -> Void in
+				dat2.withUnsafeMutableBytes({ (tta: UnsafeMutableRawBufferPointer) -> Void in
+					let tt = tta.bindMemory(to: UInt16.self)
+					DispatchQueue.concurrentPerform(iterations: tt.count / BYTESWAP_STRIDE, execute: { (tL) -> Void in
 						for j in 0 ..< BYTESWAP_STRIDE {
 							tt[tL*BYTESWAP_STRIDE+j] = tt[tL*BYTESWAP_STRIDE+j].littleEndian
 						}
@@ -168,8 +169,8 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
 							}
 						}
 					})
-					if Int(sampSize / 2) % BYTESWAP_STRIDE != 0 {
-						for i in Int(sampSize / 2) ..< (Int(sampSize / 2) - (Int(sampSize / 2)) % BYTESWAP_STRIDE) {
+					if tt.count % BYTESWAP_STRIDE != 0 {
+						for i in (tt.count - (tt.count % BYTESWAP_STRIDE)) ..< tt.count {
 							tt[i] = tt[i].littleEndian
 
 							if signedData {
@@ -180,14 +181,14 @@ private func importPAT(_ insHeader: PPInstrumentObject, data: Data) throws {
 				})
 			} else {
 				if signedData {
-					dat2.withUnsafeMutableBytes({ (aData: UnsafeMutablePointer<UInt8>) -> Void in
+					dat2.withUnsafeMutableBytes({ (aData: UnsafeMutableRawBufferPointer) -> Void in
 						DispatchQueue.concurrentPerform(iterations: Int(sampSize) / BYTESWAP_STRIDE, execute: { (ixi) -> Void in
 							for j in 0 ..< BYTESWAP_STRIDE {
 								aData[ixi*BYTESWAP_STRIDE+j] = aData[ixi*BYTESWAP_STRIDE+j] &+ 0x80
 							}
 						})
 						if Int(sampSize) % BYTESWAP_STRIDE != 0 {
-							for i in Int(sampSize) ..< (Int(sampSize) - (Int(sampSize)) % BYTESWAP_STRIDE) {
+							for i in (Int(sampSize) - (Int(sampSize)) % BYTESWAP_STRIDE) ..< Int(sampSize) {
 								aData[i] = aData[i] &+ 0x80
 							}
 						}
@@ -209,7 +210,7 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 	public let hasUIForImport = false
 	//const char headerStr[20] = "GF1PATCH110\0\0";
 	private let headerData: Data = {
-		return Data(bytes: Array("GF1PATCH110\0".utf8))
+		return Data(Array("GF1PATCH110\0".utf8))
 	}()
 
 	override public init() {

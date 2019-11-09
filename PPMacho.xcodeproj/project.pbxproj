@@ -9400,7 +9400,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9424,7 +9423,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9533,7 +9531,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/XI/XI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9554,7 +9551,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/XI/XI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9618,7 +9614,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)InstrumentPlug";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/PAT/PAT-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9643,7 +9638,6 @@
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)InstrumentPlug";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/PAT/PAT-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9776,7 +9770,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9797,7 +9790,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9815,7 +9807,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9833,7 +9824,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9851,7 +9841,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9869,7 +9858,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9887,7 +9875,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9905,7 +9892,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9923,7 +9909,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9941,7 +9926,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9961,7 +9945,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9981,7 +9964,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10171,7 +10153,6 @@
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10191,7 +10172,6 @@
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10575,7 +10555,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10595,7 +10574,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10613,7 +10591,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10631,7 +10608,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10651,7 +10627,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10671,7 +10646,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10689,7 +10663,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10707,7 +10680,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10725,7 +10697,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10743,7 +10714,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10761,7 +10731,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10779,7 +10748,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10799,7 +10767,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10819,7 +10786,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)FilterPlug";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10837,7 +10803,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10855,7 +10820,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10873,7 +10837,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10891,7 +10854,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10909,7 +10871,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10927,7 +10888,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10945,7 +10905,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10963,7 +10922,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -10980,7 +10938,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -10997,7 +10954,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
-				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -11226,7 +11182,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Release;
@@ -11245,7 +11200,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Debug;
@@ -11423,7 +11377,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Wave/Wave-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -11447,7 +11400,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)SamplePlug";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Wave/Wave-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -11546,7 +11498,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 			};
 			name = Release;
@@ -11566,7 +11517,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 			};
 			name = Debug;
@@ -11606,7 +11556,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -11627,7 +11576,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)DigitalPlug";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -11652,7 +11600,6 @@
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Release;
@@ -11677,7 +11624,6 @@
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Debug;
@@ -11700,7 +11646,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -11723,7 +11668,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
