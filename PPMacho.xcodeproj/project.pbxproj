@@ -834,6 +834,7 @@
 		55F3D3FC19C2AB1E008172D7 /* CropPlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F3D3FB19C2AB1E008172D7 /* CropPlug.swift */; };
 		55F3D3FF19C2AE8F008172D7 /* PPCrossFadePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3D3FE19C2AE8F008172D7 /* PPCrossFadePlug.m */; };
 		55F3D40219C2B139008172D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55F3D40419C2B139008172D7 /* InfoPlist.strings */; };
+		55F494CA237A0EF10008D7B3 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5552BB4B2326F8EA00147483 /* libiconv.tbd */; };
 		55F4C3E519763FDD000997BE /* MusicListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4C3E319763FDD000997BE /* MusicListObject.swift */; };
 		55F6DFD51F46156A00F655FA /* PPInstrumentPlugHandler+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F6DFD41F46156A00F655FA /* PPInstrumentPlugHandler+Swift.swift */; };
 		55F8C06D1C52A42E00F8A4BC /* ErrorWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F8C06C1C52A42E00F8A4BC /* ErrorWrappers.swift */; };
@@ -3520,6 +3521,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55F494CA237A0EF10008D7B3 /* libiconv.tbd in Frameworks */,
 				551E3B661AAB8D4200D3A530 /* CoreFoundation.framework in Frameworks */,
 				551E3B651AAB8D0000D3A530 /* AudioToolbox.framework in Frameworks */,
 				55B843311F23EC5000B5CCE6 /* SwiftAdditions.framework in Frameworks */,

@@ -336,7 +336,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			ByteSwapInstrData(&tempInstrData[x]);
 		}
 		toWrite = [[NSData alloc] initWithBytesNoCopy:tempInstrData length:sizeof(InstrData)* MAXINSTRU];
-		if (@available(macOS 10.15, *)) {
+		if (@available(macOS 10.15, ios 13.0, tvOS 13.0, *)) {
 			if(![outData writeData:toWrite error:theErr]) {
 				return NO;
 			}
@@ -354,7 +354,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			memcpy(&writeData, &tempData, sizeof(sData32));
 			writeData.data = 0;
 			toWrite = [[NSData alloc] initWithBytes:&writeData length:sizeof(sData32)];
-			if (@available(macOS 10.15, *)) {
+			if (@available(macOS 10.15, ios 13.0, tvOS 13.0, *)) {
 				if(![outData writeData:toWrite error:theErr]) {
 					return NO;
 				}
@@ -380,7 +380,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 					}
 				}
 				toWrite = [[NSData alloc] initWithBytesNoCopy:dataData length:curData->size];
-				if (@available(macOS 10.15, *)) {
+				if (@available(macOS 10.15, ios 13.0, tvOS 13.0, *)) {
 					if(![outData writeData:toWrite error:theErr]) {
 						return NO;
 					}
@@ -390,7 +390,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			}
 #else
 			toWrite = [[NSData alloc] initWithBytes:curData->data length: curData->size];
-			if (@available(macOS 10.15, *)) {
+			if (@available(macOS 10.15, ios 13.0, tvOS 13.0, *)) {
 				if(![outData writeData:toWrite error:theErr]) {
 					return NO;
 				}
