@@ -313,25 +313,36 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	currentMusic->header->generalVol = generalVolume;
 }
 
-- (MADErr)exportInstrumentListToURL:(NSURL*)outURL
+- (BOOL)exportInstrumentListToURL:(NSURL*)outURL error:(out NSError * _Nullable __autoreleasing * _Nullable)theErr
 {
-	NSFileHandle *outData = [NSFileHandle fileHandleForWritingToURL:outURL error:nil];
+	NSFileHandle *outData = [NSFileHandle fileHandleForWritingToURL:outURL error:theErr];
 	if (!outData) {
-		return MADNeedMemory;
+		return NO;
 	}
+	NSData *toWrite;
 	
 	int i, x;
 	{
 		InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
 		if (!tempInstrData) {
-			return MADNeedMemory;
+			if (theErr) {
+				*theErr = [NSError errorWithDomain:PPMADErrorDomain code:MADNeedMemory userInfo:nil];
+			}
+			return NO;
 		}
 		memcpy(tempInstrData, [self internalMadMusicStruct]->fid, sizeof(InstrData) * MAXINSTRU);
 		
 		for (int x = 0; x < MAXINSTRU; x++) {
 			ByteSwapInstrData(&tempInstrData[x]);
 		}
-		[outData writeData:[[NSData alloc] initWithBytesNoCopy:tempInstrData length:sizeof(InstrData)* MAXINSTRU]];
+		toWrite = [[NSData alloc] initWithBytesNoCopy:tempInstrData length:sizeof(InstrData)* MAXINSTRU];
+		if (@available(macOS 10.15, *)) {
+			if(![outData writeData:toWrite error:theErr]) {
+				return NO;
+			}
+		} else {
+			[outData writeData:toWrite];
+		}
 	}
 	
 	for (i = 0; i < MAXINSTRU ; i++) {
@@ -342,12 +353,23 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			ByteSwapsData(&tempData);
 			memcpy(&writeData, &tempData, sizeof(sData32));
 			writeData.data = 0;
-			[outData writeData:[[NSData alloc] initWithBytes:&writeData length:sizeof(sData32)]];
+			toWrite = [[NSData alloc] initWithBytes:&writeData length:sizeof(sData32)];
+			if (@available(macOS 10.15, *)) {
+				if(![outData writeData:toWrite error:theErr]) {
+					return NO;
+				}
+			} else {
+				[outData writeData:toWrite];
+			}
 #ifdef __LITTLE_ENDIAN__
 			{
 				Ptr dataData = malloc(curData->size);
-				if (!dataData)
-					return MADNeedMemory;
+				if (!dataData){
+					if (theErr) {
+						*theErr = [NSError errorWithDomain:PPMADErrorDomain code:MADNeedMemory userInfo:nil];
+					}
+					return NO;
+				}
 				
 				memcpy(dataData, curData->data, curData->size);
 				if (curData->amp == 16) {
@@ -357,15 +379,29 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 						MADBE16(&shortPtr[y]);
 					}
 				}
-				[outData writeData:[[NSData alloc] initWithBytesNoCopy:dataData length:curData->size]];
+				toWrite = [[NSData alloc] initWithBytesNoCopy:dataData length:curData->size];
+				if (@available(macOS 10.15, *)) {
+					if(![outData writeData:toWrite error:theErr]) {
+						return NO;
+					}
+				} else {
+					[outData writeData:toWrite];
+				}
 			}
 #else
-			[outdata writeData:[[NSData alloc] initWithBytes:curData->data length: curData->size]];
+			toWrite = [[NSData alloc] initWithBytes:curData->data length: curData->size];
+			if (@available(macOS 10.15, *)) {
+				if(![outData writeData:toWrite error:theErr]) {
+					return NO;
+				}
+			} else {
+				[outData writeData:toWrite];
+			}
 #endif
 		}
 	}
 	
-	return MADNoErr;
+	return YES;
 }
 
 - (NSArray *)instruments

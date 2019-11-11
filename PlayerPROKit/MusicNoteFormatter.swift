@@ -53,7 +53,7 @@ public final class MusicNoteFormatter: Formatter {
 		}
 		
 		if let aNum = note(from: string) {
-			obj?.pointee = NSNumber(value: Int(aNum))
+			obj?.pointee = NSNumber(value: aNum)
 			if let error = error {
 				error.pointee = nil
 			}

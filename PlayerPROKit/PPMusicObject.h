@@ -97,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly) MADMusic *internalMadMusicStruct NS_RETURNS_INNER_POINTER;
 
-- (MADErr)exportInstrumentListToURL:(NSURL*)outURL;
+- (BOOL)exportInstrumentListToURL:(NSURL*)outURL error:(out NSError * __nullable __autoreleasing*__nullable)theErr;
 - (BOOL)addInstrument:(PPInstrumentObject*)theIns;
 - (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError * __nullable __autoreleasing*__nullable)theErr;
 

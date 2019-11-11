@@ -263,7 +263,7 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoaWithDictionary(MADErr the
 	NSString *recoverySuggestion = PPLocalizedStringForKeyAndError(NSLocalizedRecoverySuggestionErrorKey, theErr);
 	NSDictionary *userInfo;
 	if (!ErrorDescription) {
-		userInfo = nil;
+		userInfo = addlInfo;
 	} else {
 		userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
 					 NSLocalizedFailureReasonErrorKey: errorReason,

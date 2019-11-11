@@ -318,7 +318,7 @@ extension PPSampleObject {
 			start /= 2
 			curData.data.withUnsafeBytes({ (theShortSample1: UnsafeRawBufferPointer) -> Void in
 				let theShortSample = theShortSample1.bindMemory(to: UInt16.self)
-				let sampleSize = curData.data.count / 2
+				let sampleSize = theShortSample.count
 				
 				var BS = start + (tSS * sampleSize) / larg
 				if isStereo {
