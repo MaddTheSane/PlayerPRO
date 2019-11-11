@@ -22,7 +22,7 @@ NSString *utf8OrMacRoman(const char *text)
 	return [[NSString alloc] initWithCString:text encoding:NSMacOSRomanStringEncoding];
 }
 
-static NSString *StripStringOfSpaces(NSString *s, BOOL andDashes) NS_RETURNS_RETAINED;
+static NSString *StripStringOfSpaces(NSString *s, BOOL andDashes);
 NSString *StripStringOfSpaces(NSString *s, BOOL andDashes)
 {
 	static NSCharacterSet *ourSet;
@@ -69,7 +69,7 @@ static const char *typeBasedOnUTI(NSString* theUTI, MADLibrary *theLib) {
 		return "MADK";
 	} else if ([theUTI isEqualToString:@"com.quadmation.playerpro.mad"]) {
 		// This can happen if a file just ends with .mad
-		return "!!!!";
+		return MADCouldNotFindPlugValue;
 	}
 	
 	for (int i = 0; i < theLib->TotalPlug; i++) {
@@ -80,7 +80,7 @@ static const char *typeBasedOnUTI(NSString* theUTI, MADLibrary *theLib) {
 		}
 	}
 	
-	return "!!!!";
+	return MADCouldNotFindPlugValue;
 }
 
 static MADDriverRec	*MADDriver = NULL;
@@ -143,7 +143,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			const char *whutType = typeBasedOnUTI((__bridge NSString *)(contentTypeUTI), MADLib);
 			
 			strcpy(type, whutType);
-			if (strcmp(type, "!!!!") == 0) {
+			if (strcmp(type, MADCouldNotFindPlugValue) == 0) {
 				OSType info = 0;
 				// We couldn't identify it based off of the UTI that way...
 				// So try via direct UTI access
@@ -154,7 +154,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 				if (info)
 					OSType2Ptr(info, utiType);
 				else
-					strcpy(utiType, "!!!!");
+					strcpy(utiType, MADCouldNotFindPlugValue);
 				// But is it still valid?
 				if (MADPlugAvailable(MADLib, utiType)) {
 					strcpy(type, utiType);

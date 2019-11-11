@@ -433,7 +433,10 @@ MADENUM(MADFourChar) {
 	MADPlugInstrumentImporter =	'INST',
 	MADPlugPlay =				'PLAY',
 	MADPlugNonePlug =			'NONE',
+	MADCouldNotFindPlugValueMADType='!!!!',
 };
+
+#define MADCouldNotFindPlugValue "!!!!"
 
 #pragma pack(pop)
 

@@ -221,7 +221,7 @@ MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 	MADInfoRec	InfoRec;
 	MADErr		iErr = MADNoErr;
 	
-	strcpy(type, "!!!!");
+	strcpy(type, MADCouldNotFindPlugValue);
 	
 	// Check if we have access to this file
 	refNum = iFileOpenRead(AlienFile);
@@ -249,7 +249,7 @@ MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 		}
 	}
 	
-	strcpy(type, "!!!!");
+	strcpy(type, MADCouldNotFindPlugValue);
 	return MADCannotFindPlug;
 }
 

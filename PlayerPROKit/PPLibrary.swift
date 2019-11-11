@@ -557,7 +557,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		
 		let anErr = MADMusicTestCFURL(theLibrary, &cStrType, url as NSURL)
 		
-		if anErr != .noErr {
+		guard anErr == .noErr else {
 			throw PPMADError(madErr: anErr, userInfo: [NSURLErrorKey: url])
 		}
 	}
