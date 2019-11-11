@@ -486,7 +486,9 @@ protocol MusicListDelegate: class {
 		
 		conn.resume()
 		
-		(conn.remoteObjectProxy as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData: [PPSTKeys : Any]?, error: Error?) -> Void in
+		(conn.remoteObjectProxyWithErrorHandler({ (err) in
+			theHandle(nil, err)
+		}) as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData: [PPSTKeys : Any]?, error: Error?) -> Void in
 			OperationQueue.main.addOperation({
 				defer {
 					conn.invalidate()
@@ -498,7 +500,7 @@ protocol MusicListDelegate: class {
 					guard let invalidAny = bookmarkData?[.lostCount] as? UInt,
 						let selectedAny = bookmarkData?[.selected] as? Int,
 						let pathsAny = bookmarkData?[.urls] as? NSArray as? [URL] else {
-							let lolwut = CocoaError(.xpcConnectionInterrupted, userInfo:
+							let lolwut = CocoaError(.xpcConnectionReplyInvalid, userInfo:
 								[NSLocalizedDescriptionKey: NSLocalizedString("Invalid data returned from helper", comment: "Invalid data returned from helper"),
 								 NSURLErrorKey: toOpen])
 							theHandle(nil, lolwut)
