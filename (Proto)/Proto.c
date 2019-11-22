@@ -1,6 +1,5 @@
 #include <CoreFoundation/CFPlugInCOM.h>
 #include <CoreFoundation/CoreFoundation.h>
-#include "OldCarbHeaders.h"
 #include <QuickTime/QuickTime.h>
 #include "MAD.h"
 #include "RDriver.h"
