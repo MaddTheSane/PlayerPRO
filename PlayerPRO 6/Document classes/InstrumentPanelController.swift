@@ -83,8 +83,8 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		}
 	}
 	
-	func exportInstrumentList(to outURL: URL) -> MADErr {
-		return currentDocument.theMusic.exportInstrumentList(to: outURL)
+	func exportInstrumentList(to outURL: URL) throws {
+		try currentDocument.theMusic.exportInstrumentList(to: outURL)
 	}
 	
 	func importInstrumentList(from insURL: URL) throws {

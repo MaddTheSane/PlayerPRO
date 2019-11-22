@@ -62,6 +62,6 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			}
 		}
 		
-		throw PPMADError(.fileNotSupportedByThisPlug)
+		throw PPMADError(.fileNotSupportedByThisPlug, userInfo: [NSURLErrorKey: theURL])
 	}
 }

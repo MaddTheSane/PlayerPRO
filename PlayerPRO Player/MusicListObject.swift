@@ -73,7 +73,7 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 	
 	#if os(OSX)
 	@objc private(set) lazy var fileIcon: NSImage = {
-		let image = NSWorkspace.shared.icon(forFile: self.musicURL.path)
+		let image = NSWorkspace.shared.icon(forFile: self.musicURL.path).copy() as! NSImage
 		image.size = NSSize(width: 16, height: 16)
 		return image
 	}()
@@ -134,7 +134,7 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 	}
 	
 	@objc(checkIsReachableAndReturnError:)
-	func checkIsReachableAndReturnError(error: NSErrorPointer) -> Bool {
+	func checkIsReachableAndReturnError(_ error: NSErrorPointer) -> Bool {
 		do {
 			return try checkIsReachable()
 		} catch let swiftError as NSError {
@@ -263,7 +263,7 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 		
 		#if os(OSX)
 			var data: Data? = nil
-		if let bookmarkData = aDecoder.decodeObject(forKey: kMusicListURLBookmark) as? Data {
+		if let bookmarkData = aDecoder.decodeObject(of: NSData.self, forKey: kMusicListURLBookmark) as Data? {
 			var stale: Bool = false
 			if let hi = try? URL(resolvingBookmarkData: bookmarkData, options: [.withoutUI], relativeTo: homeURL, bookmarkDataIsStale: &stale) {
 				fileURL = hi
@@ -280,14 +280,14 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 		#endif
 		
 		if fileURL == nil {
-			fileURL = aDecoder.decodeObject(forKey: kMusicListURLKey) as? URL
+			fileURL = aDecoder.decodeObject(of: NSURL.self, forKey: kMusicListURLKey) as URL?
 		}
 		
 		guard let aURL = fileURL,
-			let aaddedDate = aDecoder.decodeObject(forKey: kMusicListDateAddedKey) as? Date else {
+			let aaddedDate = aDecoder.decodeObject(of: NSDate.self, forKey: kMusicListDateAddedKey) as Date? else {
 				return nil
 		}
-		let aUUID = (aDecoder.decodeObject(forKey: MusicListUUIDKey) as? UUID) ?? UUID()
+		let aUUID = (aDecoder.decodeObject(of: NSUUID.self, forKey: MusicListUUIDKey) as UUID?) ?? UUID()
 		
 		self.init(url: aURL, date: aaddedDate, uuid: aUUID)
 		#if os(OSX)
