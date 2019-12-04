@@ -16,9 +16,7 @@ import SwiftAdditions
 private var kPlayerPROMADKUTI: String {
 	return "com.quadmation.playerpro.madk"
 }
-private let MadIDString: String = {
-	return OSTypeToString(MadID)!
-}()
+private let MadIDString: String = OSTypeToString(MadID)!
 
 private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	let aArray: [Int8] = try! arrayFromObject(reflecting: infoRec.internalFileName, appendLastObject: 0)
