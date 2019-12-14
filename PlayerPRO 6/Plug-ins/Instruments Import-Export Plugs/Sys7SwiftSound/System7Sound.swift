@@ -33,7 +33,7 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 				return false
 			}
 			for res in rv.types {
-				if res.type == "snd " {
+				if res.type == toOSType("snd ") {
 					return true
 				}
 			}
@@ -45,7 +45,7 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 	public func importSample(at sampleURL: URL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) throws {
 		let rv = try FVResourceFile.resourceFileWithContents(of: sampleURL)
 		for res in rv.types {
-			if res.type == "snd " {
+			if res.type == toOSType("snd ") {
 				for aRes in res.resources {
 					if let data = aRes.data {
 						let asset = try assetForSND(data)

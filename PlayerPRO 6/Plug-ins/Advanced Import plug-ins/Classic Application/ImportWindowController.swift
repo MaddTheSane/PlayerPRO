@@ -30,19 +30,19 @@ class ImportWindowController: NSWindowController {
 			var madTest: (UnsafeRawPointer) -> MADErr
 			var madLoad: (UnsafePointer<Int8>, size_t, UnsafeMutablePointer<MADMusic>, UnsafeMutablePointer<MADDriverSettings>) -> MADErr
 			switch anObject.type!.type {
-			case "MADI":
+			case toOSType("MADI"):
 				madTest = TESTMADI
 				madLoad = MADI2Mad
 				
-			case "MADF", "MADG":
+			case toOSType("MADF"), toOSType("MADG"):
 				madTest = TestMADFGFile
 				madLoad = MADFG2Mad
 				
-			case "MADH":
+			case toOSType("MADH"):
 				madTest = TESTMADH
 				madLoad = MADH2Mad
 				
-			case "MADK":
+			case toOSType("MADK"):
 				madTest = TESTMADK
 				madLoad = LoadMADK
 				

@@ -11,7 +11,7 @@ import Foundation
 import PlayerPROCore.PlugIns
 import SwiftAdditions
 
-public let MadID = toOSType(string: "MADK")
+public let MadID = toOSType("MADK")
 
 // MARK: PlayerPRO MAD data types
 

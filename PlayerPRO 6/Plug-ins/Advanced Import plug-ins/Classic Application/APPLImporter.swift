@@ -27,7 +27,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			var aRet = [String: [FVResource]]()
 			for resourceType in resFile.types {
 				switch resourceType.type {
-				case "MADK", "MADI", "MADH", "MADF", "MADG":
+				case toOSType("MADK"), toOSType("MADI"), toOSType("MADH"), toOSType("MADF"), toOSType("MADG"):
 					aRet[resourceType.typeString] = resourceType.resources
 					
 				default:
@@ -54,7 +54,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 		let resFile = try FVResourceFile.resourceFileWithContents(of: theURL)
 		for resType in resFile.types {
 			switch resType.type {
-			case "MADK", "MADI", "MADH", "MADF", "MADG":
+			case toOSType("MADK"), toOSType("MADI"), toOSType("MADH"), toOSType("MADF"), toOSType("MADG"):
 				return
 				
 			default:
