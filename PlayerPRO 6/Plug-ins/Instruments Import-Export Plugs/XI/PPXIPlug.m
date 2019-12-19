@@ -261,7 +261,8 @@ static NSData *startData()
 
 - (BOOL)exportInstrument:(PPInstrumentObject *)InsHeader toURL:(NSURL *)sampleURL driver:(PPDriver *)driver error:(NSError * _Nullable __autoreleasing * _Nonnull)error
 {
-	NSFileHandle *iFileRefI = [NSFileHandle fileHandleForWritingToURL:sampleURL error:NULL];
+	NSError *tmpErr;
+	NSFileHandle *iFileRefI = [NSFileHandle fileHandleForWritingToURL:sampleURL error:&tmpErr];
 	if (iFileRefI != NULL) {
 		// Write instrument header
 		
@@ -433,7 +434,7 @@ static NSData *startData()
 		}
 	} else {
 		if (error) {
-			*error = [NSError errorWithDomain:PPMADErrorDomain code:MADWritingErr userInfo:nil];
+			*error = [NSError errorWithDomain:PPMADErrorDomain code:MADWritingErr userInfo:tmpErr ? @{NSUnderlyingErrorKey: tmpErr} : nil];
 		}
 		
 		return NO;
