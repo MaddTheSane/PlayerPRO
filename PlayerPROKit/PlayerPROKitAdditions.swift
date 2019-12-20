@@ -159,16 +159,16 @@ public func octaveName(fromNote octNote: Int16, options: PPSampleNoteOptions = [
 	return "\(NNames[Int(octNote % 12)])\(octNote / 12)"
 }
 
-extension PPSampleObject {
+public extension PPSampleObject {
 
 #if os(OSX)
 	@objc(waveformImageUsingView:)
-	final public func waveformImage(using view: NSView) -> NSImage? {
+	final func waveformImage(using view: NSView) -> NSImage? {
 		return PPSampleObject.waveFormImage(from: self, using: view)
 	}
 	
 	@objc(waveformImageFromSample:usingView:)
-	final public class func waveFormImage(from theDat: PPSampleObject, using view: NSView) -> NSImage? {
+	final class func waveFormImage(from theDat: PPSampleObject, using view: NSView) -> NSImage? {
 		let imageSize: NSSize = {
 			var aimageSize = view.convertToBacking(view.frame.size)
 			aimageSize.height *= 2
@@ -221,12 +221,12 @@ extension PPSampleObject {
 	}
 #elseif os(iOS) || os(tvOS)
 	@objc(waveformImageUsingView:)
-	final public func waveformImage(using view: UIView) -> UIImage? {
+	final func waveformImage(using view: UIView) -> UIImage? {
 		return PPSampleObject.waveFormImage(from: self, using: view)
 	}
 	
 	@objc(waveformImageFromSample:usingView:)
-	final public class func waveFormImage(from theDat: PPSampleObject, using view: UIView) -> UIImage? {
+	final class func waveFormImage(from theDat: PPSampleObject, using view: UIView) -> UIImage? {
 		let scale = view.contentScaleFactor
 		let imageSize: CGSize = {
 			var viewSize = view.bounds.size
@@ -288,19 +288,19 @@ extension PPSampleObject {
 	}
 #endif
 	
-	final public func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, context ctxRef: CGContext) {
+	final func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, context ctxRef: CGContext) {
 		PPSampleObject.drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: self, context:ctxRef)
 	}
 	
-	final public func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, context ctxRef: CGContext) {
+	final func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, context ctxRef: CGContext) {
 		PPSampleObject.drawSample(start: startI, tSS: tSS, tSE: tSE, high: high, larg: larg, trueV: trueV, trueH: trueH, channel: channel, currentData: self, context: ctxRef)
 	}
 	
-	final public class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
+	final class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
 		drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: curData, context:ctxRef)
 	}
 
-	final public class func drawSample(start start1: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
+	final class func drawSample(start start1: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
 		var start = start1
 		ctxRef.saveGState()
 		defer {
@@ -430,7 +430,7 @@ extension PPSampleObject {
 	/// - parameter octNote: The note to convert.
 	/// - returns: A string denoting the note, such as `"D#4"`, or `"---"` if unsuccessful.
 	@objc(octaveNameFromNote:)
-	final public class func octaveName(fromNote octNote: Int16) -> String {
+	final class func octaveName(fromNote octNote: Int16) -> String {
 		return PlayerPROKit.octaveName(fromNote: octNote) ?? "---"
 	}
 
@@ -440,7 +440,7 @@ extension PPSampleObject {
 	/// value of the note, otherwise they will be solfège of the *fixed do* scale.
 	/// - returns: A string denoting the note, such as `"D#4"`, or `"---"` if unsuccessful.
 	@objc(octaveNameFromNote:usingSingularLetter:) @available(*, deprecated, message: "Use octaveName(fromNote:options:) instead")
-	final public class func octaveName(fromNote octNote: Int16, usingSingularLetter: Bool) -> String {
+	final class func octaveName(fromNote octNote: Int16, usingSingularLetter: Bool) -> String {
 		return PlayerPROKit.octaveName(fromNote: octNote, options: usingSingularLetter ? [] : .solfege) ?? "---"
 	}
 	
@@ -449,11 +449,11 @@ extension PPSampleObject {
 	/// - parameter options: A set of options to determine how the notes should be formatted.
 	/// - returns: A string denoting the note, such as `"D#4"`, or `"---"` if unsuccessful.
 	@objc(octaveNameFromNote:options:)
-	final public class func octaveName(fromNote octNote: Int16, options: PPSampleNoteOptions) -> String {
+	final class func octaveName(fromNote octNote: Int16, options: PPSampleNoteOptions) -> String {
 		return PlayerPROKit.octaveName(fromNote: octNote, options: options) ?? "---"
 	}
 
-	@objc(noteFromString:) final public class func note(from myTT: String) -> Int16 {
+	@objc(noteFromString:) final class func note(from myTT: String) -> Int16 {
 		return PlayerPROKit.note(from: myTT) ?? 0xFF
 	}
 }
@@ -479,8 +479,8 @@ extension PPInstrumentObject: Sequence {
 	}
 }
 
-extension PPDriver {
-	public func playSoundData(pointer theSnd: UnsafeRawPointer, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
+public extension PPDriver {
+	func playSoundData(pointer theSnd: UnsafeRawPointer, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
 		var loopStart = iloopStart
 		var loopLen = iloopLen
 		if (loopLen == 0) {
@@ -490,15 +490,15 @@ extension PPDriver {
 		return self.playSoundData(fromPointer: theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopStart), andLoopLength: UInt(loopLen))
 	}
 
-	public func playSoundData(pointer theSnd: UnsafeRawPointer, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
+	func playSoundData(pointer theSnd: UnsafeRawPointer, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
 		return self.playSoundData(fromPointer: theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopIn: loopRange)
 	}
 	
-	public func playSoundData(pointer theSnd: UnsafeRawPointer, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: Range<Int>) -> MADErr {
+	func playSoundData(pointer theSnd: UnsafeRawPointer, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: Range<Int>) -> MADErr {
 		return playSoundData(pointer: theSnd, size: sndSize, channel: theChan, amplitude: amp, bitRate: rate, stereo: stereo, note: theNote, loopInRange: NSRange(loopRange))
 	}
 	
-	public func playSoundData(data theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
+	func playSoundData(data theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
 		var loopStart = iloopStart
 		var loopLen = iloopLen
 		if loopLen == 0 {
@@ -508,17 +508,17 @@ extension PPDriver {
 		return self.playSoundData(fromPointer: theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopStart), andLoopLength: UInt(loopLen))
 	}
 	
-	public func playSoundData(data theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
+	func playSoundData(data theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
 		return self.playSoundData(fromPointer: theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopIn: loopRange)
 	}
 	
-	public func playSoundData(data theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: Range<Int>) -> MADErr {
+	func playSoundData(data theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: Range<Int>) -> MADErr {
 		return playSoundData(data: theSnd, channel: theChan, amplitude: amp, bitRate: rate, stereo: stereo, note: theNote, loopInRange: NSRange(loopRange))
 	}
 	
 	/// The time values are in 1/60th of a second.
 	/// Returns `nil` on error.
-	public var musicStatusTime: (current: Int, total: Int)? {
+	var musicStatusTime: (current: Int, total: Int)? {
 		var cT = 0
 		var tT = 0
 		let anErr = getMusicStatusTime(current: &cT, total: &tT)
@@ -529,7 +529,7 @@ extension PPDriver {
 		}
 	}
 	
-	public var oscilloscope: (size: size_t, pointer: UnsafeRawPointer?) {
+	var oscilloscope: (size: size_t, pointer: UnsafeRawPointer?) {
 		return (oscilloscopeSize, UnsafeRawPointer(oscilloscopePointer))
 	}
 }

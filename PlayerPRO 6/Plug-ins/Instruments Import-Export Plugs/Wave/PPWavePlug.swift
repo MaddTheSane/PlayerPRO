@@ -46,78 +46,77 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		let fileRef1 = try ExtAudioFile(open: url)
 		let newSample = PPSampleObject()
 
-		if var mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) as NSData? as Data? {
-			var realFormat = AudioStreamBasicDescription()
-			
-			var asbdSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
-			try fileRef1.get(property: kExtAudioFileProperty_FileDataFormat, dataSize: &asbdSize, data: &realFormat)
-			
-			//Constrain the audio conversion to values supported by PlayerPRO
-			realFormat.mSampleRate = ceil(realFormat.mSampleRate)
-			realFormat.mSampleRate = clamp(realFormat.mSampleRate, minimum: 5000, maximum: 44100)
-			realFormat.formatFlags = [.nativeEndian, .packed, .signedInteger]
-			switch realFormat.mBitsPerChannel {
-			case 8, 16:
-				break
-			case 1...7:
-				realFormat.mBitsPerChannel = 8
-				//case 9...15:
-				//	realFormat.mBitsPerChannel = 16
-				//case 20, 24:
-			default:
-				realFormat.mBitsPerChannel = 16
-			}
-			
-			switch realFormat.mChannelsPerFrame {
-			case 1, 2:
-				break
-			default:
-				realFormat.mChannelsPerFrame = 2
-			}
-			
-			fileRef1.clientDataFormat = realFormat
-
-			readLoop: while true {
-				if let tmpMutDat = NSMutableData(length: Int(kSrcBufSize)) {
-					let fillBufList = AudioBufferList.allocate(maximumBuffers: 1)
-					defer {
-						free(fillBufList.unsafeMutablePointer)
-					}
-					fillBufList[0].mNumberChannels = realFormat.mChannelsPerFrame
-					fillBufList[0].mDataByteSize = kSrcBufSize
-					fillBufList[0].mData = tmpMutDat.mutableBytes
-					
-					// client format is always linear PCM - so here we determine how many frames of lpcm
-					// we can read/write given our buffer size
-					var numFrames: UInt32 = kSrcBufSize / realFormat.mBytesPerFrame
-					
-					// printf("test %d\n", numFrames);
-					
-					try fileRef1.read(frames: &numFrames, data: fillBufList.unsafeMutablePointer)
-					if numFrames == 0 {
-						// this is our termination condition
-						break readLoop
-					}
-					
-					tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
-					mutableData.append(tmpMutDat as Data)
-				} else {
-					throw PPMADError(.needsMemory)
-				}
-			}
-			
-			newSample.volume = 64
-			newSample.c2spd = UInt16(realFormat.mSampleRate)
-			newSample.loopType = .classic
-			newSample.realNote = 0
-			newSample.amplitude = MADByte(realFormat.mBitsPerChannel)
-			newSample.isStereo = realFormat.mChannelsPerFrame == 2
-			newSample.data = mutableData
-			
-			asample.pointee = newSample
-		} else {
+		guard var mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) as NSData? as Data? else {
 			throw PPMADError(.needsMemory)
 		}
+		var realFormat = AudioStreamBasicDescription()
+		
+		var asbdSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
+		try fileRef1.get(property: kExtAudioFileProperty_FileDataFormat, dataSize: &asbdSize, data: &realFormat)
+		
+		//Constrain the audio conversion to values supported by PlayerPRO
+		realFormat.mSampleRate = ceil(realFormat.mSampleRate)
+		realFormat.mSampleRate = clamp(realFormat.mSampleRate, minimum: 5000, maximum: 44100)
+		realFormat.formatFlags = [.nativeEndian, .packed, .signedInteger]
+		switch realFormat.mBitsPerChannel {
+		case 8, 16:
+			break
+		case 1...7:
+			realFormat.mBitsPerChannel = 8
+			//case 9...15:
+			//	realFormat.mBitsPerChannel = 16
+		//case 20, 24:
+		default:
+			realFormat.mBitsPerChannel = 16
+		}
+		
+		switch realFormat.mChannelsPerFrame {
+		case 1, 2:
+			break
+		default:
+			realFormat.mChannelsPerFrame = 2
+		}
+		
+		fileRef1.clientDataFormat = realFormat
+		
+		readLoop: while true {
+			if let tmpMutDat = NSMutableData(length: Int(kSrcBufSize)) {
+				let fillBufList = AudioBufferList.allocate(maximumBuffers: 1)
+				defer {
+					free(fillBufList.unsafeMutablePointer)
+				}
+				fillBufList[0].mNumberChannels = realFormat.mChannelsPerFrame
+				fillBufList[0].mDataByteSize = kSrcBufSize
+				fillBufList[0].mData = tmpMutDat.mutableBytes
+				
+				// client format is always linear PCM - so here we determine how many frames of lpcm
+				// we can read/write given our buffer size
+				var numFrames: UInt32 = kSrcBufSize / realFormat.mBytesPerFrame
+				
+				// printf("test %d\n", numFrames);
+				
+				try fileRef1.read(frames: &numFrames, data: fillBufList.unsafeMutablePointer)
+				if numFrames == 0 {
+					// this is our termination condition
+					break readLoop
+				}
+				
+				tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
+				mutableData.append(tmpMutDat as Data)
+			} else {
+				throw PPMADError(.needsMemory)
+			}
+		}
+		
+		newSample.volume = 64
+		newSample.c2spd = UInt16(realFormat.mSampleRate)
+		newSample.loopType = .classic
+		newSample.realNote = 0
+		newSample.amplitude = MADByte(realFormat.mBitsPerChannel)
+		newSample.isStereo = realFormat.mChannelsPerFrame == 2
+		newSample.data = mutableData
+		
+		asample.pointee = newSample
 	}
 	
 	public func exportSample(_ sample: PPSampleObject, to sampleURL: URL, driver: PPDriver) throws {
