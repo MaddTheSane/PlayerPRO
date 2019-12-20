@@ -175,6 +175,13 @@
 
 #endif
 
+#if __has_builtin(__builtin_expect)
+#define GCC_UNLIKELY(x) __builtin_expect((x),0)
+#define GCC_LIKELY(x) __builtin_expect((x),1)
+#else
+#define GCC_UNLIKELY(x) (x)
+#define GCC_LIKELY(x) (x)
+#endif
 
 /********************						***********************/
 /*** 			  		  Error messages 						***/

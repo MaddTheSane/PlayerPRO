@@ -210,7 +210,7 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 	public let hasUIForImport = false
 	//const char headerStr[20] = "GF1PATCH110\0\0";
 	private let headerData: Data = {
-		return Data(Array("GF1PATCH110\0".utf8))
+		return Data(Array("GF1PATCH110\0\0".utf8))
 	}()
 
 	override public init() {

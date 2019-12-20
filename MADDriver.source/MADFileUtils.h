@@ -204,7 +204,7 @@ PPINLINE void MADByteSwap32(void *msg_buf)
 PPINLINE void MADByteSwap16(void *msg_buf)
 {
 	// Make sure it's properly aligned.
-	if (__builtin_expect((((uintptr_t)msg_buf) & 1) != 0, 0)) {
+	if (GCC_UNLIKELY((((uintptr_t)msg_buf) & 1) != 0)) {
 		// If not, do some hackery
 		unsigned char *msg_buf_bytes = (unsigned char *)msg_buf;
 		unsigned char byte1 = msg_buf_bytes[0];
