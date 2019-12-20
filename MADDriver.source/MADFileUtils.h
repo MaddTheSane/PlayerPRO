@@ -87,7 +87,7 @@ PPEXPORT UNFILE	iFileOpenWrite(const char *name);
  *					The path to create the new file.
  * @param		type
  *					The File Type to set the file to.
- * @discussion	\c type is ignored on platforms that aren't OS X. This includes iOS.<br>
+ * @discussion	\c type is ignored on platforms that aren't macOS. This includes iOS.<br>
  *				\c type is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
  *				It has been replaced by file extensions denoting the file type.<br>
  *				If \c type is \c 0, the file type is not set.
@@ -100,7 +100,7 @@ PPEXPORT void	iFileCreate(const char *path, MADFourChar type);
  * @result		the size of the file pointed to by <code>iFileRefI</code>
  * @param		iFileRefI
  *					The file pointer to get the size from
- * @discussion	As this returns a 'long' data type, files larger than 2 GiB on non-LP64 systems (<i>including</i> Win64) may result in an invalid value, or even crash your app.<br>
+ * @discussion	As this returns a 'long' data type, files larger than 2 GiB on non-LP64 systems (\a including Win64) may result in an invalid value, or even crash your app.<br>
  *				As most tracker types (and audio files in general) are not that large, this will most likely not be an issue.
  */
 PPEXPORT long	iGetEOF(UNFILE iFileRefI);
@@ -204,7 +204,7 @@ PPINLINE void MADByteSwap32(void *msg_buf)
 PPINLINE void MADByteSwap16(void *msg_buf)
 {
 	// Make sure it's properly aligned.
-	if ((((uintptr_t)msg_buf) & 1) != 0) {
+	if (__builtin_expect((((uintptr_t)msg_buf) & 1) != 0, 0)) {
 		// If not, do some hackery
 		unsigned char *msg_buf_bytes = (unsigned char *)msg_buf;
 		unsigned char byte1 = msg_buf_bytes[0];

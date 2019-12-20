@@ -25,7 +25,7 @@ class ImportWindowController: NSWindowController {
 	private var modalSession: NSApplication.ModalSession!
 	
 	@IBAction func importMusicObject(_ sender: AnyObject?) {
-		if let anObject = arrayCont.selectedObjects[0] as? FVResource {
+		if let anObject = arrayCont.selectedObjects.first as? FVResource {
 			var madMusic: UnsafeMutablePointer<MADMusic>
 			var madTest: (UnsafeRawPointer) -> MADErr
 			var madLoad: (UnsafePointer<Int8>, size_t, UnsafeMutablePointer<MADMusic>, UnsafeMutablePointer<MADDriverSettings>) -> MADErr
@@ -68,7 +68,7 @@ class ImportWindowController: NSWindowController {
 				var unusedDriverSettings = MADDriverSettings.new()
 				madMusic = UnsafeMutablePointer<MADMusic>.allocate(capacity: 1)
 				errVal = aData.withUnsafeBytes({ (rawDat: UnsafeRawBufferPointer) -> MADErr in
-					return madLoad(rawDat.baseAddress!.assumingMemoryBound(to: Int8.self), rawDat.count, madMusic, &unusedDriverSettings)
+					return madLoad(rawDat.bindMemory(to: Int8.self).baseAddress!, rawDat.count, madMusic, &unusedDriverSettings)
 				})
 				
 				guard errVal == .noErr else {
@@ -144,7 +144,7 @@ class ImportWindowController: NSWindowController {
 					self.resourceArray = aValue
 				}
 
-				arrayCont.bind(NSBindingName.contentArray, to: self, withKeyPath: "resourceArray", options: nil)
+				arrayCont.bind(.contentArray, to: self, withKeyPath: "resourceArray", options: nil)
 			}
 		} else {
 			super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)

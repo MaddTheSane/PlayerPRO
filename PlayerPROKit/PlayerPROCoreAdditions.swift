@@ -90,17 +90,19 @@ extension MADSoundOutput: CustomStringConvertible {
 	}
 }
 
-extension MADDriverSettings: CustomDebugStringConvertible, Equatable {	
-	public static func new() -> MADDriverSettings {
+public extension MADDriverSettings {
+	static func new() -> MADDriverSettings {
 		var mdriverSettings = MADDriverSettings()
 		mdriverSettings.resetToBestDriver()
 		return mdriverSettings
 	}
 
-	public mutating func resetToBestDriver() {
+	mutating func resetToBestDriver() {
 		MADGetBestDriver(&self)
 	}
-	
+}
+
+extension MADDriverSettings: CustomDebugStringConvertible, Equatable {
 	public var debugDescription: String {
 		let onVal = "on"
 		let offVal = "off"
@@ -179,34 +181,34 @@ private var BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, In
 	return (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }()
 
-extension sData32 {
+public extension sData32 {
 	private init() {
 		self.init(size: 0, loopBeg: 0, loopSize: 0, vol: maximumVolume, c2spd: noFineTune, loopType: .classic, amp: 8, realNote: 0, name: BlankNameChar32, stereo: false, data: 0)
 	}
 	
-	public static func new() -> sData32 {
+	static func new() -> sData32 {
 		return sData32()
 	}
 	
-	public var toSData : sData {
+	var toSData : sData {
 		return sData(self)
 	}
 	
-	public init(_ fromSData32: sData) {
+	init(_ fromSData32: sData) {
 		self.init(size: fromSData32.size, loopBeg: fromSData32.loopBeg, loopSize: fromSData32.loopSize, vol: fromSData32.vol, c2spd: fromSData32.c2spd, loopType: fromSData32.loopType, amp: fromSData32.amp, realNote: fromSData32.realNote, name: fromSData32.name, stereo: fromSData32.stereo, data: 0)
 	}
 }
 
-extension sData {
-	public static func new() -> sData {
+public extension sData {
+	static func new() -> sData {
 		return sData()
 	}
 	
-	public var toSData32 : sData32 {
+	var toSData32 : sData32 {
 		return sData32(self)
 	}
 	
-	public init(_ fromSData32: sData32) {
+	init(_ fromSData32: sData32) {
 		self.init(size: fromSData32.size, loopBeg: fromSData32.loopBeg, loopSize: fromSData32.loopSize, vol: fromSData32.vol, c2spd: fromSData32.c2spd, loopType: fromSData32.loopType, amp: fromSData32.amp, realNote: fromSData32.realNote, name: fromSData32.name, stereo: fromSData32.stereo, data: nil)
 	}
 	
@@ -344,28 +346,31 @@ extension FXSets: Equatable {
 	}
 }
 
-extension Cmd: Hashable {
+public extension Cmd {
 	private init() {
 		self.init(ins: 0, note: 0xFF, cmd: .arpeggio, arg: 0, vol: 0xFF, unused: 0)
 	}
 	
 	/// Returns a `Cmd` with all bytes to zero, except `note`
 	/// and `vol`, which are `0xFF`.
-	public static func blankCmd() -> Cmd {
+	static func blankCmd() -> Cmd {
 		return Cmd()
 	}
 	
 	/// Returns a `Cmd` with all bytes to zero, except `note`
 	/// and `vol`, which are `0xFF`.
-	public static func new() -> Cmd {
+	static func new() -> Cmd {
 		return Cmd()
 	}
 	
 	/// Reset the command
-	public mutating func kill() {
+	mutating func kill() {
 		MADKillCmd(&self)
 	}
 	
+}
+
+extension Cmd: Hashable {
 	public static func ==(lhs: Cmd, rhs: Cmd) -> Bool {
 		// Don't worry about the "unused" variable for now
 		if lhs.ins != rhs.ins {
@@ -496,12 +501,12 @@ extension IntPcmd: CommandIterator, Equatable {
 	}
 }
 
-extension MADChannel {
-	public var arpeggio: (values: [Int32], index: Int32, enabled: Bool) {
+public extension MADChannel {
+	var arpeggio: (values: [Int32], index: Int32, enabled: Bool) {
 		return (try! arrayFromObject(reflecting: arp), arpindex, arpUse)
 	}
 	
-	public var vibrato: (offset: Int8, depth: Int32, rate: Int32, type: Int32) {
+	var vibrato: (offset: Int8, depth: Int32, rate: Int32, type: Int32) {
 		return (viboffset, vibdepth, vibrate, vibtype)
 	}
 }

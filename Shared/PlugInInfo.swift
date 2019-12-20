@@ -43,11 +43,11 @@ final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 	}
 	
 	func isEqual(_ object: AnyObject?) -> Bool {
-		if (object == nil) {
+		if object == nil {
 			return false
 		}
 		
-		if (object === self) {
+		if object === self {
 			return true
 		}
 		
