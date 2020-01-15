@@ -27,7 +27,7 @@ let kUntitledMusicList = "Untitled player LiST"
 	let PPPPath: URL = {
 		do {
 			var retURL = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-			retURL.appendPathComponent("PlayerPRO")
+			retURL.appendPathComponent("PlayerPRO", isDirectory: true)
 			retURL.appendPathComponent("Player", isDirectory: true)
 			return retURL
 		} catch {
@@ -244,9 +244,9 @@ protocol MusicListDelegate: class {
 	
 	required init?(coder aDecoder: NSCoder) {
 		lostMusicCount = 0
-		if let BookmarkArray = aDecoder.decodeObject(forKey: kMusicListKey4) as? [MusicListObject] {
+		if let BookmarkArray = aDecoder.decodeObject(of: [NSArray.self, MusicListObject.self], forKey: kMusicListKey4) as? [MusicListObject] {
 			selectedMusic = aDecoder.decodeInteger(forKey: kMusicListLocation4)
-			if let aName = aDecoder.decodeObject(forKey: kMusicListName4) as? String {
+			if let aName = aDecoder.decodeObject(of: NSString.self, forKey: kMusicListName4) as String? {
 				name = aName
 			} else {
 				name = kUntitledMusicList
@@ -265,7 +265,7 @@ protocol MusicListDelegate: class {
 				}
 				musicList.append(book)
 			}
-		} else if let bookmarkArray = aDecoder.decodeObject(forKey: kMusicListKey3) as? [NSURL] {
+		} else if let bookmarkArray = aDecoder.decodeObject(of: [NSArray.self, NSURL.self], forKey: kMusicListKey3) as? [NSURL] {
 			selectedMusic = aDecoder.decodeInteger(forKey: kMusicListLocation3)
 			// Have all the new MusicListObjects use the same date
 			let currentDate = Date()
@@ -285,9 +285,9 @@ protocol MusicListDelegate: class {
 				let obj = MusicListObject(url: bookURL as URL, date: currentDate)
 				musicList.append(obj)
 			}
-		} else if let bookmarkArray = aDecoder.decodeObject(forKey: kMusicListKey2) as? [Data] {
+		} else if let bookmarkArray = aDecoder.decodeObject(of: [NSArray.self, NSData.self], forKey: kMusicListKey2) as? [Data] {
 			name = kUntitledMusicList
-			if let curSel = aDecoder.decodeObject(forKey: kMusicListLocation2) as? Int {
+			if let curSel = aDecoder.decodeObject(of: NSNumber.self, forKey: kMusicListLocation2) as? Int {
 				selectedMusic = curSel
 			} else {
 				selectedMusic = -1
@@ -309,7 +309,7 @@ protocol MusicListDelegate: class {
 					lostMusicCount += 1
 				}
 			}
-		} else if let bookmarkArray = aDecoder.decodeObject(forKey: kMusicListKey1) as? [Data] {
+		} else if let bookmarkArray = aDecoder.decodeObject(of: [NSArray.self, NSData.self], forKey: kMusicListKey1) as? [Data] {
 			name = kUntitledMusicList
 			// Have all the new MusicListObjects use the same date
 			let currentDate = Date()
@@ -323,6 +323,7 @@ protocol MusicListDelegate: class {
 			}
 			selectedMusic = -1
 		} else {
+			aDecoder.failWithError(NSError(domain: NSOSStatusErrorDomain, code: paramErr))
 			return nil
 		}
 		
@@ -348,8 +349,12 @@ protocol MusicListDelegate: class {
 	// MARK: - saving/loading
 	static func from(contentsOf url: URL) throws -> MusicList {
 		let wrappedData = try Data(contentsOf: url)
-		let keyedUnarc = NSKeyedUnarchiver(forReadingWith: wrappedData)
+		let keyedUnarc = try NSKeyedUnarchiver(forReadingFrom: wrappedData)
+		keyedUnarc.decodingFailurePolicy = .setErrorAndReturn
 		guard let newList = MusicList(coder: keyedUnarc) else {
+			if let keyError = keyedUnarc.error {
+				throw keyError
+			}
 			throw CocoaError(.fileReadCorruptFile, userInfo: [NSURLErrorKey: url])
 		}
 		if newList.name == kUntitledMusicList,
@@ -368,7 +373,7 @@ protocol MusicListDelegate: class {
 	}
 	
 	func saveMusicList(to URL: Foundation.URL) throws {
-		let theList = NSKeyedArchiver.archivedData(withRootObject: self)
+		let theList = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: true)
 		try theList.write(to: URL, options: [])
 	}
 	
@@ -486,9 +491,14 @@ protocol MusicListDelegate: class {
 		
 		conn.resume()
 		
-		(conn.remoteObjectProxyWithErrorHandler({ (err) in
+		guard let rop = (conn.remoteObjectProxyWithErrorHandler({ (err) in
 			theHandle(nil, err)
-		}) as! PPSTImporterHelper).loadStcf(at: toOpen, withReply: {(bookmarkData: [PPSTKeys : Any]?, error: Error?) -> Void in
+		}) as? PPSTImporterHelper) else {
+			theHandle(nil, CocoaError(.xpcConnectionInvalid))
+			conn.invalidate()
+			return
+		}
+		rop.loadStcf(at: toOpen, withReply: {(bookmarkData: [PPSTKeys : Any]?, error: Error?) -> Void in
 			OperationQueue.main.addOperation({
 				defer {
 					conn.invalidate()

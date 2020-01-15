@@ -124,10 +124,10 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 		super.init()
 	}
 	
-	convenience init(bookmarkData: Data, resolutionOptions: NSURL.BookmarkResolutionOptions = [], relativeURL: URL? = nil, date: Date? = Date()) throws {
+	convenience init(bookmarkData: Data, resolutionOptions: NSURL.BookmarkResolutionOptions = [], relativeURL: URL? = nil, date: Date? = Date(), uuid aUUID: UUID = UUID()) throws {
 		var unusedStale = false
 		let resolvedURL = try URL(resolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeTo: relativeURL, bookmarkDataIsStale: &unusedStale)
-		self.init(url: resolvedURL, date: date ?? Date())
+		self.init(url: resolvedURL, date: date ?? Date(), uuid: aUUID)
 		#if os(OSX)
 			bookData = Data(bookmarkData)
 		#endif
@@ -161,7 +161,7 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 	}
 	
 	override var debugDescription: String {
-		return "\(musicURL.description) \(musicURL.path): '\(fileName)' size: \(fileSize), added: \(addedDate)"
+		return "\(musicURL.description) \(musicURL.path): '\(fileName)' size: \(fileSize), added: \(addedDate), UUID: \(uuid)"
 	}
 
 	override func isEqual(_ object: Any?) -> Bool {
@@ -283,8 +283,12 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 			fileURL = aDecoder.decodeObject(of: NSURL.self, forKey: kMusicListURLKey) as URL?
 		}
 		
-		guard let aURL = fileURL,
-			let aaddedDate = aDecoder.decodeObject(of: NSDate.self, forKey: kMusicListDateAddedKey) as Date? else {
+		guard let aURL = fileURL else {
+			aDecoder.failWithError(NSError(domain: NSOSStatusErrorDomain, code: paramErr))
+			return nil
+		}
+		guard let aaddedDate = aDecoder.decodeObject(of: NSDate.self, forKey: kMusicListDateAddedKey) as Date? else {
+				aDecoder.failWithError(NSError(domain: NSOSStatusErrorDomain, code: paramErr))
 				return nil
 		}
 		let aUUID = (aDecoder.decodeObject(of: NSUUID.self, forKey: MusicListUUIDKey) as UUID?) ?? UUID()
@@ -319,6 +323,8 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 	}
 	#endif
 }
+
+//MARK: - Codable
 
 extension MusicListObject: Codable {
 	enum CodingKeys: String, CodingKey {
@@ -386,7 +392,7 @@ extension MusicListObject: Codable {
 		self.init(url: url!, date: dateAdded, uuid: aUUID)
 		#if os(OSX)
 			if let data = data {
-				bookData = Data(data)
+				bookData = data
 			}
 		#endif
 	}
