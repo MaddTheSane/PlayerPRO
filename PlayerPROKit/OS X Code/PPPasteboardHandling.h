@@ -21,13 +21,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSPasteboardType const kPPKSamplePasteboardUTI;
-extern NSPasteboardType const kPPKMADCommandPasteboardUTI;
-extern NSPasteboardType const kPPKPatternPasteboardUTI;
-extern NSPasteboardType const kPPKFXBusPasteboardUTI;
-extern NSPasteboardType const kPPKFXSetPasteboardUTI;
-extern NSPasteboardType const kPPKEnvelopePasteboardUTI;
-extern NSPasteboardType const kPPKInstrumentPasteboardUTI;
+extern NSPasteboardType const kPPKSamplePasteboardUTI NS_SWIFT_NAME(PPSampleObject.pasteboardType);
+extern NSPasteboardType const kPPKMADCommandPasteboardUTI NS_SWIFT_NAME(PPMadCommandObject.pasteboardType);
+extern NSPasteboardType const kPPKPatternPasteboardUTI NS_SWIFT_NAME(PPPatternObject.pasteboardType);
+extern NSPasteboardType const kPPKFXBusPasteboardUTI NS_SWIFT_NAME(PPFXBusObject.pasteboardType);
+extern NSPasteboardType const kPPKFXSetPasteboardUTI NS_SWIFT_NAME(PPFXSetObject.pasteboardType);
+extern NSPasteboardType const kPPKEnvelopePasteboardUTI NS_SWIFT_NAME(PPEnvelopeObject.pasteboardType);
+extern NSPasteboardType const kPPKInstrumentPasteboardUTI NS_SWIFT_NAME(PPInstrumentObject.pasteboardType);
 
 NS_ASSUME_NONNULL_END
 

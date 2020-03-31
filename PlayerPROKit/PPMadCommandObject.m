@@ -187,11 +187,11 @@ keyVal(Volume)
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
-		theCommand.ins = [(NSNumber*)[aDecoder decodeObjectForKey:kPPMadCommandInstrument] unsignedCharValue];
-		theCommand.arg = [(NSNumber*)[aDecoder decodeObjectForKey:kPPMadCommandArgument] unsignedCharValue];
-		theCommand.cmd = [(NSNumber*)[aDecoder decodeObjectForKey:kPPMadCommandCommand] unsignedCharValue];
-		theCommand.note = [(NSNumber*)[aDecoder decodeObjectForKey:kPPMadCommandNote] unsignedCharValue];
-		theCommand.vol = [(NSNumber*)[aDecoder decodeObjectForKey:kPPMadCommandVolume] unsignedCharValue];
+		theCommand.ins = [(NSNumber*)[aDecoder decodeObjectOfClass: [NSNumber class] forKey:kPPMadCommandInstrument] unsignedCharValue];
+		theCommand.arg = [(NSNumber*)[aDecoder decodeObjectOfClass: [NSNumber class] forKey:kPPMadCommandArgument] unsignedCharValue];
+		theCommand.cmd = [(NSNumber*)[aDecoder decodeObjectOfClass: [NSNumber class] forKey:kPPMadCommandCommand] unsignedCharValue];
+		theCommand.note = [(NSNumber*)[aDecoder decodeObjectOfClass: [NSNumber class] forKey:kPPMadCommandNote] unsignedCharValue];
+		theCommand.vol = [(NSNumber*)[aDecoder decodeObjectOfClass: [NSNumber class] forKey:kPPMadCommandVolume] unsignedCharValue];
 	}
 	return self;
 }

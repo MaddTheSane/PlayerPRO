@@ -408,8 +408,8 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	if (self = [super init]) {
 		sampleWriteTo = &theSample;
-		self.name = [aDecoder decodeObjectForKey:NAMEKEY];
-		self.data = [aDecoder decodeObjectForKey:DATAKEY];
+		self.name = [aDecoder decodeObjectOfClass:[NSString class] forKey:NAMEKEY];
+		self.data = [aDecoder decodeObjectOfClass:[NSData class] forKey:DATAKEY];
 		self.loopBegin = [aDecoder decodeIntForKey:LOOPBEGINKEY];
 		self.loopSize = [aDecoder decodeIntForKey:LOOPSIZEKEY];
 		self.volume = [[aDecoder decodeObjectForKey:VOLUMEKEY] unsignedCharValue];

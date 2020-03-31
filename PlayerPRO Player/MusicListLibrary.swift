@@ -145,7 +145,7 @@ extension MusicListLibrary: Codable {
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		
-		let convList = allLists.map({ListWrapper(musicList: $0)})
+		let convList = allLists.map(ListWrapper.init)
 		
 		try container.encode(allMusicObjects, forKey: .allMusicObjects)
 		try container.encode(convList, forKey: .allLists)

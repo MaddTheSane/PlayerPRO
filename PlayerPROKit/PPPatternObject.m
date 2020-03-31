@@ -253,8 +253,8 @@ static const dispatch_block_t initUTIArray = ^{
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
-		self.patternName = [aDecoder decodeObjectForKey:kPPPatternName];
-		self.commands = [(NSArray*)[aDecoder decodeObjectForKey:kPPPatternCommands] mutableCopy];
+		self.patternName = [aDecoder decodeObjectOfClass: [NSString class] forKey: kPPPatternName];
+		self.commands = [(NSArray*)[aDecoder decodeObjectOfClasses:[NSSet setWithObjects:[NSArray class], [PPMadCommandObject class], nil] forKey:kPPPatternCommands] mutableCopy];
 		index = [aDecoder decodeIntegerForKey:kPPPatternIndex];
 	}
 	return self;

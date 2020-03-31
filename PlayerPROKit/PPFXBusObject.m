@@ -130,7 +130,7 @@ static const dispatch_block_t initUTIArray = ^{
 	if (self = [super init]) {
 		theBus.ByPass = [aDecoder decodeBoolForKey:kPPBypass];
 		theBus.Active = [aDecoder decodeBoolForKey:kPPIsActive];
-		theBus.copyId = [(NSNumber*)[aDecoder decodeObjectForKey:kPPCopyID] shortValue];
+		theBus.copyId = [(NSNumber*)[aDecoder decodeObjectOfClass: [NSNumber class] forKey:kPPCopyID] shortValue];
 	}
 	return self;
 }
