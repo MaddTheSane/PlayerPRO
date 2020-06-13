@@ -15,15 +15,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Notifications
-extern NSString * const PPListPreferencesDidChangeNotification;
-extern NSString * const PPSoundPreferencesDidChangeNotification;
-extern NSString * const PPDigitalEditorPrefrencesDidChangeNotification;
-extern NSString * const PPBoxEditorPreferencesDidChangeNotification;
-extern NSString * const PPClassicalEditorPreferencesDidChangeNotification;
-extern NSString * const PPMiscPreferencesDidChangeNotification;
-extern NSString * const PPColorsDidChangeNotification;
-extern NSString * const PPMusicDidChangeNotification;
-extern NSString * const PPDriverDidChangeNotification;
+extern NSNotificationName const PPListPreferencesDidChangeNotification;
+extern NSNotificationName const PPSoundPreferencesDidChangeNotification;
+extern NSNotificationName const PPDigitalEditorPrefrencesDidChangeNotification;
+extern NSNotificationName const PPBoxEditorPreferencesDidChangeNotification;
+extern NSNotificationName const PPClassicalEditorPreferencesDidChangeNotification;
+extern NSNotificationName const PPMiscPreferencesDidChangeNotification;
+extern NSNotificationName const PPColorsDidChangeNotification;
+extern NSNotificationName const PPMusicDidChangeNotification;
+extern NSNotificationName const PPDriverDidChangeNotification;
 extern NSString * const PPColorChangedColorKey;
 extern NSString * const PPColorChangedValueKey;
 

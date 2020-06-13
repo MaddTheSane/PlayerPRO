@@ -6486,7 +6486,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					550FFADF17CEA4570003A2F3 = {
 						LastSwiftMigration = 1000;
@@ -10329,7 +10329,7 @@
 			buildSettings = {
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				CODE_SIGN_IDENTITY = "-";
-				COPY_HEADERS_RUN_UNIFDEF = YES;
+				COPY_HEADERS_RUN_UNIFDEF = NO;
 				COPY_HEADERS_UNIFDEF_FLAGS = "-D_MAC_H -D__APPLE__ -U_BE_H -UWIN32";
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
@@ -10364,6 +10364,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AZAE6TWF2Z;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
@@ -10387,6 +10388,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AZAE6TWF2Z;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
@@ -11701,6 +11703,7 @@
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -11724,6 +11727,7 @@
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -11792,7 +11796,7 @@
 			buildSettings = {
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				COPY_HEADERS_RUN_UNIFDEF = YES;
+				COPY_HEADERS_RUN_UNIFDEF = NO;
 				COPY_HEADERS_UNIFDEF_FLAGS = "-D_MAC_H -D__APPLE__ -U_BE_H -UWIN32";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";

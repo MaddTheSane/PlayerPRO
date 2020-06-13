@@ -32,6 +32,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		55251E702494AB49007BC863 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5547DFB921309AA200ABE441;
+			remoteInfo = Mix;
+		};
 		5526ACDD188C9B93008D0C14 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -291,13 +298,6 @@
 			remoteGlobalIDString = 551FEADA10E727B100EDF2F1;
 			remoteInfo = PAT;
 		};
-		5570E9E912A4C24900167E1A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55E898B710F17C2B004EB52B;
-			remoteInfo = QuickTime;
-		};
 		5570E9EB12A4C24900167E1A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -445,13 +445,6 @@
 			remoteGlobalIDString = 5591709F19C26E1C00998D7F;
 			remoteInfo = PPCoreInstrumentPlugBridge;
 		};
-		55F6DFB41F44FEF900F655FA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 556BC18219CF47FC00508F49;
-			remoteInfo = PPCoreInstrumentPlugBridge32;
-		};
 		55F6DFB61F44FEF900F655FA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -542,16 +535,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* Cocoa_ExampleAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Cocoa_ExampleAppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		256AC3D90F4B6AC300CF3369 /* Cocoa_ExampleAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Cocoa_ExampleAppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		256AC3F00F4B6AF500CF3369 /* Cocoa_Example_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocoa_Example_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		55251E722494AB4E007BC863 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55251E732494AB4E007BC863 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5570E97512A4C24900167E1A /* PPMacho.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PPMacho.xcodeproj; path = ../../PPMacho.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Cocoa_Example-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Cocoa_Example-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Cocoa Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cocoa Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -660,7 +653,6 @@
 				5526ACE8188C9B93008D0C14 /* PPQuickView.qlgenerator */,
 				557679A8199919C700CC4487 /* net.sourceforge.playerpro.StcfImporter.xpc */,
 				55F6DFB31F44FEF900F655FA /* PPCoreInstrumentPlugBridge.xpc */,
-				55F6DFB51F44FEF900F655FA /* PPCoreInstrumentPlugBridge32.xpc */,
 				5570E9B412A4C24900167E1A /* PlayerPROCore.framework */,
 				55F6DFB71F44FEF900F655FA /* PlayerPROCore.framework */,
 				5598692916432693008C55FC /* PlayerPROKit.framework */,
@@ -699,7 +691,6 @@
 				5526ACF0188C9B93008D0C14 /* Wave.plugin */,
 				55F6DFC11F44FEF900F655FA /* System 7.plugin */,
 				55F6DFC31F44FEF900F655FA /* Classic Sound.plugin */,
-				5570E9EA12A4C24900167E1A /* QuickTime.plugin */,
 				5570E9EC12A4C24900167E1A /* Amplitude.plugin */,
 				5570E9EE12A4C24900167E1A /* Backwards.plugin */,
 				5570E9F012A4C24900167E1A /* Crop.plugin */,
@@ -709,6 +700,7 @@
 				5570E9F812A4C24900167E1A /* Fade.plugin */,
 				5570E9FA12A4C24900167E1A /* Invert.plugin */,
 				5570E9FC12A4C24900167E1A /* Length.plugin */,
+				55251E712494AB49007BC863 /* Mix.plugin */,
 				5570EA0012A4C24900167E1A /* Normalize.plugin */,
 				5570EA0212A4C24900167E1A /* Sampling Rate.plugin */,
 				5570EA0412A4C24900167E1A /* Silence.plugin */,
@@ -753,13 +745,13 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Cocoa Example" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
+				de,
+				en,
+				fr,
+				ja,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Cocoa Example */;
 			projectDirPath = "";
@@ -777,6 +769,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		55251E712494AB49007BC863 /* Mix.plugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Mix.plugin;
+			remoteRef = 55251E702494AB49007BC863 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5526ACDE188C9B93008D0C14 /* PlayerPRO Player.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -1036,13 +1035,6 @@
 			remoteRef = 5570E9E712A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5570E9EA12A4C24900167E1A /* QuickTime.plugin */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = QuickTime.plugin;
-			remoteRef = 5570E9E912A4C24900167E1A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		5570E9EC12A4C24900167E1A /* Amplitude.plugin */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -1176,13 +1168,6 @@
 			remoteRef = 55F6DFB21F44FEF900F655FA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		55F6DFB51F44FEF900F655FA /* PPCoreInstrumentPlugBridge32.xpc */ = {
-			isa = PBXReferenceProxy;
-			fileType = "wrapper.xpc-service";
-			path = PPCoreInstrumentPlugBridge32.xpc;
-			remoteRef = 55F6DFB41F44FEF900F655FA /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		55F6DFB71F44FEF900F655FA /* PlayerPROCore.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1275,7 +1260,7 @@
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C165DFE840E0CC02AAC07 /* English */,
+				55251E722494AB4E007BC863 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1283,7 +1268,7 @@
 		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1DDD58150DA1D0A300B32029 /* English */,
+				55251E732494AB4E007BC863 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";

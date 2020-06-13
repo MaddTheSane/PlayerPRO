@@ -33,6 +33,13 @@
 			remoteGlobalIDString = 55680A1D19045F0A00F7616D;
 			remoteInfo = StcfImporter;
 		};
+		55251EFC2494AB6D007BC863 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5547DFB921309AA200ABE441;
+			remoteInfo = Mix;
+		};
 		5526AC12188C988B008D0C14 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -306,13 +313,6 @@
 			remoteGlobalIDString = 551FEADA10E727B100EDF2F1;
 			remoteInfo = PAT;
 		};
-		5570E9E912A4C24900167E1A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55E898B710F17C2B004EB52B;
-			remoteInfo = QuickTime;
-		};
 		5570E9EB12A4C24900167E1A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -431,13 +431,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 5591709F19C26E1C00998D7F;
 			remoteInfo = PPCoreInstrumentPlugBridge;
-		};
-		558CFD3D1A17F11B006A3C53 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 556BC18219CF47FC00508F49;
-			remoteInfo = PPCoreInstrumentPlugBridge32;
 		};
 		558CFD3F1A17F11B006A3C53 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -624,7 +617,6 @@
 				5526AC1D188C988B008D0C14 /* PPQuickView.qlgenerator */,
 				550B1FB01982B2BD0050790F /* net.sourceforge.playerpro.StcfImporter.xpc */,
 				558CFD3C1A17F11B006A3C53 /* PPCoreInstrumentPlugBridge.xpc */,
-				558CFD3E1A17F11B006A3C53 /* PPCoreInstrumentPlugBridge32.xpc */,
 				5570E9B412A4C24900167E1A /* PlayerPROCore.framework */,
 				558CFD401A17F11B006A3C53 /* PlayerPROCore.framework */,
 				5598692916432693008C55FC /* PlayerPROKit.framework */,
@@ -663,7 +655,6 @@
 				5526AC25188C988B008D0C14 /* Wave.plugin */,
 				558CFD481A17F11B006A3C53 /* System 7.plugin */,
 				558CFD4A1A17F11B006A3C53 /* Classic Sound.plugin */,
-				5570E9EA12A4C24900167E1A /* QuickTime.plugin */,
 				5570E9EC12A4C24900167E1A /* Amplitude.plugin */,
 				5570E9EE12A4C24900167E1A /* Backwards.plugin */,
 				5570E9F012A4C24900167E1A /* Crop.plugin */,
@@ -673,6 +664,7 @@
 				5570E9F812A4C24900167E1A /* Fade.plugin */,
 				5570E9FA12A4C24900167E1A /* Invert.plugin */,
 				5570E9FC12A4C24900167E1A /* Length.plugin */,
+				55251EFD2494AB6D007BC863 /* Mix.plugin */,
 				5570EA0012A4C24900167E1A /* Normalize.plugin */,
 				5570EA0212A4C24900167E1A /* Sampling Rate.plugin */,
 				5570EA0412A4C24900167E1A /* Silence.plugin */,
@@ -715,13 +707,13 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "ppplay" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
+				fr,
+				ja,
+				en,
+				de,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Cocoa Example */;
 			projectDirPath = "";
@@ -744,6 +736,13 @@
 			fileType = "wrapper.xpc-service";
 			path = net.sourceforge.playerpro.StcfImporter.xpc;
 			remoteRef = 550B1FAF1982B2BD0050790F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55251EFD2494AB6D007BC863 /* Mix.plugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Mix.plugin;
+			remoteRef = 55251EFC2494AB6D007BC863 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5526AC13188C988B008D0C14 /* PlayerPRO Player.app */ = {
@@ -1005,13 +1004,6 @@
 			remoteRef = 5570E9E712A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5570E9EA12A4C24900167E1A /* QuickTime.plugin */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = QuickTime.plugin;
-			remoteRef = 5570E9E912A4C24900167E1A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		5570E9EC12A4C24900167E1A /* Amplitude.plugin */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -1129,13 +1121,6 @@
 			fileType = "wrapper.xpc-service";
 			path = PPCoreInstrumentPlugBridge.xpc;
 			remoteRef = 558CFD3B1A17F11B006A3C53 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		558CFD3E1A17F11B006A3C53 /* PPCoreInstrumentPlugBridge32.xpc */ = {
-			isa = PBXReferenceProxy;
-			fileType = "wrapper.xpc-service";
-			path = PPCoreInstrumentPlugBridge32.xpc;
-			remoteRef = 558CFD3D1A17F11B006A3C53 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		558CFD401A17F11B006A3C53 /* PlayerPROCore.framework */ = {
