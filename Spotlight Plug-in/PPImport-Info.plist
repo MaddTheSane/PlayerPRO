@@ -5,7 +5,7 @@
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -58,11 +58,11 @@
 	</dict>
 	<key>CFPlugInTypes</key>
 	<dict>
-		<key>8B08C4BF-415B-11D8-B3F9-0003936726FC</key>
+		<key>6EBC27C4-899C-11D8-84AE-0003936726FC</key>
 		<array>
 			<string>DF098C69-8463-40CD-BD50-A964BBCEFDFE</string>
 		</array>
-		<key>6EBC27C4-899C-11D8-84AE-0003936726FC</key>
+		<key>8B08C4BF-415B-11D8-B3F9-0003936726FC</key>
 		<array>
 			<string>DF098C69-8463-40CD-BD50-A964BBCEFDFE</string>
 		</array>
