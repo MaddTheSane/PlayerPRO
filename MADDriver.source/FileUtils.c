@@ -25,6 +25,7 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include <errno.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 #include "RDriver.h"
 #include "MADFileUtils.h"
 #include "MADPrivate.h"
@@ -89,8 +90,21 @@ FILE* iFileOpen(const char *name)
 	return iFileOpenRead(name);
 }
 
+static bool is_dir(const char *path)
+{
+	struct stat statbuf;
+	stat(path, &statbuf);
+	if (S_ISDIR(statbuf.st_mode)) {
+		return true;
+	}
+	return false;
+}
+
 FILE* iFileOpenRead(const char *name)
 {
+	if (is_dir(name)) {
+		NULL;
+	}
 	return fopen(name, "rb");
 }
 
