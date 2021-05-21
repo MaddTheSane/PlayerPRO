@@ -68,6 +68,8 @@ typedef MTS_ERROR_ENUM(short, PPMADErrorDomain, PPMADError) {
 	PPMADErrorWriting = MADWritingErr,
 	/// The user cancelled an action. This shouldn't be seen by the user.
 	PPMADErrorUserCancelled = MADUserCancelledErr,
+	/// Attempted to change VST functions while music is loaded by driver.
+	PPMADErrorDriverHasMusic = MADDriverHasMusic,
 };
 
 /*!

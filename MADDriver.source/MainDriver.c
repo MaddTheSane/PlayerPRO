@@ -1249,7 +1249,7 @@ MADErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missi
 	// Purge previous Effects !
 	for (i = 0; i < 10 ; i++) {
 		if (driver->masterVST[i]) {
-			DisposeVSTEffect(driver->masterVST[i]);
+			DisposeVSTEffect(driver, driver->masterVST[i]);
 			driver->masterVST[i] = NULL;
 		}
 	}
@@ -1257,7 +1257,7 @@ MADErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missi
 	for (i = 0; i < MAXTRACK ; i++) { // Channel Effects
 		for (x = 0; x < 4; x++) {
 			if (driver->chanVST[i][x]) {
-				DisposeVSTEffect(driver->chanVST[i][x]);
+				DisposeVSTEffect(driver, driver->chanVST[i][x]);
 				driver->chanVST[i][x] = NULL;
 			}
 		}
@@ -1268,11 +1268,11 @@ MADErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missi
 	
 	for (i = 0; i < 10 ; i++) { // Global Effects
 		if (music->header->globalEffect[i]) {
-			index = ConvertUniqueIDToIndex(music->sets[alpha].FXID);
+			index = ConvertUniqueIDToIndex(driver, music->sets[alpha].FXID);
 			
 			if (index >= 0) {
-				driver->masterVST[i] = CreateVSTEffect(index);
-				ApplyVSTSets(driver->masterVST[i], &music->sets[alpha]);
+				driver->masterVST[i] = CreateVSTEffect(driver, index);
+				ApplyVSTSets(driver, driver->masterVST[i], &music->sets[alpha]);
 			}
 			else if (MissingPlugs)
 			{
@@ -1289,11 +1289,11 @@ MADErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missi
 	for (i = 0; i < MAXTRACK ; i++) {	// Channel Effects
 		for (x = 0; x < 4; x++) {
 			if (music->header->chanEffect[i][x]) {
-				index = ConvertUniqueIDToIndex(music->sets[alpha].FXID);
+				index = ConvertUniqueIDToIndex(driver, music->sets[alpha].FXID);
 				
 				if (index >= 0) {
-					driver->chanVST[i][x] = CreateVSTEffect(index);
-					ApplyVSTSets(driver->chanVST[i][x], &music->sets[alpha]);
+					driver->chanVST[i][x] = CreateVSTEffect(driver, index);
+					ApplyVSTSets(driver, driver->chanVST[i][x], &music->sets[alpha]);
 				} else if (MissingPlugs) {
 					strcat((char*)MissingPlugs, ", ");
 					MYP2CStr(music->sets[alpha].name);

@@ -153,6 +153,9 @@ extension MADErr: CustomStringConvertible, CustomDebugStringConvertible {
 		case .userCancelledErr:
 			return "MADErr.userCancelledErr"
 			
+		case .driverHasMusic:
+			return "MADErr.driverHasMusicErr"
+			
 		@unknown default:
 			return "Unknown MADErr \(rawValue)"
 		}

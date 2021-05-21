@@ -785,7 +785,6 @@
 		55F1BDC81975CA3900AD2C03 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		55F1BDC91975CA3900AD2C03 /* iOS-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A1301656FCC100A5AECA /* iOS-PlugImport.c */; };
 		55F1BDCA1975CA4D00AD2C03 /* MIDI-Hardware-Stub.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */; };
-		55F1BDCB1975CA4D00AD2C03 /* stub-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 550A474518A458380052AED7 /* stub-VSTPlugIn.c */; };
 		55F1BDCF1975CAC900AD2C03 /* 669.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340D910BB5368005208D1 /* 669.c */; };
 		55F1BDD01975CAD100AD2C03 /* AMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DB10BB5368005208D1 /* AMF.c */; };
 		55F1BDD11975CAD700AD2C03 /* DMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DE10BB5368005208D1 /* DMF.c */; };
@@ -853,6 +852,7 @@
 		55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84419844FD600D2E79C /* DigitalViewController.m */; };
 		55FEF84B1984506C00D2E79C /* ClassicalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84A1984506C00D2E79C /* ClassicalViewController.m */; };
 		55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84E1984509400D2E79C /* WaveViewController.m */; };
+		55FF1A742658360C006C3885 /* OSX-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2080,6 +2080,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 55F1BD8E1975C83400AD2C03;
 			remoteInfo = iOSPlayerPROCore;
+		};
+		55FF1A702658312C006C3885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5518F05A251D5D6600528AED;
+			remoteInfo = SIMDAdditions;
+		};
+		55FF1A722658312C006C3885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5518F062251D5D6600528AED;
+			remoteInfo = SIMDAdditionsTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -4863,6 +4877,8 @@
 				556BC3FC1FAFD6F70015C622 /* CoreTextAdditionsTests.xctest */,
 				557C2D60224A840900D74AC1 /* QuartzAdditions.framework */,
 				557C2D62224A840900D74AC1 /* QuartzAdditionsTests.xctest */,
+				55FF1A712658312C006C3885 /* SIMDAdditions.framework */,
+				55FF1A732658312C006C3885 /* SIMDAdditionsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6483,7 +6499,6 @@
 		88E0C3A80C2F21DD00D6C081 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = YES;
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 1130;
@@ -6819,6 +6834,20 @@
 			fileType = wrapper.cfbundle;
 			path = SwiftAudioAdditionsTests.xctest;
 			remoteRef = 55D5E9811B01496100EB2C84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55FF1A712658312C006C3885 /* SIMDAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SIMDAdditions.framework;
+			remoteRef = 55FF1A702658312C006C3885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55FF1A732658312C006C3885 /* SIMDAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SIMDAdditionsTests.xctest;
+			remoteRef = 55FF1A722658312C006C3885 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -8121,9 +8150,9 @@
 				55B8E1B81A3BB57A0010CE33 /* MADDebugStr.m in Sources */,
 				55F1BDC21975C9E100AD2C03 /* Interrupt.c in Sources */,
 				55F1BDD41975CAEB00AD2C03 /* MADH.c in Sources */,
+				55FF1A742658360C006C3885 /* OSX-VSTPlugIn.c in Sources */,
 				55F1BDDA1975CB1200AD2C03 /* ULT.c in Sources */,
 				55F1BDD11975CAD700AD2C03 /* DMF.c in Sources */,
-				55F1BDCB1975CA4D00AD2C03 /* stub-VSTPlugIn.c in Sources */,
 				55F1BDD71975CB1200AD2C03 /* MTM.c in Sources */,
 				55F1BDC81975CA3900AD2C03 /* OSX-CoreAudio.c in Sources */,
 				55F1BDDC1975CB1200AD2C03 /* XM.c in Sources */,

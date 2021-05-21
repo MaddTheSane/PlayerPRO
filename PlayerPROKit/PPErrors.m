@@ -40,6 +40,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"There is no error", @"No error description");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"No Recovery needed", @"No error recovery suggestion");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"You should not be seeing this. File a bug report!";
 			}
 			break;
 
@@ -50,6 +52,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"Ran out of memory", @"Ran out of memory");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Try closing some applications or closing windows.", @"Close apps");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"Not enough memory for operation";
 			}
 			break;
 			
@@ -60,6 +64,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"Could not read file", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"check to see if you have read permissions for the file.", @"Can you read it?");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"Error reading file";
 			}
 			break;
 			
@@ -70,6 +76,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"The file is incompatible", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Check the file to make sure it is a valid file.", @"Check file");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"The file is incompatible with PlayerPRO or one of it's plug-ins";
 			}
 			break;
 			
@@ -80,6 +88,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"library not initalized", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"The library is not initialized";
 			}
 			break;
 			
@@ -90,6 +100,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"Invalid parameters", @"Invalid parameters");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"Invalid paramaters were sent to a function";
 			}
 			break;
 			
@@ -100,6 +112,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"Unknown reason", @"unknown reason");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"An unknown error occured";
 			}
 			break;
 			
@@ -110,6 +124,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"Sound system initialization failure", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Make sure that the sound settings are supported by the sound system", @"");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"Error initalizing the sound system";
 			}
 			break;
 			
@@ -120,6 +136,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"order not implemented", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"The selected order is not implemented in the plug-in";
 			}
 			break;
 			
@@ -130,6 +148,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"Invalid file for plug-in", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Try using another plug-in, or checking to see if the file is okay.", @"try other plug-in");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"The file is not supported by this plug-in";
 			}
 			break;
 			
@@ -140,6 +160,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"Unable to locate a plug-in", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Make sure that the file is valid. Also try looking for a compatible plug-in.", @"");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"Unable to locate a plug-in to play this file";
 			}
 			break;
 			
@@ -150,6 +172,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"Music has no driver", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"The MAD music has no driver";
 			}
 			break;
 			
@@ -160,6 +184,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"Driver has no music", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Try attaching music to the driver by selecting the music.", @"");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"The MAD Driver has no music";
 			}
 			break;
 			
@@ -170,6 +196,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"Sound system is unavailable", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Try selecting a different sound system.", @"");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"The selected sound system is not available";
 			}
 			break;
 			
@@ -180,6 +208,8 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"Unable to write", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"Make sure you have write permissions at the location you selected.", @"");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"Unable to write to file";
 			}
 			break;
 			
@@ -190,9 +220,22 @@ NSString *PPLocalizedStringForKeyAndError(NSErrorUserInfoKey userInfoKey, MADErr
 				return PPErrorLocalizedString(@"User Cancelled Action description", @"");
 			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
 				return PPErrorLocalizedString(@"No Recovery needed", @"");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"User Cancelled Action";
 			}
 			break;
 
+		case MADDriverHasMusic:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"Attempted to change VST functions while music is loaded by driver", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Changing VST functions while music is loaded by driver is not allowed.", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			} else if ([userInfoKey isEqualToString:NSDebugDescriptionErrorKey]) {
+				return @"Attempted to change VST functions while music is loaded by driver";
+			}
+			break;
 		default:
 			break;
 	}

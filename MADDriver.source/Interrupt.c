@@ -1131,8 +1131,9 @@ void ApplyVSTEffects(MADDriverRec *intDriver, bool ByPass)
 				//TODO: Apply VST effects
 				if (intDriver->currentlyExporting) {
 					if (intDriver->thisExport) ProcessVSTPlug(intDriver, intDriver->DASCEffectBuffer[i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[i]);
-				} else
+				} else {
 					ProcessVSTPlug(intDriver, intDriver->DASCEffectBuffer[i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[i]);
+				}
 				
 				
 				// *** *** *** *** ***
@@ -1535,14 +1536,14 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 	
-	//TODO: Process VST Plug-in
 	if (intDriver->DriverSettings.outPutBits == 16) {
 		if (intDriver->currentlyExporting) {
 			if (intDriver->thisExport) {
 				ProcessVSTPlug(intDriver, intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
 			}
-		} else
+		} else {
 			ProcessVSTPlug(intDriver, intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
+		}
 	}
 	
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***

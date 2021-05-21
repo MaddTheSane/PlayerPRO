@@ -225,7 +225,8 @@ typedef MADENUM(short, MADErr) {
 	MADWritingErr					= -14,
 	/// The user cancelled an action. This shouldn't be seen by the user.
 	MADUserCancelledErr				= -15,
-	
+	/// Attempted to change VST functions while music is loaded by driver.
+	MADDriverHasMusic				= -16,
 	
 	
 	/// Use \c MADUnknownErr instead.
@@ -247,7 +248,7 @@ typedef OSType	MADFourChar;
 
 /// We're using our own boolean type for fields in files because
 /// some archs (specifically ppc-32) have the size of the \c bool being
-/// greater than 1.
+/// greater than 1 byte.
 typedef MADENUM(unsigned char, MADBool) {
 	MADFalse = 0,
 	MADTrue = 1,

@@ -761,7 +761,6 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 	}
 	
 	for (i = 0 ; i < intDriver->MultiChanNo; i++) {	//intDriver->DriverSettings.numChn
-		//TODO: VST Channel effect
 		if (IsVSTChanEffect(intDriver, i) && chanCounter < MAXCHANEFFECT) {
 			trackID = intDriver->base.curMusic->header->chanBus[intDriver->base.chan[i].TrackID].copyId;
 			// Try to find a DASCEffectBuffer with the same ID
@@ -780,8 +779,9 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 			
 			intDriver->EffectBufferID[find] = trackID;
 			intDriver->EffectBufferRealID[find] = i;
-		} else
+		} else {
 			Sample16BufferAddDelay(&intDriver->base.chan[i], intDriver->DASCBuffer, intDriver);
+		}
 	}
 }
 

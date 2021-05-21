@@ -15,10 +15,10 @@
 extern "C" {
 #endif
 
-void		DisposeVSTEffect(VSTEffect *myEffect);
-VSTEffect*	CreateVSTEffect(short effectID);
-short		ConvertUniqueIDToIndex(uint32_t);
-void		ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
+void		DisposeVSTEffect(MADDriverRec *intDriver, VSTEffect *myEffect);
+VSTEffect*	CreateVSTEffect(MADDriverRec *intDriver, short effectID);
+short		ConvertUniqueIDToIndex(MADDriverRec *intDriver, uint32_t);
+void		ApplyVSTSets(MADDriverRec *intDriver, VSTEffect* myEffect, FXSets* set);
 bool		IsVSTChanEffect(MADDriverRec *intDriver, short channel);
 void		ProcessVSTPlug(MADDriverRec *intDriver, int *data, int datasize, short channel);
 

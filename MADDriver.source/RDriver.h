@@ -651,6 +651,15 @@ typedef struct MADDriverBase {
 
 typedef struct MADDriverRec MADDriverRec, *MADDriverRecPtr;
 
+typedef struct MADVSTFunctions {
+	void (*DisposeVSTEffect)(VSTEffect *myEffect);
+	VSTEffect *(*CreateVSTEffect)(short effectID);
+	short (*ConvertUniqueIDToIndex)(uint32_t);
+	void (*ApplyVSTSets)(VSTEffect* myEffect, FXSets* set);
+	bool (*IsVSTChanEffect)(MADDriverRec *intDriver, short channel);
+	void (*ProcessVSTPlug)(MADDriverRec *intDriver, int *data, int datasize, short channel);
+} MADVSTFunctions;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -958,7 +967,12 @@ PPEXPORT short		MADFindAFreeChannel(MADDriverRecPtr intDriver);
 #pragma mark Swift helpers
 /// Fills an \c IntPatData struct with pointers to the data in \c inPat
 PPEXPORT IntPatData MADPatDataToInt(PatData *inPat);
-	
+
+#pragma mark - VST functions
+
+PPEXPORT MADErr MADRegisterVSTPointer(MADDriverRecPtr intDriver, MADVSTFunctions * const funcs);
+PPEXPORT MADErr MADDeregisterVSTPointer(MADDriverRecPtr intDriver);
+
 #ifdef __cplusplus
 }
 #endif

@@ -91,6 +91,7 @@ struct MADDriverRec {
 	void			*vstEffects;
 	VSTEffect		*masterVST[10];
 	VSTEffect		*chanVST[MAXTRACK][4];
+	MADVSTFunctions const *vstFunctions;
 	
 #ifdef _MAC_H
 	AudioUnit		CAAudioUnit;

@@ -8,22 +8,22 @@
 
 #include "VSTFunctions.h"
 
-void DisposeVSTEffect(VSTEffect *myEffect)
+void DisposeVSTEffect(MADDriverRec *intDriver, VSTEffect *myEffect)
 {
 	
 }
 
-VSTEffect* CreateVSTEffect(short effectID)
+VSTEffect* CreateVSTEffect(MADDriverRec *intDriver, short effectID)
 {
 	return NULL;
 }
 
-short ConvertUniqueIDToIndex(uint32_t idx)
+short ConvertUniqueIDToIndex(MADDriverRec *intDriver, uint32_t idx)
 {
 	return 0;
 }
 
-void ApplyVSTSets(VSTEffect* myEffect, FXSets* set)
+void ApplyVSTSets(MADDriverRec *intDriver, VSTEffect* myEffect, FXSets* set)
 {
 	
 }
@@ -36,4 +36,16 @@ bool IsVSTChanEffect(MADDriverRec *intDriver, short channel)
 void ProcessVSTPlug(MADDriverRec *intDriver, int *data, int datasize, short channel)
 {
 	
+}
+
+MADErr MADRegisterVSTPointer(MADDriverRecPtr intDriver, MADVSTFunctions * const funcs)
+{
+	// do nothing
+	return MADNoErr;
+}
+
+MADErr MADDeregisterVSTPointer(MADDriverRecPtr intDriver)
+{
+	// do nothing
+	return MADNoErr;
 }

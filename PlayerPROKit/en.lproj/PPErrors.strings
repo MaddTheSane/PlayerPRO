@@ -128,3 +128,7 @@
 
 /* No error failure reason */
 "You should not be seeing this. File a bug report!" = "You should not be seeing this…\nFile a bug report!";
+
+"Attempted to change VST functions while music is loaded by driver" = "Attempted to change VST functions while music is loaded";
+
+"Changing VST functions while music is loaded by driver is not allowed." = "Changing VST functions while music is loaded by driver is not allowed.";

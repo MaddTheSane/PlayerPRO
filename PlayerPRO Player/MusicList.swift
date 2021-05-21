@@ -39,7 +39,7 @@ let kUntitledMusicList = "Untitled player LiST"
 	let PPPPath = (try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)).appendingPathComponent("Playlists", isDirectory: true)
 #endif
 
-protocol MusicListDelegate: class {
+protocol MusicListDelegate: AnyObject {
 	func musicList(_ list: MusicList, willAdd object: MusicListObject) -> MusicListObject
 	func musicList(_ list: MusicList, didAdd object: MusicListObject)
 	func musicList(_ list: MusicList, willRemove object: MusicListObject)
