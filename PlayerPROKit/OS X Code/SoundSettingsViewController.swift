@@ -23,15 +23,7 @@ private enum BitRate {
 	case bits24
 }
 
-internal struct TagCoupling {
-	var amount:		Int32
-	var tag:		Int
-	
-	init(_ theAmount: Int32, _ theTag: Int) {
-		amount = theAmount
-		tag = theTag
-	}
-}
+private typealias TagCoupling = (amount: Int32, tag: Int)
 
 private func stereoDelayFromTag(_ theTag: Int) -> Int32 {
 	var toSet: Int32 = 0
@@ -155,7 +147,7 @@ open class SoundSettingsViewController: NSViewController {
 	}
 	
 	private func currentRate() -> SoundRate {
-		let curSelected: AnyObject! = rate.selectedCell()
+		let curSelected = rate.selectedCell()
 		if rate.cell(atRow: 0, column: 0) === curSelected {
 			return .rate11Khz
 		} else if rate.cell(atRow: 0, column: 1) === curSelected {
@@ -196,7 +188,7 @@ open class SoundSettingsViewController: NSViewController {
 	}
 	
 	private func currentBits() -> BitRate {
-		let curSelected: AnyObject! = outputBits.selectedCell()
+		let curSelected = outputBits.selectedCell()
 		if outputBits.cell(atRow: 0, column: 0) === curSelected {
 			return .bits8;
 		} else if outputBits.cell(atRow: 0, column: 1) === curSelected {

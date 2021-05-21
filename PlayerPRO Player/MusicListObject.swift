@@ -170,9 +170,6 @@ internal func URLsPointingToTheSameFile(_ urlA: URL, _ urlB: URL) -> Bool {
 		}
 		
 		if let unwrapped = object as? MusicListObject {
-			if self === unwrapped {
-				return true
-			}
 			return self == unwrapped
 		} else {
 			return false
