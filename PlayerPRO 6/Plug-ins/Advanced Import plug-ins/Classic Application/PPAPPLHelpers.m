@@ -51,13 +51,13 @@ MADErr LoadMADK(const char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSe
 	
 	//////////////////
 	
-	MadFile->fid = (InstrData*)calloc(sizeof(InstrData), MAXINSTRU);
+	MadFile->fid = (InstrData*)calloc(MAXINSTRU, sizeof(InstrData));
 	if (!MadFile->fid) {
 		free(MadFile->header);
 		return MADNeedMemory;
 	}
 	
-	MadFile->sample = (sData**)calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
+	MadFile->sample = (sData**)calloc(MAXINSTRU * MAXSAMPLE, sizeof(sData*));
 	if (!MadFile->sample) {
 		free(MadFile->header);
 		free(MadFile->fid);

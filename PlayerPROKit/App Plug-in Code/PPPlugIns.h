@@ -402,9 +402,9 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
 /**
  *	@method		exportInstrument:toURL:driver:
  *	@abstract	Exports the selected instrument to the specified file URL.
- *	@property	InsHeader
- *				The instrument to export
- *	@property	sampleURL
+ *	@param		InsHeader
+ *				The instrument to export.
+ *	@param		sampleURL
  *				The file URL to write to.
  *	@param		driver
  *				The \c PPDriver to send in, just in case more info is needed.
@@ -428,9 +428,9 @@ typedef void (^PPPlugErrorBlock)(NSError *__nullable error);
  *	@method		beginExportInstrument:toURL:driver:parentWindow:handler:
  *	@abstract	Pull up a sheet with additional options for exporting the 
  *				selected instrument to <code>sampleURL</code>.
- *	@property	instrument
+ *	@param		instrument
  *				The instrument to export.
- *	@property	sampleURL
+ *	@param		sampleURL
  *				The file URL to write the instrument to.
  *	@param		driver
  *				The \c PPDriver to send in, just in case more info is needed.
