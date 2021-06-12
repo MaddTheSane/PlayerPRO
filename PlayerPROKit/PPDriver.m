@@ -391,9 +391,9 @@
 		MADDisposeDriver(theRec);
 }
 
-- (PPMusicObject *)loadMusicFile:(NSString *)path
+- (PPMusicObject *)loadMusicFile:(NSString *)path error:(NSError *__autoreleasing  _Nullable * _Nullable)outError
 {
-	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path library:self.theLibrary error:nil];
+	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path library:self.theLibrary error:outError];
 	if (theMus) {
 		[theMus attachToDriver:self];
 	}
@@ -401,9 +401,9 @@
 	return theMus;
 }
 
-- (PPMusicObject *)loadMusicURL:(NSURL*)url
+- (PPMusicObject *)loadMusicURL:(NSURL*)url error:(NSError *__autoreleasing  _Nullable * _Nullable)outError
 {
-	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url library:self.theLibrary error:nil];
+	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url library:self.theLibrary error:outError];
 	if (theMus) {
 		[theMus attachToDriver:self];
 	}
@@ -524,6 +524,30 @@
 	drivBase->Active[idx] = enabled;
 }
 
+- (BOOL)registerVSTFunctionsWithFunctions:(MADVSTFunctions * const)funcs error:(NSError**)outError
+{
+	MADErr errVal = MADRegisterVSTPointer(theRec, funcs);
+	if (errVal != MADNoErr) {
+		if (outError) {
+			*outError = [NSError errorWithDomain:PPMADErrorDomain code:errVal userInfo:nil];
+		}
+		return NO;
+	}
+	return YES;
+}
+
+- (BOOL)deregisterVSTFunctionsWithError:(NSError**)outError
+{
+	MADErr errVal = MADDeregisterVSTPointer(theRec);
+	if (errVal != MADNoErr) {
+		if (outError) {
+			*outError = [NSError errorWithDomain:PPMADErrorDomain code:errVal userInfo:nil];
+		}
+		return NO;
+	}
+	return YES;
+}
+
 @end
 
 @implementation PPDriver (deprecated)
@@ -536,6 +560,16 @@
 - (NSInteger)audioLength
 {
 	return [self audioDataLength];
+}
+
+- (PPMusicObject *)loadMusicFile:(NSString *)path
+{
+	return [self loadMusicFile:path error:NULL];
+}
+
+- (PPMusicObject *)loadMusicURL:(NSURL*)url
+{
+	return [self loadMusicURL:url error:NULL];
 }
 
 @end

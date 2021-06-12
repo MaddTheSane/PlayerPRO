@@ -105,8 +105,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, getter=isDonePlayingMusic) BOOL donePlayingMusic;
 @property (getter=isPaused)						BOOL paused;
 
-- (nullable PPMusicObject *)loadMusicFile:(NSString*)path NS_RETURNS_RETAINED;
-- (nullable PPMusicObject *)loadMusicURL:(NSURL*)url NS_RETURNS_RETAINED;
+- (nullable PPMusicObject *)loadMusicFile:(NSString*)path error:(NSError**)outError NS_RETURNS_RETAINED;
+- (nullable PPMusicObject *)loadMusicURL:(NSURL*)url error:(NSError**)outError NS_RETURNS_RETAINED;
 
 #pragma mark - More in-depth modification of the driver:
 
@@ -122,12 +122,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isChannelActiveAtIndex:(NSInteger)idx;
 - (void)setChannelAtIndex:(NSInteger)idx toActive:(BOOL)enabled NS_SWIFT_NAME(setChannel(at:toActive:));
 
+#pragma mark - VST Method registration
+- (BOOL)registerVSTFunctionsWithFunctions:(MADVSTFunctions * const)funcs error:(NSError**)outError;
+- (BOOL)deregisterVSTFunctionsWithError:(NSError**)outError;
+
 @end
 
 @interface PPDriver (deprecated)
 - (BOOL)isDonePlaying DEPRECATED_ATTRIBUTE;
 
 - (NSInteger)audioLength DEPRECATED_ATTRIBUTE;
+
+- (nullable PPMusicObject *)loadMusicFile:(NSString*)path NS_RETURNS_RETAINED DEPRECATED_ATTRIBUTE NS_SWIFT_UNAVAILABLE("Call the throwable ones instead");
+- (nullable PPMusicObject *)loadMusicURL:(NSURL*)url NS_RETURNS_RETAINED DEPRECATED_ATTRIBUTE NS_SWIFT_UNAVAILABLE("Call the throwable ones instead");
+
 @end
 
 NS_ASSUME_NONNULL_END
