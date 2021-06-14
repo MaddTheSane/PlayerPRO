@@ -1990,20 +1990,6 @@
 			remoteGlobalIDString = 55706D991A1EC2440000FD93;
 			remoteInfo = SwiftIOKitAdditionsTests;
 		};
-		55D5E97B1B01496100EB2C84 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55403A011A745003007A488E;
-			remoteInfo = ForceFeedbackAdditions;
-		};
-		55D5E97D1B01496100EB2C84 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55403A0B1A745003007A488E;
-			remoteInfo = ForceFeedbackAdditionsTests;
-		};
 		55D5E97F1B01496100EB2C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
@@ -4869,8 +4855,6 @@
 				55D5E9761B01496100EB2C84 /* SwiftAdditionsTests.xctest */,
 				55D5E9781B01496100EB2C84 /* SwiftIOKitAdditions.framework */,
 				55D5E97A1B01496100EB2C84 /* SwiftIOKitAdditionsTests.xctest */,
-				55D5E97C1B01496100EB2C84 /* ForceFeedbackAdditions.framework */,
-				55D5E97E1B01496100EB2C84 /* ForceFeedbackAdditionsTests.xctest */,
 				55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */,
 				55D5E9821B01496100EB2C84 /* SwiftAudioAdditionsTests.xctest */,
 				556BC3FA1FAFD6F70015C622 /* CoreTextAdditions.framework */,
@@ -6501,7 +6485,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1300;
 				TargetAttributes = {
 					550FFADF17CEA4570003A2F3 = {
 						LastSwiftMigration = 1000;
@@ -6806,20 +6790,6 @@
 			fileType = wrapper.cfbundle;
 			path = SwiftIOKitAdditionsTests.xctest;
 			remoteRef = 55D5E9791B01496100EB2C84 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		55D5E97C1B01496100EB2C84 /* ForceFeedbackAdditions.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ForceFeedbackAdditions.framework;
-			remoteRef = 55D5E97B1B01496100EB2C84 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		55D5E97E1B01496100EB2C84 /* ForceFeedbackAdditionsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ForceFeedbackAdditionsTests.xctest;
-			remoteRef = 55D5E97D1B01496100EB2C84 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */ = {
@@ -10274,6 +10244,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -10303,7 +10274,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -10454,7 +10425,7 @@
 				INFOPLIST_FILE = "Spotlight Plug-in/PPImport-Info.plist";
 				INSTALL_PATH = /Library/Spotlight;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = PPImport;
 				USER_HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source $(inherited)";
@@ -10481,7 +10452,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Spotlight Plug-in/PPImport-Info.plist";
 				INSTALL_PATH = /Library/Spotlight;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = PPImport;
 				USER_HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source $(inherited)";
@@ -11296,6 +11267,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -11325,7 +11297,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
