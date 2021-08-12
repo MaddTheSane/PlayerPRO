@@ -251,6 +251,8 @@
 		553ED2581A50AE99005222E3 /* ColorPreferenceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553ED2571A50AE99005222E3 /* ColorPreferenceObject.swift */; };
 		554077F426C5D9260054E0B6 /* FoundationAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554077F126C5D9260054E0B6 /* FoundationAdditions.framework */; };
 		554077F526C5D9270054E0B6 /* FoundationAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 554077F126C5D9260054E0B6 /* FoundationAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		554077FE26C5DBE80054E0B6 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		5540780A26C5DC2D0054E0B6 /* MADK.c in Sources */ = {isa = PBXBuildFile; fileRef = 5540780826C5DC2D0054E0B6 /* MADK.c */; };
 		55413C491991B947001414D0 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		55413C4B1992AFAB001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
 		554460F31DCA758500D638C2 /* TestS3M.s3m in Resources */ = {isa = PBXBuildFile; fileRef = 554460F21DCA758500D638C2 /* TestS3M.s3m */; };
@@ -1095,6 +1097,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 5560389C26BF2CC800CD1984;
 			remoteInfo = FoundationAdditionsTests;
+		};
+		554077F926C5DBE80054E0B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
 		};
 		5547DFA821309AA200ABE441 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2515,6 +2524,10 @@
 		553B8B7019B3CD85007C2C64 /* xm-ipad-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ipad-large.png"; sourceTree = "<group>"; };
 		553B8B7119B3CD85007C2C64 /* xm-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ipad.png"; sourceTree = "<group>"; };
 		553ED2571A50AE99005222E3 /* ColorPreferenceObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPreferenceObject.swift; sourceTree = "<group>"; };
+		5540780226C5DBE80054E0B6 /* MADK.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADK.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
+		5540780626C5DC2D0054E0B6 /* MADK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADK.h; sourceTree = "<group>"; };
+		5540780726C5DC2D0054E0B6 /* MADK-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MADK-Info.plist"; sourceTree = "<group>"; };
+		5540780826C5DC2D0054E0B6 /* MADK.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MADK.c; sourceTree = "<group>"; };
 		554460F21DCA758500D638C2 /* TestS3M.s3m */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestS3M.s3m; sourceTree = "<group>"; };
 		5546217D163A345F0005F491 /* PlugExports-Mac.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; path = "PlugExports-Mac.exp"; sourceTree = "<group>"; };
 		5546713A1F6D955000CFC0FE /* SharedPrefs.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedPrefs.xcassets; sourceTree = "<group>"; };
@@ -3022,6 +3035,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				55B7E665161D1DD1000D988C /* PlayerPROCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		554077FD26C5DBE80054E0B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				554077FE26C5DBE80054E0B6 /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4191,6 +4212,7 @@
 				551E167110CCD642003C842A /* MADfg */,
 				551E167210CCD652003C842A /* MADH */,
 				551E167310CCD660003C842A /* MADI */,
+				5540780526C5DC2D0054E0B6 /* MADK */,
 				551E167410CCD66F003C842A /* MED */,
 				551E167510CCD681003C842A /* MOD */,
 				551E167610CCD68E003C842A /* MTM */,
@@ -4254,6 +4276,16 @@
 				553B8B7119B3CD85007C2C64 /* xm-ipad.png */,
 			);
 			path = XM;
+			sourceTree = "<group>";
+		};
+		5540780526C5DC2D0054E0B6 /* MADK */ = {
+			isa = PBXGroup;
+			children = (
+				5540780726C5DC2D0054E0B6 /* MADK-Info.plist */,
+				5540780826C5DC2D0054E0B6 /* MADK.c */,
+				5540780626C5DC2D0054E0B6 /* MADK.h */,
+			);
+			path = MADK;
 			sourceTree = "<group>";
 		};
 		55453526186CD32900F69F4D /* OS X-specific code */ = {
@@ -5143,6 +5175,7 @@
 				55D5E9581B01466D00EB2C84 /* System 7.plugin */,
 				55D8E1951C4EC0BC00C2B397 /* ITv2.ppimpexp */,
 				5547DFB921309AA200ABE441 /* Mix.plugin */,
+				5540780226C5DBE80054E0B6 /* MADK.ppimpexp */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5457,6 +5490,24 @@
 			name = IT;
 			productName = MOD;
 			productReference = 553341FC10BB600A005208D1 /* IT.ppimpexp */;
+			productType = "com.apple.product-type.bundle";
+		};
+		554077F726C5DBE80054E0B6 /* MADK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 554077FF26C5DBE80054E0B6 /* Build configuration list for PBXNativeTarget "MADK" */;
+			buildPhases = (
+				554077FA26C5DBE80054E0B6 /* Resources */,
+				554077FB26C5DBE80054E0B6 /* Sources */,
+				554077FD26C5DBE80054E0B6 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				554077F826C5DBE80054E0B6 /* PBXTargetDependency */,
+			);
+			name = MADK;
+			productName = MOD;
+			productReference = 5540780226C5DBE80054E0B6 /* MADK.ppimpexp */;
 			productType = "com.apple.product-type.bundle";
 		};
 		5547DFA621309AA200ABE441 /* Mix */ = {
@@ -6689,6 +6740,7 @@
 				5586870310BF5C4700FCC24D /* MADfg */,
 				5586871210BF5C4A00FCC24D /* MADH */,
 				5586872110BF5C4E00FCC24D /* MADI */,
+				554077F726C5DBE80054E0B6 /* MADK */,
 				5586874110BF5D3700FCC24D /* MED */,
 				5586875610BF5E4D00FCC24D /* MTM */,
 				558687D210BF620500FCC24D /* Okta */,
@@ -6925,6 +6977,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		553341F110BB600A005208D1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		554077FA26C5DBE80054E0B6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -7512,6 +7571,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5533422410BB6675005208D1 /* IT.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		554077FB26C5DBE80054E0B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5540780A26C5DC2D0054E0B6 /* MADK.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8348,6 +8415,11 @@
 			isa = PBXTargetDependency;
 			name = ResourceFork;
 			targetProxy = 55379CB61D64191100387CF3 /* PBXContainerItemProxy */;
+		};
+		554077F826C5DBE80054E0B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 554077F926C5DBE80054E0B6 /* PBXContainerItemProxy */;
 		};
 		5547DFA721309AA200ABE441 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9470,7 +9542,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
+				FRAMEWORK_VERSION = B;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"BUILDINGPPRO=1",
 					"$(inherited)",
@@ -9497,7 +9569,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
+				FRAMEWORK_VERSION = B;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"BUILDINGPPRO=1",
 					"$(inherited)",
@@ -9786,6 +9858,26 @@
 			buildSettings = {
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
+			};
+			name = Debug;
+		};
+		5540780026C5DBE80054E0B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
+			buildSettings = {
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5540780126C5DBE80054E0B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
+			buildSettings = {
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -10333,10 +10425,10 @@
 				COPY_HEADERS_UNIFDEF_FLAGS = "-D_MAC_H -D__APPLE__ -U_BE_H -UWIN32";
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 2;
-				DYLIB_CURRENT_VERSION = 6.0;
+				DYLIB_COMPATIBILITY_VERSION = 3;
+				DYLIB_CURRENT_VERSION = 6.1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = B;
+				FRAMEWORK_VERSION = C;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -10367,10 +10459,10 @@
 				COPY_HEADERS_UNIFDEF_FLAGS = "-D_MAC_H -D__APPLE__ -U_BE_H -UWIN32";
 				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 2;
-				DYLIB_CURRENT_VERSION = 6.0;
+				DYLIB_COMPATIBILITY_VERSION = 3;
+				DYLIB_CURRENT_VERSION = 6.1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = B;
+				FRAMEWORK_VERSION = C;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -12048,6 +12140,15 @@
 			buildConfigurations = (
 				553341F910BB600A005208D1 /* Release */,
 				553341FA10BB600A005208D1 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		554077FF26C5DBE80054E0B6 /* Build configuration list for PBXNativeTarget "MADK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5540780026C5DBE80054E0B6 /* Release */,
+				5540780126C5DBE80054E0B6 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

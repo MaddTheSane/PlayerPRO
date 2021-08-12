@@ -37,7 +37,7 @@
 #define MAXTRACK			256
 //#define MAXTRACKMULTI		99
 MADENUM(MADFourChar) {
-	MADID = 'MADK'
+	MADID = 'MADL'
 };
 
 #pragma mark Effects ID
@@ -224,7 +224,7 @@ typedef MADOPTIONS(MADByte, EFType) {
 /// Instrument
 typedef struct InstrData {
 	/// instrument name
-	char 	name[32];
+	char 	name[64];
 	/// Instrument type = 0
 	MADByte type;
 	/// Instrument number
@@ -309,7 +309,7 @@ typedef struct MADSpec {
 	/// Mad identification
 	MADFourChar	MAD;
 	/// Music's name
-	char 		name[32];
+	char 		name[80];
 	/// Informations & author name of the music.
 	/// Format is Mac OS Roman unless it begins with the
 	/// UTF-8 BOM.

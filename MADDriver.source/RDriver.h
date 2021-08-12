@@ -32,6 +32,7 @@
 #include "MAD.h"
 #include <limits.h>
 #include <stddef.h>
+#include <stdio.h>
 #ifdef _MAC_H
 #include <CoreFoundation/CFString.h>
 #include <CoreFoundation/CFArray.h>
@@ -442,7 +443,8 @@ MADENUM(MADFourChar) {
 
 #ifdef _MAC_H
 
-typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, MADInfoRec *, MADDriverSettings *);
+typedef MADErr (*MADPLUGFUNCOld)(MADFourChar, char *, MADMusic *, MADInfoRec *, MADDriverSettings *);
+typedef MADErr (*MADPLUGFUNC)(MADFourChar, FILE *, MADMusic *, MADInfoRec *, MADDriverSettings *);
 
 typedef struct PlugInfo {
 	/// Mode support : Import +/ Export
@@ -451,6 +453,8 @@ typedef struct PlugInfo {
 	UInt32		version;
 	/// Plug CODE
 	MADPLUGFUNC	IOPlug;
+	/// Old Plug Code
+	MADPLUGFUNCOld oldIOPlug;
 	/// Plug name
 	CFStringRef	MenuName;
 	/// Plug author
