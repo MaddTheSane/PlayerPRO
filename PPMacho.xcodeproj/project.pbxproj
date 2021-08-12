@@ -249,6 +249,8 @@
 		553B8B7519B3CD85007C2C64 /* xm-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B7119B3CD85007C2C64 /* xm-ipad.png */; };
 		553DD97219CF4055000CFC8D /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		553ED2581A50AE99005222E3 /* ColorPreferenceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553ED2571A50AE99005222E3 /* ColorPreferenceObject.swift */; };
+		554077F426C5D9260054E0B6 /* FoundationAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554077F126C5D9260054E0B6 /* FoundationAdditions.framework */; };
+		554077F526C5D9270054E0B6 /* FoundationAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 554077F126C5D9260054E0B6 /* FoundationAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55413C491991B947001414D0 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		55413C4B1992AFAB001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
 		554460F31DCA758500D638C2 /* TestS3M.s3m in Resources */ = {isa = PBXBuildFile; fileRef = 554460F21DCA758500D638C2 /* TestS3M.s3m */; };
@@ -397,7 +399,7 @@
 		5578C48E17D9E8560057D11B /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5578C48C17D9E8560057D11B /* Credits.rtf */; };
 		5578C49417D9E8570057D11B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5578C49217D9E8570057D11B /* MainMenu.xib */; };
 		5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		5578C49E17D9E8A00057D11B /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5578C49E17D9E8A00057D11B /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5578C4A017D9E8B50057D11B /* MOD.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4A117D9E8B50057D11B /* 669.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4A217D9E8B50057D11B /* AMF.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -1079,6 +1081,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 557168421AF06F5600B5DAD9;
 			remoteInfo = ResourceFork;
+		};
+		554077F026C5D9260054E0B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5560389426BF2CC800CD1984;
+			remoteInfo = FoundationAdditions;
+		};
+		554077F226C5D9260054E0B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5560389C26BF2CC800CD1984;
+			remoteInfo = FoundationAdditionsTests;
 		};
 		5547DFA821309AA200ABE441 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2141,6 +2157,7 @@
 				557003371B2261B300C623AB /* SwiftAdditions.framework in Copy Frameworks */,
 				5578C49E17D9E8A00057D11B /* PlayerPROCore.framework in Copy Frameworks */,
 				5593A14F1DAC05150040CACA /* MASPreferences.framework in Copy Frameworks */,
+				554077F526C5D9270054E0B6 /* FoundationAdditions.framework in Copy Frameworks */,
 				5578C4FD17DB8A3B0057D11B /* PlayerPROKit.framework in Copy Frameworks */,
 				5570033B1B2261B400C623AB /* SwiftAudioAdditions.framework in Copy Frameworks */,
 			);
@@ -3154,6 +3171,7 @@
 				557003361B2261B300C623AB /* SwiftAdditions.framework in Frameworks */,
 				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
 				55149C621832D176009C850B /* AVFoundation.framework in Frameworks */,
+				554077F426C5D9260054E0B6 /* FoundationAdditions.framework in Frameworks */,
 				5578C4FC17DB8A2F0057D11B /* PlayerPROKit.framework in Frameworks */,
 				5570033A1B2261B400C623AB /* SwiftAudioAdditions.framework in Frameworks */,
 			);
@@ -4863,6 +4881,8 @@
 				557C2D62224A840900D74AC1 /* QuartzAdditionsTests.xctest */,
 				55FF1A712658312C006C3885 /* SIMDAdditions.framework */,
 				55FF1A732658312C006C3885 /* SIMDAdditionsTests.xctest */,
+				554077F126C5D9260054E0B6 /* FoundationAdditions.framework */,
+				554077F326C5D9260054E0B6 /* FoundationAdditionsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6727,6 +6747,20 @@
 			fileType = wrapper.framework;
 			path = ResourceFork.framework;
 			remoteRef = 55379CA41D63E35500387CF3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		554077F126C5D9260054E0B6 /* FoundationAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FoundationAdditions.framework;
+			remoteRef = 554077F026C5D9260054E0B6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		554077F326C5D9260054E0B6 /* FoundationAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FoundationAdditionsTests.xctest;
+			remoteRef = 554077F226C5D9260054E0B6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		556BC3FA1FAFD6F70015C622 /* CoreTextAdditions.framework */ = {
