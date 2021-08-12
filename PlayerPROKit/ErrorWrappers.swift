@@ -9,6 +9,7 @@
 import Foundation
 import PlayerPROCore
 import SwiftAdditions
+import FoundationAdditions
 
 public extension PPMADError {
 	/// Creates a `PPMADError` from the less-friendly `MADErr` enum.

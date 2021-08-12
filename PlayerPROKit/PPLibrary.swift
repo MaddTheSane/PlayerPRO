@@ -9,6 +9,7 @@
 import Foundation
 import PlayerPROCore
 import SwiftAdditions
+import FoundationAdditions
 #if !os(OSX)
 	import MobileCoreServices
 #endif
@@ -33,17 +34,17 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 }
 
 /// Class that represents the additional tracker types that PlayerPRO can load via plug-ins.
-@objc public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
+@objc @objcMembers public final class PPLibrary: NSObject, Collection, NSFastEnumeration {
 	/// A plug-in that PlayerPROKit can use to import and/or export tracker files.
-	@objc(PPLibraryObject) public final class PlugInObject: NSObject {
+	@objc(PPLibraryObject) @objcMembers public final class PlugInObject: NSObject {
 		/// The menu name of the tracker importer. Might be localized.
-		@objc public let menuName: String
+		public let menuName: String
 		
 		/// The author of the tracker. Might be localized.
-		@objc public let authorString: String
+		public let authorString: String
 		
 		/// The bundle referencing the plug-in.
-		@objc public let bundle: Bundle
+		public let bundle: Bundle
 		
 		/// A tuple of the plug-in identifier.
 		///
@@ -53,11 +54,11 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		/// A `String` of the plug-in identifier.
 		///
 		/// Historically, this was the file type that the Classic Mac OS would use to identify the file.
-		@objc public let type: String
+		public let type: String
 		
 		/// An array of UTIs that the plug-in can open.
 		@available(*, deprecated, renamed: "utiTypes")
-		public var UTITypes: [String] {
+		@nonobjc public var UTITypes: [String] {
 			return utiTypes
 		}
 		
@@ -65,16 +66,16 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		@objc(UTITypes) public let utiTypes: [String]
 		
 		/// Can the plug-in export to this tracker type?
-		@objc public let canExport: Bool
+		public let canExport: Bool
 		
 		/// Can the plug-in import the tracker type?
-		@objc public let canImport: Bool
+		public let canImport: Bool
 		
 		/// The version of the plug-in
-		@objc public let plugVersion: UInt32
+		public let plugVersion: UInt32
 		
 		/// The file extensions associated with this plug-in.
-		@objc public var fileExtensions: [String] {
+		public var fileExtensions: [String] {
 			var theOpenables = Set<String>()
 			for anUTI in utiTypes {
 				guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassFilenameExtension)?.takeRetainedValue() as NSArray?,
@@ -89,7 +90,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		
 		#if os(OSX)
 		/// the File Type `OSType` associated with this plug-in.
-		@objc public var fileTypeCodes: [OSType]? {
+		public var fileTypeCodes: [OSType]? {
 			var theOpenables = [NSString]()
 			for anUTI in utiTypes {
 				guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI as NSString, kUTTagClassOSType)?.takeRetainedValue() as NSArray?,
@@ -166,7 +167,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	}
 	
 	public typealias Index = Int
-	@objc public let trackerLibraries: [PlugInObject]
+	public let trackerLibraries: [PlugInObject]
 	@objc internal let theLibrary: UnsafeMutablePointer<MADLibrary>
 	/// Comparable to `MADInfoRec`, but more Swift-friendly.
 	public struct MusicFileInfo: CustomStringConvertible, CustomDebugStringConvertible {
@@ -243,7 +244,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	}
 
 	/// Resets the debug function called by `MADDebugStr` to the default.
-	@objc public class func deregisterDebugFunction() {
+	public class func deregisterDebugFunction() {
 		MADRegisterDebugBlock(nil)
 	}
 	
@@ -277,7 +278,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 		return trackerLibraries.count
 	}
 
-	@objc public subscript(index: Int) -> PlugInObject {
+	public subscript(index: Int) -> PlugInObject {
 		return trackerLibraries[index]
 	}
 	
@@ -564,7 +565,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	///
 	/// - parameter aUTI: The UTI to find a plug-in type for.
 	/// - returns: A plug-in type, four characters long, or `nil` if there's no plug-in that opens the UTI.
-	@objc public func typeFromUTI(_ aUTI: String) -> String? {
+	public func typeFromUTI(_ aUTI: String) -> String? {
 		if aUTI == kPlayerPROMADKUTI {
 			return MadIDString
 		}
@@ -585,7 +586,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	/// - parameter aType: the four-character plug-in type to get a UTI for.
 	/// - returns: The first UTI in the plug-in's UTI list that corrisponds to the type,
 	/// or `nil` if the type isn't listed.
-	@objc public func typeToUTI(_ aType: String) -> String? {
+	public func typeToUTI(_ aType: String) -> String? {
 		if aType == MadIDString {
 			return kPlayerPROMADKUTI
 		}
@@ -600,7 +601,7 @@ private func toDictionary(infoRec: MADInfoRec) -> [PPLibraryInfoKeys: Any] {
 	}
 	
 	/// `NSFastEnumeration` protocol method.
-	@objc public func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
+	public func countByEnumerating(with state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (trackerLibraries as NSArray).countByEnumerating(with: state, objects: buffer, count: len)
 	}
 }

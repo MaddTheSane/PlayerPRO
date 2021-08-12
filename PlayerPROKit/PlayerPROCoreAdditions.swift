@@ -10,6 +10,7 @@ import CoreFoundation
 import Foundation
 import PlayerPROCore.PlugIns
 import SwiftAdditions
+import FoundationAdditions
 
 public let MadID = toOSType("MADK")
 
