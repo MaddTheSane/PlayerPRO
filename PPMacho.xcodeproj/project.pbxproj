@@ -345,7 +345,6 @@
 		556904201A7C27290073D7E9 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		556904261A7C27340073D7E9 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */; };
 		556BC17219CF477700508F49 /* PPEnvelopeObject32.m in Sources */ = {isa = PBXBuildFile; fileRef = 556BC17119CF460A00508F49 /* PPEnvelopeObject32.m */; };
-		556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		557003361B2261B300C623AB /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; };
 		557003371B2261B300C623AB /* SwiftAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5570033A1B2261B400C623AB /* SwiftAudioAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */; };
@@ -507,6 +506,9 @@
 		558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DD81666F14E00A333E8 /* PPDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
 		558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
+		558D717D26D76769002F5255 /* CommandIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5599119D1A0ACB8C00D1D5C3 /* CommandIterator.swift */; };
+		558D717E26D76769002F5255 /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
+		558D718E26D7683C002F5255 /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		5591706D19C2210700998D7F /* PPEchoPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591706C19C2210700998D7F /* PPEchoPlug.m */; };
 		5591707019C2254000998D7F /* PPFadeNotePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591706F19C2254000998D7F /* PPFadeNotePlug.m */; };
 		5591707319C2296300998D7F /* PPFadeVolumePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591707219C2296300998D7F /* PPFadeVolumePlug.m */; };
@@ -521,7 +523,6 @@
 		5593A14E1DAC05150040CACA /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5593A1411DAC04C20040CACA /* MASPreferences.framework */; };
 		5593A14F1DAC05150040CACA /* MASPreferences.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5593A1411DAC04C20040CACA /* MASPreferences.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5599119E1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5599119D1A0ACB8C00D1D5C3 /* CommandIterator.swift */; };
-		5599119F1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5599119D1A0ACB8C00D1D5C3 /* CommandIterator.swift */; };
 		55993EF619A340FF00C2078E /* PPRunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF519A340FF00C2078E /* PPRunAlert.swift */; };
 		559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C4188183EB4AB004A073C /* QuickLook.framework */; };
 		559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -1767,6 +1768,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 551292D7163DD68500C2C639;
 			remoteInfo = PlayerPROKit;
+		};
+		558D71A126D76B43002F5255 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
 		};
 		559170A919C26E1D00998D7F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5699,6 +5707,7 @@
 			);
 			comments = "PlayerPROCore is just the playback library.  Previously known as MADDriver.";
 			dependencies = (
+				558D71A226D76B43002F5255 /* PBXTargetDependency */,
 			);
 			name = PlayerPROCore;
 			productName = PlayerPROCore;
@@ -7427,9 +7436,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */,
 				5547DA5919A570820014A620 /* SoundSettingsViewController.swift in Sources */,
-				5599119F1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */,
 				555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55DE87CF187E60F400C36533 /* PPFXSetObject.m in Sources */,
 				558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */,
@@ -7640,11 +7647,13 @@
 				5573A35A10B50DCC00FF8B50 /* DelayOutPut.c in Sources */,
 				5573A35B10B50DD000FF8B50 /* Effects.c in Sources */,
 				5573A35C10B50DD500FF8B50 /* Interrupt.c in Sources */,
+				558D717D26D76769002F5255 /* CommandIterator.swift in Sources */,
 				5573A36010B50DEB00FF8B50 /* MainDriver.c in Sources */,
 				5573A36210B50DF200FF8B50 /* OutPut8.c in Sources */,
 				5573A36310B50DF600FF8B50 /* realft.c in Sources */,
 				55B8E1B71A3BB5790010CE33 /* MADDebugStr.m in Sources */,
 				5573A36410B50DFF00FF8B50 /* TickRemover.c in Sources */,
+				558D717E26D76769002F5255 /* PlayerPROCoreAdditions.swift in Sources */,
 				55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */,
 				550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				55F013EB1880A2EA002488D5 /* MADDriver.c in Sources */,
@@ -8160,6 +8169,7 @@
 				55F1BDD71975CB1200AD2C03 /* MTM.c in Sources */,
 				55F1BDC81975CA3900AD2C03 /* OSX-CoreAudio.c in Sources */,
 				55F1BDDC1975CB1200AD2C03 /* XM.c in Sources */,
+				558D718E26D7683C002F5255 /* PlayerPROCoreAdditions.swift in Sources */,
 				55F1BDD61975CB0000AD2C03 /* Mod.c in Sources */,
 				55F1BDC61975C9E100AD2C03 /* TickRemover.c in Sources */,
 				55F1BDCF1975CAC900AD2C03 /* 669.c in Sources */,
@@ -8808,6 +8818,11 @@
 			isa = PBXTargetDependency;
 			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
 			targetProxy = 55886F7217DEDAA200021A82 /* PBXContainerItemProxy */;
+		};
+		558D71A226D76B43002F5255 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 558D71A126D76B43002F5255 /* PBXContainerItemProxy */;
 		};
 		559170AA19C26E1D00998D7F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10348,7 +10363,6 @@
 				LLVM_LTO = YES_THIN;
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.playerpro.PlayerPROCore;
 				PRODUCT_NAME = PlayerPROCore;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -10381,7 +10395,6 @@
 				INFOPLIST_FILE = "MADDriver.source/Resources/PlayerPROCore-Info.plist";
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.playerpro.PlayerPROCore;
 				PRODUCT_NAME = PlayerPROCore;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -10393,6 +10406,7 @@
 		5578C49617D9E8570057D11B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
@@ -10417,6 +10431,7 @@
 		5578C49717D9E8570057D11B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";

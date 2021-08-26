@@ -12,7 +12,7 @@ import PlayerPROKit
 import MASPreferences.MASPreferencesViewController
 import SwiftAdditions
 
-final class SoundOutputController: SoundSettingsViewController, SoundSettingsViewWithDriverControllerDelegate, MASPreferencesViewController {
+final class SoundOutputController: SoundSettingsViewController, SoundSettingsViewControllerDelegate, MASPreferencesViewController {
 	override var identifier: NSUserInterfaceItemIdentifier? {
 		get {
 			return .PPSoundSettPrefID

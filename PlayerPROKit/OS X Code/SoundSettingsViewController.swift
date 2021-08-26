@@ -82,10 +82,7 @@ private let OversamplingCoupling = [TagCoupling(1, 1), TagCoupling(2, 2), TagCou
 	func soundView(_ :SoundSettingsViewController, reverbSizeDidChange rev: Int32)
 	func soundView(_ :SoundSettingsViewController, oversamplingAmountDidChange ovs: Int32)
 	func soundView(_ :SoundSettingsViewController, stereoDelayAmountDidChange std: Int32)
-}
-
-@objc public protocol SoundSettingsViewWithDriverControllerDelegate : SoundSettingsViewControllerDelegate {
-	func soundView(_: SoundSettingsViewController, driverDidChange driv: MADSoundOutput)
+	@objc optional func soundView(_: SoundSettingsViewController, driverDidChange driv: MADSoundOutput)
 }
 
 open class SoundSettingsViewController: NSViewController {
@@ -323,7 +320,7 @@ open class SoundSettingsViewController: NSViewController {
 		}
 		oversamplingNum.selectItem(at: toSet! - 1)
 		
-		if delegate is SoundSettingsViewWithDriverControllerDelegate {
+		if delegate?.soundView != nil {
 			soundDriver.isEnabled = true
 		} else {
 			soundDriver.isEnabled = false
@@ -336,9 +333,7 @@ open class SoundSettingsViewController: NSViewController {
 	
 	@IBAction public func changeDriver(_ sender: AnyObject!) {
 		let driver = currentSoundDriver()
-		if let delegate1 = delegate as? SoundSettingsViewWithDriverControllerDelegate {
-			delegate1.soundView(self, driverDidChange: driver)
-		}
+		delegate?.soundView?(self, driverDidChange: driver)
 	}
 	
 	@IBAction public func changeBits(_ sender: AnyObject!) {
