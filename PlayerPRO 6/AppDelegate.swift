@@ -10,6 +10,7 @@ import Cocoa
 import PlayerPROCore
 import PlayerPROKit
 import SwiftAdditions
+import FoundationAdditions
 
 @inline(__always) private func makeNSRGB(_ red: UInt16, _ green: UInt16, _ blue:UInt16) -> NSColor {
 	return NSColor(calibratedRed: CGFloat(red) / CGFloat(UInt16.max), green: CGFloat(green) / CGFloat(UInt16.max), blue: CGFloat(blue) / CGFloat(UInt16.max), alpha: 1)

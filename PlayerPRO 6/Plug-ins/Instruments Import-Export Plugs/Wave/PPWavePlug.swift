@@ -10,7 +10,7 @@ import Cocoa
 import PlayerPROKit
 import AudioUnit
 import AudioToolbox
-import SwiftAdditions
+import FoundationAdditions
 import SwiftAudioAdditions
 
 private let kSrcBufSize: UInt32 = 32768;

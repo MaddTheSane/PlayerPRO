@@ -8,7 +8,7 @@
 
 import Cocoa
 import PlayerPROKit
-import SwiftAdditions
+import FoundationAdditions
 
 private let BYTESWAP_STRIDE = 8
 
