@@ -521,7 +521,7 @@ OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSettings *i
 	
 	theMAD->header->MAD = 'MADK';
 	
-	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO MED Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO MED Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->speed			= 	ms->tempo2;
 	theMAD->header->tempo			=	((long)ms->deftempo * 125L) / 33L;

@@ -482,7 +482,7 @@ void  UpdateDigiListWindow(DialogPtr GetSelection)
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
-		/*** Général Information ***/
+		/*** G√©n√©ral Information ***/
 		
 		tempRect = viewRect;
 		
@@ -518,7 +518,7 @@ void  UpdateDigiListWindow(DialogPtr GetSelection)
 		aRect.left -= 2*TEXTLARG;		aRect.right -= 2*TEXTLARG;
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
-		/********* Légende haut *************/
+		/********* L√©gende haut *************/
 
 		saveClip = NewRgn();
  		GetClip( saveClip);

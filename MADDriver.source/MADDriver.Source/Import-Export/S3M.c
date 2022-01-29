@@ -806,7 +806,7 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSettings
 	    }
 	}
 
-	/******** Le S3M a ŽtŽ lu et analysŽ ***********/
+	/******** Le S3M a Ã©tÃ© lu et analysÃ© ***********/
 	/******** Copie des informations dans le MAD ***/
 	
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);
@@ -816,7 +816,7 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSettings
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = s3minfo.name[i];
 	
-	MADstrcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO S3M Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	MADstrcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO S3M Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat		= s3minfo.patnum;
 	theMAD->header->numPointers	= s3minfo.ordernum;

@@ -190,7 +190,7 @@ BlockMoveData( oldMAD->oPointers, theMAD->header->oPointers, 128);
 theMAD->header->speed			= 6;
 theMAD->header->tempo			= 125;
 
-mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO MAD-F-G Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO MAD-F-G Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 
 
 theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));

@@ -6,7 +6,7 @@ files except Luminance.c, which has its own header file, Luminance.h.
 Any C file that might be used as a MATLAB file should #include <VideoToolbox.h>
 as it's first C statement.
 
-Copyright 1989-1993 © Denis G. Pelli
+Copyright 1989-1993 Â© Denis G. Pelli
 
 HISTORY: (omitting changes documented in *.c files)
 2/20/93 dhb	Added various commonly used headers.  
@@ -333,7 +333,7 @@ char *IdentifyCompiler(void);
 int IsNan(double x);
 int IsInf(double x);
 #ifndef IsFinite
-	#define IsFinite(x) ((*(short *)&(x) & 32767)!=32767)	/* neither NAN nor ±INF */
+	#define IsFinite(x) ((*(short *)&(x) & 32767)!=32767)	/* neither NAN nor Â±INF */
 #endif
 
 /* kbhit.c */
@@ -521,8 +521,8 @@ struct Timer{
 	TMTask time;
 	long ourA5;
 	long interval,elapsed,elapsedIntervals;
-	long timeToStartTimer;			// minimum time in µs
-	long stopDelay;					// µs from call to stop, re from call to start
+	long timeToStartTimer;			// minimum time in Âµs
+	long stopDelay;					// Âµs from call to stop, re from call to start
 	long timeManagerVersion;
 	struct Timer *next,*previous;	// doubly linked list of Timers
 };
@@ -531,7 +531,7 @@ typedef struct Timer Timer;
 Timer *NewTimer(void);
 void DisposeTimer(Timer *t);
 void StartTimer(Timer *t);
-long StopTimer(Timer *t);					// µs
+long StopTimer(Timer *t);					// Âµs
 double StopTimerSecs(Timer *t);				// s
 
 /* TitleBarHeight.c */

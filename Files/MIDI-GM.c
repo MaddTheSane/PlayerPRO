@@ -137,7 +137,7 @@ void InitQuicktimeInstruments(void)
 void OctavesMIDIName(short	id, Str255	String)
 {
 	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
-									/*	{'Do','Do#','RŽ','RŽ#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
+									/*	{'Do','Do#','RÃ©','RÃ©#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
 	Str255		WorkStr;
 	
 	if( id == 0xFF)
@@ -1214,9 +1214,9 @@ void Quicktime2Converter(void)
 	
 	BAIL:
 	
-	#if defined( MAINPLAYERPRO)
+#if defined( MAINPLAYERPRO)
 	UpdateALLWindow();
-	#endif
+#endif
 	
 	;
 }

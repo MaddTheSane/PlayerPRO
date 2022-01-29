@@ -110,7 +110,7 @@ void raiseRect (Rect theRect)
 	LineTo(theRect.left,theRect.bottom);
 }
 
-#define timeConvert		22254 //Å22KHZ
+#define timeConvert		22254 //â‰ˆ22KHZ
 
 pascal void xRectProc (DialogPtr	theWindow,
 						short		theItem)

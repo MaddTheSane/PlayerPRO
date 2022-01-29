@@ -207,8 +207,8 @@ OSErr main( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 	
 //	MYP2CStr( (unsigned char*) AlienFileName);
 	
-	#ifndef powerc
+#ifndef powerc
 		SetA4( oldA4);
-	#endif
+#endif
 	return myErr;
 }

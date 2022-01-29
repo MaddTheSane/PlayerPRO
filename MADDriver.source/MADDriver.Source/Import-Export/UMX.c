@@ -342,7 +342,7 @@ OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriverSettin
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( inOutCount, init);
 	if( theMAD->header == 0L) return MADNeedMemory;
 	
-	MADstrcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO MOD Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	MADstrcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO MOD Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;

@@ -161,9 +161,9 @@ void PlayChannel( MADDriverRec *inMADDriver)
 	MyPPDoubleBackProc( inMADDriver->MusicChannelPP, inMADDriver->TheHeader.dbhBufferPtr[ 0]);
 	MyPPDoubleBackProc( inMADDriver->MusicChannelPP, inMADDriver->TheHeader.dbhBufferPtr[ 1]);
 	
-	#if CALL_NOT_IN_CARBON
+#if CALL_NOT_IN_CARBON
 	iErr = SndPlayDoubleBuffer( inMADDriver->MusicChannelPP, &inMADDriver->TheHeader);
-	#else
+#else
 	iErr = MySndPlayDoubleBuffer( inMADDriver->MusicChannelPP, &inMADDriver->TheHeader);
-	#endif
+#endif
 }

@@ -151,7 +151,7 @@ void ScanDirPlug( long dirID, short VRefNum)
 			
 				LoadPLUG( tPlug, info.hFileInfo.ioNamePtr);
 			
-	/*		if( info.hFileInfo.ioFlFndrInfo.fdType == 'ÃEff')
+	/*		if( info.hFileInfo.ioFlFndrInfo.fdType == 'âˆšEff')
 				LoadPLUGSE( tPlug, info.hFileInfo.ioNamePtr);*/
 			
 			tPlug++;

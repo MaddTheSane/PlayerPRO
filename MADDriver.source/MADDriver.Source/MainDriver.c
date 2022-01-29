@@ -1162,12 +1162,12 @@ Boolean		needToReset;
 	else driver->XMLinear = false;
 	
 	
-	#if MAINPLAYERPRO
+#if MAINPLAYERPRO
 	if( MissingPlugs) strcpy( (Ptr) MissingPlugs, "");
-	#endif
+#endif
 	
 	//INSTALL ALL VST EFFECTS !!!!!!
-	#if MAINPLAYERPRO
+#if MAINPLAYERPRO
 	// Purge previous Effects !
 	for( i = 0; i < 10 ; i++)
 	{
@@ -1241,7 +1241,7 @@ Boolean		needToReset;
 	}
 	
 	if( MissingPlugs) MYC2PStr( (Ptr) MissingPlugs);
-	#endif
+#endif
 	
 	if( needToReset) MADReset( driver);
 	UpdateTracksNumber( driver);

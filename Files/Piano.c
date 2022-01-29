@@ -194,7 +194,7 @@ void CreatePianoPixMap(void)
 				nRect.left += ToucheLarg;
 				nRect.right += ToucheLarg;
 				
-				/** Caractère **/
+				/** Caract√®re **/
 				
 				MoveTo( 7 + i * 17, 19);
 				
@@ -232,7 +232,7 @@ void CreatePianoPixMap(void)
 				
 				for( i = 0; i < NUMBER_NOTES; i++)
 				{
-					/** Caractère **/
+					/** Caract√®re **/
 					
 					GetToucheRect( &aRect, i);
 					

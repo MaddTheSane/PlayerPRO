@@ -385,7 +385,7 @@ OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverSetting
 	}
 	
 	
-	// ******** Le IT a ŽtŽ lu et analysŽ ***********
+	// ******** Le IT a Ã©tÃ© lu et analysÃ© ***********
 	// ******** Copie des informations dans le MAD ***
 	
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);
@@ -395,7 +395,7 @@ OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverSetting
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = ITinfo.name[i];
 	
-	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO IT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO IT Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ITinfo.patNum;
 	theMAD->header->numPointers	= ITinfo.orderNum;

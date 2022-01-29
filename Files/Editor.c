@@ -347,7 +347,7 @@ Cell	theCell = { 0, 0};
 void OctavesName(short	id, Ptr	String)
 {
 	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
-							/*	{'Do','Do#','Ré','Ré#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
+							/*	{'Do','Do#','R√©','R√©#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
 	Str255		WorkStr;
 	
 	if( id == 0xFF)
@@ -3268,7 +3268,7 @@ void InternalEditorInit()
 	GetPort( &SavePort);
  	SetPortDialogPort( EditorDlog);
 	
-	/*** Détermine la longueur d'une cell ***/
+	/*** D√©termine la longueur d'une cell ***/
 
 	aCmd.ins	=	33;		aCmd.note			=	20;
 	aCmd.cmd	=	4;		aCmd.arg			=	23;
@@ -3853,7 +3853,7 @@ GrafPtr			SavePort;
 		
 	UPDATE_NoteFINISH();
 	
-	/*** Update de la région ***/
+	/*** Update de la r√©gion ***/
 	
 	PLGetSelectRect( &eRect, &myList);
 	InvalWindowRect( GetDialogWindow( EditorDlog), &eRect);
@@ -4486,7 +4486,7 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 	
 			if( movePcmd)		// Delete source
 			{
-				// La source est déjà selectionnée...
+				// La source est d√©j√† selectionn√©e...
 				
 				DoKeyPressEditor( 8);
 			}

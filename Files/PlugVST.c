@@ -1079,7 +1079,7 @@ void InitVSTPlug( void)
 		
 		myEffect = CreateVSTEffect( i);
 		
-	//	dispatcher( myEffect, true, effOpen, 0, 0, 0, 0);					// <- PrŽsent???
+	//	dispatcher( myEffect, true, effOpen, 0, 0, 0, 0);					// <- PrÃ©sent???
 		dispatcher( myEffect, true, effIdentify, 0, 0, 0, 0);
 	//	dispatcher( myEffect, true, effSetSampleRate, 0, 0, 0, 44100);
 	//	dispatcher( myEffect, true, effSetBlockSize, 0, 4096, 0, 0);

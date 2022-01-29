@@ -23,7 +23,7 @@ ProcInfoType __procinfo = PlayerPROPlug;
 
 /*______________________________________________________________________
  | _|_																	|
- |  À  WAVE2SND Project: Balthazar				Started:	12/14/92	|
+ |  Â¿  WAVE2SND Project: Balthazar				Started:	12/14/92	|
  | 									 	  Last Modified:	12/21/92	|
  | 									 	 		Release:	12/27/92	|
  | 																		|
@@ -32,7 +32,7 @@ ProcInfoType __procinfo = PlayerPROPlug;
  | 	Fridley, Mn 55432													|
  | 	612-780-5603														|
  | 						 												|
- | Copyright © 1992 by Craig A. Marciniak          All rights reserved. |
+ | Copyright Â© 1992 by Craig A. Marciniak          All rights reserved. |
  _______________________________________________________________________*/
 
 #define WAVE_FORMAT_PCM		1

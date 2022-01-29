@@ -674,7 +674,7 @@ OSErr XM_Load( Ptr	theXM, long XMSize, MADMusic *theMAD, MADDriverSettings *init
 	
 	if( theMAD->header->numPointers > 128) theMAD->header->numPointers = 128;
 	
-	MADstrcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO XM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	MADstrcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO XM Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for( i = 0; i < mh->songlength; i++)
 	{

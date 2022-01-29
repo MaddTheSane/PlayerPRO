@@ -116,13 +116,13 @@ OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDriverSe
 		OffSetToSample += SInfo->length;
 	}
 
-	/******** Le 669 a ŽtŽ lu et analysŽ ***********/
+	/******** Le 669 a Ã©tÃ© lu et analysÃ© ***********/
 	/******** Copie des informations dans le MAD ***/
 
 	theMAD->header->MAD = 'MADK';
 	for(i=0; i<32; i++) theMAD->header->name[i] = the669->message[i];
 	
-	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO 669 Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO 669 Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPointers = 128;	//the669->loopOrder;
 	theMAD->header->tempo = 125;

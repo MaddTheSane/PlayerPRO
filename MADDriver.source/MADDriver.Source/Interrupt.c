@@ -846,7 +846,7 @@ if( curVoice->samplePtr != 0L) return;
 else if( intCmd.ins != 0 || (intCmd.note != 0xFF && intCmd.note != 0xFE))
 {
 	/********************************/
-	/* Prépare les notes manquantes */
+	/* Pr√©pare les notes manquantes */
 	/********************************/
 	
 	/********************************/

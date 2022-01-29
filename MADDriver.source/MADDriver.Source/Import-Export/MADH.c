@@ -178,7 +178,7 @@ theMAD->header->tempo			= oldMAD->tempo;
 
 theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
 for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-MADHmystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO MAD-F-G Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+MADHmystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO MAD-F-G Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 
 /**** Patterns *******/
 

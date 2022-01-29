@@ -152,7 +152,7 @@ OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MADDriver
 
 
 	/***********************************************/
-	/******** Le MTM a ŽtŽ lu et analysŽ ***********/
+	/******** Le MTM a Ã©tÃ© lu et analysÃ© ***********/
 	/***** Copie des informations dans le MAD ******/
 	/***********************************************/
 	
@@ -176,7 +176,7 @@ OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MADDriver
 		theMAD->header->name[i] = MTMFile->songname[i];
 	}
 	
-	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO MTM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO MTM Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->tempo = 125;
 	theMAD->header->speed = 6;

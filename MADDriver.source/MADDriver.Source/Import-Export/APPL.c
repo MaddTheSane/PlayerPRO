@@ -449,7 +449,7 @@ Handle					hRsrc;
 	DetachResource( hRsrc);
 	DisposeHandle( hRsrc);
 	
-	/**** On copie les ressources nécessaires pour l'application **/
+	/**** On copie les ressources n√©cessaires pour l'application **/
 
 	if( APPLType == 0 || APPLType == 2)
 	{

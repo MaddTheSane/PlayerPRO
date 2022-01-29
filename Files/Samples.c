@@ -2132,7 +2132,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 									if( curIns->pannSize < 12)
 									{
 										short ww;
-										// déplace les pts après ce pt
+										// d√©place les pts apr√®s ce pt
 										
 										for( ww = 11; ww >= i; ww--) curIns->pannEnv[ ww] = curIns->pannEnv[ ww-1];
 										
@@ -2312,7 +2312,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 									if( curIns->volSize < 12)
 									{
 										short ww;
-										// déplace les pts après ce pt
+										// d√©place les pts apr√®s ce pt
 										
 										for( ww = 11; ww >= i; ww--) curIns->volEnv[ ww] = curIns->volEnv[ ww-1];
 										
@@ -3917,7 +3917,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 					tempRect.top = SampleRect.top;
 					tempRect.bottom = SampleRect.bottom;
 				
-					/** AU Cas où on tire dans les bords **/
+					/** AU Cas o√π on tire dans les bords **/
 				
 					theDialogControl = SampleDlog[ InstruNo];
 					
@@ -4687,7 +4687,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 							
 							SampleDataD( CurWin)->size = newSize;
 							
-							/*** Réajuste la loop ***/
+							/*** R√©ajuste la loop ***/
 							
 							if( SampleDataD( CurWin)->loopBeg > Start)
 							{
@@ -4719,7 +4719,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 							InternalUpdate( CurWin);
 							if( thePrefs.ClassicalProjection) UpdateMozartInfo();
 							
-							// Réduction de la sélection à une barre de clignotement:
+							// R√©duction de la s√©lection √† une barre de clignotement:
 							
 							Clignote[ CurWin] = true;
 							TokTak[ CurWin] = false;

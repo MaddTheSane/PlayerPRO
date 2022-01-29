@@ -118,7 +118,7 @@ else if( AMFType!= 0x414D4608 && AMFType != 0x414D4609) return MADFileNotSupport
 theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);	
 if( theMAD->header == 0L) return MADNeedMemory;
 
-mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO AMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO AMF Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 
 theMAD->header->MAD = 'MADK';
 

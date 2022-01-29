@@ -139,7 +139,7 @@ OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriverSetti
 	/**** Copy last infos *****/
 	BlockMoveData( theULTCopy + sizeof( ULTinfo) + ULTinfo.reserved * 32L + 1 + (ULTSuite.NOS * sizeof( ULTIns)), &ULTSuite.pattSeq, 256 + 2);
 	
-	// ******** Le ULT a ŽtŽ lu et analysŽ ***********
+	// ******** Le ULT a Ã©tÃ© lu et analysÃ© ***********
 	// ******** Copie des informations dans le MAD ***
 	
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);
@@ -149,7 +149,7 @@ OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriverSetti
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<32; i++) theMAD->header->name[i] = ULTinfo.name[i];
 	
-	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO ULT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO ULT Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ULTSuite.NOP;
 	theMAD->header->numPointers	= 1;					// CHANGE

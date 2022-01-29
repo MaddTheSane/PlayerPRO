@@ -2907,7 +2907,7 @@ pascal OSErr MyReceiveDropStaff(WindowPtr theWindow, void* handlerRefCon, DragRe
 			
 			if( movePcmd)		// Delete source
 			{
-				// La source est déjà selectionnée...
+				// La source est d√©j√† selectionn√©e...
 				
 				DoKeyPressStaff( 8);
 			}
@@ -3004,7 +3004,7 @@ GrafPtr			SavePort;
 	if( startYSelec < 0) startYSelec = 0;
 	if( endYSelec >= curMusic->header->numChn) endYSelec = curMusic->header->numChn-1;
 	
-	/*** Update de la région ***/
+	/*** Update de la r√©gion ***/
 	
 	CreateCurStaffRect();
 	InvalWindowRect( GetDialogWindow( StaffDlog), &CurRect);

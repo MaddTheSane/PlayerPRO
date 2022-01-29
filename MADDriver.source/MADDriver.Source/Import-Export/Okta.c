@@ -227,7 +227,7 @@ OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDriverSet
 		theOktaPos += aSect->length;
 	}
 
-	/******** Le Okta a ŽtŽ lu et analysŽ ***********/
+	/******** Le Okta a Ã©tÃ© lu et analysÃ© ***********/
 	/******** Copie des informations dans le MAD ***/
 
 	theMAD->header->MAD = 'MADK';
@@ -239,7 +239,7 @@ OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDriverSet
 	theMAD->header->tempo 			= 125;
 	theMAD->header->speed 			= Okta->speed;
 	
-	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO OKTA Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO OKTA Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for( i = 0;  i < 128; i++) theMAD->header->oPointers[ i] = 0;
 	for( i = 0;  i < pbod_count; i++) theMAD->header->oPointers[ i] = Okta->patt[ i];
