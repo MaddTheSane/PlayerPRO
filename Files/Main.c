@@ -87,6 +87,7 @@ extern void DisposeVSTEffect(VSTEffect *myEffect);
 extern void CheckVSTEditor(VSTEffect *ce);
 extern void ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
 extern VSTEffect* CreateVSTEffect(short effectID);
+extern short ConvertUniqueIDToIndex(long);
 
 extern pascal void MyDlgFilterNav(NavEventCallbackMessage callBackSelector, NavCBRecPtr callBackParms, NavCallBackUserData callBackUD);
 
@@ -874,6 +875,7 @@ void MusiqueDriverInit(void)
 	MADDriver->ApplyVSTSets = ApplyVSTSets;
 	MADDriver->CreateVSTEffect = CreateVSTEffect;
 	MADDriver->syncCallback = waitNext;
+	MADDriver->ConvertUniqueIDToIndex = ConvertUniqueIDToIndex;
 }
 
 /*************************************************/

@@ -930,11 +930,13 @@ void InitVSTPlug(void)
 	if (tPlug > 0) {
 		for (i = 0; i < tPlug; i++)	AppendMenu(VSTMenu, VSTPlug[i].file.name);
 		
-		AppendMenu(SampleMenu, "\p-");
+//		AppendMenu(SampleMenu, "\p-");
+		AppendMenuItemTextWithCFString(SampleMenu, CFSTR("-"), kMenuItemAttrSeparator, 0, NULL);
 		
 		for (i = 0; i < tPlug; i++)	AppendMenu(SampleMenu, VSTPlug[i].file.name);
 	} else {
-		AppendMenu(VSTMenu, "\p(No VST Plugs available");
+		AppendMenuItemTextWithCFString(VSTMenu, CFSTR("No VST Plugs available"), kMenuItemAttrDisabled, 0, NULL);
+//		AppendMenu(VSTMenu, "\p(No VST Plugs available");
 	}
 	
 	

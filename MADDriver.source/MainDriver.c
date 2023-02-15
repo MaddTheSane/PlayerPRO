@@ -60,12 +60,7 @@ enum {
 };
 
 #ifdef _MAC_H
-void CheckVSTEditor(VSTEffect *ce);
 void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
-void DisposeVSTEffect(VSTEffect	*myEffect);
-VSTEffect* CreateVSTEffect(short effectID);
-short ConvertUniqueIDToIndex(long);
-void ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
 #endif
 
 MADMusic* CreateFreeMADK(void)
@@ -1490,7 +1485,7 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 	{
 		if (music->header->globalEffect[i])
 		{
-			index = ConvertUniqueIDToIndex(music->sets[alpha].FXID);
+			index = driver->ConvertUniqueIDToIndex(music->sets[alpha].FXID);
 			
 			if (index >= 0)
 			{
@@ -1514,7 +1509,7 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 		{
 			if (music->header->chanEffect[i][x])
 			{
-				index = ConvertUniqueIDToIndex(music->sets[alpha].FXID);
+				index = driver->ConvertUniqueIDToIndex(music->sets[alpha].FXID);
 			
 				if (index >= 0)
 				{

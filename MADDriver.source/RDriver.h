@@ -683,7 +683,6 @@ typedef struct MADDriverRec
 	VSTEffect				*masterVST[10];
 	VSTEffect				*chanVST[MAXTRACK][4];
 	PPSndDoubleBufferHeader TheHeader;
-	
 #endif
 
 	void (*syncCallback)(void);
@@ -693,6 +692,8 @@ typedef struct MADDriverRec
 	void (*CheckVSTEditor)(VSTEffect *ce);
 	void (*ApplyVSTSets)(VSTEffect* myEffect, FXSets* set);
 	VSTEffect* (*CreateVSTEffect)(short effectID);
+	short (*ConvertUniqueIDToIndex)(long);
+
 } MADDriverRec;
 
 /********************						***********************/
