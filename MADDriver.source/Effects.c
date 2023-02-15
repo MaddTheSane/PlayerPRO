@@ -27,6 +27,7 @@
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
+static void parse_slidevol(Channel *ch, Byte Arg);
 void parse_slidevol(Channel *ch, Byte Arg)
 {
 	if (HI(Arg) ) ch->volumerate = HI(Arg);

@@ -6,6 +6,7 @@
 #include "Undo.h"
 #include "Utils.h"
 #include "Navigation.h"
+#include "PlugVST.h"
 
 /******** HELP MODULE ********/
 enum
@@ -71,10 +72,7 @@ void CheckVSTEditor(VSTEffect *ce);
 pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag);
 pascal OSErr MyReceiveAdap(WindowPtr theWindow, void* handlerRefCon, DragReference theDrag);
 void UPDATE_TrackActive(void);
-void DisposeVSTEffect(VSTEffect	*myEffect);
-void HandleVSTChoice(short item, VSTEffect** vst, short channelID);
 void CreateControlAdap(void);
-void FillVSTEffects(void);
 
 void DrawValueIndicator(double val, Boolean percent, Str255 text)
 {

@@ -1600,6 +1600,7 @@
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WAV.h; sourceTree = "<group>"; };
 		5593AA631892EBC600F1B144 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = Files/Utils.h; sourceTree = "<group>"; };
 		55B1953D17FD5CC200E6F160 /* ScreenDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScreenDevice.cpp; path = Files/ScreenDevice.cpp; sourceTree = "<group>"; };
+		55B52894299D8466000D3F15 /* PlugVST.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlugVST.h; path = Files/PlugVST.h; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
@@ -3226,6 +3227,7 @@
 				88E0C3C70C2F21DD00D6C081 /* PlugsSoundFilter.c */,
 				88E0C3C80C2F21DD00D6C081 /* PlugVisual.c */,
 				88E0C3C90C2F21DD00D6C081 /* PlugVST.c */,
+				55B52894299D8466000D3F15 /* PlugVST.h */,
 			);
 			lineEnding = 0;
 			name = Plugs;

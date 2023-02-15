@@ -6,6 +6,7 @@
 #include "RDriverInt.h"
 #include "Utils.h"
 #include "Navigation.h"
+#include "PlugVST.h"
 
 extern	DialogPtr	MODListDlog;
 extern	KeyMap		km;
@@ -24,9 +25,7 @@ void KillOverShoot(short ACdriver);
 void ReconstructShowInfo();
 Boolean PressMenuItem(short menuID, short itemID, DialogPtr dia, long *curVal, short remove, Str255	str);
 void ConvertInstrumentIn(register	Byte	*tempPtr,	register long sSize);
-void GetDigitalSelection(short *XStart, short *YStart, short *XEnd, short *YEnd, short *currentPat);
-void FillVSTEffects(void);
-void CheckVSTEditor(VSTEffect *ce);
+extern void GetDigitalSelection(short *XStart, short *YStart, short *XEnd, short *YEnd, short *currentPat);
 void OtherIntErreur(short ID, OSErr theErr, Str255 otherstr);
 OSErr ConvertMovieToMPEG4(FSSpec *inputFile, FSSpec *outputFile);
 Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, OSType type, FSSpec *dstFile);

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "aeffectx.h"
 #include "RDriver.h"
+#include "PlugVST.h"
 
 #include <Carbon/Carbon.h>
 
@@ -19,13 +20,8 @@ static	short		CurrentcurSelec;
 		short		PlugsFolderOK;
 
 void SampleUpdateNow(void);
-VSTEffect* CreateVSTEffect(short effectID);
-void DisposeVSTEffect(VSTEffect *myEffect);
-long dispatcher(VSTEffect *effect, Boolean applyOnBoth, long opCode, long index, long value, void *ptr, float opt);
-Boolean VSTEditorClose(DialogPtr aDia, short itemHit);
-Boolean VSTEditorOpen(VSTEffect *ce, sData	*curData, long Start, long End, Boolean StereoMode, short channelID);
-void VSTEditorDoItemPress(short itemHit, DialogPtr aDia);
-void FillVSTEffects(void);
+static long dispatcher(VSTEffect *effect, Boolean applyOnBoth, long opCode, long index, long value, void *ptr, float opt);
+static Boolean VSTEditorOpen(VSTEffect *ce, sData	*curData, long Start, long End, Boolean StereoMode, short channelID);
 
 static	float	*inputs[2], *outputs[2], *outputs2[2];
 static	long	currentdatasize;
@@ -155,7 +151,8 @@ short PressPresetButton(long id, Point myPt, short *curSelec)
 	long		i, mresult, maxitem, temp;
 	short		returnVal = 0, table[200];
 	
-	presetMenu = NewMenu(244, "\pPreset Menu");
+	CreateNewMenu(244, 0, &presetMenu);
+	SetMenuTitleWithCFString(presetMenu, CFSTR("Preset Menu"));
 	
 	for (i = 0, maxitem = 0; i < MAXVSTPREF;i++) {
 		if (VSTPref[i] != NULL) {
@@ -168,13 +165,14 @@ short PressPresetButton(long id, Point myPt, short *curSelec)
 	}
 	
 	if (maxitem == 0) {
-		AppendMenu(presetMenu, "\p(No settings available");
+		AppendMenuItemTextWithCFString(presetMenu, CFSTR("No settings available"), kMenuItemAttrDisabled, 0, NULL);
+//		AppendMenu(presetMenu, "\p(No settings available");
 	}
 	
-	AppendMenu(presetMenu, "\p-");
-	AppendMenu(presetMenu, "\pAdd current Settings");
+	AppendMenuItemTextWithCFString(presetMenu, CFSTR("-"), kMenuItemAttrSeparator, 0, NULL);
+	AppendMenuItemTextWithCFString(presetMenu, CFSTR("Add current Settings"), 0, 0, NULL);
 	
-	InsertMenu(presetMenu, hierMenu);
+	InsertMenu(presetMenu, kInsertHierarchicalMenu);
 	
 	LocalToGlobal(&myPt);
 	
@@ -245,7 +243,7 @@ void HandleVSTChoice(short item, VSTEffect** vst, short channelID)
 #endif
 }
 
-long audioMasterFct(AEffect *effect, long opcode, long index, long value, void *ptr, float opt)
+static long audioMasterFct(AEffect *effect, long opcode, long index, long value, void *ptr, float opt)
 {
 	long returnVal = 0;
 	
@@ -325,7 +323,7 @@ static inline char ClipConvert8(float x)
 		return x * 128.;
 }
 
-void ApplyVSTFilter(VSTEffect *effect, sData *SDataSrc, long Start, long End)
+static void ApplyVSTFilter(VSTEffect *effect, sData *SDataSrc, long Start, long End)
 {
 	short	*data16;
 	char	*data8;
@@ -681,7 +679,7 @@ void ProcessVSTPlug(MADDriverRec *intDriver, long *data, long datasize, short ch
 	}
 }
 
-void CloseVST(short no, VSTEffect *myEffect)
+static void CloseVST(short no, VSTEffect *myEffect)
 {
 	OSErr myErr;
 
@@ -703,10 +701,10 @@ void CloseVSTPlug()
 	long 	i, inOutBytes;
 	OSErr	iErr;
 	FSSpec	spec;
-	short	fRefNum;
+	FSIORefNum	fRefNum;
 	
 	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);
-	pStrcpy(spec.name, VSTPREFNAME);
+	FSMakeFSSpec(spec.vRefNum, spec.parID, VSTPREFNAME, &spec);
 	
 	iErr = FSpDelete(&spec);
 	iErr = FSpCreate(&spec, 'SNPL', 'PREF',smSystemScript);
@@ -737,11 +735,11 @@ void CloseVSTPlug()
 	DisposePtr((Ptr)outputs2[1]);
 }
 
-void InitVST(short no, VSTEffect* myEffect)
+static void InitVST(short no, VSTEffect* myEffect)
 {
 	OSErr	myErr;
 	Str255	errName;
-	short	fileID;
+	FSIORefNum	fileID;
 	
 	audioMaster = audioMasterFct;
 	
@@ -763,7 +761,7 @@ void InitVST(short no, VSTEffect* myEffect)
 Boolean LoadVSTPLUG(short No, StringPtr theName)
 {
 	Handle	theRes;
-	short	fileID;
+	FSIORefNum	fileID;
 
 	/***********************/
 	
@@ -796,12 +794,13 @@ Boolean LoadVSTPLUG(short No, StringPtr theName)
 	return true;
 }
 
-void ScanDirVSTPlug(long dirID, short VRefNum)
+static void ScanDirVSTPlug(SInt32 dirID, FSVolumeRefNum VRefNum)
 {
 	CInfoPBRec		info;
 	Str255			tempStr;
 	long			dirIDCopy;
-	short			i, vRefNum;
+	short			i;
+	FSIORefNum		vRefNum;
 	OSErr			iErr;
 
 	info.hFileInfo.ioNamePtr = tempStr;
@@ -850,7 +849,7 @@ static void ByteSwapVSTPrefStruct(VSTPrefsStruct *astruct)
 
 void InitVSTPlug(void)
 {
-	short			vRefNum, fRefNum;
+	FSIORefNum		vRefNum, fRefNum;
 	long			i, x, dirID, inOutBytes;
 	OSErr			iErr;
 	FSSpec			spec;

@@ -1454,7 +1454,6 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 #endif
 	
 	//INSTALL ALL VST EFFECTS !!!!!!
-#if 1
 	if (driver->DisposeVSTEffect) {
 	// Purge previous Effects !
 	for (i = 0; i < 10 ; i++)
@@ -1530,7 +1529,6 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 	
 	if (MissingPlugs) MYC2PStr((Ptr) MissingPlugs);
 	}
-#endif
 	
 	if (needToReset) MADReset(driver);
 	UpdateTracksNumber(driver);

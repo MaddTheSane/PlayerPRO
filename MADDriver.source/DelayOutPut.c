@@ -26,9 +26,7 @@
 
 static Ptr	maxBuffer;
 
-unsigned long getfrequency(unsigned long period);
-
-Boolean IsVSTChanEffect(MADDriverRec *intDriver, short channel);
+extern unsigned long getfrequency(unsigned long period);
 
 static inline void PrepareInline(long *VolInter, long* rVolInter, double p2, double v1, double v2)
 {
@@ -760,10 +758,8 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 //	short		*ASCBuffer, valP = 0x7FFFL, valN = -0x7FFFL;
 //long		*eee, *ttt, *ASCBuffer1, *ASCBuffer2, i, ii;
 	long		i;
-#if 1
 	long		ii;
 	short		chanCounter = 0, find, trackID;
-#endif
 
 	for (i = 0; i < MAXCHANEFFECT; i++)
 	{
@@ -773,8 +769,6 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 	
 	for (i = 0 ; i < intDriver->MultiChanNo; i++)	//intDriver->DriverSettings.numChn
 	{
-#if 1
-#warning VST Channel effect
 		if (intDriver->IsVSTChanEffect && intDriver->IsVSTChanEffect(intDriver, i) && chanCounter < MAXCHANEFFECT)
 		{
 			trackID = intDriver->curMusic->header->chanBus[intDriver->chan[i].TrackID].copyId;
@@ -798,7 +792,6 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 			intDriver->EffectBufferRealID[find] = i;
 		}
 		else
-#endif
 			Sample16BufferAddDelay(&intDriver->chan[i], intDriver->DASCBuffer, intDriver);
 	}
 }

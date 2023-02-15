@@ -13,6 +13,7 @@
 #include <CoreMIDI/CoreMIDI.h>
 #include "PreferenceHandler.h"
 #include "LocalizationCarbonStrings.h"
+#include "PlugVST.h"
 
 void DoChangeLoop(void);
 void VSTEditorDoNull(void);
@@ -33,7 +34,6 @@ void 	VisualFullScreen(void);
 void 	InitFourier(void);
 void 	CloseFourier(void);
 short 	maxVisualPlug(void);
-void 	HandleVSTChoice(short item, VSTEffect **);
 void 	DoKeyVisual(DialogPtr whichDialog);
 void 		CloseBookMarks();
 void 		InitBookMarks();
@@ -81,13 +81,6 @@ void		ImportAudioCD();
 void		WindowsSettingsMenu(short item);
 void		COPYQuicktime();
 void		InitFFTSampleFilter(void);
-extern void ProcessVSTPlug(MADDriverRec *intDriver, long *data, long datasize, short channel);
-extern Boolean IsVSTChanEffect(MADDriverRec *intDriver, short channel);
-extern void DisposeVSTEffect(VSTEffect *myEffect);
-extern void CheckVSTEditor(VSTEffect *ce);
-extern void ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
-extern VSTEffect* CreateVSTEffect(short effectID);
-extern short ConvertUniqueIDToIndex(long);
 
 extern pascal void MyDlgFilterNav(NavEventCallbackMessage callBackSelector, NavCBRecPtr callBackParms, NavCallBackUserData callBackUD);
 

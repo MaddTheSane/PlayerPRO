@@ -34,9 +34,9 @@ void ApplyFilters(MADDriverRec *intDriver);
 void ApplySurround(MADDriverRec *intDriver);
 void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
 void SendMIDITimingClock(MADDriverRec *intDriver);
-void 	ConvertInstrumentIn(register	Byte	*tempPtr,	register long sSize);
+void ConvertInstrumentIn(register	Byte	*tempPtr,	register long sSize);
 void ConvertInstrument(register	Byte	*tempPtr,	register long sSize);
-Boolean IsVSTChanEffect(MADDriverRec *, short channel);
+static long getlinearperiod(short note,long c2spd, MADDriverRec *intDriver);
 
 void ProcessVisualPlug(MADDriverRec*, short*, long);
 
@@ -796,7 +796,7 @@ void IntNoteOff(Channel *curVoice, MADDriverRec *intDriver)
 	}
 }
 
-void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
+static void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 {
 	Cmd			intCmd = *theNoteCmd;
 	Boolean		ChangedInstru = false;
@@ -1169,7 +1169,7 @@ short FindAFreeChannel(MADDriverRec *intDriver)
 	return chanID;
 }
 
-void ApplyVSTEffects(MADDriverRec *intDriver, Boolean ByPass)
+static void ApplyVSTEffects(MADDriverRec *intDriver, Boolean ByPass)
 {
 	long i;
 	
@@ -1211,14 +1211,11 @@ void ApplyVSTEffects(MADDriverRec *intDriver, Boolean ByPass)
 				
 				// APPLY VST - EFFECTS
 				
-#if 1
-//TODO: Apply VST effects
 				if (intDriver->currentlyExporting)
 				{
 					if (intDriver->thisExport && intDriver->ProcessVSTPlug) intDriver->ProcessVSTPlug(intDriver, (long*) intDriver->DASCEffectBuffer[i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[i]);
 				}
 				else if (intDriver->ProcessVSTPlug) intDriver->ProcessVSTPlug(intDriver, (long*) intDriver->DASCEffectBuffer[i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[i]);
-#endif
 				
 				
 				// *** *** *** *** ***
@@ -1676,8 +1673,6 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
 	
-#if 1
-//TODO: Process VST Plug-in
 	if (intDriver->DriverSettings.outPutBits == 16)
 	{
 		if (intDriver->currentlyExporting)
@@ -1691,7 +1686,6 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			intDriver->ProcessVSTPlug(intDriver, (long*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
 		}
 	}
-#endif
 	
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
 	

@@ -693,7 +693,6 @@ typedef struct MADDriverRec
 	void (*ApplyVSTSets)(VSTEffect* myEffect, FXSets* set);
 	VSTEffect* (*CreateVSTEffect)(short effectID);
 	short (*ConvertUniqueIDToIndex)(long);
-
 } MADDriverRec;
 
 /********************						***********************/

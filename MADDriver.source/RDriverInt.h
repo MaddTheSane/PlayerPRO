@@ -121,7 +121,6 @@ void DoVolCmd(Channel *ch, short call, MADDriverRec *intDriver);
 
 void 	NoteAnalyse(MADDriverRec *intDriver);
 pascal 	void DMAPlay (void);
-void 	ReadNote(Channel *curVoice, Cmd		*theCommand, MADDriverRec *intDriver);
 void 	Filter8Bit(register Byte *myPtr, MADDriverRec *intDriver);
 void 	Filter8BitX(register Byte *myPtr, MADDriverRec *intDriver);
 void 	Filter16BitX(register short *myPtr, MADDriverRec *intDriver);
@@ -254,7 +253,6 @@ void StartPanning(Channel *ch);
 void SetUpCmdEffect(Channel *ch, MADDriverRec *intDriver);
 OSErr MADInitEqualizer(MADDriverRec *intDriver);
 void MADCloseEqualizer(MADDriverRec *intDriver);
-void MADrealft(double *data,int n,int isign);
 void MADCallFFT(sData *SData, double *filter, MADDriverRec *intDriver, Boolean);
 void FFT16S(short* SData, long size, double *filter, MADDriverRec *intDriver, short nochan, Boolean);
 void FFT8S(char	*SData, long size, double *filter, MADDriverRec *intDriver, short nochan, Boolean);
@@ -275,7 +273,6 @@ void ASIOPlayChannel(MADDriverRec *inMADDriver);
 void BL32(void *msg_buf);
 void BL16(void *msg_buf);
 
-void parse_slidevol(Channel *ch, Byte Arg);
 void ConvertTo64Rows(MADMusic *music);
 //void						BL32(void *msg_buf);
 //void						BL16(void *msg_buf);

@@ -28,8 +28,8 @@
 
 #define SWAP(a,b) tempr=(a);(a)=(b);(b)=tempr
 
-long Interpolate(long p,long p1,long p2,long v1,long v2);
-double EQInterpolate(double p,double p1,double p2,double v1,double v2);
+static void MADrealft(double *data,int n,int isign);
+extern double EQInterpolate(double p,double p1,double p2,double v1,double v2);
 
 double EQInterpolate(double p,double p1,double p2,double v1,double v2)
 {
@@ -75,7 +75,7 @@ void MADCloseEqualizer(MADDriverRec *intDriver)
 	DisposePtr((Ptr) intDriver->fData);
 }
 
-void MADfour1(double *data,int nn,int isign)
+static void MADfour1(double *data,int nn,int isign)
 {
 	int 		n, mmax, m, j, istep, i;
 	double 		wtemp, wr, wpr, wpi, wi, theta;

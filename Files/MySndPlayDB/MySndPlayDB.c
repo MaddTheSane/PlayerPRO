@@ -57,11 +57,11 @@ typedef struct PerChanInfo			PerChanInfo;
 typedef struct PerChanInfo *		PerChanInfoPtr;
 
 // Globals
-	Boolean							gNMRecBusy;
-	NMRecPtr						gNMRecPtr;
-	QHdrPtr							gFreeList;
-	Ptr								gSilenceTwos;
-	Ptr								gSilenceOnes;
+static Boolean						gNMRecBusy;
+static NMRecPtr						gNMRecPtr;
+static QHdrPtr						gFreeList;
+static Ptr							gSilenceTwos;
+static Ptr							gSilenceOnes;
 static SndCallBackUPP				gMySndPlayDoubleBufferCallBackUPP = NULL;
 static SndCallBackUPP				gMySndPlayDoubleBufferCleanUpUPP = NULL;
 
