@@ -695,7 +695,7 @@ void CreateDigiListWindow(void)
 	
 	GetPort(&savePort);
 	
-	SetItemMark(ViewsMenu, 4, checkMark);
+	CheckMenuItem(ViewsMenu, mSpectrumV, TRUE);
 	
 	DigitalDlog = GetNewDialog(150, NULL, GetDialogWindow(ToolsDlog));
 	
@@ -734,7 +734,7 @@ void CloseDigiList(void)
 {
 	if (DigitalDlog != NULL) {
 		DisposeDialog(DigitalDlog);
-		SetItemMark(ViewsMenu, 4, noMark);
+		CheckMenuItem(ViewsMenu, mSpectrumV, FALSE);
 	}
 	DigitalDlog = NULL;
 }

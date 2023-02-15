@@ -119,7 +119,7 @@ Boolean PressFKeyMenu(short itemID, DialogPtr dia, short whichFKey, Str255	str)
 								Zone.h,
 								curSelec);
 	
-	SetItemMark(FKeyMenu, curSelec, 0);
+	SetItemMark(FKeyMenu, curSelec, noMark);
 	
 	if (HiWord(mresult ) != 0 )
 	{
@@ -254,7 +254,7 @@ void PressFKey(short whichFKey)
 					
 				case RefAdaptators:
 					ShowWindow(GetDialogWindow(AdapDlog));
-					SetItemMark(ViewsMenu, mAdap, checkMark);
+					CheckMenuItem(ViewsMenu, mAdap, TRUE);
 					break;
 					
 				case RefMODList:
@@ -264,7 +264,7 @@ void PressFKey(short whichFKey)
 					
 				case RefPlayer:
 					CreateOscilloWindow();
-					SetItemMark(ViewsMenu, mOscilloV, checkMark);
+					CheckMenuItem(ViewsMenu, mOscilloV, TRUE);
 					break;
 					
 				case RefPiano:

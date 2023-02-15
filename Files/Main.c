@@ -180,7 +180,7 @@ void CreateTempFile()
 	FSSpec	spec;
 	OSErr	iErr;
 	
-	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);
+	iErr = FindFolder(kUserDomain, kTemporaryFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);
 	if (iErr == noErr) {
 		FSMakeFSSpec(spec.vRefNum, spec.parID, TEMPNAME, &spec);
 		iErr = FSpCreate(&spec, 'xxxx', 'xxxx', smSystemScript);
@@ -223,9 +223,9 @@ void DeleteTempFile()
 	FSSpec	spec;
 	OSErr	iErr;
 	
-	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);
+	iErr = FindFolder(kUserDomain, kTemporaryFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);
 	
-	pStrcpy(spec.name, TEMPNAME);
+	iErr = FSMakeFSSpec(spec.vRefNum, spec.parID, TEMPNAME, &spec);
 	iErr = FSpDelete(&spec);
 }
 
@@ -359,7 +359,7 @@ void ClosePlayerWindow(DialogPtr	theDia)
 			
 		case RefTools:
 			HideWindow(GetDialogWindow(ToolsDlog));
-			SetItemMark(ViewsMenu, mTools, noMark);
+			CheckMenuItem(ViewsMenu, mTools, FALSE);
 			break;
 			
 		case RefSample:
@@ -697,7 +697,7 @@ void ShowWindowPref(short whichState)
 						SetWindEtat(GetDialogWindow(AdapDlog));
 						SetUpScroll();
 						SelectWindow(GetDialogWindow(AdapDlog));
-					}	SetItemMark(ViewsMenu, mAdap, checkMark);
+					}	CheckMenuItem(ViewsMenu, mAdap, TRUE);
 					break;
 					
 				case RefMODList:
@@ -3516,7 +3516,7 @@ pascal short MyDlgHook2(short item, DialogPtr theDialog, void *myDataPtr)
 									  Zone.v,
 									  Zone.h,
 									  showWhat );
-			SetItemMark(showWhatMenu, showWhat, 0);
+			SetItemMark(showWhatMenu, showWhat, noMark);
 			
 			if (HiWord(mresult ) != 0 )
 			{
@@ -4244,7 +4244,7 @@ void WindowsSettingsOption()
 										  myPt.h,
 										  curSelec+1);
 				
-				SetItemMark(tMenu, curSelec+1, 0);
+				SetItemMark(tMenu, curSelec+1, noMark);
 				
 				if (HiWord(mresult) != 0) {
 					curSelec = LoWord(mresult) - 1;
@@ -4530,7 +4530,7 @@ void HandleViewsChoice(short theItem)
 					ShowWindow(GetDialogWindow(AdapDlog));
 					SelectWindow2(GetDialogWindow(AdapDlog));
 					SetPortDialogPort(AdapDlog);
-					SetItemMark(ViewsMenu, mAdap, checkMark);
+					CheckMenuItem(ViewsMenu, mAdap, TRUE);
 				}
 			} else
 				CreateAdapWindow();
@@ -4545,7 +4545,7 @@ void HandleViewsChoice(short theItem)
 				} else {
 					SelectWindow2(GetDialogWindow(ClassicDlog));
 					SetPortDialogPort(ClassicDlog);
-					SetItemMark(ViewsMenu, mPatternV, checkMark);
+					CheckMenuItem(ViewsMenu, mPatternV, TRUE);
 				}
 			} else
 				CreateClassicWindow();
@@ -4622,7 +4622,7 @@ void HandleViewsChoice(short theItem)
 				ShowWindow(GetDialogWindow(ToolsDlog));
 				SelectWindow(GetDialogWindow(ToolsDlog));
 				SelectWindow2(oldWindow);
-				SetItemMark(ViewsMenu, mTools, checkMark);
+				CheckMenuItem(ViewsMenu, mTools, TRUE);
 			}
 			break;
 			

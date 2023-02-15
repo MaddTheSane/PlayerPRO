@@ -796,7 +796,7 @@ void CreateClassicWindow(void)
 		return;
 	}
 	
-	SetItemMark(ViewsMenu, mPatternV, checkMark);
+	CheckMenuItem(ViewsMenu, mPatternV, TRUE);
 	
 	ClassicDlog = GetNewDialog(147, NULL, GetDialogWindow(ToolsDlog));
 	SetWindEtat(GetDialogWindow(ClassicDlog));
@@ -896,7 +896,7 @@ void CloseClassicWindow(void)
 {
 	if (ClassicDlog != NULL) {
 		DisposeDialog(ClassicDlog);
-		SetItemMark(ViewsMenu, mPatternV, noMark);
+		CheckMenuItem(ViewsMenu, mPatternV, FALSE);
 	}
 	ClassicDlog = NULL;
 }

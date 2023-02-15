@@ -1079,7 +1079,7 @@ void CreatePianoWindow(void)
 		return;
 	}
 	
-	SetItemMark(ViewsMenu, mPiano, checkMark);
+	CheckMenuItem(ViewsMenu, mPiano, TRUE);
 	
 	if (thePrefs.SmallPiano)
 		pianoType = eSmallPiano;
@@ -1189,7 +1189,7 @@ void ClosePiano(void)
 	PianoDlog = NULL;
 	//PianoRecording = false;
 	
-	SetItemMark(ViewsMenu, mPiano, noMark);
+	CheckMenuItem(ViewsMenu, mPiano, FALSE);
 }
 
 extern MenuHandle TrackView;

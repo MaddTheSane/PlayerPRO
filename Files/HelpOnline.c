@@ -157,7 +157,7 @@ void CreateHelpOnline(short whichSection)
 		return;
 	}
 	
-	SetItemMark(HelpMenu, 1, checkMark);
+	CheckMenuItem(HelpMenu, 1, TRUE);
 	
 	curSect = whichSection;
 	
@@ -236,7 +236,7 @@ void CloseHelpOnline(void)
 		DisposePtr((Ptr)lineList);
 		DisposeMenu(sectMenu);
 		
-		SetItemMark(HelpMenu, 1, noMark);
+		CheckMenuItem(HelpMenu, 1, FALSE);
 	}
 }
 
@@ -336,7 +336,7 @@ void DoItemPressHelpOnline(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curSect + 1);
 			
-			SetItemMark(sectMenu, curSect + 1, 0);
+			SetItemMark(sectMenu, curSect + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				curSect = (Byte)LoWord(mresult) - 1;

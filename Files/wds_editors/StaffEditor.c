@@ -2056,7 +2056,7 @@ void DoItemPressStaff(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curInstru+1 );
 			
-			SetItemMark(InstruMenu, curInstru+1 , 0);
+			SetItemMark(InstruMenu, curInstru+1, noMark);
 			
 			if (HiWord(mresult ) != 0) {
 				curInstru = (Byte) LoWord(mresult) - 1;
@@ -2195,7 +2195,7 @@ void CreateStaffWindow(void)
 		return;
 	}
 	
-	SetItemMark(EditorMenu, 3, checkMark);
+	CheckMenuItem(EditorMenu, 3, TRUE);
 	
 	StaffDlog = GetNewDialog(134, NULL, GetDialogWindow(ToolsDlog));
 	SetWindEtat(GetDialogWindow(StaffDlog));
@@ -2402,7 +2402,7 @@ void CloseStaff(void)
 	}
 	StaffDlog = NULL;
 	
-	SetItemMark(EditorMenu, 3, noMark);
+	CheckMenuItem(EditorMenu, 3, FALSE);
 }
 
 void DoKeyPressStaff(short theChar)

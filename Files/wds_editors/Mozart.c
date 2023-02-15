@@ -2512,7 +2512,7 @@ void DoItemPressMozart(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curInstru + 1);
 			
-			SetItemMark(InstruMenu, curInstru + 1, 0);
+			SetItemMark(InstruMenu, curInstru + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				curInstru = (Byte)LoWord(mresult) - 1;
@@ -2624,7 +2624,7 @@ void DoItemPressMozart(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curEffect + 1);
 			
-			SetItemMark(EffectMenu, curEffect + 1, 0);
+			SetItemMark(EffectMenu, curEffect + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				curEffect = (Byte)LoWord(mresult) - 1;

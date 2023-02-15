@@ -735,7 +735,7 @@ void DoItemPressCmdDlog(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curSelec + 1);
 			
-			SetItemMark(InstruMenu, curSelec + 1, 0);
+			SetItemMark(InstruMenu, curSelec + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
@@ -768,7 +768,7 @@ void DoItemPressCmdDlog(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curSelec);
 			
-			SetItemMark(EffectMenu, curSelec, 0);
+			SetItemMark(EffectMenu, curSelec, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				curMusic->hasChanged = true;
@@ -802,7 +802,7 @@ void DoItemPressCmdDlog(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curSelec+1);
 			
-			SetItemMark(tMenu, curSelec+1, 0);
+			SetItemMark(tMenu, curSelec+1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				curMusic->hasChanged = true;
@@ -835,7 +835,7 @@ void DoItemPressCmdDlog(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curSelec+1);
 			
-			SetItemMark(tMenu, curSelec+1, 0);
+			SetItemMark(tMenu, curSelec+1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				curMusic->hasChanged = true;
@@ -1016,7 +1016,7 @@ void DoItemPressCmdDlog(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curTrack + 1);
 			
-			SetItemMark(TrackView, curTrack + 1, 0);
+			SetItemMark(TrackView, curTrack + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				curTrack = (Byte)LoWord(mresult) - 1;
@@ -1040,7 +1040,7 @@ void DoItemPressCmdDlog(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  oldPat + 1);
 			
-			SetItemMark(thePatternMenu, oldPat + 1, 0);
+			SetItemMark(thePatternMenu, oldPat + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				MADDriver->Pat = (Byte) LoWord(mresult) - 1;

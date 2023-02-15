@@ -438,7 +438,7 @@ REGODIA:
 										  myPt.h,
 										  CategoryID);
 				
-				SetItemMark(CategoryMenu, CategoryID, 0);
+				SetItemMark(CategoryMenu, CategoryID, noMark);
 				
 				if (HiWord(mresult) != 0) {
 					CategoryID = LoWord(mresult);
@@ -480,7 +480,7 @@ REGODIA:
 										  myPt.h,
 										  QKInstruID);
 				
-				SetItemMark(QKInstruMenu[CategoryID], QKInstruID, 0);
+				SetItemMark(QKInstruMenu[CategoryID], QKInstruID, noMark);
 				
 				if (HiWord(mresult) != 0) {
 					QKInstruID = LoWord(mresult);
@@ -518,7 +518,7 @@ REGODIA:
 										  myPt.h,
 										  curSPos+1);
 				
-				SetItemMark(NoteMenu, curSPos + 1, 0);
+				SetItemMark(NoteMenu, curSPos + 1, noMark);
 				
 				if (HiWord(mresult) != 0) {
 					curSPos = LoWord(mresult) - 1;

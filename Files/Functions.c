@@ -748,7 +748,7 @@ void DoItemPressFind(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  FindTrack + 1);
 			
-			SetItemMark(TrackView, FindTrack + 1, 0);
+			SetItemMark(TrackView, FindTrack + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				FindTrack = (Byte) LoWord(mresult) - 1;
@@ -787,7 +787,7 @@ void DoItemPressFind(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  *shortPtr + 1);		// curInstru + 1
 			
-			SetItemMark(InstruMenu, *shortPtr + 1, 0);		// curInstru + 1
+			SetItemMark(InstruMenu, *shortPtr + 1, noMark);		// curInstru + 1
 			
 			if (HiWord(mresult) != 0)
 			{
@@ -841,7 +841,7 @@ void DoItemPressFind(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  tempInstru+1);
 			
-			SetItemMark(NoteMenu, tempInstru+1, 0);
+			SetItemMark(NoteMenu, tempInstru+1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				*shortPtr = LoWord(mresult)-1;
@@ -886,7 +886,7 @@ void DoItemPressFind(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  *shortPtr + 1);
 			
-			SetItemMark(EffectMenu, *shortPtr + 1, 0);
+			SetItemMark(EffectMenu, *shortPtr + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				*shortPtr = (Byte)LoWord(mresult) - 1;

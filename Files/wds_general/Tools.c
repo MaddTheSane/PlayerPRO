@@ -391,14 +391,14 @@ void CreateToolsDlog(void)
 		TimeScanPtr[i] = NULL;
 	}
 	
-	SetItemMark(ViewsMenu, mTools, checkMark);
+	CheckMenuItem(ViewsMenu, mTools, TRUE);
 }
 
 void CloseToolsWindow(void)
 {
 	HideWindow(GetDialogWindow(ToolsDlog));
 
-	SetItemMark(ViewsMenu, mTools, noMark);
+	CheckMenuItem(ViewsMenu, mTools, FALSE);
 }
 
 extern EventRecord	theEvent;

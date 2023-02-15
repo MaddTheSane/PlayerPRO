@@ -653,7 +653,7 @@ void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 			
 			mresult = PopUpMenuSelect(tempMenu, myPt.v, myPt.h, curSelec);
 			
-			SetItemMark(tempMenu, curSelec, 0);
+			SetItemMark(tempMenu, curSelec, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				OsciScale = LoWord(mresult);
@@ -689,7 +689,7 @@ void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curSelec + 1);
 			
-			SetItemMark(SpectrumTypeMenu, curSelec + 1, 0);
+			SetItemMark(SpectrumTypeMenu, curSelec + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				switch (LoWord(mresult) - 1) {
@@ -753,7 +753,7 @@ void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curSelec + 1);
 			
-			SetItemMark(OsciHMenu, curSelec + 1, 0);
+			SetItemMark(OsciHMenu, curSelec + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				switch (LoWord(mresult)) {
@@ -1002,7 +1002,7 @@ void CreateSpectrumWindow(void)
 		return;
 	}
 	
-	SetItemMark(ViewsMenu, mSpectrumV, checkMark);
+	CheckMenuItem(ViewsMenu, mSpectrumV, TRUE);
 	
 	GetPort(&savePort);
 	
@@ -1112,7 +1112,7 @@ void CloseSpectrum(void)
 		SpotTimeData = NULL;
 		DisposeDialog(SpectrumDlog);
 		
-		SetItemMark(ViewsMenu, mSpectrumV, noMark);
+		CheckMenuItem(ViewsMenu, mSpectrumV, FALSE);
 		
 		for (i = 0 ; i < 2; i++) if (specPixMap[i] != NULL) ZapPixMap(&specPixMap[i]);
 		if (CurrentQuickPixMap != NULL)

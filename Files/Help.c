@@ -1407,7 +1407,7 @@ void DoEDITOR(short itemHit)
 			
 			mresult = PopUpMenuSelect(TrackView, myPt.v, myPt.h, LastCanal + 1);
 			
-			SetItemMark(TrackView, LastCanal + 1, 0);
+			SetItemMark(TrackView, LastCanal + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				LastCanal = (Byte)LoWord(mresult) - 1;
@@ -2243,7 +2243,7 @@ Boolean PressMenuItem(short menuID, short itemID, DialogPtr dia, long *curVal, s
 	
 	mresult = PopUpMenuSelect(tMenu, Zone.v, Zone.h, curSelec);
 	
-	SetItemMark(tMenu, curSelec, 0);
+	SetItemMark(tMenu, curSelec, noMark);
 	
 	if (HiWord(mresult) != 0) {
 		long	r;

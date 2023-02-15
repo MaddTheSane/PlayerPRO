@@ -1921,7 +1921,7 @@ Boolean MLClick(Point pt, short modifiers)
 										  curSelec + 1);
 				
 				
-				SetItemMark(InstruMenu, curSelec + 1, 0);
+				SetItemMark(InstruMenu, curSelec + 1, noMark);
 				
 				if (HiWord(mresult) != 0) {
 					SaveUndo(UPattern, CurrentPat, "\pUndo 'Command Editing'");
@@ -1985,7 +1985,7 @@ Boolean MLClick(Point pt, short modifiers)
 										  myPt.h - 3,
 										  curSelec);
 				
-				SetItemMark(EffectMenu, curSelec, 0);
+				SetItemMark(EffectMenu, curSelec, noMark);
 				
 				if (HiWord(mresult) != 0) {
 					SaveUndo(UPattern, CurrentPat, "\pUndo 'Command Editing'");
@@ -2378,7 +2378,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 			
 			mresult = PopUpMenuSelect(curMenu, myPt.v, myPt.h, DefaultVol + 1);
 			
-			SetItemMark(curMenu, DefaultVol +1, 0);
+			SetItemMark(curMenu, DefaultVol +1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				DefaultVol = LoWord(mresult)-1;
@@ -2426,7 +2426,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 			
 			mresult = PopUpMenuSelect(curMenu, myPt.v, myPt.h, DefaultArg + 1);
 			
-			SetItemMark(curMenu, DefaultArg + 1, 0);
+			SetItemMark(curMenu, DefaultArg + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				DefaultArg = LoWord(mresult) -1;
@@ -2471,7 +2471,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 									  myPt.h,
 									  DefaultFX+1);
 			
-			SetItemMark(EffectMenu, DefaultFX+1, 0);
+			SetItemMark(EffectMenu, DefaultFX+1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				DefaultFX = LoWord(mresult)-1;
@@ -2519,7 +2519,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 			
 			mresult = PopUpMenuSelect(curMenu, myPt.v, myPt.h, curStep);
 			
-			SetItemMark(curMenu, curStep, 0);
+			SetItemMark(curMenu, curStep, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				curStep = LoWord(mresult);
@@ -2560,7 +2560,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 			
 			mresult = PopUpMenuSelect(InstruMenu, myPt.v, myPt.h, curInstru + 1);
 			
-			SetItemMark(InstruMenu, curInstru + 1, 0);
+			SetItemMark(InstruMenu, curInstru + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				curInstru = LoWord(mresult) - 1;

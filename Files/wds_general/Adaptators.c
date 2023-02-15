@@ -1355,13 +1355,13 @@ void CreateAdapWindow(void)
 {
 	ShowWindow(GetDialogWindow(AdapDlog));
 	SelectWindow2(GetDialogWindow(AdapDlog));
-	SetItemMark(ViewsMenu, mAdap, checkMark);
+	CheckMenuItem(ViewsMenu, mAdap, TRUE);
 }
 
 void CloseAdapWindow(void)
 {
 	HideWindow(GetDialogWindow(AdapDlog));
-	SetItemMark(ViewsMenu, mAdap, noMark);
+	CheckMenuItem(ViewsMenu, mAdap, FALSE);
 }
 
 extern EventRecord theEvent;

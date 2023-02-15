@@ -433,7 +433,7 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 										  myPt.h,
 										  currentPattern + 1);
 				
-				SetItemMark(thePatternMenu, currentPattern + 1, 0);
+				SetItemMark(thePatternMenu, currentPattern + 1, noMark);
 				
 				if (HiWord(mresult) != 0 ) {
 					currentPattern = (Byte) LoWord(mresult) - 1;
@@ -526,7 +526,7 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 											  Zone.h,
 											  curSelec);
 					
-					SetItemMark(tMenu, curSelec, 0);
+					SetItemMark(tMenu, curSelec, noMark);
 					
 					if (HiWord(mresult) != 0) {
 						temp = LoWord(mresult);

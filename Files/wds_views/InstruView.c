@@ -180,7 +180,7 @@ void CreateInstruView(void)
 		return;
 	}
 
-	SetItemMark(ViewsMenu, mInsV, checkMark);
+	CheckMenuItem(ViewsMenu, mInsV, TRUE);
 
 	InstruViewDlog = GetNewDialog(129, NULL, GetDialogWindow(ToolsDlog));
 	SetWindEtat(GetDialogWindow(InstruViewDlog));
@@ -218,5 +218,5 @@ void CloseInstruViewDlog(void)
 		DisposeDialog(InstruViewDlog);
 	InstruViewDlog = NULL;
 	
-	SetItemMark(ViewsMenu, mInsV, noMark);
+	CheckMenuItem(ViewsMenu, mInsV, FALSE);
 }

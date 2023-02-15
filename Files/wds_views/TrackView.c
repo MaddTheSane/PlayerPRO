@@ -174,7 +174,7 @@ void CreateTrackView(void)
 	Handle		itemHandle;
 	short		itemType, i;
 	
-	SetItemMark(ViewsMenu, 5, checkMark);
+	CheckMenuItem(ViewsMenu, 5, TRUE);
 	
 	TrackViewDlog = GetNewDialog(157, NULL, GetDialogWindow(ToolsDlog));
 	SetWindEtat(GetDialogWindow(TrackViewDlog));
@@ -211,5 +211,5 @@ void CloseTrackViewDlog(void)
 		DisposeDialog(TrackViewDlog);
 	TrackViewDlog = NULL;
 
-	SetItemMark(ViewsMenu, 5, noMark);
+	CheckMenuItem(ViewsMenu, 5, FALSE);
 }

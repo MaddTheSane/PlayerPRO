@@ -292,7 +292,7 @@ void CreateEQWindow(void)
 		MOT16(&logoScale[i]);
 	}
 	
-	SetItemMark(ViewsMenu, mEqualizer, checkMark);
+	CheckMenuItem(ViewsMenu, mEqualizer, TRUE);
 	
 	EQDlog = GetNewDialog(183, NULL, GetDialogWindow(ToolsDlog));
 	
@@ -495,7 +495,7 @@ void CloseEQ(void)
 		DisposeDialog(EQDlog);
 		EQDlog = NULL;
 		
-		SetItemMark(ViewsMenu, mEqualizer, noMark);
+		CheckMenuItem(ViewsMenu, mEqualizer, FALSE);
 		
 		if (logoScale != NULL)
 			DisposePtr((Ptr) logoScale);

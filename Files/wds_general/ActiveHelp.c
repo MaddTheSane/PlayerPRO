@@ -386,7 +386,7 @@ void CreateAHelpWindow(void)
 	GrafPtr		savePort;
 	Rect		caRect;
 	
-	SetItemMark(HelpMenu, 1, checkMark);
+	CheckMenuItem(HelpMenu, 1, TRUE);
 	
 	if (!HelpAvalaible) return;
 	if (AHelpDlog != NULL) return;
@@ -424,5 +424,5 @@ void CloseAHelp(void)
 	}
 	AHelpDlog = NULL;
 	
-	SetItemMark(HelpMenu, 1, noMark);
+	CheckMenuItem(HelpMenu, 1, FALSE);
 }

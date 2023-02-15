@@ -1095,7 +1095,7 @@ void DoItemPressOscillo(short whichItem, DialogPtr whichDialog)	/* Item hit ID t
 									  myPt.h,
 									  curSelec + 1);
 			
-			SetItemMark(OsciTypeMenu, curSelec + 1, 0);
+			SetItemMark(OsciTypeMenu, curSelec + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				switch (LoWord(mresult) - 1) {
@@ -1158,7 +1158,7 @@ void DoItemPressOscillo(short whichItem, DialogPtr whichDialog)	/* Item hit ID t
 									  myPt.h,
 									  curSelec + 1);
 			
-			SetItemMark(OsciModeMenu, curSelec + 1, 0);
+			SetItemMark(OsciModeMenu, curSelec + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				switch (LoWord(mresult)) {
@@ -1218,7 +1218,7 @@ void DoItemPressOscillo(short whichItem, DialogPtr whichDialog)	/* Item hit ID t
 									  myPt.h,
 									  curSelec + 1);
 			
-			SetItemMark(OsciHMenu, curSelec + 1, 0);
+			SetItemMark(OsciHMenu, curSelec + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				switch (LoWord(mresult)) {
@@ -1586,7 +1586,7 @@ void CreateOscilloWindow(void)
 		osciPixMap[i] = NULL;
 	CurrentQuickPixMap = NULL;
 	
-	SetItemMark(ViewsMenu, mOscilloV, checkMark);
+	CheckMenuItem(ViewsMenu, mOscilloV, TRUE);
 	
 	OscilloDlog = GetNewDialog(128, NULL, GetDialogWindow(ToolsDlog));
 	
@@ -1673,7 +1673,7 @@ void CloseOscillo(void)
 		if (CurrentQuickPixMap != NULL)
 			DisposePtr((Ptr)CurrentQuickPixMap);
 		
-		SetItemMark(ViewsMenu, mOscilloV, noMark);
+		CheckMenuItem(ViewsMenu, mOscilloV, FALSE);
 		
 		MADDriver->useOsciBuffers = false;
 		
@@ -1692,8 +1692,8 @@ void ResetOscilloscope(void)
 	if (OscilloDlog == NULL)
 		return;
 	
-	GetPort(&savePort );
-	SetPortDialogPort(OscilloDlog );
+	GetPort(&savePort);
+	SetPortDialogPort(OscilloDlog);
 	GetPortBounds(GetDialogPort(OscilloDlog), &caRect);
 	InvalWindowRect(GetDialogWindow(OscilloDlog), &caRect);
 	

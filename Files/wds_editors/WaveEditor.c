@@ -1216,7 +1216,7 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 									  myPt.h,
 									  curSelec + 1);
 			
-			SetItemMark(OsciHMenu, curSelec + 1, 0);
+			SetItemMark(OsciHMenu, curSelec + 1, noMark);
 			
 			if (HiWord(mresult) != 0) {
 				switch (LoWord(mresult)) {
