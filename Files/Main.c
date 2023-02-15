@@ -81,10 +81,22 @@ void		ImportAudioCD();
 void		WindowsSettingsMenu(short item);
 void		COPYQuicktime();
 void		InitFFTSampleFilter(void);
+extern void ProcessVSTPlug(MADDriverRec *intDriver, long *data, long datasize, short channel);
+extern Boolean IsVSTChanEffect(MADDriverRec *intDriver, short channel);
+extern void DisposeVSTEffect(VSTEffect *myEffect);
+extern void CheckVSTEditor(VSTEffect *ce);
+extern void ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
+extern VSTEffect* CreateVSTEffect(short effectID);
 
 extern pascal void MyDlgFilterNav(NavEventCallbackMessage callBackSelector, NavCBRecPtr callBackParms, NavCallBackUserData callBackUD);
 
 WindowPtr NextWindowVisible(WindowPtr whichWindow);
+
+static void waitNext(void)
+{
+	DoGlobalNull();
+	WaitNextEvent(everyEvent, &theEvent, 1, NULL);
+}
 
 //#define VERSION 0x05A0 //since we don't have different preferences, keeping old value
 #define	VERSION			0x0592
@@ -855,6 +867,13 @@ void MusiqueDriverInit(void)
 	
 	MADDriver->VolGlobal = thePrefs.softVolumeLevel;
 	MADDriver->SendMIDIClockData = thePrefs.SendMIDIClockData;
+	MADDriver->ProcessVSTPlug = ProcessVSTPlug;
+	MADDriver->DisposeVSTEffect = DisposeVSTEffect;
+	MADDriver->IsVSTChanEffect = IsVSTChanEffect;
+	MADDriver->CheckVSTEditor = CheckVSTEditor;
+	MADDriver->ApplyVSTSets = ApplyVSTSets;
+	MADDriver->CreateVSTEffect = CreateVSTEffect;
+	MADDriver->syncCallback = waitNext;
 }
 
 /*************************************************/

@@ -1392,9 +1392,7 @@ OSErr MADDisposeLibrary(MADLibrary *MLibrary)
 
 OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned char *MissingPlugs)
 {
-#if MAINPLAYERPRO
 	short		alpha, x, i, index;
-#endif
 	Boolean		needToReset;
 
 	if (!driver) return MADParametersErr;
@@ -1420,10 +1418,9 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 			driver->curMusic->header->generalPan = driver->globPan;
 		}
 	}
-#if MAINPLAYERPRO
-//TODO: Check VST editor
-	CheckVSTEditor(NULL);
-#endif
+	
+	if (driver->CheckVSTEditor)
+		driver->CheckVSTEditor(NULL);
 	
 	/////////////////////////
 	
@@ -1462,14 +1459,14 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 #endif
 	
 	//INSTALL ALL VST EFFECTS !!!!!!
-#if MAINPLAYERPRO
-//TODO: VST Effects
+#if 1
+	if (driver->DisposeVSTEffect) {
 	// Purge previous Effects !
 	for (i = 0; i < 10 ; i++)
 	{
 		if (driver->masterVST[i])
 		{
-			DisposeVSTEffect(driver->masterVST[i]);
+			driver->DisposeVSTEffect(driver->masterVST[i]);
 			driver->masterVST[i] = NULL;
 		}
 	}
@@ -1480,7 +1477,7 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 		{
 			if (driver->chanVST[i][x])
 			{
-				DisposeVSTEffect(driver->chanVST[i][x]);
+				driver->DisposeVSTEffect(driver->chanVST[i][x]);
 				driver->chanVST[i][x] = NULL;
 			}
 		}
@@ -1497,8 +1494,8 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 			
 			if (index >= 0)
 			{
-				driver->masterVST[i] = CreateVSTEffect(index);
-				ApplyVSTSets(driver->masterVST[i], &music->sets[alpha]);
+				driver->masterVST[i] = driver->CreateVSTEffect(index);
+				driver->ApplyVSTSets(driver->masterVST[i], &music->sets[alpha]);
 			}
 			else if (MissingPlugs)
 			{
@@ -1521,8 +1518,8 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 			
 				if (index >= 0)
 				{
-					driver->chanVST[i][x] = CreateVSTEffect(index);
-					ApplyVSTSets(driver->chanVST[i][x], &music->sets[alpha]);
+					driver->chanVST[i][x] = driver->CreateVSTEffect(index);
+					driver->ApplyVSTSets(driver->chanVST[i][x], &music->sets[alpha]);
 				}
 				else if (MissingPlugs)
 				{
@@ -1537,6 +1534,7 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 	}
 	
 	if (MissingPlugs) MYC2PStr((Ptr) MissingPlugs);
+	}
 #endif
 	
 	if (needToReset) MADReset(driver);
@@ -3216,10 +3214,9 @@ OSErr MADPlaySoundDataSYNC(MADDriverRec *MDriver, Ptr soundPtr, long size, long 
 			if (MADIsPressed((unsigned char*) km, 0x37) && MADIsPressed((unsigned char*) km, 0x2F)) continueLoop = false;
 			if (Button()) continueLoop = false;
 			
-#if MAINPLAYERPRO
-			DoGlobalNull();
-			WaitNextEvent(everyEvent, &theEvent, 1, NULL);
-#endif
+			if (MDriver->syncCallback) {
+				MDriver->syncCallback();
+			}
 		}
 		
 		if (MDriver->chan[channel].samplePtr != NULL)

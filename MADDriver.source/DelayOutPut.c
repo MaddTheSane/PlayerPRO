@@ -760,7 +760,7 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 //	short		*ASCBuffer, valP = 0x7FFFL, valN = -0x7FFFL;
 //long		*eee, *ttt, *ASCBuffer1, *ASCBuffer2, i, ii;
 	long		i;
-#if defined(MAINPLAYERPRO)
+#if 1
 	long		ii;
 	short		chanCounter = 0, find, trackID;
 #endif
@@ -773,9 +773,9 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 	
 	for (i = 0 ; i < intDriver->MultiChanNo; i++)	//intDriver->DriverSettings.numChn
 	{
-#if defined(MAINPLAYERPRO)
+#if 1
 #warning VST Channel effect
-		if (IsVSTChanEffect(intDriver, i) && chanCounter < MAXCHANEFFECT)
+		if (intDriver->IsVSTChanEffect && intDriver->IsVSTChanEffect(intDriver, i) && chanCounter < MAXCHANEFFECT)
 		{
 			trackID = intDriver->curMusic->header->chanBus[intDriver->chan[i].TrackID].copyId;
 		

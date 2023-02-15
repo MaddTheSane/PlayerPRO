@@ -39,7 +39,6 @@ void ConvertInstrument(register	Byte	*tempPtr,	register long sSize);
 Boolean IsVSTChanEffect(MADDriverRec *, short channel);
 
 void ProcessVisualPlug(MADDriverRec*, short*, long);
-void ProcessVSTPlug(MADDriverRec*, long*, long, short);
 
 void ConvertInstrument(register	Byte	*tempPtr,	register long sSize)
 {
@@ -1212,13 +1211,13 @@ void ApplyVSTEffects(MADDriverRec *intDriver, Boolean ByPass)
 				
 				// APPLY VST - EFFECTS
 				
-#if defined(MAINPLAYERPRO)
+#if 1
 //TODO: Apply VST effects
 				if (intDriver->currentlyExporting)
 				{
-					if (intDriver->thisExport) ProcessVSTPlug(intDriver, (long*) intDriver->DASCEffectBuffer[i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[i]);
+					if (intDriver->thisExport && intDriver->ProcessVSTPlug) intDriver->ProcessVSTPlug(intDriver, (long*) intDriver->DASCEffectBuffer[i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[i]);
 				}
-				else ProcessVSTPlug(intDriver, (long*) intDriver->DASCEffectBuffer[i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[i]);
+				else if (intDriver->ProcessVSTPlug) intDriver->ProcessVSTPlug(intDriver, (long*) intDriver->DASCEffectBuffer[i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[i]);
 #endif
 				
 				
@@ -1677,18 +1676,20 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
 	
-#if defined(MAINPLAYERPRO)
+#if 1
 //TODO: Process VST Plug-in
 	if (intDriver->DriverSettings.outPutBits == 16)
 	{
 		if (intDriver->currentlyExporting)
 		{
-			if (intDriver->thisExport)
+			if (intDriver->thisExport && intDriver->ProcessVSTPlug)
 			{
-				ProcessVSTPlug(intDriver, (long*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
+				intDriver->ProcessVSTPlug(intDriver, (long*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
 			}
 		}
-		else ProcessVSTPlug(intDriver, (long*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
+		else if (intDriver->ProcessVSTPlug) {
+			intDriver->ProcessVSTPlug(intDriver, (long*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
+		}
 	}
 #endif
 	
