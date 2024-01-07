@@ -54,10 +54,8 @@ pascal OSErr 	MyTrackingSample(short message, WindowPtr theWindow, void *handler
 void			NSelectInstruList(short , short);
 long			AmpToByte(short Pos, short InstruNo);
 void			ConvertInstrumentOut16(register	short	*tempPtr,	register long sSize);
-void			FFTSampleFilter(sData *SData, short instru, Boolean filter);
-void			SampleUpdateNow(void);
+extern void		SampleUpdateNow(void);
 
-extern	DialogPtr	InstruListDlog;
 extern	Boolean		PianoRecording, DragManagerUse;
 extern	RGBColor	theColor;
 extern	Cursor		HandCrsr, beamCrsr, pencilCrsr, pencilCrsrStereo, CHandCrsr;

@@ -19,7 +19,7 @@ static	short		CurrentcurSelec;
 		short		tPlug;
 		short		PlugsFolderOK;
 
-void SampleUpdateNow(void);
+extern void SampleUpdateNow(void);
 static long dispatcher(VSTEffect *effect, Boolean applyOnBoth, long opCode, long index, long value, void *ptr, float opt);
 static Boolean VSTEditorOpen(VSTEffect *ce, sData	*curData, long Start, long End, Boolean StereoMode, short channelID);
 

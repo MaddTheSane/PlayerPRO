@@ -80,7 +80,6 @@ OSErr		inMADPlaySoundData(Ptr soundPtr, long size, long channel, long note, long
 void		ImportAudioCD();
 void		WindowsSettingsMenu(short item);
 void		COPYQuicktime();
-void		InitFFTSampleFilter(void);
 
 extern pascal void MyDlgFilterNav(NavEventCallbackMessage callBackSelector, NavCBRecPtr callBackParms, NavCallBackUserData callBackUD);
 

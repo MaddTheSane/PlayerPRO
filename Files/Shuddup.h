@@ -319,7 +319,7 @@ enum {
 //void MyP2CStr(unsigned char *cStr);
 void			NNumToString(short no, Str255 aStr);
 void			GetNoteString(short note, Str255	string);
-Boolean			GetIns(short *ins, short *samp);
+extern Boolean	GetIns(short *ins, short *samp);
 void			DoLoadOtherMusic(Boolean Affiche);
 void			Erreur(short ID, OSErr theErr);
 void			UpdateAHelpInfo(short *, short , DialogPtr );

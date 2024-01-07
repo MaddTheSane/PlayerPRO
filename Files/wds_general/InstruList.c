@@ -64,10 +64,10 @@ static	DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
 
 		DialogPtr				InstruListDlog;
 
-OSErr			CloseSampleData(DialogPtr	TheDia);
-void			ShowSampleData(DialogPtr	TheDia);
-Boolean 		DragInstrument(RgnHandle , short , EventRecord *);
-pascal OSErr 	MyReceiveDropHandler(WindowPtr , void* , DragReference );
+static OSErr	CloseSampleData(DialogPtr	TheDia);
+static void		ShowSampleData(DialogPtr	TheDia);
+static Boolean 	DragInstrument(RgnHandle , short , EventRecord *);
+static pascal void actionProcInstru(ControlHandle theControl, short ctlPart);
 pascal OSErr 	MyTrackingHandler(short , WindowPtr , void *, DragReference );
 void			NCreateSampleWindow(short ins, short samp);
 void 			SetInstruMozart(short myInstru);
@@ -2124,14 +2124,14 @@ void DrawInstruListItem(short iD)
 			
 			if (thePrefs.OCArrow[ins]) {
 				CopyBits((BitMap*)*(OP),
-						 (BitMap*)*GetPortPixMap(GetDialogPort(InstruListDlog)),
+						 GetPortBitMapForCopyBits(GetDialogPort(InstruListDlog)),
 						 &(*OP)->bounds,
 						 &destRect,
 						 srcCopy,
 						 NULL);
 			} else {
 				CopyBits((BitMap*)*(CP),
-						 (BitMap*)*GetPortPixMap(GetDialogPort(InstruListDlog)),
+						 GetPortBitMapForCopyBits(GetDialogPort(InstruListDlog)),
 						 &(*CP)->bounds,
 						 &destRect,
 						 srcCopy,
@@ -2167,7 +2167,7 @@ void DrawInstruListItem(short iD)
 		destRect.bottom = destRect.top + (*mySABut)->bounds.bottom;
 		
 		CopyBits((BitMap*) *(mySABut),
-				 (BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
+				 GetPortBitMapForCopyBits(GetDialogPort(InstruListDlog)),
 				 &(*mySABut)->bounds,
 				 &destRect,
 				 srcCopy,
@@ -2188,7 +2188,7 @@ void DrawInstruListItem(short iD)
 			destRect.bottom = destRect.top + (*ArrowPix)->bounds.bottom;
 			
 			CopyBits((BitMap*) *(ArrowPix),
-					 (BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
+					 GetPortBitMapForCopyBits(GetDialogPort(InstruListDlog)),
 					 &(*ArrowPix)->bounds,
 					 &destRect,
 					 srcCopy,
@@ -2339,10 +2339,12 @@ void DrawSmallSamplePreview()
 			UnlockPixels(GetPortPixMap(theGWorld));
 			DisposeGWorld(theGWorld);
 			
-		} else
+		} else {
 			EraseRect(&iRect);
-	} else
+		}
+	} else {
 		EraseRect(&iRect);
+	}
 }
 
 void UpdateInstruListWindow(DialogPtr GetSelection)
@@ -2627,7 +2629,7 @@ Boolean DragInstruSelect(void)
 
 static	OSType DragType;
 
-Boolean IsMyTypeAvailable(DragReference theDrag)
+static Boolean IsMyTypeAvailable(DragReference theDrag)
 {
 	FlavorFlags     	theFlags;
 	ItemReference   	theItem;
@@ -3238,12 +3240,14 @@ pascal OSErr MySendDataProc(FlavorType theFlavor,  void *refCon, ItemReference t
 				Erreur(63, err);
 				return dragNotAcceptedErr;
 			}
-		} else
+		} else {
 			return dragNotAcceptedErr;
+		}
 		
 		return noErr;
-	} else
+	} else {
 		return dragNotAcceptedErr;
+	}
 }
 
 Boolean DragInstrument(RgnHandle myRgn, short no, EventRecord *theEvent)
@@ -3285,21 +3289,25 @@ Boolean DragInstrument(RgnHandle myRgn, short no, EventRecord *theEvent)
 			return false;
 		}
 		
-		if (curData->size == 0)
+		if (curData->size == 0) {
 			return false;
+		}
 		
 		theSound = NewHandle(4096);
-		if (theSound == NULL)
+		if (theSound == NULL) {
 			return false;
+		}
 		
 		inOutBytes = GetPtrSize(curData->data);
-		if (inOutBytes != curData->size)
+		if (inOutBytes != curData->size) {
 			return false;
+		}
 		
-		if (curData->stereo)
+		if (curData->stereo) {
 			numChan = 2;
-		else
+		} else {
 			numChan = 1;
+		}
 		
 		SetupSndHeader((SndListHandle) theSound,
 							numChan,
@@ -3323,10 +3331,11 @@ Boolean DragInstrument(RgnHandle myRgn, short no, EventRecord *theEvent)
 		
 		HLock(theSound);
 		BlockMoveData(curData->data, *theSound + temp, inOutBytes);
-		if (curData->amp == 8)
+		if (curData->amp == 8) {
 			ConvertInstrumentIn((Byte*)(*theSound + temp), inOutBytes);
-		else
+		} else {
 			ConvertInstrumentIn16((short*)(*theSound + temp), inOutBytes);
+		}
 	}
 	//******************************************
 	//******************************************
@@ -3618,8 +3627,8 @@ void CreateInstruListWindow(void)
 		MyReceiveDropHandlerUPP 	= NewDragReceiveHandlerUPP(MyReceiveDropHandler);
 		mySendDataUPP 				= NewDragSendDataUPP(MySendDataProc);
 		
-		InstallTrackingHandler((DragTrackingHandlerUPP) MyTrackingHandlerUPP, GetDialogWindow(InstruListDlog), (void *) NULL);
-		InstallReceiveHandler((DragReceiveHandlerUPP) MyReceiveDropHandlerUPP, GetDialogWindow(InstruListDlog), (void *) NULL);
+		InstallTrackingHandler(MyTrackingHandlerUPP, GetDialogWindow(InstruListDlog), (void *) NULL);
+		InstallReceiveHandler(MyReceiveDropHandlerUPP, GetDialogWindow(InstruListDlog), (void *) NULL);
 	}
 }
 
@@ -3719,7 +3728,7 @@ void DoItemPressInstruList(short whichItem, DialogPtr whichDialog)
 							itemRect.bottom = itemRect.top + (*OPB)->bounds.bottom;
 							
 							CopyBits((BitMap*) *(OPB),
-										(BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
+										GetPortBitMapForCopyBits(GetDialogPort(InstruListDlog)),
 										&(*OPB)->bounds,
 										&itemRect,
 										srcCopy,
@@ -3728,7 +3737,7 @@ void DoItemPressInstruList(short whichItem, DialogPtr whichDialog)
 							itemRect.bottom = itemRect.top + (*CPB)->bounds.bottom;
 							
 							CopyBits((BitMap*) *(CPB),
-										(BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
+										GetPortBitMapForCopyBits(GetDialogPort(InstruListDlog)),
 										&(*CPB)->bounds,
 										&itemRect,
 										srcCopy,
@@ -3744,7 +3753,7 @@ void DoItemPressInstruList(short whichItem, DialogPtr whichDialog)
 							itemRect.bottom = itemRect.top + (*OP)->bounds.bottom;
 							
 							CopyBits((BitMap*) *(OP),
-										(BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
+									 GetPortBitMapForCopyBits(GetDialogPort(InstruListDlog)),
 										&(*OP)->bounds,
 										&itemRect,
 										srcCopy,
@@ -3753,7 +3762,7 @@ void DoItemPressInstruList(short whichItem, DialogPtr whichDialog)
 							itemRect.bottom = itemRect.top + (*CP)->bounds.bottom;
 							
 							CopyBits((BitMap*) *(CP),
-										(BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
+									 GetPortBitMapForCopyBits(GetDialogPort(InstruListDlog)),
 										&(*CP)->bounds,
 										&itemRect,
 										srcCopy,
@@ -3805,10 +3814,12 @@ void DoItemPressInstruList(short whichItem, DialogPtr whichDialog)
 					ConvertIDtoInsSamp(theCell.v, &ins, &samp);
 					
 					if (samp < 0) {
-						if (GetIns(&temp, &samp))
+						if (GetIns(&temp, &samp)) {
 							NEditInstruInfo(temp, samp);
-					} else
+						}
+					} else {
 						NCreateSampleWindow(ins, samp);
+					}
 				}
 			} else {
 				PLGetSelectRect(&itemRect, &myList);
@@ -3924,10 +3935,12 @@ void DoItemPressInstruList(short whichItem, DialogPtr whichDialog)
 					ConvertIDtoInsSamp(theCell.v, &ins, &samp);
 				
 					if (samp < 0) {
-						if (GetIns(&temp, &samp))
+						if (GetIns(&temp, &samp)) {
 							NEditInstruInfo(temp, samp);
-					} else
+						}
+					} else {
 						NCreateSampleWindow(ins, samp);
+					}
 				}
 			}
 			break;
@@ -3953,10 +3966,11 @@ void DoItemPressInstruList(short whichItem, DialogPtr whichDialog)
 				EraseGrowIcon(whichDialog);
 				SetMaxWindow(caRect.right + 3, 0, whichDialog);
 				
-				if (caRect.right == 300)
+				if (caRect.right == 300) {
 					SetControlValue(FlipBut, 0);
-				else
+				} else {
 					SetControlValue(FlipBut, 1);
+				}
 			}
 			break;
 	}
@@ -3988,10 +4002,11 @@ void DoKeyPressInstruList(short theChar, short xxxxxxx)
 		if (GetIns(&ins, &samp)) {
 			MADPurgeTrackIfInstru(MADDriver, ins);
 			
-			if (samp >= 0)
+			if (samp >= 0) {
 				MADKillSample(curMusic, ins, samp);
-			else
+			} else {
 				MADKillInstrument(curMusic, ins);
+			}
 		}
 		
 		CreateInstruList();
@@ -4006,9 +4021,12 @@ void DoKeyPressInstruList(short theChar, short xxxxxxx)
 			ConvertIDtoInsSamp(theCell.v, &ins, &samp);
 			
 			if (samp < 0) {
-				if (GetIns(&temp, &samp)) NEditInstruInfo(temp, samp);
+				if (GetIns(&temp, &samp)) {
+					NEditInstruInfo(temp, samp);
+				}
+			} else {
+				NCreateSampleWindow(ins, samp);
 			}
-			else NCreateSampleWindow(ins, samp);
 		}
 	}
 	else if (theChar == selectAll) {
@@ -4020,8 +4038,9 @@ void DoKeyPressInstruList(short theChar, short xxxxxxx)
 		} while (LNextCell(true, true, &theCell, InstruList));
 #endif
 	} else if (theChar == getinfo) {
-		if (GetIns(&temp, &samp))
+		if (GetIns(&temp, &samp)) {
 			NEditInstruInfo(temp, samp);
+		}
 	} else if (theChar == '/' || theChar == '*') {
 		if (GetIns(&temp, &samp)) {
 			if (samp >= 0) {
@@ -4047,10 +4066,11 @@ void DoKeyPressInstruList(short theChar, short xxxxxxx)
 //	RGBBackColor(&theColor);
 	
 	theCell.v = 0;	theCell.h = 0;
-	if (PLGetSelect(&theCell, &myList))
+	if (PLGetSelect(&theCell, &myList)) {
 		DrawInfoInstrument();
-	else
+	} else {
 		EraseInstrumentInfo();
+	}
 	
 	SetPort(SavePort);
 }
@@ -4072,8 +4092,9 @@ void PASTEInstruList()
 		//MADKillSample(curMusic, DestIns, DestSamp);
 						
 			// Delete old sample
-			if (curMusic->sample[DestIns * MAXSAMPLE + DestSamp]->data)
+			if (curMusic->sample[DestIns * MAXSAMPLE + DestSamp]->data) {
 				DisposePtr(curMusic->sample[DestIns * MAXSAMPLE + DestSamp]->data);
+			}
 			DisposePtr((Ptr)curMusic->sample[DestIns * MAXSAMPLE + DestSamp]);
 			curMusic->sample[DestIns * MAXSAMPLE + DestSamp] = NULL;
 			
@@ -4153,7 +4174,8 @@ void SaveInstrumentsList()
 
 OSErr OpenInstrumentsList(FSSpec *file)
 {
-	short		x, i, srcFile;
+	short		x, i;
+	FSIORefNum	srcFile;
 	long		inOutCount;
 	OSErr		theErr;
 	
