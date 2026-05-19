@@ -4,7 +4,7 @@
 #include "GetMetadataForFile.h"
 
 // -----------------------------------------------------------------------------
-//	constants
+#pragma mark constants
 // -----------------------------------------------------------------------------
 
 #define PLUGIN_ID "DF098C69-8463-40CD-BD50-A964BBCEFDFE"
@@ -14,10 +14,10 @@
 //
 
 // -----------------------------------------------------------------------------
-//	typedefs
+#pragma mark typedefs
 // -----------------------------------------------------------------------------
 			   
-// The layout for an instance of MetaDataImporterPlugIn 
+//! The layout for an instance of MetadataImporterPlugIn
 typedef struct __MetadataImporterPluginType {
 	MDImporterInterfaceStruct		*conduitInterface;
 	MDImporterURLInterfaceStruct	*extraInterface;
@@ -26,7 +26,7 @@ typedef struct __MetadataImporterPluginType {
 } MDImportPlug;
 
 // -----------------------------------------------------------------------------
-//	prototypes
+#pragma mark prototypes
 // -----------------------------------------------------------------------------
 //	Forward declaration for the IUnknown implementation.
 //
@@ -37,24 +37,9 @@ static HRESULT		MetadataImporterQueryInterface(void *thisInstance,REFIID iid,LPV
 extern void			*PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID) __attribute__((visibility ("default")));
 static ULONG		MetadataImporterPluginAddRef(void *thisInstance);
 static ULONG		MetadataImporterPluginRelease(void *thisInstance);
+static Boolean GetMetadataForFile(void* thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFStringRef pathToFile);
 
-static Boolean GetMetadataForFile(void* thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFStringRef pathToFile)
-{
-	Boolean isGood = FALSE;
-	CFURLRef theURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, false);
-	if (theURL) {
-		isGood = GetMetadataForURL(thisInterface, attributes, contentTypeUTI, theURL);
-		CFRelease(theURL);
-	}
-	return isGood;
-}
-
-// -----------------------------------------------------------------------------
-//	testInterfaceFtbl	definition
-// -----------------------------------------------------------------------------
-//	The TestInterface function table.
-//
-
+//! The TestInterface function table.
 static MDImporterInterfaceStruct testInterfaceFtbl = {
 	NULL,
 	MetadataImporterQueryInterface,
@@ -63,6 +48,7 @@ static MDImporterInterfaceStruct testInterfaceFtbl = {
 	GetMetadataForFile
 };
 
+//! The TestInterfaceURL function table.
 static MDImporterURLInterfaceStruct testInterfaceURLFtbl = {
 	NULL,
 	MetadataImporterQueryInterface,
@@ -71,13 +57,12 @@ static MDImporterURLInterfaceStruct testInterfaceURLFtbl = {
 	GetMetadataForURL
 };
 
-// -----------------------------------------------------------------------------
-//	AllocMetadataImporterPluginType
-// -----------------------------------------------------------------------------
-//	Utility function that allocates a new instance.
-//      You can do some initial setup for the importer here if you wish
-//      like allocating globals etc...
-//
+#pragma mark -
+
+//! Utility function that allocates a new instance.
+//!
+//! You can do some initial setup for the importer here if you wish
+//! like allocating globals etc...
 static MDImportPlug *AllocMetadataImporterPluginType(CFUUIDRef inFactoryID)
 {
 	MDImportPlug *theNewInstance = (MDImportPlug *)calloc(sizeof(MDImportPlug), 1);
@@ -95,14 +80,11 @@ static MDImportPlug *AllocMetadataImporterPluginType(CFUUIDRef inFactoryID)
 	return theNewInstance;
 }
 
-// -----------------------------------------------------------------------------
-//	DeallocMetadataImporterPluginType
-// -----------------------------------------------------------------------------
-//	Utility function that deallocates the instance when
-//	the refCount goes to zero.
-//      In the current implementation importer interfaces are never deallocated
-//      but implement this as this might change in the future
-//
+//! Utility function that deallocates the instance when
+//! the `refCount` goes to zero.
+//!
+//! In the current implementation importer interfaces are never deallocated
+//! but implement this as this might change in the future
 static void DeallocMetadataImporterPluginType(MDImportPlug *thisInstance)
 {
 	CFUUIDRef theFactoryID = thisInstance->factoryID;
@@ -114,11 +96,7 @@ static void DeallocMetadataImporterPluginType(MDImportPlug *thisInstance)
 	}
 }
 
-// -----------------------------------------------------------------------------
-//	MetadataImporterQueryInterface
-// -----------------------------------------------------------------------------
-//	Implementation of the IUnknown QueryInterface function.
-//
+//! Implementation of the `IUnknown` `QueryInterface` function.
 static HRESULT MetadataImporterQueryInterface(void *thisInstance, REFIID iid, LPVOID *ppv)
 {
 	CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes(kCFAllocatorDefault, iid);
@@ -160,13 +138,9 @@ static HRESULT MetadataImporterQueryInterface(void *thisInstance, REFIID iid, LP
 	}
 }
 
-// -----------------------------------------------------------------------------
-//	MetadataImporterPluginAddRef
-// -----------------------------------------------------------------------------
-//	Implementation of reference counting for this type. Whenever an interface
-//	is requested, bump the refCount for the instance. NOTE: returning the
-//	refcount is a convention but is not required so don't rely on it.
-//
+//! Implementation of reference counting for this type. Whenever an interface
+//! is requested, bump the `refCount` for the instance. NOTE: returning the
+//! `refcount` is a convention but is not required so don't rely on it.
 static ULONG MetadataImporterPluginAddRef(void *thisInstance)
 {
 	// First, make sure we get the proper pointer.
@@ -177,12 +151,8 @@ static ULONG MetadataImporterPluginAddRef(void *thisInstance)
 	return ++((MDImportPlug*)thisInstance)->refCount;
 }
 
-// -----------------------------------------------------------------------------
-// MetadataImporterPluginRelease
-// -----------------------------------------------------------------------------
-//	When an interface is released, decrement the refCount.
-//	If the refCount goes to zero, deallocate the instance.
-//
+//! When an interface is released, decrement the `refCount`.
+//! If the `refCount` goes to zero, deallocate the instance.
 static ULONG MetadataImporterPluginRelease(void *thisInstance)
 {
 	// First, make sure we get the proper pointer.
@@ -199,11 +169,20 @@ static ULONG MetadataImporterPluginRelease(void *thisInstance)
 	}
 }
 
-// -----------------------------------------------------------------------------
-//	PPMetadataImporterPluginFactory
-// -----------------------------------------------------------------------------
-//	Implementation of the factory function for this type.
-//
+//! Simple function that converts a POSIX path to a CFURL and call `GetMetadataForURL`.
+static Boolean GetMetadataForFile(void* thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFStringRef pathToFile)
+{
+	Boolean isGood = FALSE;
+	CFURLRef theURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, false);
+	if (theURL) {
+		isGood = GetMetadataForURL(thisInterface, attributes, contentTypeUTI, theURL);
+		CFRelease(theURL);
+	}
+	return isGood;
+}
+
+
+//! Implementation of the factory function for this type.
 void *PPMetadataImporterPluginFactory(CFAllocatorRef allocator, CFUUIDRef typeID)
 {
 	MDImportPlug	*result;

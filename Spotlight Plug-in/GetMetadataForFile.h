@@ -15,9 +15,11 @@
 
 #define __private_extern __attribute__((visibility("hidden")))
 
-// The import function to be implemented in GetMetadataForFile.c
-__private_extern Boolean GetMetadataForURL(void* thisInterface,
-										   CFMutableDictionaryRef attributes,
-										   CFStringRef contentTypeUTI,
-										   CFURLRef urlForFile);
+//! The import function to be implemented in GetMetadataForFile.c
+__private_extern extern
+Boolean GetMetadataForURL(void* thisInterface,
+						  CFMutableDictionaryRef attributes,
+						  CFStringRef contentTypeUTI,
+						  CFURLRef urlForFile);
+
 #endif
